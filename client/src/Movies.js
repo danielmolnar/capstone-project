@@ -10,7 +10,7 @@ function Movies() {
         fetchUrl={requests.fetchNetflixOriginals}
         isNetflix
       />
-      <Row title="TRENDING NOW" fetchUrl={requests.fetchTrending} />
+      <Row title="Trending" fetchUrl={requests.fetchTrending} />
       <Row title="TOP RATED" fetchUrl={requests.fetchTopRated} />
       <Row title="ACTION" fetchUrl={requests.fetchActionMovies} />
       <Row title="COMEDY" fetchUrl={requests.fetchComedyMovies} />

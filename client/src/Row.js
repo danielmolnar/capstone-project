@@ -26,7 +26,7 @@ function Row({ title, fetchUrl, isNetflix }) {
       <CardContainer>
         {movies.map((movie) => (
           <ImageStyler
-            myProps={isNetflix}
+            netflixStyle={isNetflix}
             key={movie.id}
             src={`${baseUrl}${
               isNetflix ? movie.poster_path : movie.backdrop_path
@@ -41,7 +41,9 @@ function Row({ title, fetchUrl, isNetflix }) {
 
 export default Row;
 
-const RowContainer = styled.div``;
+const RowContainer = styled.div`
+  margin-left: 20px;
+`;
 
 const CardContainer = styled.div`
   display: flex;
@@ -64,9 +66,12 @@ const ImageStyler = styled.img(
     :hover {
       transform: scale(1.08);
     }
-    ${props.myProps &&
+    ${props.netflixStyle &&
     css`
       max-height: 200px;
+      :hover {
+        transform: scale(1.09);
+      }
     `}
   `
 );
