@@ -10,7 +10,6 @@ function Row({ title, fetchUrl, isNetflix }) {
   useEffect(() => {
     async function fetchMovies() {
       const request = await axios.get(fetchUrl);
-      // console.log(request.data.results);
       setMovies(request.data.results);
       return request;
     }
@@ -20,32 +19,35 @@ function Row({ title, fetchUrl, isNetflix }) {
   console.log(movies);
 
   return (
-    <RowContainer>
+    <Wrapper>
       <h2>{title}</h2>
-
-      <CardContainer>
+      <MovieWrapper>
         {movies.map((movie) => (
-          <ImageStyler
-            netflixStyle={isNetflix}
-            key={movie.id}
-            src={`${baseUrl}${
-              isNetflix ? movie.poster_path : movie.backdrop_path
-            }`}
-            alt={movie.name}
-          />
+          <ImageContainer netflixStyle={isNetflix}>
+            <ImageStyler
+              netflixStyle={isNetflix}
+              key={movie.id}
+              src={`${baseUrl}${
+                isNetflix ? movie.poster_path : movie.backdrop_path
+              }`}
+              alt={movie.name}
+            />
+            <Overlay></Overlay>
+            {/*Add to Watchlist icon will be placed in Overlay*/}
+          </ImageContainer>
         ))}
-      </CardContainer>
-    </RowContainer>
+      </MovieWrapper>
+    </Wrapper>
   );
 }
 
 export default Row;
 
-const RowContainer = styled.div`
+const Wrapper = styled.div`
   margin-left: 20px;
 `;
 
-const CardContainer = styled.div`
+const MovieWrapper = styled.div`
   display: flex;
   overflow-y: hidden;
   overflow-x: scroll;
@@ -55,23 +57,49 @@ const CardContainer = styled.div`
   }
 `;
 
-const ImageStyler = styled.img(
+const ImageContainer = styled.div(
   (props) => css`
-    max-height: 100px;
-    object-fit: contain;
-    transition: transform 450ms;
-    max-height: 100px;
-    width: 100%;
+    position: relative;
     margin-right: 10px;
+    transition: transform 450ms;
+    width: 100%;
     :hover {
       transform: scale(1.08);
     }
+    :hover div {
+      opacity: 1;
+    }
     ${props.netflixStyle &&
     css`
-      max-height: 200px;
       :hover {
         transform: scale(1.09);
       }
     `}
   `
 );
+
+const ImageStyler = styled.img(
+  (props) => css`
+    max-height: 100px;
+    object-fit: contain;
+    ${props.netflixStyle &&
+    css`
+      max-height: 200px;
+    `}
+  `
+);
+
+const Overlay = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  opacity: 0;
+  top: 0;
+  font-size: 20px;
+  padding: 5px;
+  text-align: center;
+  transition: 450ms;
+`;
