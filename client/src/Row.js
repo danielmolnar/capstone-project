@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from './axios';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const baseUrl = 'https://image.tmdb.org/t/p/original/';
 
-function Row({ title, fetchUrl }) {
+function Row({ title, fetchUrl, isNetflix }) {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
@@ -25,9 +25,12 @@ function Row({ title, fetchUrl }) {
 
       <CardContainer>
         {movies.map((movie) => (
-          <img
+          <ImageStyler
+            myProps={isNetflix}
             key={movie.id}
-            src={`${baseUrl}${movie.poster_path}`}
+            src={`${baseUrl}${
+              isNetflix ? movie.poster_path : movie.backdrop_path
+            }`}
             alt={movie.name}
           />
         ))}
@@ -45,20 +48,25 @@ const CardContainer = styled.div`
   overflow-y: hidden;
   overflow-x: scroll;
   padding: 20px;
-
   ::-webkit-scrollbar {
     display: none;
   }
+`;
 
-  img {
-    width: 100%;
-    object-fit: contain;
+const ImageStyler = styled.img(
+  (props) => css`
     max-height: 100px;
+    object-fit: contain;
     transition: transform 450ms;
+    max-height: 100px;
+    width: 100%;
     margin-right: 10px;
-
     :hover {
       transform: scale(1.08);
     }
-  }
-`;
+    ${props.myProps &&
+    css`
+      max-height: 200px;
+    `}
+  `
+);
