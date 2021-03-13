@@ -1,6 +1,6 @@
 import React from 'react';
-import Row from './Row';
-import requests from './requests';
+import Row from '../components/Row';
+import requests from '../services/requests';
 
 function Movies() {
   return (
