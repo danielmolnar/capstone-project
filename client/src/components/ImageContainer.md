@@ -2,7 +2,7 @@ Netflix Movie
 
 ```js
 <ImageContainer
-  isNetflix
+  isLarge
   movie={{
     name: 'Lucifer',
     poster_path: '/4EYPN5mVIhKLfxGruy7Dy41dTVn.jpg',

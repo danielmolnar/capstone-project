@@ -8,7 +8,7 @@ function Home() {
       <Row
         title="NETFLIX ORIGINALS"
         fetchUrl={requests.fetchNetflixOriginals}
-        isNetflix
+        isLarge
       />
       <Row title="TRENDING" fetchUrl={requests.fetchTrending} />
       <Row title="TOP RATED" fetchUrl={requests.fetchTopRated} />

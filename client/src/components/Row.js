@@ -5,9 +5,7 @@ import styled from 'styled-components';
 
 import ImageContainer from './ImageContainer';
 
-const baseUrl = 'https://image.tmdb.org/t/p/original/';
-
-function Row({ title, fetchUrl, isNetflix }) {
+function Row({ title, fetchUrl, isLarge }) {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
@@ -19,8 +17,6 @@ function Row({ title, fetchUrl, isNetflix }) {
     fetchMovies();
   }, [fetchUrl]);
 
-  console.log(movies);
-
   return (
     <Wrapper>
       <h2>{title}</h2>
@@ -28,9 +24,9 @@ function Row({ title, fetchUrl, isNetflix }) {
         {movies.map((movie) => (
           <ImageContainer
             key={movie.id}
-            baseUrl={baseUrl}
-            isNetflix={isNetflix}
+            isNetflix={isLarge}
             movie={movie}
+            isLarge={isLarge}
           />
         ))}
       </MovieWrapper>
@@ -39,6 +35,12 @@ function Row({ title, fetchUrl, isNetflix }) {
 }
 
 export default Row;
+
+Row.propTypes = {
+  title: PropTypes.string,
+  fetchUrl: PropTypes.string,
+  isLarge: PropTypes.bool,
+};
 
 const Wrapper = styled.div`
   margin-left: 20px;

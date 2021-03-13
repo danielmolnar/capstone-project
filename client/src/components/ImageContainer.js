@@ -2,18 +2,16 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
-const baseUrl = 'https://image.tmdb.org/t/p/original/';
+function ImageContainer({ isLarge, movie }) {
+  const baseUrl = 'https://image.tmdb.org/t/p/original/';
 
-function ImageContainer({ isNetflix, movie }) {
   return (
     <>
-      <MovieContainer netflixStyle={isNetflix}>
+      <MovieContainer netflixStyle={isLarge}>
         <ImageStyler
-          netflixStyle={isNetflix}
+          netflixStyle={isLarge}
           key={movie.id}
-          src={`${baseUrl}${
-            isNetflix ? movie.poster_path : movie.backdrop_path
-          }`}
+          src={`${baseUrl}${isLarge ? movie.poster_path : movie.backdrop_path}`}
           alt={movie.name}
         />
         <Overlay></Overlay>
@@ -45,6 +43,12 @@ const MovieContainer = styled.div(
     `}
   `
 );
+
+ImageContainer.propTypes = {
+  isLarge: PropTypes.bool,
+  movie: PropTypes.object,
+  baseUrl: PropTypes.string,
+};
 
 const ImageStyler = styled.img(
   (props) => css`
