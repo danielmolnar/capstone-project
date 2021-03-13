@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../services/axios';
+import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
 const baseUrl = 'https://image.tmdb.org/t/p/original/';
@@ -42,6 +43,12 @@ function Row({ title, fetchUrl, isNetflix }) {
 }
 
 export default Row;
+
+Row.propTypes = {
+  title: PropTypes.string,
+  fetchUrl: PropTypes.string,
+  isNetflix: PropTypes.bool,
+};
 
 const Wrapper = styled.div`
   margin-left: 20px;
