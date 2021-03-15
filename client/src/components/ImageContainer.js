@@ -6,18 +6,15 @@ function ImageContainer({ isLarge, movie }) {
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
 
   return (
-    <>
-      <MovieContainer netflixStyle={isLarge}>
-        <ImageStyler
-          netflixStyle={isLarge}
-          key={movie.id}
-          src={`${baseUrl}${isLarge ? movie.poster_path : movie.backdrop_path}`}
-          alt={movie.name}
-        />
-        <Overlay></Overlay>
-        {/*Add to Watchlist icon will be placed in Overlay*/}
-      </MovieContainer>
-    </>
+    <MovieContainer netflixStyle={isLarge}>
+      <ImageStyler
+        netflixStyle={isLarge}
+        key={movie.id}
+        src={`${baseUrl}${isLarge ? movie.poster_path : movie.backdrop_path}`}
+        alt={movie.name}
+      />
+      <Overlay />
+    </MovieContainer>
   );
 }
 
@@ -38,7 +35,7 @@ const MovieContainer = styled.div(
     ${props.netflixStyle &&
     css`
       :hover {
-        transform: scale(1.09);
+        transform: scale(1.1);
       }
     `}
   `
@@ -74,4 +71,9 @@ const Overlay = styled.div`
   padding: 5px;
   text-align: center;
   transition: 450ms;
+
+  p {
+    font-size: 12px;
+    color: white;
+  }
 `;

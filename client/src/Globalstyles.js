@@ -2,7 +2,7 @@ import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
 
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 *{
   box-sizing: border-box;
@@ -17,8 +17,8 @@ background: linear-gradient(to right, #93291E, #ED213A); /* W3C, IE 10+/ Edge, F
 
 }
 
-h2 {
-  font-family: 'Bebas Neue';
+p, h2 {
+  font-family: 'Roboto', sans-serif;
   color: white;
 }
 
