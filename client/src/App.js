@@ -20,5 +20,5 @@ export default App;
 const Buffer = styled.div`
   height: 1px;
   width: 100%;
-  margin-bottom: 20%;
+  margin-bottom: 150px;
 `;

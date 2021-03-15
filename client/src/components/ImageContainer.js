@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
+import Overlay from '../components/Overlay';
 
 function ImageContainer({ isLarge, movie }) {
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
@@ -13,7 +14,7 @@ function ImageContainer({ isLarge, movie }) {
         src={`${baseUrl}${isLarge ? movie.poster_path : movie.backdrop_path}`}
         alt={movie.name}
       />
-      <Overlay />
+      <Overlay movieText={movie.overview} />
     </MovieContainer>
   );
 }
@@ -57,23 +58,3 @@ const ImageStyler = styled.img(
     `}
   `
 );
-
-const Overlay = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  background: rgba(0, 0, 0, 0.5);
-  width: 100%;
-  opacity: 0;
-  top: 0;
-  font-size: 20px;
-  padding: 5px;
-  text-align: center;
-  transition: 450ms;
-
-  p {
-    font-size: 12px;
-    color: white;
-  }
-`;
