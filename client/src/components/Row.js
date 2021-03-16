@@ -13,10 +13,11 @@ function Row({ title, fetchUrl, isLarge }) {
       setMovies(request.data.results);
       return request;
     }
-    // console.table(movies);
+
     fetchMovies();
   }, [fetchUrl]);
 
+  console.table(movies);
   return (
     <Wrapper>
       <h2>{title}</h2>

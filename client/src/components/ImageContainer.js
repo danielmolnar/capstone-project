@@ -11,10 +11,16 @@ function ImageContainer({ isLarge, movie }) {
       <ImageStyler
         netflixStyle={isLarge}
         key={movie.id}
-        src={`${baseUrl}${isLarge ? movie.poster_path : movie.backdrop_path}`}
+        src={`${baseUrl}${isLarge ? movie?.poster_path : movie?.backdrop_path}`}
         alt={movie.name}
       />
-      <Overlay movieText={movie.overview} />
+      <Overlay
+        baseUrl={baseUrl}
+        background={movie?.backdrop_path}
+        movieText={movie.overview}
+        movieName={movie?.name || movie?.title || movie?.original_name}
+        release={movie.first_air_date || movie.release_date}
+      />
     </MovieContainer>
   );
 }
@@ -45,7 +51,6 @@ const MovieContainer = styled.div(
 ImageContainer.propTypes = {
   isLarge: PropTypes.bool,
   movie: PropTypes.object,
-  baseUrl: PropTypes.string,
 };
 
 const ImageStyler = styled.img(

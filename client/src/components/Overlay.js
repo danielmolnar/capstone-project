@@ -1,15 +1,29 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Modal from '../components/Modal';
+import CardInfos from '../components/CardInfos';
+import Button from '../components/Button';
+import PropTypes from 'prop-types';
 
-export default function Overlay({ movie, movieText }) {
+export default function Overlay({
+  movieText,
+  movieName,
+  release,
+  background,
+  baseUrl,
+}) {
   const [isOpen, setIsOpen] = useState(false);
+
+  const clickHandler = () => setIsOpen(true);
 
   return (
     <OverlayStyler>
-      <button onClick={() => setIsOpen(true)}>Movie Info</button>
-      <Modal
+      <Button clickHandler={clickHandler} />
+      <CardInfos
+        baseUrl={baseUrl}
+        background={background}
+        release={release}
         movieText={movieText}
+        movieName={movieName}
         open={isOpen}
         onClose={() => setIsOpen(false)}
       />
@@ -17,22 +31,20 @@ export default function Overlay({ movie, movieText }) {
   );
 }
 
+Overlay.propTypes = {
+  movieText: PropTypes.string,
+  movieName: PropTypes.string,
+  release: PropTypes.string,
+  background: PropTypes.string,
+  baseUrl: PropTypes.string,
+};
+
 const OverlayStyler = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   position: absolute;
-  background: rgba(0, 0, 0, 0.5);
   width: 100%;
   opacity: 0;
-  top: 0;
-  font-size: 20px;
-  padding: 5px;
-  text-align: center;
-  transition: 450ms;
-
-  p {
-    font-size: 12px;
-    color: white;
-  }
+  bottom: 0;
 `;
