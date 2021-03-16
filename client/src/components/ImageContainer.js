@@ -15,6 +15,7 @@ function ImageContainer({ isLarge, movie }) {
         alt={movie.name}
       />
       <Overlay
+        score={movie.vote_average}
         baseUrl={baseUrl}
         background={movie?.backdrop_path}
         movieText={movie.overview}

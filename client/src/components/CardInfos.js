@@ -3,6 +3,7 @@ import styled from 'styled-components/macro';
 import ReactDom from 'react-dom';
 import PropTypes from 'prop-types';
 import AddButton from '../components/AddButton';
+import AudienceScore from '../assets/Audience_score';
 
 export default function CardInfos({
   open,
@@ -12,6 +13,7 @@ export default function CardInfos({
   release,
   background,
   baseUrl,
+  score,
 }) {
   if (!open) return null;
 
@@ -33,7 +35,10 @@ export default function CardInfos({
         </TextContainer>
         <TagWrapper>
           <p>{release.slice(0, 4)}</p>
-      
+          <ScoreWrapper>
+            <p>{score}/10</p>
+            <CustomAudienceScore fillColor="white" />
+          </ScoreWrapper>
         </TagWrapper>
       </ModalStyler>
     </>,
@@ -49,6 +54,7 @@ CardInfos.propTypes = {
   release: PropTypes.string,
   background: PropTypes.string,
   baseUrl: PropTypes.string,
+  score: PropTypes.number,
 };
 
 const BackgroundStyler = styled.div`
@@ -135,3 +141,17 @@ const TextContainer = styled.div`
   padding: 0 1rem;
 `;
 
+const CustomAudienceScore = styled(AudienceScore)`
+  width: 25px;
+  height: 25px;
+`;
+
+const ScoreWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 2rem;
+
+  border-radius: 5px;
+  height: 40px;
+`;

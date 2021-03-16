@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
-import Logo from '../images/Logo.svg';
+import Logo from '../images/Logo.js';
 
-function HeaderNav() {
+function Banner() {
   const [show, handleShow] = useState(false);
 
   useEffect(() => {
@@ -17,18 +17,12 @@ function HeaderNav() {
 
   return (
     <ImageWrapper show={show}>
-      <ImageStyler src={Logo} alt="App Logo" />
+      <LogoStyler />
     </ImageWrapper>
   );
 }
 
-export default HeaderNav;
-
-const ImageStyler = styled.img`
-  object-fit: contain;
-  max-width: 30%;
-  padding: 10px;
-`;
+export default Banner;
 
 const ImageWrapper = styled.div(
   (props) => css`
@@ -44,8 +38,14 @@ const ImageWrapper = styled.div(
     transition: all 0.5s;
 
     ${props.show &&
-    css`
-      opacity: 0;
-    `}
+      css`
+        opacity: 0;
+      `}
   `
 );
+
+const LogoStyler = styled(Logo)`
+  object-fit: contain;
+  max-width: 30%;
+  padding: 10px;
+`;

@@ -1,14 +1,13 @@
 import Home from './Pages/Home';
-import Header from '../src/components/Header';
+import Banner from '../src/components/Banner';
 import styled from 'styled-components';
 
 function App() {
   return (
     <>
-      <Header />
-
       <div className="App">
-        <Buffer></Buffer>
+        <Banner />
+        <Buffer />
         <Home />
       </div>
     </>

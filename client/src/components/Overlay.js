@@ -10,6 +10,7 @@ export default function Overlay({
   release,
   background,
   baseUrl,
+  score,
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -19,6 +20,7 @@ export default function Overlay({
     <OverlayStyler>
       <Button clickHandler={clickHandler} />
       <CardInfos
+        score={score}
         baseUrl={baseUrl}
         background={background}
         release={release}
@@ -37,6 +39,8 @@ Overlay.propTypes = {
   release: PropTypes.string,
   background: PropTypes.string,
   baseUrl: PropTypes.string,
+  onClose: PropTypes.func,
+  open: PropTypes.bool,
 };
 
 const OverlayStyler = styled.div`
