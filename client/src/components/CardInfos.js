@@ -14,6 +14,7 @@ export default function CardInfos({
   background,
   baseUrl,
   score,
+  addToWatchList,
 }) {
   if (!open) return null;
 
@@ -27,7 +28,7 @@ export default function CardInfos({
         </Header>
         <BackGroundWrapper background={background} baseUrl={baseUrl}>
           <DetailsWrapper>
-            <AddButton />
+            <AddButton addToWatchList={addToWatchList} />
           </DetailsWrapper>
         </BackGroundWrapper>
         <TextContainer>
