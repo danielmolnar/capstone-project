@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from '../services/axios';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
 import ImageContainer from './ImageContainer';
 
 function Row({ title, fetchUrl, isLarge }) {
@@ -14,9 +13,11 @@ function Row({ title, fetchUrl, isLarge }) {
       setMovies(request.data.results);
       return request;
     }
+
     fetchMovies();
   }, [fetchUrl]);
 
+  console.table(movies);
   return (
     <Wrapper>
       <h2>{title}</h2>

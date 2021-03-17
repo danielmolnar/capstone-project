@@ -17,7 +17,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "svg": "styled-svg src/**/*.svg --size=small:18x18 --size=medium:24x24"
   },
   "eslintConfig": {
     "extends": [
@@ -38,6 +39,7 @@
     ]
   },
   "devDependencies": {
-    "react-styleguidist": "^11.1.5"
+    "react-styleguidist": "^11.1.5",
+    "styled-svg": "^2.4.7"
   }
 }

@@ -2,23 +2,32 @@ import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
 
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto&display=swap');
+:root {
+  --primary-background: linear-gradient(to right, hsl(6, 66%, 35%), hsl(353, 85%, 53%));
+
+  --primary-100: hsl(353, 85%, 53%);
+  --primary-100-opacity: hsla(353, 85%, 53%, 0.8);
+  --primary-200: hsl(6, 66%, 35%);
+  --secondary-200-opacity: hsla(6, 66%, 35%, 0.8)
+
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 *{
   box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
 }
 
 body {
 
 margin: 0;
-background: #ED213A;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #93291E, #ED213A);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #93291E, #ED213A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+background: var(--primary-background);
 
 }
 
-h2 {
-  font-family: 'Bebas Neue';
+p, h2 {
+
   color: white;
 }
 
