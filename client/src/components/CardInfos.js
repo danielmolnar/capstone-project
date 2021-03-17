@@ -20,7 +20,7 @@ export default function CardInfos({
 
   return ReactDom.createPortal(
     <>
-      <BackgroundStyler></BackgroundStyler>
+      <BackgroundStyler />
       <ModalStyler>
         <Header>
           <h2>{movieName}</h2>

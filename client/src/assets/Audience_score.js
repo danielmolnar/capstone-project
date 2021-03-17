@@ -1,21 +1,19 @@
-import React, { Fragment } from "react";
-import PropTypes from "prop-types";
-import styled, { css } from "styled-components";
+import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
+import styled, { css } from 'styled-components';
 
 const createHelpers = (width, height, css) => {
-  // somehow sizes is ending up in markup, even if it is not a valid svg attribute
-  // until we have a better solution, just render it empty, instead to '[Object object]'
-  const sanitizeSizes = sizes =>
-    Object.defineProperty(sizes, "toString", {
-      value: () => "",
-      enumerable: false
+  const sanitizeSizes = (sizes) =>
+    Object.defineProperty(sizes, 'toString', {
+      value: () => '',
+      enumerable: false,
     });
 
   const getDimensions = (size, sizes) => {
     if (
       size &&
-      typeof size.width === "number" &&
-      typeof size.height === "number"
+      typeof size.width === 'number' &&
+      typeof size.height === 'number'
     ) {
       return size;
     }
@@ -25,14 +23,14 @@ const createHelpers = (width, height, css) => {
 
   const getCss = (size, sizes, fillColor, fillColorRule, noStyles) => {
     if (noStyles) {
-      return "";
+      return '';
     }
 
     const dimensions = getDimensions(size, sizes);
     const fillRule =
       fillColor && fillColorRule
         ? `${fillColorRule}{ fill: ${fillColor}; }`
-        : "";
+        : '';
 
     return css`
       width: ${dimensions.width}px;
@@ -48,13 +46,13 @@ const createHelpers = (width, height, css) => {
     getCss,
     getDimensions,
     propsToCss,
-    sanitizeSizes
+    sanitizeSizes,
   };
 };
 
-const width = "512";
-const height = "512";
-const viewBox = "0 0 512 512";
+const width = '512';
+const height = '512';
+const viewBox = '0 0 512 512';
 
 const { getDimensions, getCss, propsToCss, sanitizeSizes } = createHelpers(
   width,
@@ -64,7 +62,7 @@ const { getDimensions, getCss, propsToCss, sanitizeSizes } = createHelpers(
 
 const sizes = sanitizeSizes({
   small: { width: 18, height: 18 },
-  medium: { width: 24, height: 24 }
+  medium: { width: 24, height: 24 },
 });
 
 const Image = styled.svg`
@@ -87,9 +85,9 @@ const defaultProps = {
   children,
   viewBox,
   fillColor: null,
-  fillColorRule: "&&& path, &&& use, &&& g",
+  fillColorRule: '&&& path, &&& use, &&& g',
   sizes,
-  size: null
+  size: null,
 };
 
 Image.propTypes /* remove-proptypes */ = {
@@ -101,18 +99,18 @@ Image.propTypes /* remove-proptypes */ = {
     PropTypes.string,
     PropTypes.shape({
       height: PropTypes.number.isRequired,
-      width: PropTypes.number.isRequired
-    })
+      width: PropTypes.number.isRequired,
+    }),
   ]),
   sizes: PropTypes.shape({
     height: PropTypes.number,
-    width: PropTypes.number
-  })
+    width: PropTypes.number,
+  }),
 };
 
 export default Object.assign(Image, {
   getDimensions,
   getCss,
   defaultProps,
-  displayName: "Audience_score"
+  displayName: 'Audience_score',
 });
