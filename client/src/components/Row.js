@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ImageContainer from './ImageContainer';
 
-function Row({ title, fetchUrl, isLarge }) {
+function Row({ title, fetchUrl, isLarge, addToWatchList }) {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
@@ -17,7 +17,6 @@ function Row({ title, fetchUrl, isLarge }) {
     fetchMovies();
   }, [fetchUrl]);
 
-  console.table(movies);
   return (
     <Wrapper>
       <h2>{title}</h2>
@@ -28,6 +27,7 @@ function Row({ title, fetchUrl, isLarge }) {
             isNetflix={isLarge}
             movie={movie}
             isLarge={isLarge}
+            addToWatchList={() => addToWatchList(movie)}
           />
         ))}
       </MovieWrapper>

@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import Overlay from '../components/Overlay';
 
-function ImageContainer({ isLarge, movie }) {
+function ImageContainer({ isLarge, movie, addToWatchList }) {
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
 
   return (
@@ -15,6 +15,7 @@ function ImageContainer({ isLarge, movie }) {
         alt={movie.name}
       />
       <Overlay
+        addToWatchList={addToWatchList}
         score={movie.vote_average}
         baseUrl={baseUrl}
         background={movie?.backdrop_path}
@@ -41,11 +42,11 @@ const MovieContainer = styled.div(
       opacity: 1;
     }
     ${props.netflixStyle &&
-    css`
-      :hover {
-        transform: scale(1.1);
-      }
-    `}
+      css`
+        :hover {
+          transform: scale(1.1);
+        }
+      `}
   `
 );
 
@@ -59,8 +60,8 @@ const ImageStyler = styled.img(
     max-height: 100px;
     object-fit: contain;
     ${props.netflixStyle &&
-    css`
-      max-height: 200px;
-    `}
+      css`
+        max-height: 200px;
+      `}
   `
 );
