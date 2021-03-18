@@ -25,12 +25,25 @@ function App() {
   return (
     <>
       <Navigation />
+      <Banner />
+      <Buffer />
       <Switch>
         <Route exact path="/">
           <Home addToWatchList={addToWatchList} />
         </Route>
         <Route path="/watchlist">
-          <Watchlist />
+          <GridWrapper>
+            <WatchlistWrapper>
+              {isWatchList.map((movie) => (
+                <Watchlist
+                  key={movie.id}
+                  isLarge
+                  movie={movie}
+                  addToWatchList={() => addToWatchList(movie)}
+                />
+              ))}
+            </WatchlistWrapper>
+          </GridWrapper>
         </Route>
         <Route path="/friends">
           <Friends />
@@ -39,6 +52,7 @@ function App() {
           <Search />
         </Route>
       </Switch>
+      <Buffer />
     </>
   );
 }
@@ -49,4 +63,15 @@ const Buffer = styled.div`
   height: 1px;
   width: 100%;
   margin-bottom: 150px;
+`;
+
+const WatchlistWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+`;
+
+const GridWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
