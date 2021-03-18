@@ -12,6 +12,7 @@ export default function Overlay({
   baseUrl,
   score,
   addToWatchList,
+  isWatchList,
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -21,6 +22,7 @@ export default function Overlay({
     <OverlayStyler>
       <Button clickHandler={clickHandler} />
       <CardInfos
+        isWatchList={isWatchList}
         addToWatchList={addToWatchList}
         score={score}
         baseUrl={baseUrl}

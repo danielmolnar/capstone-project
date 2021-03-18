@@ -9,18 +9,20 @@ import Banner from '../src/components/Banner';
 import Navigation from '../src/components/Navigation';
 
 function App() {
-  const [isWatchList, setIsWatchList] = useState([]);
+  const [watchlist, setWatchList] = useState([]);
+  const [isWatchList, setIsWatchList] = useState(false);
 
   function addToWatchList(movieToAdd) {
-    const isOnWatchList = isWatchList.some(
-      (movie) => movie.id === movieToAdd.id
-    );
+    const isOnWatchList = watchlist.some((movie) => movie.id === movieToAdd.id);
 
     if (!isOnWatchList) {
-      setIsWatchList([...isWatchList, movieToAdd]);
+      setWatchList([...watchlist, movieToAdd]);
+      setIsWatchList(!isWatchList);
     } else
-      setIsWatchList(isWatchList.filter((movie) => movie.id !== movieToAdd.id));
+      setWatchList(watchlist.filter((movie) => movie.id !== movieToAdd.id));
+    setIsWatchList(!isWatchList);
   }
+  console.log(watchlist);
 
   return (
     <>
@@ -29,13 +31,14 @@ function App() {
       <Buffer />
       <Switch>
         <Route exact path="/">
-          <Home addToWatchList={addToWatchList} />
+          <Home addToWatchList={addToWatchList} isWatchList={isWatchList} />
         </Route>
         <Route path="/watchlist">
           <GridWrapper>
             <WatchlistWrapper>
-              {isWatchList.map((movie) => (
+              {watchlist.map((movie) => (
                 <Watchlist
+                  isWatchList={movie.isWatchList}
                   key={movie.id}
                   isLarge
                   movie={movie}

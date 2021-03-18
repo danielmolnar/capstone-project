@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default function AddButton({ addToWatchList }) {
+export default function AddButton({ addToWatchList, isWatchList }) {
   return (
-    <WatchListButton onClick={addToWatchList}>+ Watchlist</WatchListButton>
+    <WatchListButton onClick={addToWatchList}>
+      {isWatchList ? 'Remove from ' : 'Add to '}Watchlist
+    </WatchListButton>
   );
 }
 

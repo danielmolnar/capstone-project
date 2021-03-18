@@ -4,12 +4,24 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ImageContainer from './ImageContainer';
 
-function Row({ title, fetchUrl, isLarge, addToWatchList }) {
+function Row({ title, fetchUrl, isLarge, addToWatchList, isWatchList }) {
   const [movies, setMovies] = useState([]);
+  const [newMovies, setNewMovies] = useState([]);
 
   useEffect(() => {
     async function fetchMovies() {
       const request = await axios.get(fetchUrl);
+      const myMovies = request.data.results.map((item) => ({
+        id: item.id,
+        poster: item?.poster_path,
+        backdrop: item?.backdrop_path,
+        alt: item.name,
+        score: item.vote_average,
+        text: item.overview,
+        release: item.first_air_date,
+        onWatchList: false,
+      }));
+      setNewMovies(myMovies);
       setMovies(request.data.results);
       return request;
     }
@@ -17,12 +29,15 @@ function Row({ title, fetchUrl, isLarge, addToWatchList }) {
     fetchMovies();
   }, [fetchUrl]);
 
+  console.log(newMovies);
   return (
     <Wrapper>
       <h2>{title}</h2>
       <MovieWrapper>
         {movies.map((movie) => (
           <ImageContainer
+            testOnWatchlist={movie.testOnWatchlist}
+            isWatchList={isWatchList}
             key={movie.id}
             isNetflix={isLarge}
             movie={movie}

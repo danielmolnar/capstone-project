@@ -1,17 +1,20 @@
 import React from 'react';
-import styled from 'styled-components';
 import ImageContainer from '../components/ImageContainer';
 
-export default function Watchlist({ isLarge, movie, addToWatchList }) {
+export default function Watchlist({
+  isLarge,
+  movie,
+  addToWatchList,
+  isWatchList,
+}) {
   return (
-    <Wrapper>
+    <>
       <ImageContainer
+        isWatchList={isWatchList}
         isLarge={isLarge}
         movie={movie}
         addToWatchList={addToWatchList}
       />
-    </Wrapper>
+    </>
   );
 }
-
-const Wrapper = styled.div``;
