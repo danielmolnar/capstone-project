@@ -22,7 +22,6 @@ function App() {
       setWatchList(watchlist.filter((movie) => movie.id !== movieToAdd.id));
     setIsWatchList(!isWatchList);
   }
-  console.log(watchlist);
 
   return (
     <>

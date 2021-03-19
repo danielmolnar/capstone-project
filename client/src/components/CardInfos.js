@@ -117,6 +117,7 @@ const BackGroundWrapper = styled.div`
   background-position: center center;
   object-fit: contain;
   height: 200px;
+  box-shadow: 10px 0px 10px rgba(0, 0, 0, 0.5);
 `;
 
 const DetailsWrapper = styled.div`

@@ -2,9 +2,18 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import Overlay from '../components/Overlay';
+import Spinner from '../components/Spinner';
+// // import Gif from '../images/spinner.gif'
 
-function ImageContainer({ isLarge, movie, addToWatchList, isWatchList }) {
+function ImageContainer({
+  isLarge,
+  movie,
+  addToWatchList,
+  isWatchList,
+  isLoading,
+}) {
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
+  // const spinnerSrc = '"../images/spinner.gif"';
 
   return (
     <MovieContainer netflixStyle={isLarge}>
@@ -12,6 +21,7 @@ function ImageContainer({ isLarge, movie, addToWatchList, isWatchList }) {
         netflixStyle={isLarge}
         key={movie.id}
         src={`${baseUrl}${isLarge ? movie?.poster_path : movie?.backdrop_path}`}
+        // src="spinner.gif"
         alt={movie.name}
       />
       <Overlay
