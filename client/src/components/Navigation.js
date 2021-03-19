@@ -4,14 +4,23 @@ import styled from 'styled-components';
 import React from 'react';
 
 export default function Navigation() {
+  const activeClassName = 'nav-item-active';
+
+  const StyledLink = styled(NavLink).attrs({ activeClassName })`
+    background-image: '../images/home.png';
+    &.${activeClassName} {
+      background-image: '../images/home.png';
+    }
+  `;
+
   return (
     <Nav>
-      <NavLink exact to="/">
+      <StyledLink exact to="/">
         Home
-      </NavLink>
-      <NavLink to="/friends">Friends</NavLink>
-      <NavLink to="/watchlist">Watchlist</NavLink>
-      <NavLink to="/search">Search</NavLink>
+      </StyledLink>
+      <StyledLink to="/friends">Friends</StyledLink>
+      <StyledLink to="/watchlist">Watchlist</StyledLink>
+      <StyledLink to="/search">Search</StyledLink>
     </Nav>
   );
 }
