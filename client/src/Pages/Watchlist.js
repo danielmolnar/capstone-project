@@ -6,6 +6,7 @@ export default function Watchlist({
   movie,
   addToWatchList,
   isWatchList,
+  isOnWatchList,
 }) {
   return (
     <>
@@ -14,6 +15,7 @@ export default function Watchlist({
         isLarge={isLarge}
         movie={movie}
         addToWatchList={addToWatchList}
+        isOnWatchList={isOnWatchList}
       />
     </>
   );

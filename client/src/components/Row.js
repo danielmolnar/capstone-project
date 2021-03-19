@@ -5,7 +5,14 @@ import styled from 'styled-components';
 import ImageContainer from './ImageContainer';
 import Spinner from '../components/Spinner';
 
-function Row({ title, fetchUrl, isLarge, addToWatchList, isWatchList }) {
+function Row({
+  title,
+  fetchUrl,
+  isLarge,
+  addToWatchList,
+  isWatchList,
+  isOnWatchList,
+}) {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -24,7 +31,12 @@ function Row({ title, fetchUrl, isLarge, addToWatchList, isWatchList }) {
     fetchMovies();
   }, [fetchUrl]);
 
-  console.log(isLoading);
+  // console.log(isLoading);
+  function logger(movie) {
+    // isOnWatchList(movie);
+    // console.log(isOnWatchList(movie));
+    console.log(movie);
+  }
 
   return isLoading ? (
     <>
@@ -39,12 +51,12 @@ function Row({ title, fetchUrl, isLarge, addToWatchList, isWatchList }) {
           {movies.map((movie) => (
             <ImageContainer
               isLoading={isLoading}
-              testOnWatchlist={movies.adult}
               isWatchList={isWatchList}
               key={movie.id}
               isNetflix={isLarge}
               movie={movie}
               isLarge={isLarge}
+              isOnWatchlist={() => isOnWatchList(movie)}
               addToWatchList={() => addToWatchList(movie)}
             />
           ))}

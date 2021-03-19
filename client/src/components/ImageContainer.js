@@ -11,6 +11,7 @@ function ImageContainer({
   addToWatchList,
   isWatchList,
   isLoading,
+  isOnWatchList,
 }) {
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
   // const spinnerSrc = '"../images/spinner.gif"';
@@ -25,6 +26,7 @@ function ImageContainer({
         alt={movie.name}
       />
       <Overlay
+        isOnWatchlist={isOnWatchList}
         isWatchList={isWatchList}
         addToWatchList={addToWatchList}
         score={movie.vote_average}

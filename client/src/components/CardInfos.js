@@ -16,6 +16,7 @@ export default function CardInfos({
   score,
   addToWatchList,
   isWatchList,
+  isOnWatchList,
 }) {
   if (!open) return null;
 
@@ -32,6 +33,7 @@ export default function CardInfos({
             <AddButton
               addToWatchList={addToWatchList}
               isWatchList={isWatchList}
+              isOnWatchlist={isOnWatchList}
             />
             <button></button>
           </DetailsWrapper>

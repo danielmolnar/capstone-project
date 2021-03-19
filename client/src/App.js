@@ -12,10 +12,11 @@ function App() {
   const [watchlist, setWatchList] = useState([]);
   const [isWatchList, setIsWatchList] = useState(false);
 
-  function addToWatchList(movieToAdd) {
-    const isOnWatchList = watchlist.some((movie) => movie.id === movieToAdd.id);
+  const isOnWatchList = (movieToAdd) =>
+    watchlist.some((movie) => movie.id === movieToAdd.id);
 
-    if (!isOnWatchList) {
+  function addToWatchList(movieToAdd) {
+    if (!isOnWatchList(movieToAdd)) {
       setWatchList([...watchlist, movieToAdd]);
       setIsWatchList(!isWatchList);
     } else
@@ -30,7 +31,11 @@ function App() {
       <Buffer />
       <Switch>
         <Route exact path="/">
-          <Home addToWatchList={addToWatchList} isWatchList={isWatchList} />
+          <Home
+            addToWatchList={addToWatchList}
+            isWatchList={isWatchList}
+            isOnWatchlist={isOnWatchList}
+          />
         </Route>
         <Route path="/watchlist">
           <GridWrapper>
@@ -42,6 +47,7 @@ function App() {
                   isLarge
                   movie={movie}
                   addToWatchList={() => addToWatchList(movie)}
+                  isOnWatchList={() => isOnWatchList(movie)}
                 />
               ))}
             </WatchlistWrapper>
