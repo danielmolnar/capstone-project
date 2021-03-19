@@ -10,7 +10,7 @@ function Row({
   fetchUrl,
   isLarge,
   addToWatchList,
-  isWatchList,
+
   isOnWatchList,
 }) {
   const [movies, setMovies] = useState([]);
@@ -32,11 +32,11 @@ function Row({
   }, [fetchUrl]);
 
   // console.log(isLoading);
-  function logger(movie) {
-    // isOnWatchList(movie);
-    // console.log(isOnWatchList(movie));
-    console.log(movie);
-  }
+  // function logger(movie) {
+  //   console.log(isOnWatchList(movie));
+  // }
+
+  // console.log(isOnWatchList);
 
   return isLoading ? (
     <>
@@ -51,13 +51,12 @@ function Row({
           {movies.map((movie) => (
             <ImageContainer
               isLoading={isLoading}
-              isWatchList={isWatchList}
               key={movie.id}
               isNetflix={isLarge}
               movie={movie}
               isLarge={isLarge}
-              isOnWatchlist={() => isOnWatchList(movie)}
               addToWatchList={() => addToWatchList(movie)}
+              isOnWatchList={() => isOnWatchList(movie)}
             />
           ))}
         </MovieWrapper>
@@ -83,6 +82,7 @@ const MovieWrapper = styled.div`
   overflow-y: hidden;
   overflow-x: scroll;
   padding: 20px;
+  scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;
   }

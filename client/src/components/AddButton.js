@@ -1,12 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default function AddButton({
-  addToWatchList,
-  isWatchList,
-  isOnWatchList,
-}) {
-  console.log(isOnWatchList);
+export default function AddButton({ addToWatchList, isOnWatchList }) {
   return (
     <WatchListButton onClick={addToWatchList}>
       {isOnWatchList ? 'Remove from ' : 'Add to '}Watchlist
