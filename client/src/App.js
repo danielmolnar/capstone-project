@@ -7,15 +7,10 @@ import Friends from './Pages/Friends';
 import Search from './Pages/Search';
 import Banner from '../src/components/Banner';
 import Navigation from '../src/components/Navigation';
-import loadFromLocal from '../src/lib/loadFromLocal';
-import saveToLocal from '../src/lib/saveToLocal';
+import { useLocalStorage } from '../src/hooks/useLocalStorage';
 
 function App() {
-  const [watchlist, setWatchList] = useState(loadFromLocal('WatchList') ?? []);
-
-  useEffect(() => {
-    saveToLocal('WatchList', watchlist);
-  }, [watchlist]);
+  const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
 
   const isOnWatchList = (movieToAdd) =>
     watchlist.some((movie) => movie.id === movieToAdd.id);
@@ -73,6 +68,7 @@ const Buffer = styled.div`
 
 const WatchlistWrapper = styled.div`
   display: grid;
+  gap: 1rem;
   grid-template-columns: repeat(4, 1fr);
 `;
 

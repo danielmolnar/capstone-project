@@ -16,15 +16,16 @@ function Row({
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const resolvePromise = (request) => {
-    setMovies(request.data.results);
-    setIsLoading(false);
-  };
+  // const resolvePromise = (request) => {
+  //   setMovies(request.data.results);
+  //   setIsLoading(false);
+  // };
 
   useEffect(() => {
     async function fetchMovies() {
       const request = await axios.get(fetchUrl);
-      resolvePromise(request);
+      setMovies(request.data.results);
+      setIsLoading(false);
       return request;
     }
 
