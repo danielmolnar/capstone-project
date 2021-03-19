@@ -13,11 +13,12 @@ function Row({ title, fetchUrl, isLarge, addToWatchList, isWatchList }) {
       const request = await axios.get(fetchUrl);
       const myMovies = request.data.results.map((item) => ({
         id: item.id,
+        title: item.name || item.title || item.original_name,
         poster: item?.poster_path,
         backdrop: item?.backdrop_path,
-        alt: item.name,
+        alt: item.name || item.title || item.original_name,
         score: item.vote_average,
-        text: item.overview,
+        // text: item.overview,
         release: item.first_air_date,
         onWatchList: false,
       }));
@@ -29,14 +30,14 @@ function Row({ title, fetchUrl, isLarge, addToWatchList, isWatchList }) {
     fetchMovies();
   }, [fetchUrl]);
 
-  console.log(newMovies);
+  // console.log(movies);
   return (
     <Wrapper>
       <h2>{title}</h2>
       <MovieWrapper>
         {movies.map((movie) => (
           <ImageContainer
-            testOnWatchlist={movie.testOnWatchlist}
+            testOnWatchlist={movies.adult}
             isWatchList={isWatchList}
             key={movie.id}
             isNetflix={isLarge}

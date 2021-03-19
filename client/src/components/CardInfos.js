@@ -33,6 +33,7 @@ export default function CardInfos({
               addToWatchList={addToWatchList}
               isWatchList={isWatchList}
             />
+            <button></button>
           </DetailsWrapper>
         </BackGroundWrapper>
         <TextContainer>

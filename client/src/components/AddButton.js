@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export default function AddButton({ addToWatchList, isWatchList }) {
   return (
     <WatchListButton onClick={addToWatchList}>
-      {isWatchList ? 'Remove from ' : 'Add to '}Watchlist
+      {isWatchList ? 'Add to ' : 'Remove from '}Watchlist
     </WatchListButton>
   );
 }
