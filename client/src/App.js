@@ -11,6 +11,7 @@ import { useLocalStorage } from '../src/hooks/useLocalStorage';
 
 function App() {
   const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
+  const [isWatchList, setIsWatchList] = useState(false);
 
   const isOnWatchList = (movieToAdd) =>
     watchlist.some((movie) => movie.id === movieToAdd.id);
@@ -18,6 +19,7 @@ function App() {
   function addToWatchList(movieToAdd) {
     if (!isOnWatchList(movieToAdd)) {
       setWatchList([...watchlist, movieToAdd]);
+      setIsWatchList(!isWatchList);
     } else
       setWatchList(watchlist.filter((movie) => movie.id !== movieToAdd.id));
   }
@@ -72,6 +74,18 @@ const WatchlistWrapper = styled.div`
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(4, 1fr);
+
+  @media (max-width: 800px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 500px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 320px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const GridWrapper = styled.div`

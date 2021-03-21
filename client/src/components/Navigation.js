@@ -11,7 +11,7 @@ export default function Navigation() {
   const activeClassName = 'nav-item-active';
 
   const StyledLink = styled(NavLink).attrs({ activeClassName })`
-    color: black;
+    color: white;
 
     svg {
       max-height: 24px;
@@ -19,7 +19,9 @@ export default function Navigation() {
     }
 
     &.${activeClassName} {
-      color: var(--primary-100);
+      border: white 2px solid;
+      padding: 3px;
+      border-radius: 10px;
     }
   `;
 
@@ -45,10 +47,12 @@ export default function Navigation() {
 
 const Nav = styled.nav`
   display: flex;
+  justify-content: space-around;
   border-top: white;
   align-items: center;
-  background-color: white;
-  padding: 5px;
+  background: linear-gradient(to right, hsl(6, 66%, 35%), hsl(353, 85%, 53%));
+  /* padding: 5px; */
+  width: 100%;
 `;
 
 const NavWrapper = styled.div`
@@ -58,7 +62,8 @@ const NavWrapper = styled.div`
   bottom: 0;
   z-index: 10000;
   width: 100%;
-  height: 40px;
+  height: 50px;
+  border-top: white 3px solid;
 `;
 
 // const NavWrapper = styled.div`
