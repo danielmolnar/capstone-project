@@ -15,7 +15,7 @@ const WatchListButton = styled.button`
   outline: none;
   border-radius: 3px;
   padding: 5px 10px;
-  transition: transform 250ms;
+  transition: transform 250ms; // ?
   color: white;
   font-weight: bold;
   text-decoration: none;

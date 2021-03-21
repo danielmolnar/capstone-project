@@ -25,6 +25,7 @@ function App() {
   return (
     <>
       <Navigation />
+
       <Banner />
       <Buffer />
       <Switch>
@@ -32,6 +33,7 @@ function App() {
           <Home addToWatchList={addToWatchList} isOnWatchlist={isOnWatchList} />
         </Route>
         <Route path="/watchlist">
+          <Headline>WATCHLIST</Headline>
           <GridWrapper>
             <WatchlistWrapper>
               {watchlist.map((movie) => (
@@ -62,8 +64,8 @@ export default App;
 
 const Buffer = styled.div`
   height: 1px;
-  width: 100%;
-  margin-bottom: 150px;
+
+  margin-bottom: 100px;
 `;
 
 const WatchlistWrapper = styled.div`
@@ -76,4 +78,9 @@ const GridWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+`;
+
+const Headline = styled.h2`
+  margin-left: 20px;
 `;
