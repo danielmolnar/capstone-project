@@ -3,14 +3,7 @@ import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import Overlay from '../components/Overlay';
 
-function ImageContainer({
-  isLarge,
-  movie,
-  addToWatchList,
-  isOnWatchList,
-  isWatchList,
-  helper,
-}) {
+function ImageContainer({ isLarge, movie, addToWatchList, isOnWatchList }) {
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
 
   return (

@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { Context } from '../Store';
 
 export default function AddButton({ addToWatchList }) {
-  const [lala, setLala] = useContext(Context);
+  const [checkWatchList, setCheckWatchList] = useContext(Context);
 
   return (
     <WatchListButton onClick={addToWatchList}>
-      {lala ? 'Remove from ' : 'Add to '}Watchlist
+      {checkWatchList ? 'Remove from ' : 'Add to '}Watchlist
     </WatchListButton>
   );
 }

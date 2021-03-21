@@ -45,7 +45,6 @@ const Nav = styled.nav`
   border-top: white;
   align-items: center;
   background: linear-gradient(to right, hsl(6, 66%, 35%), hsl(353, 85%, 53%));
-  /* padding: 5px; */
   width: 100%;
 `;
 
@@ -57,50 +56,5 @@ const NavWrapper = styled.div`
   z-index: 10000;
   width: 100%;
   height: 50px;
-  border-top: white 3px solid;
+  border-top: white 2px solid;
 `;
-
-// const NavWrapper = styled.div`
-//   border-top: white 1px solid;
-//   display: flex;
-//   justify-content: center;
-//   background: none;
-//   position: fixed;
-//   z-index: 10000;
-//   bottom: 0;
-//   width: 100%;
-// `;
-
-// const RedHome = styled(HomeAlt)`
-//   color: white;
-
-//   &:active {
-//     fill: white;
-//   }
-// `;
-// const StyledLink = styled(NavLink).attrs({ activeClassName })`
-//   svg {
-//     color: var(--primary-100);
-//   }
-
-//   &.${activeClassName} {
-//     svg {
-//       path {
-//         fill: var(--primary-100);
-//       }
-//     }
-//   }
-// `;
-
-// const StyledLink = styled(NavLink).attrs({ activeClassName })`
-//   ${HomeAlt} {
-//     color: blue;
-//     fill-opacity: 0.3;
-//   }
-
-//   &.${activeClassName} {
-//     ${People} {
-//       color: white;
-//     }
-//   }
-// `;

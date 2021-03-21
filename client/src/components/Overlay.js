@@ -21,7 +21,6 @@ export default function Overlay({
   function clickHandler() {
     setIsOpen(true);
     setCheckWatchlist(isOnWatchList);
-    console.log(checkWatchtlist);
   }
 
   function onClose() {
