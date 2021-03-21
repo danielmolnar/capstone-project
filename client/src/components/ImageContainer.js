@@ -3,7 +3,14 @@ import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import Overlay from '../components/Overlay';
 
-function ImageContainer({ isLarge, movie, addToWatchList, isOnWatchList }) {
+function ImageContainer({
+  isLarge,
+  movie,
+  addToWatchList,
+  isOnWatchList,
+  isWatchList,
+  helper,
+}) {
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
 
   return (
@@ -15,7 +22,7 @@ function ImageContainer({ isLarge, movie, addToWatchList, isOnWatchList }) {
         alt={movie.name}
       />
       <Overlay
-        isOnWatchlist={isOnWatchList}
+        isOnWatchList={isOnWatchList}
         addToWatchList={addToWatchList}
         score={movie.vote_average}
         baseUrl={baseUrl}

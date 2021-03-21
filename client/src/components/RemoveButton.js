@@ -1,13 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { Context } from '../Store';
 
-export default function AddButton({ addToWatchList }) {
-  const [lala, setLala] = useContext(Context);
-
+export default function RemoveButton({ removeFromWatchList }) {
   return (
-    <WatchListButton onClick={addToWatchList}>
-      {lala ? 'Remove from ' : 'Add to '}Watchlist
+    <WatchListButton onClick={removeFromWatchList}>
+      Remove from WatchList
     </WatchListButton>
   );
 }

@@ -3,6 +3,7 @@ import styled from 'styled-components/macro';
 import ReactDom from 'react-dom';
 import PropTypes from 'prop-types';
 import AddButton from '../components/AddButton';
+
 import AudienceScore from '../assets/Audience_score';
 
 export default function CardInfos({
@@ -15,7 +16,6 @@ export default function CardInfos({
   baseUrl,
   score,
   addToWatchList,
-  isOnWatchList,
 }) {
   if (!open) return null;
 
@@ -29,10 +29,7 @@ export default function CardInfos({
         </Header>
         <BackGroundWrapper background={background} baseUrl={baseUrl}>
           <DetailsWrapper>
-            <AddButton
-              addToWatchList={addToWatchList}
-              isOnWatchlist={isOnWatchList}
-            />
+            <AddButton addToWatchList={addToWatchList} />
           </DetailsWrapper>
         </BackGroundWrapper>
         <TextContainer>

@@ -1,30 +1,12 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { HomeAlt } from '@styled-icons/boxicons-regular/HomeAlt';
-import { UserFriends } from '@styled-icons/fa-solid/UserFriends';
 import { CameraMovie } from '@styled-icons/boxicons-regular/CameraMovie';
 import { SearchAlt } from '@styled-icons/boxicons-regular/SearchAlt';
 import { People } from '@styled-icons/octicons/People';
 import React from 'react';
 
 export default function Navigation() {
-  const activeClassName = 'nav-item-active';
-
-  const StyledLink = styled(NavLink).attrs({ activeClassName })`
-    color: white;
-
-    svg {
-      max-height: 24px;
-      max-width: 24px;
-    }
-
-    &.${activeClassName} {
-      border: white 2px solid;
-      padding: 3px;
-      border-radius: 10px;
-    }
-  `;
-
   return (
     <NavWrapper>
       <Nav>
@@ -44,6 +26,18 @@ export default function Navigation() {
     </NavWrapper>
   );
 }
+
+const activeClassName = 'nav-item-active';
+
+const StyledLink = styled(NavLink).attrs({ activeClassName })`
+  color: white;
+
+  &.${activeClassName} {
+    border: white 2px solid;
+    padding: 3px;
+    border-radius: 10px;
+  }
+`;
 
 const Nav = styled.nav`
   display: flex;
