@@ -6,26 +6,31 @@ import Overlay from '../components/Overlay';
 function ImageContainer({ isLarge, movie, addToWatchList, isOnWatchList }) {
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
 
-  return (
-    <MovieContainer netflixStyle={isLarge}>
-      <ImageStyler
-        netflixStyle={isLarge}
-        key={movie.id}
-        src={`${baseUrl}${isLarge ? movie?.poster_path : movie?.backdrop_path}`}
-        alt={movie?.name || movie?.title || movie?.original_name}
-      />
-      <Overlay
-        isOnWatchList={isOnWatchList}
-        addToWatchList={addToWatchList}
-        score={movie.vote_average}
-        baseUrl={baseUrl}
-        background={movie?.backdrop_path}
-        movieText={movie.overview}
-        movieName={movie?.name || movie?.title || movie?.original_name}
-        release={movie.first_air_date || movie.release_date}
-      />
-    </MovieContainer>
-  );
+  if (movie.poster_path === null && movie.backdrop_path === null) {
+    return null;
+  } else
+    return (
+      <MovieContainer netflixStyle={isLarge}>
+        <ImageStyler
+          netflixStyle={isLarge}
+          key={movie.id}
+          src={`${baseUrl}${
+            isLarge ? movie?.poster_path : movie?.backdrop_path
+          }`}
+          alt={movie?.name || movie?.title || movie?.original_name}
+        />
+        <Overlay
+          isOnWatchList={isOnWatchList}
+          addToWatchList={addToWatchList}
+          score={movie.vote_average}
+          baseUrl={baseUrl}
+          background={movie?.backdrop_path ?? movie?.poster_path}
+          movieText={movie.overview}
+          movieName={movie?.name || movie?.title || movie?.original_name}
+          release={movie.first_air_date || movie.release_date}
+        />
+      </MovieContainer>
+    );
 }
 
 export default ImageContainer;
@@ -39,6 +44,7 @@ ImageContainer.propTypes = {
 
 const MovieContainer = styled.div(
   (props) => css`
+    max-height: 200px;
     position: relative;
     margin-right: 10px;
     transition: transform 450ms;

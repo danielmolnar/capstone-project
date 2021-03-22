@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import CardInfos from '../components/CardInfos';
 import Button from '../components/Button';
 import PropTypes from 'prop-types';
-import { Context } from '../hooks/Store';
+import { Context } from '../Store';
 
 export default function Overlay({
   movieText,
@@ -16,7 +16,8 @@ export default function Overlay({
   isOnWatchList,
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [checkWatchtlist, setCheckWatchlist] = useContext(Context);
+  const { watchlistValue } = useContext(Context);
+  const [checkWatchlist, setCheckWatchlist] = watchlistValue;
 
   function clickHandler() {
     setIsOpen(true);

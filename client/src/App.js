@@ -1,4 +1,5 @@
 import { Switch, Route } from 'react-router-dom';
+import React from 'react';
 import styled from 'styled-components';
 import Home from './Pages/Home';
 import Watchlist from './Pages/Watchlist';
@@ -6,7 +7,7 @@ import Friends from './Pages/Friends';
 import Search from './Pages/Search';
 import Banner from '../src/components/Banner';
 import Navigation from '../src/components/Navigation';
-import Store from './hooks/Store';
+import Store from './Store';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
 
 function App() {
@@ -30,12 +31,10 @@ function App() {
       <Switch>
         <Store>
           <Route exact path="/">
-            <Store>
-              <Home
-                addToWatchList={addToWatchList}
-                isOnWatchList={isOnWatchList}
-              />
-            </Store>
+            <Home
+              addToWatchList={addToWatchList}
+              isOnWatchList={isOnWatchList}
+            />
           </Route>
           <Route path="/watchlist">
             <Headline>WATCHLIST</Headline>
@@ -57,7 +56,16 @@ function App() {
             <Friends />
           </Route>
           <Route path="/search">
-            <Search />
+            <Headline>SEARCH</Headline>
+            <GridWrapper>
+              <WatchlistWrapper>
+                <Search
+                  isLarge
+                  addToWatchList={addToWatchList}
+                  isOnWatchList={isOnWatchList}
+                />
+              </WatchlistWrapper>
+            </GridWrapper>
           </Route>
         </Store>
       </Switch>
@@ -96,6 +104,7 @@ const GridWrapper = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  border: solid white 1px;
 `;
 
 const Headline = styled.h2`
