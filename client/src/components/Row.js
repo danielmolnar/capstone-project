@@ -1,15 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from '../services/axios';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import axios from '../services/axios';
 import ImageContainer from './ImageContainer';
 import Spinner from '../components/Spinner';
-import { Context } from '../Store';
+import { Context } from '../hooks/Store';
 
 function Row({ title, fetchUrl, isLarge, addToWatchList, isOnWatchList }) {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
   const [checkWatchlist, setCheckWatchlist] = useContext(Context);
 
   useEffect(() => {
@@ -34,12 +33,12 @@ function Row({ title, fetchUrl, isLarge, addToWatchList, isOnWatchList }) {
 
   return isLoading ? (
     <>
-      <HeadLinerStyler>{title}</HeadLinerStyler>
+      <HeadLineStyler>{title}</HeadLineStyler>
       <Spinner isNetflix={isLarge} />
     </>
   ) : (
     <>
-      <HeadLinerStyler>{title}</HeadLinerStyler>
+      <HeadLineStyler>{title}</HeadLineStyler>
       <Wrapper>
         <MovieWrapper>
           {movies.map((movie) => (
@@ -65,6 +64,8 @@ Row.propTypes = {
   title: PropTypes.string,
   fetchUrl: PropTypes.string,
   isLarge: PropTypes.bool,
+  addToWatchList: PropTypes.func,
+  isOnWatchList: PropTypes.func,
 };
 
 const Wrapper = styled.div`
@@ -82,6 +83,6 @@ const MovieWrapper = styled.div`
   }
 `;
 
-const HeadLinerStyler = styled.h2`
+const HeadLineStyler = styled.h2`
   margin-left: 20px;
 `;

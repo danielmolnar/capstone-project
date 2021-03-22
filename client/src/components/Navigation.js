@@ -1,10 +1,10 @@
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { HomeAlt } from '@styled-icons/boxicons-regular/HomeAlt';
 import { CameraMovie } from '@styled-icons/boxicons-regular/CameraMovie';
 import { SearchAlt } from '@styled-icons/boxicons-regular/SearchAlt';
 import { People } from '@styled-icons/octicons/People';
-import React from 'react';
 
 export default function Navigation() {
   return (

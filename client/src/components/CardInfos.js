@@ -3,7 +3,6 @@ import styled from 'styled-components/macro';
 import ReactDom from 'react-dom';
 import PropTypes from 'prop-types';
 import AddButton from '../components/AddButton';
-
 import AudienceScore from '../assets/Audience_score';
 
 export default function CardInfos({
@@ -57,6 +56,7 @@ CardInfos.propTypes = {
   background: PropTypes.string,
   baseUrl: PropTypes.string,
   score: PropTypes.number,
+  addToWatchList: PropTypes.func,
 };
 
 const BackgroundStyler = styled.div`
@@ -87,6 +87,12 @@ const Header = styled.div`
   align-items: center;
   padding: 0px 5px;
   margin: 0 0.8rem 0 0.8rem;
+
+  h2 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 1.5rem;
+  }
 `;
 
 const CloseButton = styled.button`

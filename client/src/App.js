@@ -6,7 +6,7 @@ import Friends from './Pages/Friends';
 import Search from './Pages/Search';
 import Banner from '../src/components/Banner';
 import Navigation from '../src/components/Navigation';
-import Store from './Store';
+import Store from './hooks/Store';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
 
 function App() {
@@ -70,7 +70,6 @@ export default App;
 
 const Buffer = styled.div`
   height: 1px;
-
   margin-bottom: 100px;
 `;
 

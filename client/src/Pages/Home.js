@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Row from '../components/Row';
 import requests from '../services/requests';
 
@@ -57,5 +58,10 @@ function Home({ addToWatchList, isOnWatchList }) {
     </>
   );
 }
+
+Home.propTypes = {
+  addToWatchList: PropTypes.func,
+  isOnWatchList: PropTypes.func,
+};
 
 export default Home;

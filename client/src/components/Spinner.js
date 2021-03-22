@@ -1,6 +1,7 @@
 import React from 'react';
-import spinner from '../images/spinner.gif';
 import styled, { css } from 'styled-components';
+import PropTypes from 'prop-types';
+import spinner from '../images/spinner.gif';
 
 export default function Spinner({ isNetflix }) {
   return (
@@ -14,6 +15,10 @@ export default function Spinner({ isNetflix }) {
     </Wrapper>
   );
 }
+
+Spinner.propTypes = {
+  isNetflix: PropTypes.bool,
+};
 
 const Wrapper = styled.div`
   margin-left: 20px;
