@@ -4,6 +4,7 @@ import ReactDom from 'react-dom';
 import PropTypes from 'prop-types';
 import AddButton from '../components/AddButton';
 import AudienceScore from '../assets/Audience_score';
+import flixbuddies_poster from '../images/flixbuddies_poster.png';
 
 export default function CardInfos({
   open,
@@ -11,12 +12,24 @@ export default function CardInfos({
   movieText,
   movieName,
   release,
-  background,
+  backgroundStandard,
   baseUrl,
   score,
   addToWatchList,
+  movie,
 }) {
   if (!open) return null;
+
+  const posterCheck = movie.poster_path;
+  const backdropCheck = movie.backdrop_path;
+  const check = movie.backdrop_path && movie.poster_path;
+
+  console.log(backdropCheck);
+  let background;
+
+  // if (backdropCheck === null) {
+  //   background = { flixbuddies_poster };
+  // } else background = { backgroundStandard };
 
   return ReactDom.createPortal(
     <>
@@ -26,7 +39,8 @@ export default function CardInfos({
           <h2>{movieName}</h2>
           <CloseButton onClick={onClose}>&times;</CloseButton>
         </Header>
-        <BackGroundWrapper background={background} baseUrl={baseUrl}>
+
+        <BackGroundWrapper background={backgroundStandard} baseUrl={baseUrl}>
           <DetailsWrapper>
             <AddButton addToWatchList={addToWatchList} />
           </DetailsWrapper>

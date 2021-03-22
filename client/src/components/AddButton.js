@@ -4,8 +4,7 @@ import styled from 'styled-components';
 import { Context } from '../Store';
 
 export default function AddButton({ addToWatchList }) {
-  const { watchlistValue } = useContext(Context);
-  const [checkWatchlist, setCheckWatchlist] = watchlistValue;
+  const [checkWatchlist, setCheckWatchlist] = useContext(Context);
 
   return (
     <WatchListButton onClick={addToWatchList}>

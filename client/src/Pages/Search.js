@@ -1,45 +1,56 @@
-import axios from 'axios';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Context } from '../Store';
 import ImageContainer from '../components/ImageContainer';
+import { Context } from '../Store';
 
 export default function Search({
-  movie,
   isLarge,
+  movie,
   addToWatchList,
   isOnWatchList,
 }) {
-  const { searchValue } = useContext(Context);
-  const [search, setSearch] = searchValue;
+  const [checkWatchlist, setCheckWatchlist] = useContext(Context);
 
-  const baseUrl = 'https://api.themoviedb.org/3/';
-  const APIKEY = process.env.REACT_APP_APIKEY;
+  function toggleButton(movie) {
+    addToWatchList(movie);
+    setCheckWatchlist(!checkWatchlist);
+  }
 
-  useEffect(() => {
-    const fetchSearch = async () => {
-      const result = await axios(
-        `${baseUrl}search/movie?api_key=${APIKEY}&language=en-US&query=Godfather&page=1&include_adult=false`
-      );
-      setSearch(result.data.results);
-      // console.log(result.data);
-    };
-    fetchSearch();
-  }, []);
-
-  console.table(search);
+  function toggleWatchList(movie) {
+    setCheckWatchlist(isOnWatchList(movie));
+  }
 
   return (
-    <>
-      {search.map((movie) => (
-        <ImageContainer
-          key={movie.id}
-          isLarge={isLarge}
-          movie={movie}
-          addToWatchList={() => addToWatchList(movie)}
-          isOnWatchList={() => isOnWatchList(movie)}
-        />
-      ))}
-    </>
+    <Flex>
+      <ImageContainer
+        isLarge={isLarge}
+        movie={movie}
+        addToWatchList={() => toggleButton(movie)}
+        isOnWatchList={() => toggleWatchList(movie)}
+      />
+    </Flex>
   );
 }
+
+Search.propTypes = {
+  isLarge: PropTypes.bool,
+  movie: PropTypes.object,
+  addToWatchList: PropTypes.func,
+  isOnWatchList: PropTypes.func,
+};
+
+const Flex = styled.div`
+  display: flex;
+`;
+
+// const MovieWrapper = styled.div`
+//   display: flex;
+//   overflow-y: hidden;
+//   overflow-x: scroll;
+//   padding: 20px;
+//   scrollbar-width: none;
+//   ::-webkit-scrollbar {
+//     display: none;
+//   }
+// `;

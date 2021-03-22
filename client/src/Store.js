@@ -4,14 +4,9 @@ export const Context = React.createContext();
 
 const Store = ({ children }) => {
   const [checkWatchlist, setCheckWatchlist] = useState(false);
-  const [search, setSearch] = useState([]);
+
   return (
-    <Context.Provider
-      value={{
-        watchlistValue: [checkWatchlist, setCheckWatchlist],
-        searchValue: [search, setSearch],
-      }}
-    >
+    <Context.Provider value={[checkWatchlist, setCheckWatchlist]}>
       {children}
     </Context.Provider>
   );

@@ -9,8 +9,8 @@ import { Context } from '../Store';
 function Row({ title, fetchUrl, isLarge, addToWatchList, isOnWatchList }) {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { watchlistValue } = useContext(Context);
-  const [checkWatchlist, setCheckWatchlist] = watchlistValue;
+
+  const [checkWatchlist, setCheckWatchlist] = useContext(Context);
 
   useEffect(() => {
     async function fetchMovies() {

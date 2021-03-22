@@ -4,6 +4,7 @@ import CardInfos from '../components/CardInfos';
 import Button from '../components/Button';
 import PropTypes from 'prop-types';
 import { Context } from '../Store';
+import flixbuddies_poster from '../images/flixbuddies_poster.png';
 
 export default function Overlay({
   movieText,
@@ -14,10 +15,10 @@ export default function Overlay({
   score,
   addToWatchList,
   isOnWatchList,
+  movie,
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const { watchlistValue } = useContext(Context);
-  const [checkWatchlist, setCheckWatchlist] = watchlistValue;
+  const [checkWatchlist, setCheckWatchlist] = useContext(Context);
 
   function clickHandler() {
     setIsOpen(true);
@@ -29,16 +30,22 @@ export default function Overlay({
     setCheckWatchlist(false);
   }
 
+  if (movie.backdrop_path === null) {
+    background = { flixbuddies_poster };
+  } else background = { background };
+
   return (
     <OverlayStyler>
-      <Button clickHandler={clickHandler} />
-
+      <ButtonWrapper>
+        <Button clickHandler={clickHandler} />
+      </ButtonWrapper>
       <CardInfos
+        movie={movie}
         isOnWatchList={isOnWatchList}
         addToWatchList={addToWatchList}
         score={score}
         baseUrl={baseUrl}
-        background={background}
+        backgroundStandard={background}
         release={release}
         movieText={movieText}
         movieName={movieName}
@@ -68,4 +75,9 @@ const OverlayStyler = styled.div`
   width: 100%;
   opacity: 0;
   bottom: 0;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
 `;

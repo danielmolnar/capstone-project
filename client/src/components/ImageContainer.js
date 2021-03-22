@@ -2,35 +2,62 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import Overlay from '../components/Overlay';
+import Spinner from '../components/Spinner';
+import NotFound from '../images/not-found.png';
+import flixbuddies_poster from '../images/flixbuddies_poster.png';
 
 function ImageContainer({ isLarge, movie, addToWatchList, isOnWatchList }) {
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
 
-  if (movie.poster_path === null && movie.backdrop_path === null) {
-    return null;
-  } else
-    return (
-      <MovieContainer netflixStyle={isLarge}>
+  const posterCheck = movie.poster_path;
+  const backdropCheck = movie.backdrop_path;
+  const check = movie.backdrop_path && movie.poster_path;
+  const checker = backdropCheck === true;
+
+  return check === null ? (
+    <MovieContainer netflixStyle={isLarge}>
+      <Test>
+        <p>{movie.title}</p>
         <ImageStyler
           netflixStyle={isLarge}
           key={movie.id}
-          src={`${baseUrl}${
-            isLarge ? movie?.poster_path : movie?.backdrop_path
-          }`}
+          src={flixbuddies_poster}
           alt={movie?.name || movie?.title || movie?.original_name}
         />
-        <Overlay
-          isOnWatchList={isOnWatchList}
-          addToWatchList={addToWatchList}
-          score={movie.vote_average}
-          baseUrl={baseUrl}
-          background={movie?.backdrop_path ?? movie?.poster_path}
-          movieText={movie.overview}
-          movieName={movie?.name || movie?.title || movie?.original_name}
-          release={movie.first_air_date || movie.release_date}
-        />
-      </MovieContainer>
-    );
+      </Test>
+      <Overlay
+        movie={movie}
+        isOnWatchList={isOnWatchList}
+        addToWatchList={addToWatchList}
+        score={movie.vote_average}
+        baseUrl={baseUrl}
+        background={movie?.backdrop_path ?? movie?.poster_path}
+        movieText={movie.overview}
+        movieName={movie?.name || movie?.title || movie?.original_name}
+        release={movie.first_air_date || movie.release_date}
+      />
+    </MovieContainer>
+  ) : (
+    <MovieContainer netflixStyle={isLarge}>
+      <ImageStyler
+        netflixStyle={isLarge}
+        key={movie.id}
+        src={`${baseUrl}${isLarge ? movie?.poster_path : movie?.backdrop_path}`}
+        alt={movie?.name || movie?.title || movie?.original_name}
+      />
+      <Overlay
+        movie={movie}
+        isOnWatchList={isOnWatchList}
+        addToWatchList={addToWatchList}
+        score={movie.vote_average}
+        baseUrl={baseUrl}
+        background={movie?.backdrop_path ?? movie?.poster_path}
+        movieText={movie.overview}
+        movieName={movie?.name || movie?.title || movie?.original_name}
+        release={movie.first_air_date || movie.release_date}
+      />
+    </MovieContainer>
+  );
 }
 
 export default ImageContainer;
@@ -48,7 +75,12 @@ const MovieContainer = styled.div(
     position: relative;
     margin-right: 10px;
     transition: transform 450ms;
-    width: 100%;
+
+    p {
+      font-size: 0.7rem;
+      position: absolute;
+    }
+    /* width: 100%; */
     :hover {
       transform: scale(1.08);
     }
@@ -74,3 +106,8 @@ const ImageStyler = styled.img(
       `}
   `
 );
+
+const Test = styled.div`
+  display: flex;
+  justify-content: center;
+`;
