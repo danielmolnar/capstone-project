@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import ImageContainer from '../components/ImageContainer';
 
 export default function Watchlist({
@@ -19,3 +19,10 @@ export default function Watchlist({
     </>
   );
 }
+
+Watchlist.propTypes = {
+  isLarge: PropTypes.bool,
+  movie: PropTypes.object,
+  addToWatchList: PropTypes.func,
+  isOnWatchList: PropTypes.func,
+};

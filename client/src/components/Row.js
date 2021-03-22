@@ -1,25 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import axios from '../services/axios';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import axios from '../services/axios';
 import ImageContainer from './ImageContainer';
 import Spinner from '../components/Spinner';
+import { Context } from '../hooks/Store';
 
-function Row({
-  title,
-  fetchUrl,
-  isLarge,
-  addToWatchList,
-
-  isOnWatchList,
-}) {
+function Row({ title, fetchUrl, isLarge, addToWatchList, isOnWatchList }) {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
-  // const resolvePromise = (request) => {
-  //   setMovies(request.data.results);
-  //   setIsLoading(false);
-  // };
+  const [checkWatchlist, setCheckWatchlist] = useContext(Context);
 
   useEffect(() => {
     async function fetchMovies() {
@@ -32,21 +22,23 @@ function Row({
     fetchMovies();
   }, [fetchUrl]);
 
-  // console.log(isLoading);
-  // function logger(movie) {
-  //   console.log(isOnWatchList(movie));
-  // }
+  function toggleButton(movie) {
+    addToWatchList(movie);
+    setCheckWatchlist(!checkWatchlist);
+  }
 
-  // console.log(isOnWatchList);
+  function toggleWatchList(movie) {
+    setCheckWatchlist(isOnWatchList(movie));
+  }
 
   return isLoading ? (
     <>
-      <HeadLinerStyler>{title}</HeadLinerStyler>
+      <HeadLineStyler>{title}</HeadLineStyler>
       <Spinner isNetflix={isLarge} />
     </>
   ) : (
     <>
-      <HeadLinerStyler>{title}</HeadLinerStyler>
+      <HeadLineStyler>{title}</HeadLineStyler>
       <Wrapper>
         <MovieWrapper>
           {movies.map((movie) => (
@@ -56,8 +48,8 @@ function Row({
               isNetflix={isLarge}
               movie={movie}
               isLarge={isLarge}
-              addToWatchList={() => addToWatchList(movie)}
-              isOnWatchList={() => isOnWatchList(movie)}
+              addToWatchList={() => toggleButton(movie)}
+              isOnWatchList={() => toggleWatchList(movie)}
             />
           ))}
         </MovieWrapper>
@@ -72,6 +64,8 @@ Row.propTypes = {
   title: PropTypes.string,
   fetchUrl: PropTypes.string,
   isLarge: PropTypes.bool,
+  addToWatchList: PropTypes.func,
+  isOnWatchList: PropTypes.func,
 };
 
 const Wrapper = styled.div`
@@ -89,6 +83,6 @@ const MovieWrapper = styled.div`
   }
 `;
 
-const HeadLinerStyler = styled.h2`
+const HeadLineStyler = styled.h2`
   margin-left: 20px;
 `;

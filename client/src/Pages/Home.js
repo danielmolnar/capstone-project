@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Row from '../components/Row';
 import requests from '../services/requests';
 
-function Home({ addToWatchList, isWatchList, isOnWatchList }) {
+function Home({ addToWatchList, isOnWatchList }) {
   return (
     <>
       <Row
@@ -10,60 +11,57 @@ function Home({ addToWatchList, isWatchList, isOnWatchList }) {
         fetchUrl={requests.fetchNetflixOriginals}
         isLarge
         addToWatchList={addToWatchList}
-        isWatchList={isWatchList}
-        isOnWatchlist={isOnWatchList}
+        isOnWatchList={isOnWatchList}
       />
       <Row
         title="TRENDING"
         fetchUrl={requests.fetchTrending}
         addToWatchList={addToWatchList}
-        isWatchList={isWatchList}
-        isOnWatchlist={isOnWatchList}
+        isOnWatchList={isOnWatchList}
       />
       <Row
         title="TOP RATED"
         fetchUrl={requests.fetchTopRated}
         addToWatchList={addToWatchList}
-        isWatchList={isWatchList}
-        isOnWatchlist={isOnWatchList}
+        isOnWatchList={isOnWatchList}
       />
       <Row
         title="ACTION"
         fetchUrl={requests.fetchActionMovies}
         addToWatchList={addToWatchList}
-        isWatchList={isWatchList}
-        isOnWatchlist={isOnWatchList}
+        isOnWatchList={isOnWatchList}
       />
       <Row
         title="COMEDY"
         fetchUrl={requests.fetchComedyMovies}
         addToWatchList={addToWatchList}
-        isWatchList={isWatchList}
-        isOnWatchlist={isOnWatchList}
+        isOnWatchList={isOnWatchList}
       />
       <Row
         title="HORROR"
         fetchUrl={requests.fetchHorrorMovies}
         addToWatchList={addToWatchList}
-        isWatchList={isWatchList}
-        isOnWatchlist={isOnWatchList}
+        isOnWatchList={isOnWatchList}
       />
       <Row
         title="ROMANCE"
         fetchUrl={requests.fetchRomanceMovies}
         addToWatchList={addToWatchList}
-        isWatchList={isWatchList}
-        isOnWatchlist={isOnWatchList}
+        isOnWatchList={isOnWatchList}
       />
       <Row
         title="DOCUMENTARIES"
         fetchUrl={requests.fetchDocumentaries}
         addToWatchList={addToWatchList}
-        isWatchList={isWatchList}
-        isOnWatchlist={isOnWatchList}
+        isOnWatchList={isOnWatchList}
       />
     </>
   );
 }
+
+Home.propTypes = {
+  addToWatchList: PropTypes.func,
+  isOnWatchList: PropTypes.func,
+};
 
 export default Home;

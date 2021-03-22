@@ -12,10 +12,10 @@ function ImageContainer({ isLarge, movie, addToWatchList, isOnWatchList }) {
         netflixStyle={isLarge}
         key={movie.id}
         src={`${baseUrl}${isLarge ? movie?.poster_path : movie?.backdrop_path}`}
-        alt={movie.name}
+        alt={movie?.name || movie?.title || movie?.original_name}
       />
       <Overlay
-        isOnWatchlist={isOnWatchList}
+        isOnWatchList={isOnWatchList}
         addToWatchList={addToWatchList}
         score={movie.vote_average}
         baseUrl={baseUrl}
@@ -29,6 +29,13 @@ function ImageContainer({ isLarge, movie, addToWatchList, isOnWatchList }) {
 }
 
 export default ImageContainer;
+
+ImageContainer.propTypes = {
+  isLarge: PropTypes.bool,
+  movie: PropTypes.object,
+  addToWatchList: PropTypes.func,
+  isOnWatchList: PropTypes.func,
+};
 
 const MovieContainer = styled.div(
   (props) => css`
@@ -50,11 +57,6 @@ const MovieContainer = styled.div(
       `}
   `
 );
-
-ImageContainer.propTypes = {
-  isLarge: PropTypes.bool,
-  movie: PropTypes.object,
-};
 
 const ImageStyler = styled.img(
   (props) => css`

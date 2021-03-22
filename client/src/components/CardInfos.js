@@ -15,7 +15,6 @@ export default function CardInfos({
   baseUrl,
   score,
   addToWatchList,
-  isOnWatchList,
 }) {
   if (!open) return null;
 
@@ -29,10 +28,7 @@ export default function CardInfos({
         </Header>
         <BackGroundWrapper background={background} baseUrl={baseUrl}>
           <DetailsWrapper>
-            <AddButton
-              addToWatchList={addToWatchList}
-              isOnWatchlist={isOnWatchList}
-            />
+            <AddButton addToWatchList={addToWatchList} />
           </DetailsWrapper>
         </BackGroundWrapper>
         <TextContainer>
@@ -60,6 +56,7 @@ CardInfos.propTypes = {
   background: PropTypes.string,
   baseUrl: PropTypes.string,
   score: PropTypes.number,
+  addToWatchList: PropTypes.func,
 };
 
 const BackgroundStyler = styled.div`
@@ -90,6 +87,12 @@ const Header = styled.div`
   align-items: center;
   padding: 0px 5px;
   margin: 0 0.8rem 0 0.8rem;
+
+  h2 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 1.5rem;
+  }
 `;
 
 const CloseButton = styled.button`
