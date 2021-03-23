@@ -1,3 +1,3 @@
 ```js
-<Banner />
+<Banner show="false" />
 ```

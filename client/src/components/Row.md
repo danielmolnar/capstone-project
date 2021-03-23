@@ -1,5 +1,7 @@
 Netflix Movies
 
-```js
-<Row title="Example Header" />
+```jsx
+import styled from 'styled-components';
+
+<Row title="Example Header" isNetflix="true" />;
 ```

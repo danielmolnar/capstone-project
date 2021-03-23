@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import Overlay from '../components/Overlay';
 
-function ImageContainer({ isLarge, movie }) {
+function ImageContainer({ isLarge, movie, addToWatchList, isOnWatchList }) {
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
 
   return (
@@ -12,9 +12,11 @@ function ImageContainer({ isLarge, movie }) {
         netflixStyle={isLarge}
         key={movie.id}
         src={`${baseUrl}${isLarge ? movie?.poster_path : movie?.backdrop_path}`}
-        alt={movie.name}
+        alt={movie?.name || movie?.title || movie?.original_name}
       />
       <Overlay
+        isOnWatchList={isOnWatchList}
+        addToWatchList={addToWatchList}
         score={movie.vote_average}
         baseUrl={baseUrl}
         background={movie?.backdrop_path}
@@ -27,6 +29,13 @@ function ImageContainer({ isLarge, movie }) {
 }
 
 export default ImageContainer;
+
+ImageContainer.propTypes = {
+  isLarge: PropTypes.bool,
+  movie: PropTypes.object,
+  addToWatchList: PropTypes.func,
+  isOnWatchList: PropTypes.func,
+};
 
 const MovieContainer = styled.div(
   (props) => css`
@@ -41,26 +50,21 @@ const MovieContainer = styled.div(
       opacity: 1;
     }
     ${props.netflixStyle &&
-    css`
-      :hover {
-        transform: scale(1.1);
-      }
-    `}
+      css`
+        :hover {
+          transform: scale(1.1);
+        }
+      `}
   `
 );
-
-ImageContainer.propTypes = {
-  isLarge: PropTypes.bool,
-  movie: PropTypes.object,
-};
 
 const ImageStyler = styled.img(
   (props) => css`
     max-height: 100px;
     object-fit: contain;
     ${props.netflixStyle &&
-    css`
-      max-height: 200px;
-    `}
+      css`
+        max-height: 200px;
+      `}
   `
 );

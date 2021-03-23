@@ -14,12 +14,13 @@ export default function CardInfos({
   background,
   baseUrl,
   score,
+  addToWatchList,
 }) {
   if (!open) return null;
 
   return ReactDom.createPortal(
     <>
-      <BackgroundStyler></BackgroundStyler>
+      <BackgroundStyler />
       <ModalStyler>
         <Header>
           <h2>{movieName}</h2>
@@ -27,7 +28,7 @@ export default function CardInfos({
         </Header>
         <BackGroundWrapper background={background} baseUrl={baseUrl}>
           <DetailsWrapper>
-            <AddButton />
+            <AddButton addToWatchList={addToWatchList} />
           </DetailsWrapper>
         </BackGroundWrapper>
         <TextContainer>
@@ -55,6 +56,7 @@ CardInfos.propTypes = {
   background: PropTypes.string,
   baseUrl: PropTypes.string,
   score: PropTypes.number,
+  addToWatchList: PropTypes.func,
 };
 
 const BackgroundStyler = styled.div`
@@ -85,6 +87,12 @@ const Header = styled.div`
   align-items: center;
   padding: 0px 5px;
   margin: 0 0.8rem 0 0.8rem;
+
+  h2 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 1.5rem;
+  }
 `;
 
 const CloseButton = styled.button`
@@ -111,6 +119,7 @@ const BackGroundWrapper = styled.div`
   background-position: center center;
   object-fit: contain;
   height: 200px;
+  box-shadow: 10px 0px 10px rgba(0, 0, 0, 0.5);
 `;
 
 const DetailsWrapper = styled.div`

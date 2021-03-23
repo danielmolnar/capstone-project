@@ -1,37 +1,60 @@
-import React, { useState, useEffect } from 'react';
-import axios from '../services/axios';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import axios from '../services/axios';
 import ImageContainer from './ImageContainer';
+import Spinner from '../components/Spinner';
+import { Context } from '../hooks/Store';
 
-function Row({ title, fetchUrl, isLarge }) {
+function Row({ title, fetchUrl, isLarge, addToWatchList, isOnWatchList }) {
   const [movies, setMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [checkWatchlist, setCheckWatchlist] = useContext(Context);
 
   useEffect(() => {
     async function fetchMovies() {
       const request = await axios.get(fetchUrl);
       setMovies(request.data.results);
+      setIsLoading(false);
       return request;
     }
 
     fetchMovies();
   }, [fetchUrl]);
 
-  console.table(movies);
-  return (
-    <Wrapper>
-      <h2>{title}</h2>
-      <MovieWrapper>
-        {movies.map((movie) => (
-          <ImageContainer
-            key={movie.id}
-            isNetflix={isLarge}
-            movie={movie}
-            isLarge={isLarge}
-          />
-        ))}
-      </MovieWrapper>
-    </Wrapper>
+  function toggleButton(movie) {
+    addToWatchList(movie);
+    setCheckWatchlist(!checkWatchlist);
+  }
+
+  function toggleWatchList(movie) {
+    setCheckWatchlist(isOnWatchList(movie));
+  }
+
+  return isLoading ? (
+    <>
+      <HeadLineStyler>{title}</HeadLineStyler>
+      <Spinner isNetflix={isLarge} />
+    </>
+  ) : (
+    <>
+      <HeadLineStyler>{title}</HeadLineStyler>
+      <Wrapper>
+        <MovieWrapper>
+          {movies.map((movie) => (
+            <ImageContainer
+              isLoading={isLoading}
+              key={movie.id}
+              isNetflix={isLarge}
+              movie={movie}
+              isLarge={isLarge}
+              addToWatchList={() => toggleButton(movie)}
+              isOnWatchList={() => toggleWatchList(movie)}
+            />
+          ))}
+        </MovieWrapper>
+      </Wrapper>
+    </>
   );
 }
 
@@ -41,6 +64,8 @@ Row.propTypes = {
   title: PropTypes.string,
   fetchUrl: PropTypes.string,
   isLarge: PropTypes.bool,
+  addToWatchList: PropTypes.func,
+  isOnWatchList: PropTypes.func,
 };
 
 const Wrapper = styled.div`
@@ -52,7 +77,12 @@ const MovieWrapper = styled.div`
   overflow-y: hidden;
   overflow-x: scroll;
   padding: 20px;
+  scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;
   }
+`;
+
+const HeadLineStyler = styled.h2`
+  margin-left: 20px;
 `;

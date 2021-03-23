@@ -10,6 +10,7 @@
 
 # production
 /build
+.stylelintrc
 
 # misc
 .DS_Store

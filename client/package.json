@@ -9,8 +9,10 @@
     "axios": "^0.21.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "styled-components": "^5.2.1",
+    "styled-icons": "^10.29.0",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
@@ -18,7 +20,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "svg": "styled-svg src/**/*.svg --size=small:18x18 --size=medium:24x24"
+    "svg": "styled-svg src/**/*.svg --size=small:18x18 --size=medium:24x24",
+    "lint:css": "stylelint './src/**/*.js'"
   },
   "eslintConfig": {
     "extends": [
@@ -40,6 +43,10 @@
   },
   "devDependencies": {
     "react-styleguidist": "^11.1.5",
-    "styled-svg": "^2.4.7"
+    "styled-svg": "^2.4.7",
+    "stylelint": "^13.12.0",
+    "stylelint-config-recommended": "^4.0.0",
+    "stylelint-config-styled-components": "^0.1.1",
+    "stylelint-processor-styled-components": "^1.10.0"
   }
 }
