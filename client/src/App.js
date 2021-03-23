@@ -10,23 +10,27 @@ import Banner from '../src/components/Banner';
 import Navigation from '../src/components/Navigation';
 import Store from './Store';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
+import Searchbar from './components/Searchbar';
 
 function App() {
   const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
   const [search, setSearch] = useState([]);
+  const [query, setQuery] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
   const baseUrl = 'https://api.themoviedb.org/3/';
   const APIKEY = process.env.REACT_APP_APIKEY;
 
   useEffect(() => {
     const fetchSearch = async () => {
+      setIsLoading(true);
       const result = await axios(
-        `${baseUrl}search/movie?api_key=${APIKEY}&language=en-US&query=Godfather&page=1&include_adult=false`
+        `${baseUrl}search/movie?api_key=${APIKEY}&language=en-US&query=${query}&page=1&include_adult=false`
       );
       setSearch(result.data.results);
-      // console.log(result.data);
+      setIsLoading(false);
     };
     fetchSearch();
-  }, []);
+  }, [query]);
 
   const isOnWatchList = (movieToAdd) =>
     watchlist.some((movie) => movie.id === movieToAdd.id);
@@ -75,9 +79,13 @@ function App() {
           <Route path="/search">
             <Headline>SEARCH</Headline>
             <GridWrapper>
+              <SearchbarWrapper>
+                <Searchbar getQuery={(q) => setQuery(q)} />
+              </SearchbarWrapper>
               <WatchlistWrapper>
                 {search.map((movie) => (
                   <Search
+                    isLoading={isLoading}
                     key={movie.id}
                     movie={movie}
                     isLarge
@@ -104,7 +112,8 @@ const Buffer = styled.div`
 
 const WatchlistWrapper = styled.div`
   display: grid;
-  max-width: 80%;
+  justify-self: stretch;
+  align-self: center;
   gap: 1rem;
 
   grid-template-columns: repeat(4, 1fr);
@@ -124,11 +133,23 @@ const WatchlistWrapper = styled.div`
 
 const GridWrapper = styled.div`
   display: flex;
-  justify-content: center;
-
-  /* max-width: 80%; */
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
 `;
 
 const Headline = styled.h2`
   margin-left: 20px;
+  margin-bottom: 0px;
+`;
+
+const SearchbarWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 1rem;
+  width: auto;
 `;

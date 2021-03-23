@@ -14,6 +14,7 @@ function Row({ title, fetchUrl, isLarge, addToWatchList, isOnWatchList }) {
 
   useEffect(() => {
     async function fetchMovies() {
+      setIsLoading(true);
       const request = await axios.get(fetchUrl);
       setMovies(request.data.results);
       setIsLoading(false);

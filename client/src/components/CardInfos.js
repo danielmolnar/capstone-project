@@ -1,10 +1,11 @@
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled, { css } from 'styled-components';
 import ReactDom from 'react-dom';
 import PropTypes from 'prop-types';
 import AddButton from '../components/AddButton';
 import AudienceScore from '../assets/Audience_score';
 import flixbuddies_poster from '../images/flixbuddies_poster.png';
+import backdrop_poster from '../images/backdrop_poster.png';
 
 export default function CardInfos({
   open,
@@ -12,7 +13,7 @@ export default function CardInfos({
   movieText,
   movieName,
   release,
-  backgroundStandard,
+  background,
   baseUrl,
   score,
   addToWatchList,
@@ -20,12 +21,17 @@ export default function CardInfos({
 }) {
   if (!open) return null;
 
-  const posterCheck = movie.poster_path;
-  const backdropCheck = movie.backdrop_path;
-  const check = movie.backdrop_path && movie.poster_path;
+  let check;
 
-  console.log(backdropCheck);
-  let background;
+  if (movie.backdrop_path === null) {
+    check = true;
+  } else check = false;
+  // const posterCheck = movie.poster_path;
+  // const backdropCheck = movie.backdrop_path;
+  // const check = movie.backdrop_path && movie.poster_path;
+
+  // console.log(backdropCheck);
+  // let background;
 
   // if (backdropCheck === null) {
   //   background = { flixbuddies_poster };
@@ -39,8 +45,12 @@ export default function CardInfos({
           <h2>{movieName}</h2>
           <CloseButton onClick={onClose}>&times;</CloseButton>
         </Header>
-
-        <BackGroundWrapper background={backgroundStandard} baseUrl={baseUrl}>
+        <BackGroundWrapper
+          background={background}
+          baseUrl={baseUrl}
+          check={check}
+          backdrop_poster={backdrop_poster}
+        >
           <DetailsWrapper>
             <AddButton addToWatchList={addToWatchList} />
           </DetailsWrapper>
@@ -124,17 +134,24 @@ const CloseButton = styled.button`
   }
 `;
 
-const BackGroundWrapper = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-end;
-  background-image: ${(props) => `url("${props.baseUrl}${props.background}")`};
-  background-size: cover;
-  background-position: center center;
-  object-fit: contain;
-  height: 200px;
-  box-shadow: 10px 0px 10px rgba(0, 0, 0, 0.5);
-`;
+const BackGroundWrapper = styled.div(
+  (props) => css`
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    background-size: cover;
+    background-position: center center;
+    object-fit: contain;
+    height: 200px;
+    box-shadow: 10px 0px 10px rgba(0, 0, 0, 0.5);
+    background-image: ${(props) =>
+      `url("${props.baseUrl}${props.background}")`};
+    ${props.check &&
+      css`
+        background-image: url('../images/backdrop_poster.png');
+      `}
+  `
+);
 
 const DetailsWrapper = styled.div`
   display: flex;

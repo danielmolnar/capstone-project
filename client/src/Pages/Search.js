@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ImageContainer from '../components/ImageContainer';
+import Spinner from '../components/Spinner';
 import { Context } from '../Store';
 
 export default function Search({
@@ -9,6 +10,7 @@ export default function Search({
   movie,
   addToWatchList,
   isOnWatchList,
+  isLoading,
 }) {
   const [checkWatchlist, setCheckWatchlist] = useContext(Context);
 
@@ -21,7 +23,11 @@ export default function Search({
     setCheckWatchlist(isOnWatchList(movie));
   }
 
-  return (
+  return isLoading ? (
+    <>
+      <Spinner />
+    </>
+  ) : (
     <Flex>
       <ImageContainer
         isLarge={isLarge}

@@ -16,6 +16,7 @@ export default function Overlay({
   addToWatchList,
   isOnWatchList,
   movie,
+  check,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [checkWatchlist, setCheckWatchlist] = useContext(Context);
@@ -30,9 +31,9 @@ export default function Overlay({
     setCheckWatchlist(false);
   }
 
-  if (movie.backdrop_path === null) {
-    background = { flixbuddies_poster };
-  } else background = { background };
+  // if (movie.backdrop_path === null) {
+  //   background = { flixbuddies_poster };
+  // } else background = { background };
 
   return (
     <OverlayStyler>
@@ -40,12 +41,13 @@ export default function Overlay({
         <Button clickHandler={clickHandler} />
       </ButtonWrapper>
       <CardInfos
+        check={check}
         movie={movie}
         isOnWatchList={isOnWatchList}
         addToWatchList={addToWatchList}
         score={score}
         baseUrl={baseUrl}
-        backgroundStandard={background}
+        background={background}
         release={release}
         movieText={movieText}
         movieName={movieName}

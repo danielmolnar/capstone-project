@@ -5,16 +5,21 @@ import Overlay from '../components/Overlay';
 import Spinner from '../components/Spinner';
 import NotFound from '../images/not-found.png';
 import flixbuddies_poster from '../images/flixbuddies_poster.png';
+import backdrop_poster from '../images/backdrop_poster.png';
 
 function ImageContainer({ isLarge, movie, addToWatchList, isOnWatchList }) {
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
 
   const posterCheck = movie.poster_path;
   const backdropCheck = movie.backdrop_path;
-  const check = movie.backdrop_path && movie.poster_path;
-  const checker = backdropCheck === true;
+  // const check = movie.backdrop_path && movie.poster_path;
+  let check;
 
-  return check === null ? (
+  if (movie.backdrop_path === null && movie.poster_path === null) {
+    check = true;
+  } else check = false;
+
+  return check ? (
     <MovieContainer netflixStyle={isLarge}>
       <Test>
         <p>{movie.title}</p>
@@ -26,12 +31,13 @@ function ImageContainer({ isLarge, movie, addToWatchList, isOnWatchList }) {
         />
       </Test>
       <Overlay
+        check={check}
         movie={movie}
         isOnWatchList={isOnWatchList}
         addToWatchList={addToWatchList}
         score={movie.vote_average}
         baseUrl={baseUrl}
-        background={movie?.backdrop_path ?? movie?.poster_path}
+        background={backdrop_poster}
         movieText={movie.overview}
         movieName={movie?.name || movie?.title || movie?.original_name}
         release={movie.first_air_date || movie.release_date}
@@ -46,6 +52,7 @@ function ImageContainer({ isLarge, movie, addToWatchList, isOnWatchList }) {
         alt={movie?.name || movie?.title || movie?.original_name}
       />
       <Overlay
+        check={check}
         movie={movie}
         isOnWatchList={isOnWatchList}
         addToWatchList={addToWatchList}
