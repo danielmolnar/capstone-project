@@ -15,20 +15,17 @@ Button.propTypes = {
 };
 
 const ButtonWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
   margin-bottom: 0.5rem;
+  position: relative;
 `;
 
 const ButtonStyler = styled.button`
   background-color: var(--primary-100-opacity);
   text-align: center;
-  margin: 0 auto;
   color: white;
   border-radius: 3px;
   border: none;
-  display: block;
+  /* display: block; */
   cursor: pointer;
   padding: 2px 5px;
   font-size: 0.65rem;
