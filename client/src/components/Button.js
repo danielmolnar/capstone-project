@@ -25,7 +25,6 @@ const ButtonStyler = styled.button`
   color: white;
   border-radius: 3px;
   border: none;
-  /* display: block; */
   cursor: pointer;
   padding: 2px 5px;
   font-size: 0.65rem;

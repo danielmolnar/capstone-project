@@ -36,7 +36,7 @@ function Row({ title, fetchUrl, isLarge, addToWatchList, isOnWatchList }) {
   return isLoading ? (
     <>
       <HeadLineStyler>{title}</HeadLineStyler>
-      <Spinner isNetflix={isLarge} />
+      <Spinner isLarge={isLarge} />
     </>
   ) : (
     <>
@@ -47,7 +47,6 @@ function Row({ title, fetchUrl, isLarge, addToWatchList, isOnWatchList }) {
             <ImageContainer
               isLoading={isLoading}
               key={movie.id}
-              isNetflix={isLarge}
               movie={movie}
               isLarge={isLarge}
               addToWatchList={() => toggleButton(movie)}
