@@ -1,13 +1,14 @@
 import { Switch, Route } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
 import Home from './Pages/Home';
 import Watchlist from './Pages/Watchlist';
 import Friends from './Pages/Friends';
 import Search from './Pages/Search';
 import Banner from '../src/components/Banner';
+import Sidebar from '../src/components/Sidebar';
 import Navigation from '../src/components/Navigation';
 import Store from './Store';
 import Searchbar from './components/Searchbar';
@@ -17,6 +18,7 @@ function App() {
   const [search, setSearch] = useState([]);
   const [query, setQuery] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [open, setOpen] = useState(false);
   const baseUrl = 'https://api.themoviedb.org/3/';
   const APIKEY = process.env.REACT_APP_APIKEY;
 
@@ -44,7 +46,9 @@ function App() {
   return (
     <>
       <Navigation />
-      <Banner />
+      {/* <Sidebar open={open} setOpen={setOpen} /> */}
+      <Banner open={open} setOpen={setOpen} />
+
       <Buffer />
       <Switch>
         <Store>
@@ -52,6 +56,7 @@ function App() {
             <Home
               addToWatchList={addToWatchList}
               isOnWatchList={isOnWatchList}
+              open={open}
             />
           </Route>
           <Route path="/watchlist">

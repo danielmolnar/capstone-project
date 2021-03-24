@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import Logo from '../images/Logo.js';
+import Sidebar from '../components/Sidebar';
 
-function Banner() {
+function Banner({ open, setOpen }) {
   const [show, handleShow] = useState(false);
 
   useEffect(() => {
@@ -16,8 +17,9 @@ function Banner() {
   }, []);
 
   return (
-    <ImageWrapper show={show}>
-      <LogoStyler />
+    <ImageWrapper show={show} open={open}>
+      <LogoStyler open={open} />
+      <Sidebar open={open} setOpen={setOpen} />
     </ImageWrapper>
   );
 }
@@ -46,6 +48,8 @@ const ImageWrapper = styled.div(
 
 const LogoStyler = styled(Logo)`
   object-fit: contain;
+  transform: ${({ open }) => (open ? 'translateX(50vH)' : 'translateX(0)')};
+  transition: transform 0.3s ease-in-out;
   max-width: 30%;
   padding: 10px;
 `;
