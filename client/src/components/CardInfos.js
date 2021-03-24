@@ -11,7 +11,9 @@ export default function CardInfos({ open, onClose, addToWatchList, movie }) {
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
   const release = movie.first_air_date || movie.release_date;
   let check;
-  movie.backdrop_path === null ? (check = true) : (check = false);
+  movie.poster_path === null && movie.backdrop_path === null
+    ? (check = true)
+    : (check = false);
 
   return ReactDom.createPortal(
     <>
@@ -22,7 +24,7 @@ export default function CardInfos({ open, onClose, addToWatchList, movie }) {
           <CloseButton onClick={onClose}>&times;</CloseButton>
         </Header>
         <BackGroundWrapper
-          background={movie.backdrop_path ?? movie.poster_path}
+          background={movie.backdrop_path || movie.poster_path}
           check={check}
           baseUrl={baseUrl}
         >

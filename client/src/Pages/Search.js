@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import ImageContainer from '../components/ImageContainer';
 import Spinner from '../components/Spinner';
 import { Context } from '../Store';
@@ -27,14 +28,14 @@ export default function Search({
       <Spinner />
     </>
   ) : (
-    <>
+    <FlexWrapper>
       <ImageContainer
         isLarge={isLarge}
         movie={movie}
         addToWatchList={() => toggleButton(movie)}
         isOnWatchList={() => toggleWatchList(movie)}
       />
-    </>
+    </FlexWrapper>
   );
 }
 
@@ -45,3 +46,8 @@ Search.propTypes = {
   isOnWatchList: PropTypes.func,
   isLoading: PropTypes.bool,
 };
+
+const FlexWrapper = styled.div`
+  display: flex;
+  margin-bottom: 20px;
+`;

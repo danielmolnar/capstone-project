@@ -41,8 +41,6 @@ function App() {
       : setWatchList(watchlist.filter((movie) => movie.id !== movieToAdd.id));
   };
 
-  console.log(watchlist);
-
   return (
     <>
       <Navigation />
@@ -111,10 +109,6 @@ const Buffer = styled.div`
 
 const GridWrapper = styled.div`
   display: grid;
-  justify-self: stretch;
-  align-self: center;
-  gap: 1rem;
-
   grid-template-columns: repeat(4, 1fr);
 
   @media (max-width: 800px) {

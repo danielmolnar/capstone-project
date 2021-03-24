@@ -9,7 +9,6 @@ import { Context } from '../Store';
 function Row({ title, fetchUrl, isLarge, addToWatchList, isOnWatchList }) {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
   const [checkWatchlist, setCheckWatchlist] = useContext(Context);
 
   useEffect(() => {
@@ -78,6 +77,7 @@ const MovieWrapper = styled.div`
   overflow-y: hidden;
   overflow-x: scroll;
   padding: 20px;
+  margin-right: 15px;
   scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;

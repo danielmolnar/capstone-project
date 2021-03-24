@@ -30,7 +30,7 @@ const MovieContainer = styled.div(
   (props) => css`
     max-height: 200px;
     position: relative;
-    margin-right: 10px;
+    margin-right: 15px;
     transition: transform 450ms;
 
     p {
