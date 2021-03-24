@@ -1,43 +1,44 @@
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled, { css } from 'styled-components';
 import ReactDom from 'react-dom';
 import PropTypes from 'prop-types';
 import AddButton from '../components/AddButton';
 import AudienceScore from '../assets/Audience_score';
+import backdrop_poster from '../images/backdrop_poster.png';
 
-export default function CardInfos({
-  open,
-  onClose,
-  movieText,
-  movieName,
-  release,
-  background,
-  baseUrl,
-  score,
-  addToWatchList,
-}) {
+export default function CardInfos({ open, onClose, addToWatchList, movie }) {
   if (!open) return null;
+  const baseUrl = 'https://image.tmdb.org/t/p/original/';
+  const release = movie.first_air_date || movie.release_date;
+  let check;
+  movie.poster_path === null && movie.backdrop_path === null
+    ? (check = true)
+    : (check = false);
 
   return ReactDom.createPortal(
     <>
       <BackgroundStyler />
       <ModalStyler>
         <Header>
-          <h2>{movieName}</h2>
+          <h2>{movie?.name || movie?.title || movie?.original_name}</h2>
           <CloseButton onClick={onClose}>&times;</CloseButton>
         </Header>
-        <BackGroundWrapper background={background} baseUrl={baseUrl}>
+        <BackGroundWrapper
+          background={movie.backdrop_path || movie.poster_path}
+          check={check}
+          baseUrl={baseUrl}
+        >
           <DetailsWrapper>
             <AddButton addToWatchList={addToWatchList} />
           </DetailsWrapper>
         </BackGroundWrapper>
         <TextContainer>
-          <p>{movieText}</p>
+          <p>{movie.overview}</p>
         </TextContainer>
         <TagWrapper>
           <p>{release.slice(0, 4)}</p>
           <ScoreWrapper>
-            <p>{score}/10</p>
+            <p>{movie.vote_average}/10</p>
             <CustomAudienceScore fillColor="white" />
           </ScoreWrapper>
         </TagWrapper>
@@ -50,13 +51,8 @@ export default function CardInfos({
 CardInfos.propTypes = {
   open: PropTypes.bool,
   onClose: PropTypes.func,
-  movieText: PropTypes.string,
-  movieName: PropTypes.string,
-  release: PropTypes.string,
-  background: PropTypes.string,
-  baseUrl: PropTypes.string,
-  score: PropTypes.number,
   addToWatchList: PropTypes.func,
+  movie: PropTypes.object,
 };
 
 const BackgroundStyler = styled.div`
@@ -110,17 +106,24 @@ const CloseButton = styled.button`
   }
 `;
 
-const BackGroundWrapper = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-end;
-  background-image: ${(props) => `url("${props.baseUrl}${props.background}")`};
-  background-size: cover;
-  background-position: center center;
-  object-fit: contain;
-  height: 200px;
-  box-shadow: 10px 0px 10px rgba(0, 0, 0, 0.5);
-`;
+const BackGroundWrapper = styled.div(
+  (props) => css`
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    background-size: cover;
+    background-position: center center;
+    object-fit: contain;
+    height: 200px;
+    box-shadow: 10px 0px 10px rgba(0, 0, 0, 0.5);
+    background-image: ${(props) =>
+      `url("${props.baseUrl}${props.background}")`};
+    ${props.check &&
+      css`
+        background-image: url(${backdrop_poster});
+      `}
+  `
+);
 
 const DetailsWrapper = styled.div`
   display: flex;

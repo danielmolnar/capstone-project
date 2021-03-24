@@ -3,20 +3,11 @@ import styled from 'styled-components';
 import CardInfos from '../components/CardInfos';
 import Button from '../components/Button';
 import PropTypes from 'prop-types';
-import { Context } from '../hooks/Store';
+import { Context } from '../Store';
 
-export default function Overlay({
-  movieText,
-  movieName,
-  release,
-  background,
-  baseUrl,
-  score,
-  addToWatchList,
-  isOnWatchList,
-}) {
+export default function Overlay({ addToWatchList, isOnWatchList, movie }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [checkWatchtlist, setCheckWatchlist] = useContext(Context);
+  const [checkWatchlist, setCheckWatchlist] = useContext(Context);
 
   function clickHandler() {
     setIsOpen(true);
@@ -30,17 +21,13 @@ export default function Overlay({
 
   return (
     <OverlayStyler>
-      <Button clickHandler={clickHandler} />
-
+      <ButtonWrapper>
+        <Button clickHandler={clickHandler} />
+      </ButtonWrapper>
       <CardInfos
+        movie={movie}
         isOnWatchList={isOnWatchList}
         addToWatchList={addToWatchList}
-        score={score}
-        baseUrl={baseUrl}
-        background={background}
-        release={release}
-        movieText={movieText}
-        movieName={movieName}
         open={isOpen}
         onClose={onClose}
       />
@@ -49,14 +36,9 @@ export default function Overlay({
 }
 
 Overlay.propTypes = {
-  movieText: PropTypes.string,
-  movieName: PropTypes.string,
-  release: PropTypes.string,
-  background: PropTypes.string,
-  baseUrl: PropTypes.string,
-  score: PropTypes.number,
   addToWatchList: PropTypes.func,
   isOnWatchList: PropTypes.func,
+  movie: PropTypes.object,
 };
 
 const OverlayStyler = styled.div`
@@ -67,4 +49,9 @@ const OverlayStyler = styled.div`
   width: 100%;
   opacity: 0;
   bottom: 0;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
 `;

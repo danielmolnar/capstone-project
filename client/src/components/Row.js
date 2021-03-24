@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import axios from '../services/axios';
 import ImageContainer from './ImageContainer';
 import Spinner from '../components/Spinner';
-import { Context } from '../hooks/Store';
+import { Context } from '../Store';
 
 function Row({ title, fetchUrl, isLarge, addToWatchList, isOnWatchList }) {
   const [movies, setMovies] = useState([]);
@@ -13,6 +13,7 @@ function Row({ title, fetchUrl, isLarge, addToWatchList, isOnWatchList }) {
 
   useEffect(() => {
     async function fetchMovies() {
+      setIsLoading(true);
       const request = await axios.get(fetchUrl);
       setMovies(request.data.results);
       setIsLoading(false);
@@ -34,7 +35,7 @@ function Row({ title, fetchUrl, isLarge, addToWatchList, isOnWatchList }) {
   return isLoading ? (
     <>
       <HeadLineStyler>{title}</HeadLineStyler>
-      <Spinner isNetflix={isLarge} />
+      <Spinner isLarge={isLarge} />
     </>
   ) : (
     <>
@@ -45,7 +46,6 @@ function Row({ title, fetchUrl, isLarge, addToWatchList, isOnWatchList }) {
             <ImageContainer
               isLoading={isLoading}
               key={movie.id}
-              isNetflix={isLarge}
               movie={movie}
               isLarge={isLarge}
               addToWatchList={() => toggleButton(movie)}
@@ -77,6 +77,7 @@ const MovieWrapper = styled.div`
   overflow-y: hidden;
   overflow-x: scroll;
   padding: 20px;
+  margin-right: 15px;
   scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;

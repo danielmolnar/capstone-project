@@ -21,7 +21,7 @@ Spinner.propTypes = {
 };
 
 const Wrapper = styled.div`
-  margin-left: 20px;
+  /* margin-left: 20px; */
 `;
 
 const SpinnerStyler = styled.img(

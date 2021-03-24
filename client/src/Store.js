@@ -13,3 +13,8 @@ const Store = ({ children }) => {
 };
 
 export default Store;
+
+// value={{
+//   checkWatchlist: [checkWatchlist, setCheckWatchlist],
+//   search: [search, setSearch],
+// }}
