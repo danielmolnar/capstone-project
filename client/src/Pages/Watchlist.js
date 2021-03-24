@@ -30,8 +30,5 @@ Watchlist.propTypes = {
 
 const FlexWrapper = styled.div`
   display: flex;
-
-  /* flex-direction: center; */
-
   margin-bottom: 15px;
 `;
