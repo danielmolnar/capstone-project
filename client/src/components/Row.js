@@ -4,12 +4,12 @@ import styled from 'styled-components';
 import axios from '../services/axios';
 import ImageContainer from './ImageContainer';
 import Spinner from '../components/Spinner';
-import { Context } from '../Store';
+import { MovieContext } from '../Store';
 
 function Row({ title, fetchUrl, isLarge, addToWatchList, isOnWatchList }) {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [checkWatchlist, setCheckWatchlist] = useContext(Context);
+  const [checkWatchlist, setCheckWatchlist] = useContext(MovieContext);
 
   useEffect(() => {
     async function fetchMovies() {

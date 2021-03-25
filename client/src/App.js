@@ -1,5 +1,5 @@
 import { Switch, Route } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
@@ -76,7 +76,7 @@ function App() {
           <Route path="/search">
             <Headline>SEARCH</Headline>
             <SearchbarWrapper>
-              <Searchbar getQuery={(q) => setQuery(q)} />
+              <Searchbar getQuery={(query) => setQuery(query)} />
             </SearchbarWrapper>
             <MovieWrapper>
               <GridWrapper>

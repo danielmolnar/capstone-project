@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ImageContainer from '../components/ImageContainer';
 import Spinner from '../components/Spinner';
-import { Context } from '../Store';
+import { MovieContext } from '../Store';
 
 export default function Search({
   isLarge,
@@ -12,7 +12,7 @@ export default function Search({
   isOnWatchList,
   isLoading,
 }) {
-  const [checkWatchlist, setCheckWatchlist] = useContext(Context);
+  const [checkWatchlist, setCheckWatchlist] = useContext(MovieContext);
 
   function toggleButton(movie) {
     addToWatchList(movie);
@@ -24,9 +24,7 @@ export default function Search({
   }
 
   return isLoading ? (
-    <>
-      <Spinner />
-    </>
+    <Spinner />
   ) : (
     <FlexWrapper>
       <ImageContainer

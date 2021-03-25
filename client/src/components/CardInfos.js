@@ -10,10 +10,8 @@ export default function CardInfos({ open, onClose, addToWatchList, movie }) {
   if (!open) return null;
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
   const release = movie.first_air_date || movie.release_date;
-  let check;
-  movie.poster_path === null && movie.backdrop_path === null
-    ? (check = true)
-    : (check = false);
+  const existingPath =
+    movie.poster_path === null && movie.backdrop_path === null;
 
   return ReactDom.createPortal(
     <>
@@ -25,7 +23,7 @@ export default function CardInfos({ open, onClose, addToWatchList, movie }) {
         </Header>
         <BackGroundWrapper
           background={movie.backdrop_path || movie.poster_path}
-          check={check}
+          existingPath={existingPath}
           baseUrl={baseUrl}
         >
           <DetailsWrapper>
@@ -118,7 +116,7 @@ const BackGroundWrapper = styled.div(
     box-shadow: 10px 0px 10px rgba(0, 0, 0, 0.5);
     background-image: ${(props) =>
       `url("${props.baseUrl}${props.background}")`};
-    ${props.check &&
+    ${props.existingPath &&
       css`
         background-image: url(${backdrop_poster});
       `}

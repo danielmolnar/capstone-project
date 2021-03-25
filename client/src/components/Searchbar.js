@@ -4,21 +4,19 @@ import PropTypes from 'prop-types';
 
 export default function Searchbar({ getQuery }) {
   const [text, setText] = useState('');
-  const onChange = (q) => {
-    setText(q);
-    getQuery(q);
+  const onChange = (query) => {
+    setText(query);
+    getQuery(query);
   };
 
   return (
-    <>
-      <Inputstyler
-        type="text"
-        placeholder="Search for Movies"
-        value={text}
-        onChange={(event) => onChange(event.target.value)}
-        autoFocus
-      />
-    </>
+    <Inputstyler
+      type="text"
+      placeholder="Search for Movies"
+      value={text}
+      onChange={(event) => onChange(event.target.value)}
+      autoFocus
+    />
   );
 }
 

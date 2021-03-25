@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import CardInfos from '../components/CardInfos';
 import Button from '../components/Button';
 import PropTypes from 'prop-types';
-import { Context } from '../Store';
+import { MovieContext } from '../Store';
 
 export default function Overlay({ addToWatchList, isOnWatchList, movie }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [checkWatchlist, setCheckWatchlist] = useContext(Context);
+  const [checkWatchlist, setCheckWatchlist] = useContext(MovieContext);
 
   function clickHandler() {
     setIsOpen(true);
