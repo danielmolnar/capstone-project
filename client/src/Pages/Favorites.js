@@ -3,25 +3,25 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ImageContainer from '../components/ImageContainer';
 
-export default function Watchlist({
+export default function Favorites({
   isLarge,
   movie,
-  addToWatchList,
-  isOnWatchList,
+  addToFavorites,
+  isFavorite,
 }) {
   return (
     <FlexWrapper>
       <ImageContainer
         isLarge={isLarge}
         movie={movie}
-        addToWatchList={addToWatchList}
-        isOnWatchList={isOnWatchList}
+        addToFavorites={addToFavorites}
+        isFavorite={isFavorite}
       />
     </FlexWrapper>
   );
 }
 
-Watchlist.propTypes = {
+Favorites.propTypes = {
   isLarge: PropTypes.bool,
   movie: PropTypes.object,
   addToWatchList: PropTypes.func,

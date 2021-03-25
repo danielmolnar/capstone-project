@@ -2,27 +2,25 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import Overlay from '../components/Overlay';
+import Poster from '../components/Poster.js';
 
-function ImageContainer({ isLarge, movie, addToWatchList, isOnWatchList }) {
-  const baseUrl = 'https://image.tmdb.org/t/p/original/';
-
+function ImageContainer({
+  isLarge,
+  movie,
+  addToWatchList,
+  isOnWatchList,
+  isFavorite,
+  addToFavorites,
+}) {
   return (
-    <MovieContainer netflixStyle={isLarge}>
-      <ImageStyler
-        netflixStyle={isLarge}
-        key={movie.id}
-        src={`${baseUrl}${isLarge ? movie?.poster_path : movie?.backdrop_path}`}
-        alt={movie?.name || movie?.title || movie?.original_name}
-      />
+    <MovieContainer isLarge={isLarge}>
+      <Poster isLarge={isLarge} movie={movie} />
       <Overlay
+        isFavorite={isFavorite}
+        addToFavorites={addToFavorites}
+        movie={movie}
         isOnWatchList={isOnWatchList}
         addToWatchList={addToWatchList}
-        score={movie.vote_average}
-        baseUrl={baseUrl}
-        background={movie?.backdrop_path}
-        movieText={movie.overview}
-        movieName={movie?.name || movie?.title || movie?.original_name}
-        release={movie.first_air_date || movie.release_date}
       />
     </MovieContainer>
   );
@@ -39,32 +37,27 @@ ImageContainer.propTypes = {
 
 const MovieContainer = styled.div(
   (props) => css`
+    max-height: 200px;
     position: relative;
-    margin-right: 10px;
+    margin-right: 15px;
     transition: transform 450ms;
-    width: 100%;
+
+    p {
+      font-size: 0.7rem;
+      position: absolute;
+    }
+
     :hover {
       transform: scale(1.08);
     }
     :hover div {
       opacity: 1;
     }
-    ${props.netflixStyle &&
+    ${props.isLarge &&
       css`
         :hover {
           transform: scale(1.1);
         }
-      `}
-  `
-);
-
-const ImageStyler = styled.img(
-  (props) => css`
-    max-height: 100px;
-    object-fit: contain;
-    ${props.netflixStyle &&
-      css`
-        max-height: 200px;
       `}
   `
 );

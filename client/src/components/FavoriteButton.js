@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-export default function Button({ clickHandler }) {
+export default function Button({ addToFavorites, isFavorite }) {
   return (
     <ButtonWrapper>
-      <ButtonStyler onClick={clickHandler}>MORE</ButtonStyler>
+      <ButtonStyler onClick={addToFavorites}>Add to Favorites</ButtonStyler>
     </ButtonWrapper>
   );
 }
