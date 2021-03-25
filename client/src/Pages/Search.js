@@ -1,9 +1,7 @@
-import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ImageContainer from '../components/ImageContainer';
 import Spinner from '../components/Spinner';
-import { Context } from '../Store';
 
 export default function Search({
   isLarge,
@@ -14,28 +12,15 @@ export default function Search({
   isFavorite,
   addToFavorites,
 }) {
-  const [checkWatchlist, setCheckWatchlist] = useContext(Context);
-
-  function toggleButton(movie) {
-    addToWatchList(movie);
-    setCheckWatchlist(!checkWatchlist);
-  }
-
-  function toggleWatchList(movie) {
-    setCheckWatchlist(isOnWatchList(movie));
-  }
-
   return isLoading ? (
-    <>
-      <Spinner />
-    </>
+    <Spinner />
   ) : (
     <FlexWrapper>
       <ImageContainer
         isLarge={isLarge}
         movie={movie}
-        addToWatchList={() => toggleButton(movie)}
-        isOnWatchList={() => toggleWatchList(movie)}
+        addToWatchList={() => addToWatchList(movie)}
+        isOnWatchList={() => isOnWatchList(movie)}
         addToFavorites={addToFavorites}
         isFavorite={isFavorite}
       />

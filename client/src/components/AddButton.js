@@ -1,14 +1,13 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Context } from '../Store';
 
-export default function AddButton({ addToWatchList }) {
-  const [checkWatchlist, setCheckWatchlist] = useContext(Context);
+export default function AddButton({ addToWatchList, isOnWatchList, movie }) {
+  const checkOnWatchList = isOnWatchList(movie);
 
   return (
     <WatchListButton onClick={addToWatchList}>
-      {checkWatchlist ? 'Remove from ' : 'Add to '}Watchlist
+      {checkOnWatchList ? 'Remove from ' : 'Add to '}Watchlist
     </WatchListButton>
   );
 }

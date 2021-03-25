@@ -6,9 +6,9 @@ import backdrop_poster from '../images/backdrop_poster.png';
 
 function Poster({ isLarge, movie }) {
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
-  let check = movie.poster_path === null && movie.backdrop_path === null;
+  let existingPath = movie.poster_path === null && movie.backdrop_path === null;
 
-  return check ? (
+  return existingPath ? (
     <>
       <Title>{movie?.name || movie?.title || movie?.original_name}</Title>
       <ImageStyler

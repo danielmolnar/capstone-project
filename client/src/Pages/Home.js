@@ -86,11 +86,19 @@ const StyleWrapper = styled.div`
   transition: transform 0.3s ease-in-out;
   overflow-y: hidden;
   overflow-x: scroll;
+  scrollbar-width: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const RowWrapper = styled.div`
   overflow-y: hidden;
   overflow-x: scroll;
+  scrollbar-width: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export default Home;

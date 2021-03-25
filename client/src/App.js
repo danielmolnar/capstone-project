@@ -1,5 +1,5 @@
 import { Switch, Route } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from './services/axios';
 import styled from 'styled-components';
 import requests from './services/requests';

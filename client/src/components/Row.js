@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import axios from '../services/axios';
 import ImageContainer from './ImageContainer';
 import Spinner from '../components/Spinner';
-import { Context } from '../Store';
 
 function Row({
   title,
@@ -17,7 +16,6 @@ function Row({
 }) {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [checkWatchlist, setCheckWatchlist] = useContext(Context);
 
   useEffect(() => {
     async function fetchMovies() {
@@ -30,15 +28,6 @@ function Row({
 
     fetchMovies();
   }, [fetchUrl]);
-
-  function toggleButton(movie) {
-    addToWatchList(movie);
-    setCheckWatchlist(!checkWatchlist);
-  }
-
-  function toggleWatchList(movie) {
-    setCheckWatchlist(isOnWatchList(movie));
-  }
 
   return isLoading ? (
     <>
@@ -56,8 +45,8 @@ function Row({
               key={movie.id}
               movie={movie}
               isLarge={isLarge}
-              addToWatchList={() => toggleButton(movie)}
-              isOnWatchList={() => toggleWatchList(movie)}
+              addToWatchList={() => addToWatchList(movie)}
+              isOnWatchList={() => isOnWatchList(movie)}
               addToFavorites={() => addToFavorites(movie)}
               isFavorite={() => isFavorite(movie)}
             />

@@ -3,14 +3,24 @@ import styled, { css } from 'styled-components';
 import ReactDom from 'react-dom';
 import PropTypes from 'prop-types';
 import AddButton from '../components/AddButton';
+import FavoriteButton from '../components/FavoriteButton';
 
 import backdrop_poster from '../images/backdrop_poster.png';
 
-export default function CardInfos({ open, onClose, addToWatchList, movie }) {
+export default function CardInfos({
+  open,
+  onClose,
+  addToWatchList,
+  movie,
+  isOnWatchList,
+  isFavorite,
+  addToFavorites,
+}) {
   if (!open) return null;
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
   const release = movie.first_air_date || movie.release_date;
-  let check = movie.poster_path === null && movie.backdrop_path === null;
+  const existingPath =
+    movie.poster_path === null && movie.backdrop_path === null;
 
   return ReactDom.createPortal(
     <>
@@ -22,12 +32,23 @@ export default function CardInfos({ open, onClose, addToWatchList, movie }) {
         </Header>
         <BackGroundWrapper
           background={movie.backdrop_path || movie.poster_path}
-          check={check}
+          existingPath={existingPath}
           baseUrl={baseUrl}
         >
           <DetailsWrapper>
-            <AddButton addToWatchList={addToWatchList} />
+            <AddButton
+              addToWatchList={addToWatchList}
+              isOnWatchList={isOnWatchList}
+              movie={movie}
+            />
           </DetailsWrapper>
+          <FavoriteWrapper>
+            <FavoriteButton
+              movie={movie}
+              isFavorite={isFavorite}
+              addToFavorite={addToFavorites}
+            />
+          </FavoriteWrapper>
         </BackGroundWrapper>
         <TextContainer>
           <p>{movie.overview}</p>
@@ -105,16 +126,17 @@ const CloseButton = styled.button`
 const BackGroundWrapper = styled.div(
   (props) => css`
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: flex-end;
     background-size: cover;
     background-position: center center;
     object-fit: contain;
+    position: relative;
     height: 200px;
     box-shadow: 10px 0px 10px rgba(0, 0, 0, 0.5);
     background-image: ${(props) =>
       `url("${props.baseUrl}${props.background}")`};
-    ${props.check &&
+    ${props.existingPath &&
       css`
         background-image: url(${backdrop_poster});
       `}
@@ -157,4 +179,11 @@ const ScoreWrapper = styled.div`
 
   border-radius: 5px;
   height: 40px;
+`;
+
+const FavoriteWrapper = styled.div`
+  top: 0;
+  right: 0;
+  padding: 10px;
+  position: absolute;
 `;
