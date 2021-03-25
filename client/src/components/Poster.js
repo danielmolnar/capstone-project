@@ -2,20 +2,18 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import flixbuddies_poster from '../images/flixbuddies_poster.png';
+import backdrop_poster from '../images/backdrop_poster.png';
 
 function Poster({ isLarge, movie }) {
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
-  let check;
-  movie.poster_path === null && movie.backdrop_path === null
-    ? (check = true)
-    : (check = false);
+  let check = movie.poster_path === null && movie.backdrop_path === null;
 
   return check ? (
     <>
       <Title>{movie?.name || movie?.title || movie?.original_name}</Title>
       <ImageStyler
         netflixStyle={isLarge}
-        src={flixbuddies_poster}
+        src={isLarge ? flixbuddies_poster : backdrop_poster}
         alt={movie?.name || movie?.title || movie?.original_name}
       />
     </>
@@ -23,7 +21,11 @@ function Poster({ isLarge, movie }) {
     <ImageStyler
       netflixStyle={isLarge}
       key={movie.id}
-      src={`${baseUrl}${isLarge ? movie?.poster_path : movie?.backdrop_path}`}
+      src={`${baseUrl}${
+        isLarge
+          ? movie?.poster_path
+          : movie?.backdrop_path || movie?.poster_path
+      }`}
       alt={movie?.name || movie?.title || movie?.original_name}
     />
   );

@@ -8,6 +8,8 @@ export default function Watchlist({
   movie,
   addToWatchList,
   isOnWatchList,
+  isFavorite,
+  addToFavorites,
 }) {
   return (
     <FlexWrapper>
@@ -16,6 +18,8 @@ export default function Watchlist({
         movie={movie}
         addToWatchList={addToWatchList}
         isOnWatchList={isOnWatchList}
+        isFavorite={isFavorite}
+        addToFavorites={addToFavorites}
       />
     </FlexWrapper>
   );

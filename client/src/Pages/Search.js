@@ -11,6 +11,8 @@ export default function Search({
   addToWatchList,
   isOnWatchList,
   isLoading,
+  isFavorite,
+  addToFavorites,
 }) {
   const [checkWatchlist, setCheckWatchlist] = useContext(Context);
 
@@ -34,6 +36,8 @@ export default function Search({
         movie={movie}
         addToWatchList={() => toggleButton(movie)}
         isOnWatchList={() => toggleWatchList(movie)}
+        addToFavorites={addToFavorites}
+        isFavorite={isFavorite}
       />
     </FlexWrapper>
   );

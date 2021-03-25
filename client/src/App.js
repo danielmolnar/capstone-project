@@ -83,6 +83,8 @@ function App() {
                     movie={movie}
                     addToWatchList={() => addToWatchList(movie)}
                     isOnWatchList={() => isOnWatchList(movie)}
+                    addToFavorites={() => addToFavorites(movie)}
+                    isFavorite={() => isFavorite(movie)}
                   />
                 ))}
               </GridWrapper>
@@ -106,6 +108,8 @@ function App() {
                     isLarge
                     addToWatchList={() => addToWatchList(movie)}
                     isOnWatchList={() => isOnWatchList(movie)}
+                    addToFavorites={() => addToFavorites(movie)}
+                    isFavorite={() => isFavorite(movie)}
                   />
                 ))}
               </GridWrapper>
@@ -120,6 +124,8 @@ function App() {
                     key={movie.id}
                     isLarge
                     movie={movie}
+                    addToWatchList={() => addToWatchList(movie)}
+                    isOnWatchList={() => isOnWatchList(movie)}
                     addToFavorites={() => addToFavorites(movie)}
                     isFavorite={() => isFavorite(movie)}
                   />

@@ -3,17 +3,14 @@ import styled, { css } from 'styled-components';
 import ReactDom from 'react-dom';
 import PropTypes from 'prop-types';
 import AddButton from '../components/AddButton';
-import AudienceScore from '../assets/Audience_score';
+
 import backdrop_poster from '../images/backdrop_poster.png';
 
 export default function CardInfos({ open, onClose, addToWatchList, movie }) {
   if (!open) return null;
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
   const release = movie.first_air_date || movie.release_date;
-  let check;
-  movie.poster_path === null && movie.backdrop_path === null
-    ? (check = true)
-    : (check = false);
+  let check = movie.poster_path === null && movie.backdrop_path === null;
 
   return ReactDom.createPortal(
     <>
@@ -39,7 +36,6 @@ export default function CardInfos({ open, onClose, addToWatchList, movie }) {
           <p>{release.slice(0, 4)}</p>
           <ScoreWrapper>
             <p>{movie.vote_average}/10</p>
-            <CustomAudienceScore fillColor="white" />
           </ScoreWrapper>
         </TagWrapper>
       </ModalStyler>
@@ -151,11 +147,6 @@ const TextContainer = styled.div`
   line-height: 1.3;
   font-size: 0.8rem;
   padding: 0 1rem;
-`;
-
-const CustomAudienceScore = styled(AudienceScore)`
-  width: 25px;
-  height: 25px;
 `;
 
 const ScoreWrapper = styled.div`
