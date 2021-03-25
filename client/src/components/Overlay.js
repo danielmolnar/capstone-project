@@ -2,10 +2,17 @@ import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import CardInfos from '../components/CardInfos';
 import Button from '../components/Button';
+import FavoriteButton from '../components/FavoriteButton.js';
 import PropTypes from 'prop-types';
 import { Context } from '../Store';
 
-export default function Overlay({ addToWatchList, isOnWatchList, movie }) {
+export default function Overlay({
+  addToWatchList,
+  isOnWatchList,
+  movie,
+  addToFavorites,
+  isFavorite,
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [checkWatchlist, setCheckWatchlist] = useContext(Context);
 
@@ -23,6 +30,10 @@ export default function Overlay({ addToWatchList, isOnWatchList, movie }) {
     <OverlayStyler>
       <ButtonWrapper>
         <Button clickHandler={clickHandler} />
+        <FavoriteButton
+          addToFavorites={addToFavorites}
+          isFavorite={isFavorite}
+        />
       </ButtonWrapper>
       <CardInfos
         movie={movie}

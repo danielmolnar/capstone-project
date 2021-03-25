@@ -1,38 +1,43 @@
 import { Switch, Route } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import styled, { ThemeProvider } from 'styled-components';
+import axios from './services/axios';
+import styled from 'styled-components';
+import requests from './services/requests';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
 import Home from './Pages/Home';
 import Watchlist from './Pages/Watchlist';
 import Friends from './Pages/Friends';
 import Search from './Pages/Search';
 import Banner from '../src/components/Banner';
-import Sidebar from '../src/components/Sidebar';
+import Favorites from './Pages/Favorites';
 import Navigation from '../src/components/Navigation';
 import Store from './Store';
 import Searchbar from './components/Searchbar';
 
 function App() {
   const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
+  const [favorites, setFavorites] = useLocalStorage('Favorites', []);
   const [search, setSearch] = useState([]);
   const [query, setQuery] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [open, setOpen] = useState(false);
-  const baseUrl = 'https://api.themoviedb.org/3/';
-  const APIKEY = process.env.REACT_APP_APIKEY;
+
+  let fetchUrl;
+  query === ''
+    ? (fetchUrl = requests.fetchTrending)
+    : (fetchUrl = `${requests.fetchSearch}${query}&page=1&include_adult=false`);
 
   useEffect(() => {
-    const fetchSearch = async () => {
+    async function fetchSearch() {
       setIsLoading(true);
-      const result = await axios(
-        `${baseUrl}search/movie?api_key=${APIKEY}&language=en-US&query=${query}&page=1&include_adult=false`
-      );
-      setSearch(result.data.results);
+      const request = await axios.get(fetchUrl);
+      setSearch(request.data.results);
       setIsLoading(false);
-    };
-    query !== '' ? fetchSearch() : setSearch([]);
-  }, [query, APIKEY]);
+      return request;
+    }
+
+    fetchSearch();
+  }, [query, fetchUrl]);
 
   const isOnWatchList = (movieToAdd) =>
     watchlist.some((movie) => movie.id === movieToAdd.id);
@@ -43,12 +48,19 @@ function App() {
       : setWatchList(watchlist.filter((movie) => movie.id !== movieToAdd.id));
   };
 
+  const isFavorite = (movieToAdd) =>
+    favorites.some((movie) => movie.id === movieToAdd.id);
+
+  const addToFavorites = (movieToAdd) => {
+    !isFavorite(movieToAdd)
+      ? setFavorites([...favorites, movieToAdd])
+      : setFavorites(favorites.filter((movie) => movie.id !== movieToAdd.id));
+  };
+
   return (
     <>
       <Navigation />
-      {/* <Sidebar open={open} setOpen={setOpen} /> */}
       <Banner open={open} setOpen={setOpen} />
-
       <Buffer />
       <Switch>
         <Store>
@@ -56,7 +68,8 @@ function App() {
             <Home
               addToWatchList={addToWatchList}
               isOnWatchList={isOnWatchList}
-              open={open}
+              addToFavorites={addToFavorites}
+              isFavorite={isFavorite}
             />
           </Route>
           <Route path="/watchlist">
@@ -93,6 +106,22 @@ function App() {
                     isLarge
                     addToWatchList={() => addToWatchList(movie)}
                     isOnWatchList={() => isOnWatchList(movie)}
+                  />
+                ))}
+              </GridWrapper>
+            </MovieWrapper>
+          </Route>
+          <Route path="/favorites">
+            <WatchlistHeadline>FAVORITES</WatchlistHeadline>
+            <MovieWrapper>
+              <GridWrapper>
+                {favorites.map((movie) => (
+                  <Favorites
+                    key={movie.id}
+                    isLarge
+                    movie={movie}
+                    addToFavorites={() => addToFavorites(movie)}
+                    isFavorite={() => isFavorite(movie)}
                   />
                 ))}
               </GridWrapper>

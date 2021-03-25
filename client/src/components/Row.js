@@ -6,7 +6,15 @@ import ImageContainer from './ImageContainer';
 import Spinner from '../components/Spinner';
 import { Context } from '../Store';
 
-function Row({ title, fetchUrl, isLarge, addToWatchList, isOnWatchList }) {
+function Row({
+  title,
+  fetchUrl,
+  isLarge,
+  addToWatchList,
+  isOnWatchList,
+  isFavorite,
+  addToFavorites,
+}) {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [checkWatchlist, setCheckWatchlist] = useContext(Context);
@@ -50,6 +58,8 @@ function Row({ title, fetchUrl, isLarge, addToWatchList, isOnWatchList }) {
               isLarge={isLarge}
               addToWatchList={() => toggleButton(movie)}
               isOnWatchList={() => toggleWatchList(movie)}
+              addToFavorites={() => addToFavorites(movie)}
+              isFavorite={() => isFavorite(movie)}
             />
           ))}
         </MovieWrapper>

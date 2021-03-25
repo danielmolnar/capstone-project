@@ -1,25 +1,26 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export default function Menu({ open }) {
   return (
     <StyledMenu open={open}>
-      <a href="/">
+      <Link to="/favorites">
         <span role="img" aria-label="Favorites"></span>
         Favorites
-      </a>
-      <a href="/">
+      </Link>
+      <Link to="/favorites">
         <span role="img" aria-label="Ratings"></span>
         Ratings
-      </a>
-      <a href="/">
+      </Link>
+      <Link to="/newwatchlist">
         <span role="img" aria-label="Friends"></span>
         Friends
-      </a>
-      <a href="/">
+      </Link>
+      <Link to="/favorites">
         <span role="img" aria-label="Edit Profile"></span>
         Edit Profile
-      </a>
+      </Link>
     </StyledMenu>
   );
 }

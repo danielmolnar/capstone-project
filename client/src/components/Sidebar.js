@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import Burger from './Burger';
 import Menu from './Menu';
 

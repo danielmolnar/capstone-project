@@ -4,7 +4,13 @@ import styled from 'styled-components';
 import Row from '../components/Row';
 import requests from '../services/requests';
 
-function Home({ addToWatchList, isOnWatchList, open }) {
+function Home({
+  addToWatchList,
+  isOnWatchList,
+  open,
+  isFavorite,
+  addToFavorites,
+}) {
   return (
     <StyleWrapper open={open}>
       <Row
@@ -13,42 +19,48 @@ function Home({ addToWatchList, isOnWatchList, open }) {
         isLarge
         addToWatchList={addToWatchList}
         isOnWatchList={isOnWatchList}
+        addToFavorites={addToFavorites}
+        isFavorite={isFavorite}
       />
       <Row
         title="TRENDING"
         fetchUrl={requests.fetchTrending}
         addToWatchList={addToWatchList}
         isOnWatchList={isOnWatchList}
+        addToFavorites={addToFavorites}
+        isFavorite={isFavorite}
       />
       <Row
         title="TOP RATED"
         fetchUrl={requests.fetchTopRated}
         addToWatchList={addToWatchList}
         isOnWatchList={isOnWatchList}
+        addToFavorites={addToFavorites}
+        isFavorite={isFavorite}
       />
       <Row
         title="ACTION"
         fetchUrl={requests.fetchActionMovies}
         addToWatchList={addToWatchList}
         isOnWatchList={isOnWatchList}
+        addToFavorites={addToFavorites}
+        isFavorite={isFavorite}
       />
       <Row
         title="COMEDY"
         fetchUrl={requests.fetchComedyMovies}
         addToWatchList={addToWatchList}
         isOnWatchList={isOnWatchList}
+        addToFavorites={addToFavorites}
+        isFavorite={isFavorite}
       />
       <Row
         title="HORROR"
         fetchUrl={requests.fetchHorrorMovies}
         addToWatchList={addToWatchList}
         isOnWatchList={isOnWatchList}
-      />
-      <Row
-        title="ROMANCE"
-        fetchUrl={requests.fetchRomanceMovies}
-        addToWatchList={addToWatchList}
-        isOnWatchList={isOnWatchList}
+        addToFavorites={addToFavorites}
+        isFavorite={isFavorite}
       />
       <RowWrapper>
         <Row
@@ -56,6 +68,8 @@ function Home({ addToWatchList, isOnWatchList, open }) {
           fetchUrl={requests.fetchDocumentaries}
           addToWatchList={addToWatchList}
           isOnWatchList={isOnWatchList}
+          addToFavorites={addToFavorites}
+          isFavorite={isFavorite}
         />
       </RowWrapper>
     </StyleWrapper>

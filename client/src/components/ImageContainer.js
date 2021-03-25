@@ -4,11 +4,20 @@ import PropTypes from 'prop-types';
 import Overlay from '../components/Overlay';
 import Poster from '../components/Poster.js';
 
-function ImageContainer({ isLarge, movie, addToWatchList, isOnWatchList }) {
+function ImageContainer({
+  isLarge,
+  movie,
+  addToWatchList,
+  isOnWatchList,
+  isFavorite,
+  addToFavorites,
+}) {
   return (
     <MovieContainer isLarge={isLarge}>
       <Poster isLarge={isLarge} movie={movie} />
       <Overlay
+        isFavorite={isFavorite}
+        addToFavorites={addToFavorites}
         movie={movie}
         isOnWatchList={isOnWatchList}
         addToWatchList={addToWatchList}
