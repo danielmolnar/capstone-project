@@ -2,16 +2,13 @@ import ReactDom from 'react-dom';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import AddButton from '../components/AddButton';
-import FavoriteButton from '../components/FavoriteButton';
 import backdrop_poster from '../images/backdrop_poster.png';
 
 export default function CardInfos({
   open,
   movie,
   onClose,
-  isFavorite,
   isOnWatchList,
-  addToFavorites,
   addToWatchList,
 }) {
   if (!open) return null;
@@ -40,13 +37,6 @@ export default function CardInfos({
               addToWatchList={addToWatchList}
             />
           </DetailsWrapper>
-          <FavoriteWrapper>
-            <FavoriteButton
-              movie={movie}
-              isFavorite={isFavorite}
-              addToFavorite={addToFavorites}
-            />
-          </FavoriteWrapper>
         </BackGroundWrapper>
         <TextContainer>
           <p>{movie.overview}</p>
@@ -179,11 +169,4 @@ const ScoreWrapper = styled.div`
   gap: 0.5rem;
   height: 40px;
   margin-left: 2rem;
-`;
-
-const FavoriteWrapper = styled.div`
-  padding: 10px;
-  position: absolute;
-  right: 0;
-  top: 0;
 `;

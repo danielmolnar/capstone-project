@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Button from '../components/Button';
+import OpenButton from './OpenButton';
 import CardInfos from '../components/CardInfos';
-import FavoriteButton from '../components/FavoriteButton.js';
 
 export default function Overlay({
   movie,
@@ -16,23 +15,19 @@ export default function Overlay({
 
   return (
     <OverlayStyler>
-      <HeartWrapper>
-        <FavoriteButton
+      <ButtonWrapper>
+        <OpenButton
+          clickHandler={() => setIsOpen(true)}
           movie={movie}
           isFavorite={isFavorite}
           addToFavorites={addToFavorites}
         />
-      </HeartWrapper>
-      <ButtonWrapper>
-        <Button clickHandler={() => setIsOpen(true)} />
       </ButtonWrapper>
       <CardInfos
         open={isOpen}
         movie={movie}
-        isFavorite={isFavorite}
         isOnWatchList={isOnWatchList}
         addToWatchList={addToWatchList}
-        addToFavorites={addToFavorites}
         onClose={() => setIsOpen(false)}
       />
     </OverlayStyler>
@@ -66,14 +61,4 @@ const ButtonWrapper = styled.div`
   bottom: 0;
   width: 100%;
   position: absolute;
-`;
-
-const HeartWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  height: 100%;
-  right: 0;
-  top: 0;
-  padding: 5px;
-  /* flex-direction: column; */
 `;

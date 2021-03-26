@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
 import ImageContainer from '../components/ImageContainer';
 
 export default function Favorites({
