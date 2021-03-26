@@ -1,8 +1,7 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-export default function AddButton({ addToWatchList, isOnWatchList, movie }) {
+export default function AddButton({ movie, isOnWatchList, addToWatchList }) {
   const checkOnWatchList = isOnWatchList(movie);
 
   return (
@@ -13,19 +12,21 @@ export default function AddButton({ addToWatchList, isOnWatchList, movie }) {
 }
 
 AddButton.propTypes = {
+  movie: PropTypes.object,
+  isOnWatchList: PropTypes.bool,
   addToWatchList: PropTypes.func,
 };
 
 const WatchListButton = styled.button`
   background-color: var(--primary-100-opacity);
-  border: none;
-  outline: none;
   border-radius: 3px;
-  padding: 5px 10px;
-  transition: transform 250ms; // ?
+  border: none;
   color: white;
   font-weight: bold;
+  outline: none;
+  padding: 5px 10px;
   text-decoration: none;
+  transition: transform 250ms;
 
   cursor: pointer;
   :hover {

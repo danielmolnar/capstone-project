@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import ImageContainer from '../components/ImageContainer';
 import Spinner from '../components/Spinner';
+import ImageContainer from '../components/ImageContainer';
 
 export default function Search({
-  isLarge,
   movie,
-  addToWatchList,
-  isOnWatchList,
+  isLarge,
   isLoading,
   isFavorite,
+  isOnWatchList,
+  addToWatchList,
   addToFavorites,
 }) {
   return isLoading ? (
@@ -17,23 +17,25 @@ export default function Search({
   ) : (
     <FlexWrapper>
       <ImageContainer
-        isLarge={isLarge}
         movie={movie}
-        addToWatchList={() => addToWatchList(movie)}
-        isOnWatchList={() => isOnWatchList(movie)}
-        addToFavorites={addToFavorites}
+        isLarge={isLarge}
         isFavorite={isFavorite}
+        isOnWatchList={isOnWatchList}
+        addToWatchList={addToWatchList}
+        addToFavorites={addToFavorites}
       />
     </FlexWrapper>
   );
 }
 
 Search.propTypes = {
-  isLarge: PropTypes.bool,
   movie: PropTypes.object,
-  addToWatchList: PropTypes.func,
-  isOnWatchList: PropTypes.func,
+  isLarge: PropTypes.bool,
   isLoading: PropTypes.bool,
+  isFavorite: PropTypes.bool,
+  isOnWatchList: PropTypes.bool,
+  addToWatchList: PropTypes.func,
+  addToFavorites: PropTypes.func,
 };
 
 const FlexWrapper = styled.div`

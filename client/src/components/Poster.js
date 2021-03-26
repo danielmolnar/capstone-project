@@ -1,10 +1,9 @@
-import React from 'react';
-import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import flixbuddies_poster from '../images/flixbuddies_poster.png';
+import styled, { css } from 'styled-components';
 import backdrop_poster from '../images/backdrop_poster.png';
+import flixbuddies_poster from '../images/flixbuddies_poster.png';
 
-function Poster({ isLarge, movie }) {
+function Poster({ movie, isLarge }) {
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
   let existingPath = movie.poster_path === null && movie.backdrop_path === null;
 
@@ -39,8 +38,8 @@ Poster.propTyes = {
 };
 
 const Title = styled.p`
-  text-align: center;
   padding: 5px;
+  text-align: center;
 `;
 
 const ImageStyler = styled.img(

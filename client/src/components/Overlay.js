@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import CardInfos from '../components/CardInfos';
-import Button from '../components/Button';
-import FavoriteButton from '../components/FavoriteButton.js';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import Button from '../components/Button';
+import CardInfos from '../components/CardInfos';
+import FavoriteButton from '../components/FavoriteButton.js';
 
 export default function Overlay({
-  addToWatchList,
-  isOnWatchList,
   movie,
-  addToFavorites,
   isFavorite,
+  isOnWatchList,
+  addToWatchList,
+  addToFavorites,
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -19,20 +19,20 @@ export default function Overlay({
       <HeartWrapper>
         <FavoriteButton
           movie={movie}
-          addToFavorites={addToFavorites}
           isFavorite={isFavorite}
+          addToFavorites={addToFavorites}
         />
       </HeartWrapper>
       <ButtonWrapper>
         <Button clickHandler={() => setIsOpen(true)} />
       </ButtonWrapper>
       <CardInfos
-        addToFavorites={addToFavorites}
-        isFavorite={isFavorite}
+        open={isOpen}
         movie={movie}
+        isFavorite={isFavorite}
         isOnWatchList={isOnWatchList}
         addToWatchList={addToWatchList}
-        open={isOpen}
+        addToFavorites={addToFavorites}
         onClose={() => setIsOpen(false)}
       />
     </OverlayStyler>
@@ -40,20 +40,22 @@ export default function Overlay({
 }
 
 Overlay.propTypes = {
-  addToWatchList: PropTypes.func,
-  isOnWatchList: PropTypes.func,
   movie: PropTypes.object,
+  isFavorite: PropTypes.bool,
+  isOnWatchList: PropTypes.func,
+  addToWatchList: PropTypes.func,
+  addToFavorites: PropTypes.func,
 };
 
 const OverlayStyler = styled.div`
   /* display: flex;
   /* align-items: center; */
   /* justify-content: center; */
-  position: absolute;
-  width: 100%;
+  bottom: 0;
   height: 100%;
   opacity: 0;
-  bottom: 0;
+  width: 100%;
+  position: absolute;
 `;
 
 const ButtonWrapper = styled.div`
@@ -61,17 +63,17 @@ const ButtonWrapper = styled.div`
   justify-content: center;
   /*align-items: center;
   justify-content: center; */
-  position: absolute;
   bottom: 0;
   width: 100%;
+  position: absolute;
 `;
 
 const HeartWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
-  padding: 5px;
-  top: 0;
-  right: 0;
   height: 100%;
+  right: 0;
+  top: 0;
+  padding: 5px;
   /* flex-direction: column; */
 `;

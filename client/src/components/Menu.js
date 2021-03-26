@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -25,6 +26,10 @@ export default function Menu({ open }) {
   );
 }
 
+Menu.propTypes = {
+  open: PropTypes.bool,
+};
+
 const StyledMenu = styled.nav`
   display: flex;
   flex-direction: column;
@@ -32,30 +37,30 @@ const StyledMenu = styled.nav`
   align-items: flex-start;
   background: white;
   height: 100vh;
-  text-align: left;
+  left: 0;
   padding: 1rem;
   position: absolute;
-  z-index: 1;
+  text-align: left;
   top: 0;
-  left: 0;
   transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
   transition: transform 0.3s ease-in-out;
   width: 20vh;
+  z-index: 1;
   @media (max-width: ${({ theme }) => theme.mobile}) {
     width: 35%;
   }
 
   a {
     font-family: 'Bebas Neue', cursive;
-    font-size: 1.5rem;
-    /* margin-bottom: 5rem; */
-    /* text-transform: uppercase; */
-    /* padding: 2rem 0; */
-    /* font-weight: bold; */
-    /* letter-spacing: 0.5rem; */
     color: hsl(353, 85%, 53%);
     text-decoration: none;
     transition: color 0.3s linear;
+    font-size: 1.5rem;
+    /* font-weight: bold; */
+    /* letter-spacing: 0.5rem; */
+    /* margin-bottom: 5rem; */
+    /* padding: 2rem 0; */
+    /* text-transform: uppercase; */
 
     @media (max-width: ${({ theme }) => theme.mobile}) {
       font-size: 1.5rem;

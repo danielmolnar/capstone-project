@@ -1,6 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 export default function Button({ clickHandler }) {
   return (
@@ -21,13 +20,13 @@ const ButtonWrapper = styled.div`
 
 const ButtonStyler = styled.button`
   background-color: var(--primary-100-opacity);
-  text-align: center;
-  color: white;
   border-radius: 3px;
   border: none;
+  color: white;
   cursor: pointer;
-  padding: 2px 5px;
   font-size: 0.65rem;
+  padding: 2px 5px;
+  text-align: center;
   :hover {
     background-color: var(--primary-100);
   }

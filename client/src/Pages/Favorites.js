@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { MovieContext } from '../Store';
+import PropTypes from 'prop-types';
+
 import ImageContainer from '../components/ImageContainer';
 
 export default function Favorites({
@@ -12,17 +11,6 @@ export default function Favorites({
   addToWatchList,
   isOnWatchList,
 }) {
-  const [checkWatchlist, setCheckWatchlist] = useContext(MovieContext);
-
-  function toggleButton(movie) {
-    addToWatchList(movie);
-    setCheckWatchlist(!checkWatchlist);
-  }
-
-  function toggleWatchList(movie) {
-    setCheckWatchlist(isOnWatchList(movie));
-  }
-
   return (
     <FlexWrapper>
       <ImageContainer
@@ -30,8 +18,8 @@ export default function Favorites({
         movie={movie}
         addToFavorites={addToFavorites}
         isFavorite={isFavorite}
-        addToWatchList={() => toggleButton(movie)}
-        isOnWatchList={() => toggleWatchList(movie)}
+        addToWatchList={addToWatchList}
+        isOnWatchList={isOnWatchList}
       />
     </FlexWrapper>
   );
@@ -40,6 +28,8 @@ export default function Favorites({
 Favorites.propTypes = {
   isLarge: PropTypes.bool,
   movie: PropTypes.object,
+  addToFavorites: PropTypes.func,
+  isFavorite: PropTypes.bool,
   addToWatchList: PropTypes.func,
   isOnWatchList: PropTypes.func,
 };

@@ -1,75 +1,74 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Row from '../components/Row';
 import requests from '../services/requests';
 
 function Home({
-  addToWatchList,
-  isOnWatchList,
   open,
   isFavorite,
+  isOnWatchList,
+  addToWatchList,
   addToFavorites,
 }) {
   return (
     <StyleWrapper open={open}>
       <Row
-        title="NETFLIX ORIGINALS"
-        fetchUrl={requests.fetchNetflixOriginals}
         isLarge
-        addToWatchList={addToWatchList}
-        isOnWatchList={isOnWatchList}
-        addToFavorites={addToFavorites}
+        title="NETFLIX ORIGINALS"
         isFavorite={isFavorite}
+        isOnWatchList={isOnWatchList}
+        addToWatchList={addToWatchList}
+        addToFavorites={addToFavorites}
+        fetchUrl={requests.fetchNetflixOriginals}
       />
       <Row
         title="TRENDING"
-        fetchUrl={requests.fetchTrending}
-        addToWatchList={addToWatchList}
-        isOnWatchList={isOnWatchList}
-        addToFavorites={addToFavorites}
         isFavorite={isFavorite}
+        isOnWatchList={isOnWatchList}
+        addToWatchList={addToWatchList}
+        addToFavorites={addToFavorites}
+        fetchUrl={requests.fetchTrending}
       />
       <Row
         title="TOP RATED"
-        fetchUrl={requests.fetchTopRated}
-        addToWatchList={addToWatchList}
-        isOnWatchList={isOnWatchList}
-        addToFavorites={addToFavorites}
         isFavorite={isFavorite}
+        isOnWatchList={isOnWatchList}
+        addToWatchList={addToWatchList}
+        addToFavorites={addToFavorites}
+        fetchUrl={requests.fetchTopRated}
       />
       <Row
         title="ACTION"
-        fetchUrl={requests.fetchActionMovies}
-        addToWatchList={addToWatchList}
-        isOnWatchList={isOnWatchList}
-        addToFavorites={addToFavorites}
         isFavorite={isFavorite}
+        isOnWatchList={isOnWatchList}
+        addToWatchList={addToWatchList}
+        addToFavorites={addToFavorites}
+        fetchUrl={requests.fetchActionMovies}
       />
       <Row
         title="COMEDY"
-        fetchUrl={requests.fetchComedyMovies}
-        addToWatchList={addToWatchList}
-        isOnWatchList={isOnWatchList}
-        addToFavorites={addToFavorites}
         isFavorite={isFavorite}
+        isOnWatchList={isOnWatchList}
+        addToWatchList={addToWatchList}
+        addToFavorites={addToFavorites}
+        fetchUrl={requests.fetchComedyMovies}
       />
       <Row
         title="HORROR"
-        fetchUrl={requests.fetchHorrorMovies}
-        addToWatchList={addToWatchList}
-        isOnWatchList={isOnWatchList}
-        addToFavorites={addToFavorites}
         isFavorite={isFavorite}
+        isOnWatchList={isOnWatchList}
+        addToWatchList={addToWatchList}
+        addToFavorites={addToFavorites}
+        fetchUrl={requests.fetchHorrorMovies}
       />
       <RowWrapper>
         <Row
           title="DOCUMENTARIES"
-          fetchUrl={requests.fetchDocumentaries}
-          addToWatchList={addToWatchList}
-          isOnWatchList={isOnWatchList}
-          addToFavorites={addToFavorites}
           isFavorite={isFavorite}
+          isOnWatchList={isOnWatchList}
+          addToWatchList={addToWatchList}
+          addToFavorites={addToFavorites}
+          fetchUrl={requests.fetchDocumentaries}
         />
       </RowWrapper>
     </StyleWrapper>
@@ -77,16 +76,19 @@ function Home({
 }
 
 Home.propTypes = {
+  open: PropTypes.bool,
+  isFavorite: PropTypes.bool,
+  isOnWatchList: PropTypes.bool,
   addToWatchList: PropTypes.func,
-  isOnWatchList: PropTypes.func,
+  addToFavorites: PropTypes.func,
 };
 
 const StyleWrapper = styled.div`
+  overflow-x: scroll;
+  overflow-y: hidden;
+  scrollbar-width: none;
   transform: ${({ open }) => (open ? 'translateX(20vH)' : 'translateX(0)')};
   transition: transform 0.3s ease-in-out;
-  overflow-y: hidden;
-  overflow-x: scroll;
-  scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;
   }

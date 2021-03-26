@@ -1,24 +1,23 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ImageContainer from '../components/ImageContainer';
 
 export default function Watchlist({
-  isLarge,
   movie,
-  addToWatchList,
-  isOnWatchList,
+  isLarge,
   isFavorite,
+  isOnWatchList,
+  addToWatchList,
   addToFavorites,
 }) {
   return (
     <FlexWrapper>
       <ImageContainer
-        isLarge={isLarge}
         movie={movie}
-        addToWatchList={addToWatchList}
-        isOnWatchList={isOnWatchList}
+        isLarge={isLarge}
         isFavorite={isFavorite}
+        isOnWatchList={isOnWatchList}
+        addToWatchList={addToWatchList}
         addToFavorites={addToFavorites}
       />
     </FlexWrapper>
@@ -26,10 +25,12 @@ export default function Watchlist({
 }
 
 Watchlist.propTypes = {
-  isLarge: PropTypes.bool,
   movie: PropTypes.object,
+  isLarge: PropTypes.bool,
+  isFavorite: PropTypes.bool,
+  isOnWatchList: PropTypes.bool,
   addToWatchList: PropTypes.func,
-  isOnWatchList: PropTypes.func,
+  addToFavorites: PropTypes.func,
 };
 
 const FlexWrapper = styled.div`

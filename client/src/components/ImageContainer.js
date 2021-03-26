@@ -1,25 +1,24 @@
-import React from 'react';
-import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
+import styled, { css } from 'styled-components';
 import Overlay from '../components/Overlay';
 import Poster from '../components/Poster.js';
 
 function ImageContainer({
-  isLarge,
   movie,
-  addToWatchList,
-  isOnWatchList,
+  isLarge,
   isFavorite,
+  isOnWatchList,
+  addToWatchList,
   addToFavorites,
 }) {
   return (
     <MovieContainer isLarge={isLarge}>
       <Poster isLarge={isLarge} movie={movie} />
       <Overlay
-        isFavorite={isFavorite}
-        addToFavorites={addToFavorites}
         movie={movie}
+        isFavorite={isFavorite}
         isOnWatchList={isOnWatchList}
+        addToFavorites={addToFavorites}
         addToWatchList={addToWatchList}
       />
     </MovieContainer>
@@ -29,17 +28,19 @@ function ImageContainer({
 export default ImageContainer;
 
 ImageContainer.propTypes = {
-  isLarge: PropTypes.bool,
   movie: PropTypes.object,
+  isLarge: PropTypes.bool,
+  isFavorite: PropTypes.bool,
+  isOnWatchList: PropTypes.bool,
   addToWatchList: PropTypes.func,
-  isOnWatchList: PropTypes.func,
+  addToFavorites: PropTypes.func,
 };
 
 const MovieContainer = styled.div(
   (props) => css`
+    margin-right: 15px;
     max-height: 200px;
     position: relative;
-    margin-right: 15px;
     transition: transform 450ms;
 
     p {

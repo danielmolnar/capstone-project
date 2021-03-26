@@ -2,16 +2,16 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import axios from '../services/axios';
-import ImageContainer from './ImageContainer';
 import Spinner from '../components/Spinner';
+import ImageContainer from './ImageContainer';
 
 function Row({
   title,
-  fetchUrl,
   isLarge,
-  addToWatchList,
-  isOnWatchList,
+  fetchUrl,
   isFavorite,
+  isOnWatchList,
+  addToWatchList,
   addToFavorites,
 }) {
   const [movies, setMovies] = useState([]);
@@ -41,14 +41,14 @@ function Row({
         <MovieWrapper>
           {movies.map((movie) => (
             <ImageContainer
-              isLoading={isLoading}
-              key={movie.id}
               movie={movie}
+              key={movie.id}
               isLarge={isLarge}
-              addToWatchList={() => addToWatchList(movie)}
-              isOnWatchList={() => isOnWatchList(movie)}
-              addToFavorites={() => addToFavorites(movie)}
+              isLoading={isLoading}
               isFavorite={() => isFavorite(movie)}
+              isOnWatchList={() => isOnWatchList(movie)}
+              addToWatchList={() => addToWatchList(movie)}
+              addToFavorites={() => addToFavorites(movie)}
             />
           ))}
         </MovieWrapper>
@@ -61,10 +61,12 @@ export default Row;
 
 Row.propTypes = {
   title: PropTypes.string,
-  fetchUrl: PropTypes.string,
   isLarge: PropTypes.bool,
+  fetchUrl: PropTypes.string,
+  isFavorite: PropTypes.bool,
+  isOnWatchList: PropTypes.bool,
   addToWatchList: PropTypes.func,
-  isOnWatchList: PropTypes.func,
+  addToFavorites: PropTypes.func,
 };
 
 const Wrapper = styled.div`
@@ -73,10 +75,10 @@ const Wrapper = styled.div`
 
 const MovieWrapper = styled.div`
   display: flex;
-  overflow-y: hidden;
-  overflow-x: scroll;
-  padding: 20px;
   margin-right: 15px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  padding: 20px;
   scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;
