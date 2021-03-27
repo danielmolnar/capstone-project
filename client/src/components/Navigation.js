@@ -5,56 +5,64 @@ import { HomeAlt } from '@styled-icons/boxicons-regular/HomeAlt';
 import { CameraMovie } from '@styled-icons/boxicons-regular/CameraMovie';
 import { SearchAlt } from '@styled-icons/boxicons-regular/SearchAlt';
 import { People } from '@styled-icons/octicons/People';
+import Sidebar from '../components/Sidebar';
 
-export default function Navigation() {
+export default function Navigation({ open, setOpen }) {
   return (
-    <NavWrapper>
-      <Nav>
-        <StyledLink exact to="/">
-          <HomeAlt size="24" />
-        </StyledLink>
-        <StyledLink to="/friends">
-          <People size="24" />
-        </StyledLink>
-        <StyledLink to="/watchlist">
-          <CameraMovie size="24" />
-        </StyledLink>
-        <StyledLink to="/search">
-          <SearchAlt size="24" />
-        </StyledLink>
-      </Nav>
-    </NavWrapper>
+    <>
+      <NavWrapper>
+        <Nav>
+          <StyledLink exact to="/">
+            <HomeAlt size="24" />
+          </StyledLink>
+          <StyledLink to="/friends">
+            <People size="24" />
+          </StyledLink>
+          <StyledLink to="/watchlist">
+            <CameraMovie size="24" />
+          </StyledLink>
+          <StyledLink to="/search">
+            <SearchAlt size="24" />
+          </StyledLink>
+        </Nav>
+      </NavWrapper>
+    </>
   );
 }
 
 const activeClassName = 'nav-item-active';
 
 const StyledLink = styled(NavLink).attrs({ activeClassName })`
-  color: white;
+  color: var(--primary-100);
 
   &.${activeClassName} {
-    border: white 2px solid;
+    border: var(--primary-100) 2px solid;
     padding: 3px;
     border-radius: 10px;
   }
 `;
 
+const SidebarWrapper = styled.div`
+  position: absolute;
+`;
+
 const Nav = styled.nav`
   display: flex;
   justify-content: space-around;
-  border-top: white;
+  bottom: 0;
+  position: fixed;
   align-items: center;
-  background: linear-gradient(to right, hsl(6, 66%, 35%), hsl(353, 85%, 53%));
+  background: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   width: 100%;
+  height: 3rem;
 `;
 
 const NavWrapper = styled.div`
-  display: flex;
-  justify-content: center;
+  /* display: flex;
+  justify-content: center; */
   position: fixed;
-  bottom: 0;
-  z-index: 10000;
+  z-index: 90000000000000;
   width: 100%;
-  height: 50px;
-  border-top: white 2px solid;
+  bottom: 0;
 `;

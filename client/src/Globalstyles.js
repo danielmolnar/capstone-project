@@ -21,6 +21,8 @@ export const GlobalStyles = createGlobalStyle`
 body {
 margin: 0;
 background: var(--primary-background);
+overflow-x: hidden;
+overflow-y: scroll;
 }
 
 h2 {

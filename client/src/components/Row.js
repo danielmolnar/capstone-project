@@ -70,12 +70,12 @@ Row.propTypes = {
 };
 
 const Wrapper = styled.div`
-  margin-left: 20px;
+  margin-left: 25px;
 `;
 
 const MovieWrapper = styled.div`
   display: flex;
-  margin-right: 15px;
+  /* margin-right: 5px; */
   overflow-x: scroll;
   overflow-y: hidden;
   padding: 20px;

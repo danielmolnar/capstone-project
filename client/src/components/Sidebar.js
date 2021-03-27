@@ -20,5 +20,5 @@ Sidebar.propTypes = {
 };
 
 const BurgerWrapper = styled.div`
-  margin-top: 0.5rem;
+  /* position: fixed; */
 `;
