@@ -2,8 +2,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Burger from './Burger';
 import Menu from './Menu';
-
-import React from 'react';
+import { device } from '../services/device';
 
 export default function Sidebar({ open, setOpen }) {
   return (
@@ -20,8 +19,15 @@ Sidebar.propTypes = {
 };
 
 const BurgerWrapper = styled.div`
-  position: fixed;
-  bottom: 0;
-  left: 0;
+  /* position: fixed; */
+  /* bottom: 0; */
+  /* left: 0; */
   z-index: 9999999999999999;
+  @media ${device.laptop} {
+    max-width: 800px;
+  }
+
+  @media ${device.desktop} {
+    max-width: 1400px;
+  }
 `;

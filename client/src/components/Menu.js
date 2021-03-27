@@ -6,27 +6,26 @@ export default function Menu({ open, setOpen }) {
   return (
     <StyledMenu open={open}>
       <StyledText>
-        <Link to="/favorites">
+        <BurgerLink to="/favorites">
           <CloseContainer onClick={() => setOpen(!open)}>
             <h2>Favorites</h2>
           </CloseContainer>
-        </Link>
-
-        <Link to="/favorites">
+        </BurgerLink>
+        <BurgerLink to="/favorites">
           <CloseContainer onClick={() => setOpen(!open)}>
             <h2>Ratings</h2>
           </CloseContainer>
-        </Link>
-        <Link to="/newwatchlist">
+        </BurgerLink>
+        <BurgerLink to="/newwatchlist">
           <CloseContainer onClick={() => setOpen(!open)}>
             <h2>Friends</h2>
           </CloseContainer>
-        </Link>
-        <Link to="/favorites">
+        </BurgerLink>
+        <BurgerLink to="/favorites">
           <CloseContainer onClick={() => setOpen(!open)}>
             <h2>Edit Profile</h2>
           </CloseContainer>
-        </Link>
+        </BurgerLink>
       </StyledText>
     </StyledMenu>
   );
@@ -36,8 +35,13 @@ Menu.propTypes = {
   open: PropTypes.bool,
 };
 
+const BurgerLink = styled(Link)`
+  text-decoration: none !important;
+`;
+
 const StyledMenu = styled.nav`
   display: flex;
+  text-decoration: none !important;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
@@ -66,7 +70,9 @@ const StyledMenu = styled.nav`
   }
 `;
 
-const CloseContainer = styled.div``;
+const CloseContainer = styled.div`
+  text-decoration: none !important;
+`;
 
 const StyledText = styled.div`
   display: flex;
@@ -74,12 +80,13 @@ const StyledText = styled.div`
   align-items: flex-start;
   justify-content: space-evenly;
   height: 80vh;
+  text-decoration: none !important;
 
   h2 {
     font-family: 'Bebas Neue', cursive;
     color: hsl(353, 85%, 53%);
-    text-decoration: none;
     transition: color 0.3s linear;
     font-size: 1.5rem;
+    text-decoration: none !important;
   }
 `;

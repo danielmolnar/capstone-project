@@ -12,8 +12,6 @@ import Banner from '../src/components/Banner';
 import Searchbar from './components/Searchbar';
 import Navigation from '../src/components/Navigation';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
-import ScrollToTop from './services/ScrollToTop';
-import Sidebar from './components/Sidebar';
 
 function App() {
   const [query, setQuery] = useState('');
@@ -60,120 +58,86 @@ function App() {
 
   return (
     <>
-      <Navigation open={open} setOpen={setOpen} />
-      <Sidebar open={open} setOpen={setOpen} />
+      <Navigation />
       <Banner open={open} setOpen={setOpen} />
-      <ScrollToTop>
-        <Switch>
-          <Body open={open}>
-            <Buffer />
-            <Route exact path="/">
-              <HomeWrapper>
-                <Home
-                  isFavorite={isFavorite}
-                  isOnWatchList={isOnWatchList}
-                  addToWatchList={addToWatchList}
-                  addToFavorites={addToFavorites}
+      <Buffer />
+      <Switch>
+        <Route exact path="/">
+          <Home
+            isFavorite={isFavorite}
+            isOnWatchList={isOnWatchList}
+            addToWatchList={addToWatchList}
+            addToFavorites={addToFavorites}
+          />
+        </Route>
+        <Route path="/watchlist">
+          <WatchlistHeadline>WATCHLIST</WatchlistHeadline>
+          <MovieWrapper>
+            <GridWrapper>
+              {watchlist.map((movie) => (
+                <Watchlist
+                  isLarge
+                  key={movie.id}
+                  movie={movie}
+                  isFavorite={() => isFavorite(movie)}
+                  isOnWatchList={() => isOnWatchList(movie)}
+                  addToWatchList={() => addToWatchList(movie)}
+                  addToFavorites={() => addToFavorites(movie)}
                 />
-              </HomeWrapper>
-            </Route>
-            <Route path="/watchlist">
-              <WatchlistHeadline>WATCHLIST</WatchlistHeadline>
-              <MovieWrapper>
-                <GridWrapper>
-                  {watchlist.map((movie) => (
-                    <Watchlist
-                      isLarge
-                      key={movie.id}
-                      movie={movie}
-                      isFavorite={() => isFavorite(movie)}
-                      isOnWatchList={() => isOnWatchList(movie)}
-                      addToWatchList={() => addToWatchList(movie)}
-                      addToFavorites={() => addToFavorites(movie)}
-                    />
-                  ))}
-                </GridWrapper>
-              </MovieWrapper>
-            </Route>
-            <Route path="/friends">
-              <Friends />
-            </Route>
-            <Route path="/search">
-              <SearchWrapper>
-                <Headline>SEARCH</Headline>
-                <SearchbarWrapper>
-                  <Searchbar getQuery={(q) => setQuery(q)} />
-                </SearchbarWrapper>
-                <MovieWrapper>
-                  <GridWrapper>
-                    {search.map((movie) => (
-                      <Search
-                        isLarge
-                        movie={movie}
-                        key={movie.id}
-                        isLoading={isLoading}
-                        isFavorite={() => isFavorite(movie)}
-                        isOnWatchList={() => isOnWatchList(movie)}
-                        addToWatchList={() => addToWatchList(movie)}
-                        addToFavorites={() => addToFavorites(movie)}
-                      />
-                    ))}
-                  </GridWrapper>
-                </MovieWrapper>
-              </SearchWrapper>
-            </Route>
-            <Route path="/favorites">
-              <WatchlistHeadline>FAVORITES</WatchlistHeadline>
-              <MovieWrapper>
-                <GridWrapper>
-                  {favorites.map((movie) => (
-                    <Favorites
-                      isLarge
-                      movie={movie}
-                      key={movie.id}
-                      isFavorite={() => isFavorite(movie)}
-                      isOnWatchList={() => isOnWatchList(movie)}
-                      addToWatchList={() => addToWatchList(movie)}
-                      addToFavorites={() => addToFavorites(movie)}
-                    />
-                  ))}
-                </GridWrapper>
-              </MovieWrapper>
-            </Route>
-            <Buffer />
-          </Body>
-        </Switch>
-      </ScrollToTop>
+              ))}
+            </GridWrapper>
+          </MovieWrapper>
+        </Route>
+        <Route path="/friends">
+          <Friends />
+        </Route>
+        <Route path="/search">
+          <Headline>SEARCH</Headline>
+          <SearchbarWrapper>
+            <Searchbar getQuery={(q) => setQuery(q)} />
+          </SearchbarWrapper>
+          <MovieWrapper>
+            <GridWrapper>
+              {search.map((movie) => (
+                <Search
+                  isLarge
+                  movie={movie}
+                  key={movie.id}
+                  isLoading={isLoading}
+                  isFavorite={() => isFavorite(movie)}
+                  isOnWatchList={() => isOnWatchList(movie)}
+                  addToWatchList={() => addToWatchList(movie)}
+                  addToFavorites={() => addToFavorites(movie)}
+                />
+              ))}
+            </GridWrapper>
+          </MovieWrapper>
+        </Route>
+        <Route path="/favorites">
+          <WatchlistHeadline>FAVORITES</WatchlistHeadline>
+          <MovieWrapper>
+            <GridWrapper>
+              {favorites.map((movie) => (
+                <Favorites
+                  isLarge
+                  movie={movie}
+                  key={movie.id}
+                  isFavorite={() => isFavorite(movie)}
+                  isOnWatchList={() => isOnWatchList(movie)}
+                  addToWatchList={() => addToWatchList(movie)}
+                  addToFavorites={() => addToFavorites(movie)}
+                />
+              ))}
+            </GridWrapper>
+          </MovieWrapper>
+        </Route>
+      </Switch>
+      <Buffer />
     </>
   );
 }
 
 export default App;
-
-const HomeWrapper = styled.div`
-  scrollbar-width: none;
-  /* overflow: overlay; */
-  ::-webkit-scrollbar {
-    display: none;
-  }
-`;
-
-const Body = styled.div`
-  transition: transform 0.3s ease-in-out;
-  transform: ${({ open }) => (open ? 'translateX(35vH)' : 'translateX()')};
-
-  @media (max-width: 800px) {
-    transform: ${({ open }) => (open ? 'translateX(30vH)' : 'translateX()')};
-  }
-
-  @media (max-width: 500px) {
-    transform: ${({ open }) => (open ? 'translateX(20vh)' : 'translateX()')};
-  }
-
-  @media (max-width: 320px) {
-    transform: ${({ open }) => (open ? 'translateX(15vh)' : 'translateX()')};
-  }
-`;
 
 const Buffer = styled.div`
   height: 1px;
@@ -222,12 +186,4 @@ const SearchbarWrapper = styled.div`
   align-items: center;
   justify-content: flex-end;
   margin-bottom: 1rem;
-`;
-
-const SearchWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 80%;
-  margin-left: 10%;
-  margin-right: 10%;
 `;

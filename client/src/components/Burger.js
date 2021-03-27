@@ -24,7 +24,7 @@ export const StyledBurger = styled.button`
   flex-direction: column;
   height: 2rem;
   justify-content: space-around;
-  left: 1rem;
+  /* left: 1rem; */
   padding: 0;
   position: absolute;
   bottom: 0.5rem;

@@ -84,23 +84,15 @@ Home.propTypes = {
 };
 
 const StyleWrapper = styled.div`
-  overflow-x: scroll;
-  overflow-y: hidden;
-  scrollbar-width: none;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
+  /* height: 100%; */
 `;
 
 const RowWrapper = styled.div`
-  /* overflow-y: hidden;
-  overflow-x: scroll;
-  scrollbar-width: none;
+  /* scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;
-  } */
-  /* z-index: 1; */
+  }
+  z-index: 1; */
 `;
 
 export default Home;

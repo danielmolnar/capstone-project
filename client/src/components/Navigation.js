@@ -1,3 +1,4 @@
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { HomeAlt } from '@styled-icons/boxicons-regular/HomeAlt';
@@ -5,35 +6,36 @@ import { CameraMovie } from '@styled-icons/boxicons-regular/CameraMovie';
 import { SearchAlt } from '@styled-icons/boxicons-regular/SearchAlt';
 import { People } from '@styled-icons/octicons/People';
 
-export default function Navigation({ open, setOpen }) {
+export default function Navigation() {
   return (
-    <>
-      <NavWrapper>
-        <Nav>
-          <StyledLink exact to="/">
-            <HomeAlt size="24" />
-          </StyledLink>
-          <StyledLink to="/friends">
-            <People size="24" />
-          </StyledLink>
-          <StyledLink to="/watchlist">
-            <CameraMovie size="24" />
-          </StyledLink>
-          <StyledLink to="/search">
-            <SearchAlt size="24" />
-          </StyledLink>
-        </Nav>
-      </NavWrapper>
-    </>
+    <NavWrapper>
+      <Nav>
+        <StyledLink exact to="/">
+          <HomeAlt size="24" />
+        </StyledLink>
+        <StyledLink to="/friends">
+          <People size="24" />
+        </StyledLink>
+        <StyledLink to="/watchlist">
+          <CameraMovie size="24" />
+        </StyledLink>
+        <StyledLink to="/search">
+          <SearchAlt size="24" />
+        </StyledLink>
+      </Nav>
+    </NavWrapper>
   );
 }
 
 const activeClassName = 'nav-item-active';
 
 const StyledLink = styled(NavLink).attrs({ activeClassName })`
-  color: black;
+  color: white;
+
   &.${activeClassName} {
-    color: white;
+    border: white 2px solid;
+    padding: 3px;
+    border-radius: 10px;
   }
 `;
 
@@ -42,7 +44,7 @@ const Nav = styled.nav`
   justify-content: space-around;
   border-top: white;
   align-items: center;
-  position: relative;
+  background: linear-gradient(to right, hsl(6, 66%, 35%), hsl(353, 85%, 53%));
   width: 100%;
 `;
 
@@ -51,9 +53,8 @@ const NavWrapper = styled.div`
   justify-content: center;
   position: fixed;
   bottom: 0;
-  z-index: 1;
+  z-index: 10000;
   width: 100%;
-  background: linear-gradient(to right, hsl(6, 66%, 35%), hsl(353, 85%, 53%));
-  height: 3rem;
+  height: 50px;
   border-top: white 2px solid;
 `;
