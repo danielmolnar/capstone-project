@@ -36,7 +36,7 @@ export default function Overlay({
 
 Overlay.propTypes = {
   movie: PropTypes.object,
-  isFavorite: PropTypes.bool,
+  isFavorite: PropTypes.func,
   isOnWatchList: PropTypes.func,
   addToWatchList: PropTypes.func,
   addToFavorites: PropTypes.func,

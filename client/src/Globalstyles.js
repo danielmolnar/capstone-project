@@ -12,15 +12,18 @@ export const GlobalStyles = createGlobalStyle`
 }
 
 *{
+  
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
-  /* background: ${({ theme }) => theme.primaryDark};
-  color: ${({ theme }) => theme.primaryLight}; */
+
 }
 
 body {
+ overflow-y: scroll; 
+ overflow-x: hidden; 
+scrollbar-width: none;
 margin: 0;
-background: var(--primary-background);
+background: var(--primary-background) !important;
 }
 
 h2 {

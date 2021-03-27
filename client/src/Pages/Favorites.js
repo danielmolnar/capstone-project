@@ -25,12 +25,12 @@ export default function Favorites({
 }
 
 Favorites.propTypes = {
-  isLarge: PropTypes.bool,
   movie: PropTypes.object,
-  addToFavorites: PropTypes.func,
-  isFavorite: PropTypes.bool,
-  addToWatchList: PropTypes.func,
+  isLarge: PropTypes.bool,
+  isFavorite: PropTypes.func,
   isOnWatchList: PropTypes.func,
+  addToFavorites: PropTypes.func,
+  addToWatchList: PropTypes.func,
 };
 
 const FlexWrapper = styled.div`

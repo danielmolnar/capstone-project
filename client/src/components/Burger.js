@@ -24,17 +24,15 @@ export const StyledBurger = styled.button`
   flex-direction: column;
   height: 2rem;
   justify-content: space-around;
-  left: 2rem;
+  left: 1rem;
   padding: 0;
   position: absolute;
-  top: 5%;
+  bottom: 0.5rem;
   width: 2rem;
-  z-index: 2;
-
+  z-index: 999999999999999999999999999999999999999999999999999999999999999999999999999999999;
   &:focus {
     outline: none;
   }
-
   div {
     background: ${({ theme }) => theme.primaryLight};
     border-radius: 10px;
@@ -45,20 +43,15 @@ export const StyledBurger = styled.button`
     width: 2rem;
     :first-child {
       transform: ${({ open }) => (open ? 'rotate(45deg)' : 'rotate(0)')};
-      background: ${({ open }) =>
-        open ? 'hsl(353, 85%, 53%)' : 'hsl(353, 85%, 53%)'};
+      background: ${({ open }) => (open ? 'white' : 'white')};
     }
-
     :nth-child(2) {
-      background: ${({ open }) =>
-        open ? 'hsl(353, 85%, 53%)' : 'hsl(353, 85%, 53%)'};
+      background: ${({ open }) => (open ? 'white' : 'white')};
       opacity: ${({ open }) => (open ? '0' : '1')};
       transform: ${({ open }) => (open ? 'translateX(20px)' : 'translateX(0)')};
     }
-
     :nth-child(3) {
-      background: ${({ open }) =>
-        open ? 'hsl(353, 85%, 53%)' : 'hsl(353, 85%, 53%)'};
+      background: ${({ open }) => (open ? 'white' : 'white')};
       transform: ${({ open }) => (open ? 'rotate(-45deg)' : 'rotate(0)')};
     }
   }

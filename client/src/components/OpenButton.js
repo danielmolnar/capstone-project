@@ -5,10 +5,10 @@ import { HeartCircle } from '@styled-icons/boxicons-solid/HeartCircle';
 import { HeartCircle as HeartInActive } from '@styled-icons/boxicons-regular/HeartCircle';
 
 export default function OpenButton({
-  clickHandler,
-  isFavorite,
-  addToFavorites,
   movie,
+  isFavorite,
+  clickHandler,
+  addToFavorites,
 }) {
   const favoriteCheck = isFavorite(movie);
 
@@ -25,7 +25,9 @@ export default function OpenButton({
 }
 
 OpenButton.propTypes = {
+  isFavorite: PropTypes.func,
   clickHandler: PropTypes.func,
+  addtoFavorites: PropTypes.func,
 };
 
 const StyledHeartInActive = styled(HeartInActive)`
@@ -61,54 +63,4 @@ const ButtonWrapper = styled.div`
   margin-bottom: 0.5rem;
   position: relative;
   width: 100%;
-`;
-
-// return !favoriteCheck ? (
-//   <HeartBackGround>
-//     <HeartInactive onClick={addToFavorites} />
-//   </HeartBackGround>
-// ) : (
-//   <HeartBackGround>
-//     <HeartActive onClick={addToFavorites} />
-//   </HeartBackGround>
-// );
-// }
-
-const HeartBackGround = styled.div`
-  /* display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  border: solid white 2.5px;
-  height: 20px;
-  width: 20px; */
-  /* background-color: var(--primary-100); */
-`;
-
-const HeartInactive = styled(HeartCircle)`
-  color: white;
-  cursor: pointer;
-  /* font-weight: bold; */
-
-  transition: transform 250ms;
-  height: 25px;
-  width: 25px;
-
-  :hover {
-    color: var(--primary-100);
-  }
-`;
-
-const ButtonStyler = styled.button`
-  background-color: var(--primary-100-opacity);
-  border-radius: 3px;
-  border: none;
-  color: white;
-  cursor: pointer;
-  font-size: 0.65rem;
-  padding: 2px 5px;
-  text-align: center;
-  :hover {
-    background-color: var(--primary-100);
-  }
 `;
