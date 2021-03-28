@@ -57,8 +57,8 @@ CardInfos.propTypes = {
   open: PropTypes.bool,
   movie: PropTypes.object,
   onClose: PropTypes.func,
-  isFavorite: PropTypes.bool,
-  isOnWatchList: PropTypes.bool,
+  isFavorite: PropTypes.func,
+  isOnWatchList: PropTypes.func,
   addToFavorites: PropTypes.func,
   addToWatchList: PropTypes.func,
 };

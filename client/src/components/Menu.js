@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { device } from '../services/device';
-import { HeartCircle } from '@styled-icons/boxicons-solid/HeartCircle';
+import { Link } from 'react-router-dom';
 import { Star } from '@styled-icons/fa-regular/Star';
-import { PeopleCommunity } from '@styled-icons/fluentui-system-filled/PeopleCommunity';
+import { HeartCircle } from '@styled-icons/boxicons-solid/HeartCircle';
 import { Settings } from '@styled-icons/fluentui-system-filled/Settings';
+import { PeopleCommunity } from '@styled-icons/fluentui-system-filled/PeopleCommunity';
 
 export default function Menu({ open, setOpen }) {
   return (
@@ -17,22 +16,22 @@ export default function Menu({ open, setOpen }) {
             <p>Favorites</p>
           </CloseWrapper>
         </BurgerLink>
-        <BurgerLink to="/favorites">
+        <BurgerLink to="/ratings">
           <CloseWrapper onClick={() => setOpen(!open)}>
             <StyledStar />
             <p>Ratings</p>
           </CloseWrapper>
         </BurgerLink>
-        <BurgerLink to="/newwatchlist">
+        <BurgerLink to="/friendsinfo">
           <CloseWrapper onClick={() => setOpen(!open)}>
             <Friends />
             <p>Friends</p>
           </CloseWrapper>
         </BurgerLink>
-        <BurgerLink to="/favorites">
+        <BurgerLink to="/profile">
           <CloseWrapper onClick={() => setOpen(!open)}>
             <ProfileSettings />
-            <p>Edit Profile</p>
+            <p>Profile</p>
           </CloseWrapper>
         </BurgerLink>
       </MenuWrapper>

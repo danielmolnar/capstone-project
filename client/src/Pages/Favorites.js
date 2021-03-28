@@ -1,36 +1,36 @@
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import ImageContainer from '../components/ImageContainer';
 
 export default function Favorites({
-  isLarge,
   movie,
-  addToFavorites,
+  isLarge,
   isFavorite,
-  addToWatchList,
   isOnWatchList,
+  addToWatchList,
+  addToFavorites,
 }) {
   return (
     <FlexWrapper>
       <ImageContainer
-        isLarge={isLarge}
         movie={movie}
-        addToFavorites={addToFavorites}
+        isLarge={isLarge}
         isFavorite={isFavorite}
-        addToWatchList={addToWatchList}
         isOnWatchList={isOnWatchList}
+        addToWatchList={addToWatchList}
+        addToFavorites={addToFavorites}
       />
     </FlexWrapper>
   );
 }
 
 Favorites.propTypes = {
-  isLarge: PropTypes.bool,
   movie: PropTypes.object,
-  addToFavorites: PropTypes.func,
-  isFavorite: PropTypes.bool,
-  addToWatchList: PropTypes.func,
+  isLarge: PropTypes.bool,
+  isFavorite: PropTypes.func,
   isOnWatchList: PropTypes.func,
+  addToWatchList: PropTypes.func,
+  addToFavorites: PropTypes.func,
 };
 
 const FlexWrapper = styled.div`

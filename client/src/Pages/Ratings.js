@@ -1,10 +1,9 @@
-import React from 'react';
 import styled from 'styled-components';
 
-export default function Friends() {
+export default function Ratings() {
   return (
     <Wrapper>
-      <h2>Friends</h2>
+      <h2>Ratings</h2>
     </Wrapper>
   );
 }

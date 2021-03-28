@@ -5,16 +5,18 @@ import Home from './Pages/Home';
 import Search from './Pages/Search';
 import axios from './services/axios';
 import Friends from './Pages/Friends';
+import Ratings from './Pages/Ratings';
+import Profile from './Pages/Profile';
 import Watchlist from './Pages/Watchlist';
 import Favorites from './Pages/Favorites';
+import Sidebar from './components/Sidebar';
 import requests from './services/requests';
 import Banner from '../src/components/Banner';
 import Searchbar from './components/Searchbar';
+import FriendsCards from './Pages/FriendsCards';
+import ScrollToTop from './services/ScrollToTop';
 import Navigation from '../src/components/Navigation';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
-import useScrollToTop from './hooks/useScrollToTop';
-import useScreenLock from '../src/hooks/useScreenLock';
-import Sidebar from './components/Sidebar';
 
 function App() {
   const [query, setQuery] = useState('');
@@ -64,9 +66,9 @@ function App() {
   return (
     <>
       <Navigation />
-      <Banner open={open} setOpen={setOpen} />
+      <Banner />
       <Sidebar open={open} setOpen={setOpen} />
-      <useScrollToTop>
+      <ScrollToTop>
         <Switch>
           <MainWrapper open={open}>
             <Buffer />
@@ -102,7 +104,7 @@ function App() {
             <Route path="/search">
               <Headline>SEARCH</Headline>
               <SearchbarWrapper>
-                <Searchbar getQuery={(q) => setQuery(q)} />
+                <Searchbar getQuery={(query) => setQuery(query)} />
               </SearchbarWrapper>
               <MovieWrapper>
                 <GridWrapper>
@@ -139,10 +141,19 @@ function App() {
                 </GridWrapper>
               </MovieWrapper>
             </Route>
+            <Route path="/ratings">
+              <Ratings />
+            </Route>
+            <Route path="/friendsinfo">
+              <FriendsCards />
+            </Route>
+            <Route path="/profile">
+              <Profile />
+            </Route>
             <Buffer />
           </MainWrapper>
         </Switch>
-      </useScrollToTop>
+      </ScrollToTop>
     </>
   );
 }
@@ -199,7 +210,6 @@ const Headline = styled.h2`
 `;
 
 const WatchlistHeadline = styled.h2`
-  /* margin-bottom: 3rem; */
   margin-left: 20px;
 `;
 

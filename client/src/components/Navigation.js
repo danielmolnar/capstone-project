@@ -1,10 +1,9 @@
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { HomeAlt } from '@styled-icons/boxicons-regular/HomeAlt';
 import { CameraMovie } from '@styled-icons/boxicons-regular/CameraMovie';
 import { SearchAlt } from '@styled-icons/boxicons-regular/SearchAlt';
 import { People } from '@styled-icons/octicons/People';
-import Sidebar from '../components/Sidebar';
 
 export default function Navigation() {
   return (
@@ -54,8 +53,6 @@ const Nav = styled.nav`
 `;
 
 const NavWrapper = styled.div`
-  /* display: flex;
-  justify-content: center; */
   position: fixed;
   z-index: 90000000000000;
   width: 100%;

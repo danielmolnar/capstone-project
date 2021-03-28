@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import axios from '../services/axios';
@@ -63,8 +63,8 @@ Row.propTypes = {
   title: PropTypes.string,
   isLarge: PropTypes.bool,
   fetchUrl: PropTypes.string,
-  isFavorite: PropTypes.bool,
-  isOnWatchList: PropTypes.bool,
+  isFavorite: PropTypes.func,
+  isOnWatchList: PropTypes.func,
   addToWatchList: PropTypes.func,
   addToFavorites: PropTypes.func,
 };
@@ -75,7 +75,6 @@ const Wrapper = styled.div`
 
 const MovieWrapper = styled.div`
   display: flex;
-  /* margin-right: 5px; */
   overflow-x: scroll;
   overflow-y: hidden;
   padding: 20px;
