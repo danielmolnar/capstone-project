@@ -13,7 +13,7 @@ export default function AddButton({ movie, isOnWatchList, addToWatchList }) {
 
 AddButton.propTypes = {
   movie: PropTypes.object,
-  isOnWatchList: PropTypes.bool,
+  isOnWatchList: PropTypes.func,
   addToWatchList: PropTypes.func,
 };
 

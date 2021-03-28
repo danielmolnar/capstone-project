@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 export default function Searchbar({ getQuery }) {
   const [text, setText] = useState('');
-  const onChange = (q) => {
-    setText(q);
-    getQuery(q);
+  const onChange = (query) => {
+    setText(query);
+    getQuery(query);
   };
 
   return (

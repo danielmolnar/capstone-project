@@ -36,16 +36,13 @@ export default function Overlay({
 
 Overlay.propTypes = {
   movie: PropTypes.object,
-  isFavorite: PropTypes.bool,
+  isFavorite: PropTypes.func,
   isOnWatchList: PropTypes.func,
   addToWatchList: PropTypes.func,
   addToFavorites: PropTypes.func,
 };
 
 const OverlayStyler = styled.div`
-  /* display: flex;
-  /* align-items: center; */
-  /* justify-content: center; */
   bottom: 0;
   height: 100%;
   opacity: 0;
@@ -56,8 +53,6 @@ const OverlayStyler = styled.div`
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
-  /*align-items: center;
-  justify-content: center; */
   bottom: 0;
   width: 100%;
   position: absolute;

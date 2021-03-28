@@ -1,10 +1,8 @@
-import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import Logo from '../images/Logo.js';
-import Sidebar from '../components/Sidebar';
 
-function Banner({ open, setOpen }) {
+function Banner() {
   const [show, handleShow] = useState(false);
 
   useEffect(() => {
@@ -18,42 +16,27 @@ function Banner({ open, setOpen }) {
   }, []);
 
   return (
-    <>
-      <SidebarWrapper>
-        <Sidebar open={open} setOpen={setOpen} />
-      </SidebarWrapper>
-      <ImageWrapper show={show} open={open}>
-        <LogoStyler open={open} />
-      </ImageWrapper>
-    </>
+    <ImageWrapper show={show}>
+      <LogoStyler />
+    </ImageWrapper>
   );
 }
 
 export default Banner;
 
-Banner.propTypes = {
-  open: PropTypes.bool,
-  setOpen: PropTypes.func,
-};
-
-const SidebarWrapper = styled.div`
-  top: 0;
-  position: relative;
-`;
-
 const ImageWrapper = styled.div(
   (props) => css`
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
-    position: fixed;
     top: 0;
-    transition: all 0.5s;
-    transition-timing-function: ease-out;
+    position: fixed;
     width: 100%;
     z-index: 1;
-
+    /* background-color: white; */
+    /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); */
+    transition-timing-function: ease-out;
+    transition: all 0.5s;
+    z-index: 11;
     ${props.show &&
       css`
         opacity: 0;
@@ -62,9 +45,9 @@ const ImageWrapper = styled.div(
 );
 
 const LogoStyler = styled(Logo)`
-  max-width: 30%;
-  padding: 10px;
-  transform: ${({ open }) => (open ? 'translateX(50vH)' : 'translateX(0)')};
-  transition: transform 0.3s ease-in-out;
   object-fit: contain;
+  padding: 10px;
+  height: 3.5rem;
+  width: 100%;
+  background: white;
 `;

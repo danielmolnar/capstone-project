@@ -14,13 +14,13 @@ export const GlobalStyles = createGlobalStyle`
 *{
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
-  /* background: ${({ theme }) => theme.primaryDark};
-  color: ${({ theme }) => theme.primaryLight}; */
 }
 
 body {
 margin: 0;
 background: var(--primary-background);
+overflow-x: hidden;
+overflow-y: scroll;
 }
 
 h2 {

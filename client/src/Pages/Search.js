@@ -32,8 +32,8 @@ Search.propTypes = {
   movie: PropTypes.object,
   isLarge: PropTypes.bool,
   isLoading: PropTypes.bool,
-  isFavorite: PropTypes.bool,
-  isOnWatchList: PropTypes.bool,
+  isFavorite: PropTypes.func,
+  isOnWatchList: PropTypes.func,
   addToWatchList: PropTypes.func,
   addToFavorites: PropTypes.func,
 };

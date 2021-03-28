@@ -1,17 +1,10 @@
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import Row from '../components/Row';
 import requests from '../services/requests';
 
-function Home({
-  open,
-  isFavorite,
-  isOnWatchList,
-  addToWatchList,
-  addToFavorites,
-}) {
+function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
   return (
-    <StyleWrapper open={open}>
+    <>
       <Row
         isLarge
         title="NETFLIX ORIGINALS"
@@ -61,46 +54,24 @@ function Home({
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchHorrorMovies}
       />
-      <RowWrapper>
-        <Row
-          title="DOCUMENTARIES"
-          isFavorite={isFavorite}
-          isOnWatchList={isOnWatchList}
-          addToWatchList={addToWatchList}
-          addToFavorites={addToFavorites}
-          fetchUrl={requests.fetchDocumentaries}
-        />
-      </RowWrapper>
-    </StyleWrapper>
+
+      <Row
+        title="DOCUMENTARIES"
+        isFavorite={isFavorite}
+        isOnWatchList={isOnWatchList}
+        addToWatchList={addToWatchList}
+        addToFavorites={addToFavorites}
+        fetchUrl={requests.fetchDocumentaries}
+      />
+    </>
   );
 }
 
 Home.propTypes = {
-  open: PropTypes.bool,
-  isFavorite: PropTypes.bool,
-  isOnWatchList: PropTypes.bool,
+  isFavorite: PropTypes.func,
+  isOnWatchList: PropTypes.func,
   addToWatchList: PropTypes.func,
   addToFavorites: PropTypes.func,
 };
-
-const StyleWrapper = styled.div`
-  overflow-x: scroll;
-  overflow-y: hidden;
-  scrollbar-width: none;
-  transform: ${({ open }) => (open ? 'translateX(20vH)' : 'translateX(0)')};
-  transition: transform 0.3s ease-in-out;
-  ::-webkit-scrollbar {
-    display: none;
-  }
-`;
-
-const RowWrapper = styled.div`
-  overflow-y: hidden;
-  overflow-x: scroll;
-  scrollbar-width: none;
-  ::-webkit-scrollbar {
-    display: none;
-  }
-`;
 
 export default Home;
