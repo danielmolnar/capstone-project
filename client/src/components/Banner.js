@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import Logo from '../images/Logo.js';
 
-function Banner() {
+function Banner({ open }) {
   const [show, handleShow] = useState(false);
 
   useEffect(() => {
@@ -16,8 +16,8 @@ function Banner() {
   }, []);
 
   return (
-    <ImageWrapper show={show}>
-      <LogoStyler />
+    <ImageWrapper show={show} open={open}>
+      <LogoStyler open={open} />
     </ImageWrapper>
   );
 }
@@ -32,8 +32,8 @@ const ImageWrapper = styled.div(
     position: fixed;
     width: 100%;
     z-index: 1;
-    background-color: white;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    /* background-color: white; */
+    /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); */
     transition-timing-function: ease-out;
     transition: all 0.5s;
     z-index: 11;
@@ -41,12 +41,20 @@ const ImageWrapper = styled.div(
       css`
         opacity: 0;
       `}
+
+    /* @media (max-width: 500px) {
+      transform: ${({ open }) => (open ? 'translateX(25vh)' : 'translateX()')};
+    } */
   `
 );
 
 const LogoStyler = styled(Logo)`
   object-fit: contain;
-  max-width: 30%;
+  /* max-width: 30%; */
   padding: 10px;
   height: 3.5rem;
+  width: 100%;
+  background: white;
+  /* position: absolute; */
+  /* border-radius: 0px 0px 10px 10px; */
 `;

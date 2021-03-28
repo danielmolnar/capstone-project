@@ -12,7 +12,7 @@ import Banner from '../src/components/Banner';
 import Searchbar from './components/Searchbar';
 import Navigation from '../src/components/Navigation';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
-import ScrollToTop from './services/ScrollToTop';
+import useScrollToTop from './hooks/useScrollToTop';
 import useScreenLock from '../src/hooks/useScreenLock';
 import Sidebar from './components/Sidebar';
 
@@ -41,7 +41,7 @@ function App() {
     fetchSearch();
   }, [query, fetchUrl]);
 
-  useScreenLock(open);
+  // useScreenLock(open);
 
   const isOnWatchList = (movieToAdd) =>
     watchlist.some((movie) => movie.id === movieToAdd.id);
@@ -63,10 +63,10 @@ function App() {
 
   return (
     <>
-      <Navigation open={open} setOpen={setOpen} />
+      <Navigation />
       <Banner open={open} setOpen={setOpen} />
       <Sidebar open={open} setOpen={setOpen} />
-      <ScrollToTop>
+      <useScrollToTop>
         <Switch>
           <MainWrapper open={open}>
             <Buffer />
@@ -142,7 +142,7 @@ function App() {
             <Buffer />
           </MainWrapper>
         </Switch>
-      </ScrollToTop>
+      </useScrollToTop>
     </>
   );
 }
@@ -156,16 +156,12 @@ const Buffer = styled.div`
 
 const MainWrapper = styled.main`
   transition: transform 0.3s ease-in-out;
-  transform: ${({ open }) => (open ? 'translateX(40vH)' : 'translateX()')};
+  transform: ${({ open }) => (open ? 'translateX(30vH)' : 'translateX()')};
   @media (max-width: 800px) {
-    transform: ${({ open }) => (open ? 'translateX(35vh)' : 'translateX()')};
+    transform: ${({ open }) => (open ? 'translateX(25vh)' : 'translateX()')};
   }
 
   @media (max-width: 500px) {
-    transform: ${({ open }) => (open ? 'translateX(30vh)' : 'translateX()')};
-  }
-
-  @media (max-width: 320px) {
     transform: ${({ open }) => (open ? 'translateX(25vh)' : 'translateX()')};
   }
 `;
@@ -203,8 +199,8 @@ const Headline = styled.h2`
 `;
 
 const WatchlistHeadline = styled.h2`
-  margin-bottom: 3rem;
-  margin-left: 100px;
+  /* margin-bottom: 3rem; */
+  margin-left: 20px;
 `;
 
 const SearchbarWrapper = styled.div`
@@ -212,8 +208,4 @@ const SearchbarWrapper = styled.div`
   align-items: center;
   justify-content: flex-end;
   margin-bottom: 1rem;
-`;
-
-const SidebarWrapper = styled.div`
-  position: fixed;
 `;

@@ -1,5 +1,4 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { HomeAlt } from '@styled-icons/boxicons-regular/HomeAlt';
 import { CameraMovie } from '@styled-icons/boxicons-regular/CameraMovie';
@@ -7,7 +6,7 @@ import { SearchAlt } from '@styled-icons/boxicons-regular/SearchAlt';
 import { People } from '@styled-icons/octicons/People';
 import Sidebar from '../components/Sidebar';
 
-export default function Navigation({ open, setOpen }) {
+export default function Navigation() {
   return (
     <>
       <NavWrapper>
@@ -40,10 +39,6 @@ const StyledLink = styled(NavLink).attrs({ activeClassName })`
     padding: 3px;
     border-radius: 10px;
   }
-`;
-
-const SidebarWrapper = styled.div`
-  position: absolute;
 `;
 
 const Nav = styled.nav`
