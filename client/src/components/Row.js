@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useState, useEffect } from 'react';
 import axios from '../services/axios';
 import Spinner from '../components/Spinner';
 import ImageContainer from './ImageContainer';

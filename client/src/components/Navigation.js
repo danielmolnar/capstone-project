@@ -1,42 +1,39 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { HomeAlt } from '@styled-icons/boxicons-regular/HomeAlt';
-import { CameraMovie } from '@styled-icons/boxicons-regular/CameraMovie';
-import { CameraMovie as CameraMovieFilled } from '@styled-icons/boxicons-solid/CameraMovie';
-import { Search } from '@styled-icons/octicons/Search';
-import { Search2 } from '@styled-icons/remix-fill/Search2';
-import { People } from '@styled-icons/octicons/People';
 import Cinema from '../images/Cinema';
-import CinemaFilled from '../images/CinemaFilled';
-
 import { AiFillHome } from 'react-icons/ai';
 import { AiOutlineHome } from 'react-icons/ai';
+import CinemaFilled from '../images/CinemaFilled';
+import { Search } from '@styled-icons/octicons/Search';
+import { Search2 } from '@styled-icons/remix-fill/Search2';
+import { CameraMovie } from '@styled-icons/boxicons-regular/CameraMovie';
+import { CameraMovie as CameraMovieFilled } from '@styled-icons/boxicons-solid/CameraMovie';
 
-export default function Navigation() {
+export default function Navigation({ setOpen }) {
   const location = useLocation();
 
   return (
     <>
       <NavWrapper>
         <Nav>
-          <StyledLink exact to="/">
+          <StyledLink exact to="/" onClick={() => setOpen(false)}>
             {location.pathname === '/' ? <AiFillHome /> : <AiOutlineHome />}
           </StyledLink>
-          <StyledLink to="/friends">
+          <StyledLink to="/friends" onClick={() => setOpen(false)}>
             {location.pathname === '/friends' ? (
               <CinemaFriendsFilled />
             ) : (
               <CinemaFriends />
             )}
           </StyledLink>
-          <StyledLink to="/watchlist">
+          <StyledLink to="/watchlist" onClick={() => setOpen(false)}>
             {location.pathname === '/watchlist' ? (
               <CameraMovieFilled />
             ) : (
               <CameraMovie />
             )}
           </StyledLink>
-          <StyledLink to="/search">
+          <StyledLink to="/search" onClick={() => setOpen(false)}>
             {location.pathname === '/search' ? <Search2 /> : <Search />}
           </StyledLink>
         </Nav>
@@ -48,7 +45,7 @@ export default function Navigation() {
 const activeClassName = 'nav-item-active';
 
 const StyledLink = styled(NavLink).attrs({ activeClassName })`
-  color: white;
+  color: var(--secondary-100);
   svg {
     width: 25px;
     height: 25px;
@@ -61,34 +58,34 @@ const StyledLink = styled(NavLink).attrs({ activeClassName })`
 const CinemaFriends = styled(Cinema)`
   width: 25px;
   height: 25px;
-  fill: white;
+  fill: var(--secondary-100);
 `;
 
 const CinemaFriendsFilled = styled(CinemaFilled)`
   width: 22.5px;
   height: 22.5px;
-  fill: white;
+  fill: var(--secondary-100);
 `;
 
 const Nav = styled.nav`
   display: flex;
   justify-content: space-around;
-  bottom: 0;
   align-items: center;
   border-radius: 5px;
   height: 3rem;
+  max-width: 1080px;
   padding: 1.5rem;
   width: 100%;
-  max-width: 800px;
 `;
 
 const NavWrapper = styled.div`
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  position: fixed;
-  background: var(--primary-background);
   display: flex;
   justify-content: center;
-  z-index: 90000000000000;
-  width: 100%;
+  align-items: center;
+  background: var(--primary-background);
   bottom: 0;
+  box-shadow: var(--boxshadow);
+  position: fixed;
+  width: 100%;
+  z-index: 5;
 `;

@@ -21,7 +21,7 @@ const WatchListButton = styled.button`
   background-color: var(--primary-100-opacity);
   border-radius: 3px;
   border: none;
-  color: white;
+  color: var(--secondary-100);
   font-weight: bold;
   outline: none;
   padding: 5px 10px;

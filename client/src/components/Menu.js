@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Star } from '@styled-icons/fa-regular/Star';
+import { UserSettings } from '@styled-icons/remix-line/UserSettings';
 import { HeartCircle } from '@styled-icons/boxicons-solid/HeartCircle';
-import { Settings } from '@styled-icons/fluentui-system-filled/Settings';
 import { PeopleCommunity } from '@styled-icons/fluentui-system-filled/PeopleCommunity';
 
 export default function Menu({ open, setOpen }) {
@@ -41,46 +41,50 @@ export default function Menu({ open, setOpen }) {
 
 Menu.propTypes = {
   open: PropTypes.bool,
+  setOpen: PropTypes.func,
 };
 
 const Heart = styled(HeartCircle)`
+  color: var(--secondary-100);
   height: 30px;
-  width: 30px;
-  color: white;
   margin-left: 20px;
+  width: 30px;
 `;
 
 const StyledStar = styled(Star)`
+  color: var(--secondary-100);
   height: 30px;
-  width: 30px;
-  color: white;
   margin-left: 20px;
+  width: 30px;
 `;
 
 const Friends = styled(PeopleCommunity)`
+  color: var(--secondary-100);
   height: 30px;
-  width: 30px;
-  color: white;
   margin-left: 20px;
+  width: 30px;
 `;
 
-const ProfileSettings = styled(Settings)`
+const ProfileSettings = styled(UserSettings)`
+  color: var(--secondary-100);
   height: 30px;
+  margin-left: 22.5px;
   width: 30px;
-  color: white;
-  margin-left: 20px;
 `;
 
 const StyledMenu = styled.nav`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background: hsla(360, 100%, 100%, 0);
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  height: 100%;
+  background: var(--secondary-100-opacity);
+  bottom: 0;
+  box-shadow: ${({ open }) => (open ? 'var(--boxshadow)' : '')};
+  height: 100vh;
   left: 0;
-  position: absolute;
+  overflow-x: hidden;
+  position: fixed;
   text-align: left;
+  top: 0;
   transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
   transition: transform 0.3s ease-in-out;
   width: 30vh;
@@ -96,11 +100,11 @@ const StyledMenu = styled.nav`
 `;
 
 const MenuWrapper = styled.div`
-  height: 100%;
-  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  height: 100%;
+  width: 100%;
 `;
 
 const CloseWrapper = styled.div`
@@ -109,8 +113,9 @@ const CloseWrapper = styled.div`
   height: 3rem;
   gap: 1rem;
 
-  &:active {
-    background-color: hsla(360, 100%, 100%, 0.3);
+  &:active,
+  &:hover {
+    background-color: var(--button-hover);
   }
 `;
 

@@ -22,6 +22,7 @@ function App() {
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState([]);
+  const [show, handleShow] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
   const [favorites, setFavorites] = useLocalStorage('Favorites', []);
@@ -43,8 +44,6 @@ function App() {
     fetchSearch();
   }, [query, fetchUrl]);
 
-  // useScreenLock(open);
-
   const isOnWatchList = (movieToAdd) =>
     watchlist.some((movie) => movie.id === movieToAdd.id);
 
@@ -65,13 +64,17 @@ function App() {
 
   return (
     <>
-      <Navigation />
-      <Banner />
-      <Sidebar open={open} setOpen={setOpen} />
+      <Navigation open={open} setOpen={setOpen} />
+      <Banner show={show} handleShow={handleShow} />
+      <Sidebar
+        open={open}
+        setOpen={setOpen}
+        show={show}
+        handleShow={handleShow}
+      />
       <ScrollToTop>
         <Switch>
           <MainWrapper open={open}>
-            <Buffer />
             <Route exact path="/">
               <Home
                 isFavorite={isFavorite}
@@ -81,8 +84,8 @@ function App() {
               />
             </Route>
             <Route path="/watchlist">
-              <WatchlistHeadline>WATCHLIST</WatchlistHeadline>
               <MovieWrapper>
+                <HeadlineWrapper>WATCHLIST</HeadlineWrapper>
                 <GridWrapper>
                   {watchlist.map((movie) => (
                     <Watchlist
@@ -102,11 +105,11 @@ function App() {
               <Friends />
             </Route>
             <Route path="/search">
-              <Headline>SEARCH</Headline>
-              <SearchbarWrapper>
-                <Searchbar getQuery={(query) => setQuery(query)} />
-              </SearchbarWrapper>
               <MovieWrapper>
+                <HeadlineWrapper>SEARCH</HeadlineWrapper>
+                <SearchbarWrapper>
+                  <Searchbar getQuery={(query) => setQuery(query)} />
+                </SearchbarWrapper>
                 <GridWrapper>
                   {search.map((movie) => (
                     <Search
@@ -124,8 +127,8 @@ function App() {
               </MovieWrapper>
             </Route>
             <Route path="/favorites">
-              <WatchlistHeadline>FAVORITES</WatchlistHeadline>
               <MovieWrapper>
+                <HeadlineWrapper>FAVORITES</HeadlineWrapper>
                 <GridWrapper>
                   {favorites.map((movie) => (
                     <Favorites
@@ -150,7 +153,6 @@ function App() {
             <Route path="/profile">
               <Profile />
             </Route>
-            <Buffer />
           </MainWrapper>
         </Switch>
       </ScrollToTop>
@@ -160,12 +162,9 @@ function App() {
 
 export default App;
 
-const Buffer = styled.div`
-  height: 1px;
-  margin-bottom: 100px;
-`;
-
 const MainWrapper = styled.main`
+  margin-top: 100px;
+  margin-bottom: 100px;
   transition: transform 0.3s ease-in-out;
   transform: ${({ open }) => (open ? 'translateX(30vH)' : 'translateX()')};
   @media (max-width: 800px) {
@@ -180,7 +179,7 @@ const MainWrapper = styled.main`
 const GridWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-
+  max-width: 1080px;
   @media (max-width: 800px) {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -199,23 +198,29 @@ const MovieWrapper = styled.div`
   align-items: center;
   flex-direction: column;
   justify-content: flex-end;
-  margin-left: 10%;
-  margin-right: 10%;
-  width: 80%;
+  margin: 0 auto;
+  max-width: 1080px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
-const Headline = styled.h2`
-  margin-bottom: 0px;
-  margin-left: 20px;
-`;
-
-const WatchlistHeadline = styled.h2`
-  margin-left: 20px;
+const HeadlineWrapper = styled.h2`
+  display: flex;
+  margin-left: 30px;
+  width: 100%;
+  max-width: 1080px;
 `;
 
 const SearchbarWrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   margin-bottom: 1rem;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 800px;
 `;

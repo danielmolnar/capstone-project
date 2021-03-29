@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import Row from '../components/Row';
 import requests from '../services/requests';
 
 function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
   return (
-    <>
+    <WrapWrapper>
       <Row
         isLarge
         title="NETFLIX ORIGINALS"
@@ -14,6 +15,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchNetflixOriginals}
       />
+
       <Row
         title="TRENDING"
         isFavorite={isFavorite}
@@ -22,6 +24,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchTrending}
       />
+
       <Row
         title="TOP RATED"
         isFavorite={isFavorite}
@@ -30,6 +33,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchTopRated}
       />
+
       <Row
         title="ACTION"
         isFavorite={isFavorite}
@@ -38,6 +42,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchActionMovies}
       />
+
       <Row
         title="COMEDY"
         isFavorite={isFavorite}
@@ -46,6 +51,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchComedyMovies}
       />
+
       <Row
         title="HORROR"
         isFavorite={isFavorite}
@@ -63,9 +69,14 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchDocumentaries}
       />
-    </>
+    </WrapWrapper>
   );
 }
+
+const WrapWrapper = styled.div`
+  margin: 0 auto;
+  max-width: 1920px;
+`;
 
 Home.propTypes = {
   isFavorite: PropTypes.func,

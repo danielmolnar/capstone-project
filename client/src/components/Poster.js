@@ -49,6 +49,7 @@ const ImageStyler = styled.img(
     ${props.netflixStyle &&
       css`
         max-height: 200px;
+        max-width: 134px;
       `}
   `
 );

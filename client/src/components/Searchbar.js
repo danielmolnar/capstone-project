@@ -27,19 +27,19 @@ Searchbar.propTypes = {
 };
 
 const Inputstyler = styled.input`
-  width: 20%;
+  width: 40%;
   outline: none;
   padding: 10px;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  margin-right: 20px;
+  margin-bottom: 2rem;
   height: 25px;
   border: none;
   border-radius: 5px;
   transition: width 0.4s ease-in-out;
+  max-width: 800px;
 
   &:focus,
   &:hover {
-    width: 50%;
+    width: 60%;
+    max-width: 800px;
   }
 `;

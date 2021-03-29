@@ -1,9 +1,14 @@
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-export default function Burger({ open, setOpen }) {
+export default function Burger({ open, setOpen, show, handleShow }) {
   return (
-    <StyledBurger open={open} onClick={() => setOpen(!open)}>
+    <StyledBurger
+      open={open}
+      onClick={() => setOpen(!open)}
+      show={show}
+      handleShow={handleShow}
+    >
       <div />
       <div />
       <div />
@@ -14,10 +19,12 @@ export default function Burger({ open, setOpen }) {
 Burger.propTypes = {
   open: PropTypes.bool,
   setOpen: PropTypes.func,
+  show: PropTypes.bool,
+  handleShow: PropTypes.func,
 };
 
 export const StyledBurger = styled.button`
-  position: absolute;
+  position: fixed;
   top: 0.725rem;
   left: 1rem;
   display: flex;
@@ -31,12 +38,15 @@ export const StyledBurger = styled.button`
   padding: 0;
   z-index: 12;
 
+  @media (min-width: 1920px) {
+    left: 5%;
+  }
+
   &:focus {
     outline: none;
   }
 
   div {
-    background: ${({ theme }) => theme.primaryLight};
     border-radius: 10px;
     height: 0.25rem;
     position: relative;
@@ -44,18 +54,18 @@ export const StyledBurger = styled.button`
     transition: all 0.3s linear;
     width: 2rem;
     :first-child {
+      background: ${({ show }) => (show ? 'white' : 'var(--primary-100)')};
       transform: ${({ open }) => (open ? 'rotate(45deg)' : 'rotate(0)')};
-      background: var(--primary-100);
     }
 
     :nth-child(2) {
-      background: var(--primary-100);
+      background: ${({ show }) => (show ? 'white' : 'var(--primary-100)')};
       opacity: ${({ open }) => (open ? '0' : '1')};
       transform: ${({ open }) => (open ? 'translateX(20px)' : 'translateX(0)')};
     }
 
     :nth-child(3) {
-      background: var(--primary-100);
+      background: ${({ show }) => (show ? 'white' : 'var(--primary-100)')};
       transform: ${({ open }) => (open ? 'rotate(-45deg)' : 'rotate(0)')};
     }
   }

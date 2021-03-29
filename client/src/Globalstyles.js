@@ -5,14 +5,18 @@ export const GlobalStyles = createGlobalStyle`
 :root {
   --primary-background: linear-gradient(to right, hsl(6, 66%, 35%), hsl(353, 85%, 53%));
   --primary-100: hsl(353, 85%, 53%);
-  --primary-100-opacity: hsla(353, 85%, 53%, 0.8);
   --primary-200: hsl(6, 66%, 35%);
-  --secondary-200-opacity: hsla(6, 66%, 35%, 0.8)
+  --secondary-100: hsl(0, 100%, 100%);
+  --primary-100-opacity: hsla(353, 85%, 53%, 0.8);
+  --primary-200-opacity: hsla(6, 66%, 35%, 0.8);
+  --secondary-100-opacity: hsla(360, 100%, 100%, 0);
+  --modal-opacity: rgba(0, 0, 0, 0.7);
+  --button-hover: hsla(360, 100%, 100%, 0.3);
+  --boxshadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 
 }
 
 *{
-
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
 }
@@ -22,6 +26,10 @@ margin: 0;
 background: var(--primary-background);
 overflow-x: hidden;
 overflow-y: scroll;
+scrollbar-width: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 h2 {

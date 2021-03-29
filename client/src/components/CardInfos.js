@@ -64,7 +64,7 @@ CardInfos.propTypes = {
 };
 
 const BackgroundStyler = styled.div`
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: var(--modal-opacity);
   bottom: 0;
   left: 0;
   position: fixed;
@@ -102,7 +102,7 @@ const Header = styled.div`
 const CloseButton = styled.button`
   background: none;
   border: none;
-  color: white;
+  color: var(--secondary-100);
   cursor: pointer;
   font-size: 1.25rem;
   font-weight: bold;
@@ -121,7 +121,7 @@ const BackGroundWrapper = styled.div(
     align-items: flex-end;
     background-position: center center;
     background-size: cover;
-    box-shadow: 10px 0px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--boxshadow);
     height: 200px;
     object-fit: contain;
     position: relative;
@@ -150,7 +150,7 @@ const TagWrapper = styled.div`
 
   p {
     border-radius: 5px;
-    border: solid white 1px;
+    border: solid var(--secondary-100) 1px;
     font-size: 0.8rem;
     padding: 1px 3px;
   }
