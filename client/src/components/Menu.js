@@ -34,6 +34,12 @@ export default function Menu({ open, setOpen }) {
             <p>Profile</p>
           </CloseWrapper>
         </BurgerLink>
+        <BurgerLink to="/createprofile">
+          <CloseWrapper onClick={() => setOpen(!open)}>
+            <ProfileSettings />
+            <p>Edit Profile</p>
+          </CloseWrapper>
+        </BurgerLink>
       </MenuWrapper>
     </StyledMenu>
   );

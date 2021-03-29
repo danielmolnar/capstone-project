@@ -17,6 +17,8 @@ import FriendsCards from './Pages/FriendsCards';
 import ScrollToTop from './services/ScrollToTop';
 import Navigation from '../src/components/Navigation';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
+import { v4 as uuidv4 } from 'uuid';
+import CreateProfile from './Pages/CreateProfile';
 
 function App() {
   const [query, setQuery] = useState('');
@@ -26,6 +28,12 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
   const [favorites, setFavorites] = useLocalStorage('Favorites', []);
+  const [user, setUser] = useLocalStorage('UserProfile', []);
+  const [myProfile, setMyProfile] = useState([]);
+  const [finalUser, setFinalUser] = useState({});
+
+  const createProfile = (profile) =>
+    setMyProfile([...myProfile, { ...profile, user_id: uuidv4() }]);
 
   let fetchUrl;
   query === ''
@@ -43,6 +51,16 @@ function App() {
 
     fetchSearch();
   }, [query, fetchUrl]);
+
+  // function bootUser(user, favorites) {
+  //   const userData = {
+  //     data: { user },
+  //     favs: [...favorites],
+  //   };
+  //   setFinalUser(userData);
+  // }
+
+  // bootUser(user, favorites);
 
   const isOnWatchList = (movieToAdd) =>
     watchlist.some((movie) => movie.id === movieToAdd.id);
@@ -75,6 +93,7 @@ function App() {
       <ScrollToTop>
         <Switch>
           <MainWrapper open={open}>
+            <button onClick={() => console.log(finalUser)}></button>
             <Route exact path="/">
               <Home
                 isFavorite={isFavorite}
@@ -152,6 +171,12 @@ function App() {
             </Route>
             <Route path="/profile">
               <Profile />
+            </Route>
+            <Route path="/createprofile">
+              <CreateProfile
+                createProfile={createProfile}
+                favorites={favorites}
+              />
             </Route>
           </MainWrapper>
         </Switch>
