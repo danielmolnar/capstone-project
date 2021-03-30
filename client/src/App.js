@@ -88,7 +88,7 @@ function App() {
       <ScrollToTop>
         <Switch>
           <MainWrapper open={open}>
-            <button onClick={() => console.log(favorites)}></button>
+            <button onClick={() => console.log(myProfile)}></button>
             <Route exact path="/">
               <Home
                 isFavorite={isFavorite}

@@ -25,6 +25,8 @@ server.get('/users', (request, response) => {
 server.post('/users', (request, response) => {
   const user = {
     name: request.body.name,
+    tags: request.body.tags,
+    about: request.body.about,
     favorites: request.body.favorites,
   };
   mongoClient.connect(connectionString, (error, client) => {

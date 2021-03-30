@@ -23,6 +23,7 @@ const WatchListButton = styled.button`
   border: none;
   color: var(--secondary-100);
   font-weight: bold;
+  margin-bottom: 5px;
   outline: none;
   padding: 5px 10px;
   text-decoration: none;
