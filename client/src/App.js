@@ -1,24 +1,24 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
+import axios from './services/axios';
+import requests from './services/requests';
+import ScrollToTop from './services/ScrollToTop';
+import { useLocalStorage } from '../src/hooks/useLocalStorage';
 import Home from './Pages/Home';
 import Search from './Pages/Search';
-import axios from './services/axios';
 import Friends from './Pages/Friends';
 import Ratings from './Pages/Ratings';
 import Profile from './Pages/Profile';
 import Watchlist from './Pages/Watchlist';
 import Favorites from './Pages/Favorites';
+import FriendsCards from './Pages/FriendsCards';
+import CreateProfile from './Pages/CreateProfile';
 import Sidebar from './components/Sidebar';
-import requests from './services/requests';
 import Banner from '../src/components/Banner';
 import Searchbar from './components/Searchbar';
-import FriendsCards from './Pages/FriendsCards';
-import ScrollToTop from './services/ScrollToTop';
 import Navigation from '../src/components/Navigation';
-import { useLocalStorage } from '../src/hooks/useLocalStorage';
-import { v4 as uuidv4 } from 'uuid';
-import CreateProfile from './Pages/CreateProfile';
 
 function App() {
   const [query, setQuery] = useState('');
@@ -29,12 +29,13 @@ function App() {
   const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
   const [favorites, setFavorites] = useLocalStorage('Favorites', []);
   const [user, setUser] = useLocalStorage('UserProfile', []);
-  const [myProfile, setMyProfile] = useState([]);
+  const [myProfile, setMyProfile] = useState({});
   const [finalUser, setFinalUser] = useState({});
 
-  const createProfile = (profile) =>
-    setMyProfile([...myProfile, { ...profile, user_id: uuidv4() }]);
-
+  const createProfile = (profile) => {
+    setMyProfile({ ...profile, user_id: uuidv4() });
+    debugger;
+  };
   let fetchUrl;
   query === ''
     ? (fetchUrl = requests.fetchTrending)
@@ -87,7 +88,7 @@ function App() {
       <ScrollToTop>
         <Switch>
           <MainWrapper open={open}>
-            <button onClick={() => console.log(finalUser)}></button>
+            <button onClick={() => console.log(myProfile)}></button>
             <Route exact path="/">
               <Home
                 isFavorite={isFavorite}

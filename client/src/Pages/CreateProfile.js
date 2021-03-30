@@ -28,6 +28,7 @@ export default function Profile({ createProfile }) {
   };
 
   function submitProfile(event) {
+    event.preventDefault();
     createProfile(profile);
     setProfile(initialProfile);
   }
