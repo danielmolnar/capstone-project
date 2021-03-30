@@ -1,40 +1,27 @@
 import express from 'express';
-import mongodb from 'mongodb';
-import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import userRoutes from './routes/userRoutes.routes.js';
+
+// const result = dotenv.config();
+const server = express();
+server.use(cors());
+server.use(express.json());
+const DB_NAME = process.env.DB_NAME;
 
 const connectionString = 'mongodb://localhost:27017/';
-const databaseName = 'flix-buddies';
-
-const mongoClient = mongodb.MongoClient;
-
-const server = express();
-server.use(bodyParser.json());
-
-server.get('/', (request, response) => {
-  response.json({ status: 'Server is running...' });
+mongoose.connect(connectionString, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndMofidy: false,
 });
 
-server.get('/users', (request, response) => {
-  mongoClient.connect(connectionString, async (error, client) => {
-    const db = client.db(databaseName);
-    const users = await db.collection('users').find().toArray();
-    response.json(users);
-  });
+server.get('/', (req, res) => {
+  res.json({ status: 'Server is up and running.' });
 });
 
-server.post('/users', (request, response) => {
-  const user = {
-    name: request.body.name,
-    tags: request.body.tags,
-    about: request.body.about,
-    favorites: request.body.favorites,
-  };
-  mongoClient.connect(connectionString, (error, client) => {
-    const db = client.db(databaseName);
-    db.collection('flix-buddies')
-      .insertOne(user)
-      .then((result) => response.json(result.ops[o]));
-  });
-});
+server.use('/', [userRoutes]);
 
-server.listen(4000, () => console.log('Server started'));
+const port = 4000;
+server.listen(port, () => console.log(`Server listens on port ${port}.`));
