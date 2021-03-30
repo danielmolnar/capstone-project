@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import Tags from '../components/Tags';
-import { v4 as uuidv4 } from 'uuid';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
 export default function Profile({ createProfile }) {

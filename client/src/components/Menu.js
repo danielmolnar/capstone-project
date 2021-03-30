@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import { Star } from '@styled-icons/fa-regular/Star';
 import { UserSettings } from '@styled-icons/remix-line/UserSettings';
 import { HeartCircle } from '@styled-icons/boxicons-solid/HeartCircle';
-import { PeopleCommunity } from '@styled-icons/fluentui-system-filled/PeopleCommunity';
+import { PeopleFill } from '@styled-icons/bootstrap/PeopleFill';
+import { Profile } from '@styled-icons/icomoon/Profile';
 
 export default function Menu({ open, setOpen }) {
   return (
@@ -30,7 +31,7 @@ export default function Menu({ open, setOpen }) {
         </BurgerLink>
         <BurgerLink to="/profile">
           <CloseWrapper onClick={() => setOpen(!open)}>
-            <ProfileSettings />
+            <MyProfile />
             <p>Profile</p>
           </CloseWrapper>
         </BurgerLink>
@@ -64,10 +65,17 @@ const StyledStar = styled(Star)`
   width: 30px;
 `;
 
-const Friends = styled(PeopleCommunity)`
+const Friends = styled(PeopleFill)`
   color: var(--secondary-100);
   height: 30px;
   margin-left: 20px;
+  width: 30px;
+`;
+
+const MyProfile = styled(Profile)`
+  color: var(--secondary-100);
+  height: 30px;
+  margin-left: 22.5px;
   width: 30px;
 `;
 

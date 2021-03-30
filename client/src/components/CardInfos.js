@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import AddButton from '../components/AddButton';
 import backdrop_poster from '../images/backdrop_poster.png';
+import { BiTachometer } from 'react-icons/bi';
 
 export default function CardInfos({
   open,
@@ -42,8 +43,11 @@ export default function CardInfos({
           <p>{movie.overview}</p>
         </TextContainer>
         <TagWrapper>
-          <p>{release.slice(0, 4)}</p>
+          <ReleaseWrapper>
+            <p>{release.slice(0, 4)}</p>
+          </ReleaseWrapper>
           <ScoreWrapper>
+            <Score />
             <p>{movie.vote_average}/10</p>
           </ScoreWrapper>
         </TagWrapper>
@@ -146,14 +150,7 @@ const TagWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   height: 25px;
-  margin: 0 0 0.3rem 0.9rem;
-
-  p {
-    border-radius: 5px;
-    border: solid var(--secondary-100) 1px;
-    font-size: 0.8rem;
-    padding: 1px 3px;
-  }
+  margin: 0 0 0.5rem 0.9rem;
 `;
 
 const TextContainer = styled.div`
@@ -166,7 +163,29 @@ const ScoreWrapper = styled.div`
   display: flex;
   align-items: center;
   border-radius: 5px;
+  border: solid var(--secondary-100) 1px;
   gap: 0.5rem;
-  height: 40px;
-  margin-left: 2rem;
+  height: 25px;
+  margin-left: 1rem;
+  padding: 0.3rem;
+  p {
+    font-size: 0.8rem;
+  }
+`;
+
+const Score = styled(BiTachometer)`
+  color: white;
+`;
+
+const ReleaseWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  border: solid var(--secondary-100) 1px;
+  height: 25px;
+  padding: 0.3rem;
+
+  p {
+    font-size: 0.8rem;
+  }
 `;

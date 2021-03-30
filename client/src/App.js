@@ -52,15 +52,9 @@ function App() {
     fetchSearch();
   }, [query, fetchUrl]);
 
-  // function bootUser(user, favorites) {
   //   const userData = {
   //     data: { user },
   //     favs: [...favorites],
-  //   };
-  //   setFinalUser(userData);
-  // }
-
-  // bootUser(user, favorites);
 
   const isOnWatchList = (movieToAdd) =>
     watchlist.some((movie) => movie.id === movieToAdd.id);
