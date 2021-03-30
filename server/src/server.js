@@ -25,13 +25,14 @@ server.get('/users', (request, response) => {
 server.post('/users', (request, response) => {
   const user = {
     name: request.body.name,
+    favorites: request.body.favorites,
   };
   mongoClient.connect(connectionString, (error, client) => {
     const db = client.db(databaseName);
     db.collection('flix-buddies')
-      .isertOne(user)
+      .insertOne(user)
       .then((result) => response.json(result.ops[o]));
   });
 });
 
-server.listen(4000);
+server.listen(4000, () => console.log('Server started'));
