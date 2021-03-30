@@ -1,67 +1,88 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import Row from '../components/Row';
 import requests from '../services/requests';
 
-function Home({ addToWatchList, isOnWatchList }) {
+function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
   return (
-    <>
+    <WrapWrapper>
       <Row
-        title="NETFLIX ORIGINALS"
-        fetchUrl={requests.fetchNetflixOriginals}
         isLarge
-        addToWatchList={addToWatchList}
+        title="NETFLIX ORIGINALS"
+        isFavorite={isFavorite}
         isOnWatchList={isOnWatchList}
+        addToWatchList={addToWatchList}
+        addToFavorites={addToFavorites}
+        fetchUrl={requests.fetchNetflixOriginals}
       />
+
       <Row
         title="TRENDING"
-        fetchUrl={requests.fetchTrending}
-        addToWatchList={addToWatchList}
+        isFavorite={isFavorite}
         isOnWatchList={isOnWatchList}
+        addToWatchList={addToWatchList}
+        addToFavorites={addToFavorites}
+        fetchUrl={requests.fetchTrending}
       />
+
       <Row
         title="TOP RATED"
-        fetchUrl={requests.fetchTopRated}
-        addToWatchList={addToWatchList}
+        isFavorite={isFavorite}
         isOnWatchList={isOnWatchList}
+        addToWatchList={addToWatchList}
+        addToFavorites={addToFavorites}
+        fetchUrl={requests.fetchTopRated}
       />
+
       <Row
         title="ACTION"
-        fetchUrl={requests.fetchActionMovies}
-        addToWatchList={addToWatchList}
+        isFavorite={isFavorite}
         isOnWatchList={isOnWatchList}
+        addToWatchList={addToWatchList}
+        addToFavorites={addToFavorites}
+        fetchUrl={requests.fetchActionMovies}
       />
+
       <Row
         title="COMEDY"
-        fetchUrl={requests.fetchComedyMovies}
-        addToWatchList={addToWatchList}
+        isFavorite={isFavorite}
         isOnWatchList={isOnWatchList}
+        addToWatchList={addToWatchList}
+        addToFavorites={addToFavorites}
+        fetchUrl={requests.fetchComedyMovies}
       />
+
       <Row
         title="HORROR"
+        isFavorite={isFavorite}
+        isOnWatchList={isOnWatchList}
+        addToWatchList={addToWatchList}
+        addToFavorites={addToFavorites}
         fetchUrl={requests.fetchHorrorMovies}
-        addToWatchList={addToWatchList}
-        isOnWatchList={isOnWatchList}
       />
-      <Row
-        title="ROMANCE"
-        fetchUrl={requests.fetchRomanceMovies}
-        addToWatchList={addToWatchList}
-        isOnWatchList={isOnWatchList}
-      />
+
       <Row
         title="DOCUMENTARIES"
-        fetchUrl={requests.fetchDocumentaries}
-        addToWatchList={addToWatchList}
+        isFavorite={isFavorite}
         isOnWatchList={isOnWatchList}
+        addToWatchList={addToWatchList}
+        addToFavorites={addToFavorites}
+        fetchUrl={requests.fetchDocumentaries}
       />
-    </>
+    </WrapWrapper>
   );
 }
 
+const WrapWrapper = styled.div`
+  margin: 0 auto;
+  max-width: 1920px;
+`;
+
 Home.propTypes = {
-  addToWatchList: PropTypes.func,
+  isFavorite: PropTypes.func,
   isOnWatchList: PropTypes.func,
+  addToWatchList: PropTypes.func,
+  addToFavorites: PropTypes.func,
 };
 
 export default Home;

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ImageContainer from '../components/ImageContainer';
 
-export default function Watchlist({
+export default function Favorites({
   movie,
   isLarge,
   isFavorite,
@@ -24,7 +24,7 @@ export default function Watchlist({
   );
 }
 
-Watchlist.propTypes = {
+Favorites.propTypes = {
   movie: PropTypes.object,
   isLarge: PropTypes.bool,
   isFavorite: PropTypes.func,

@@ -1,60 +1,91 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { HomeAlt } from '@styled-icons/boxicons-regular/HomeAlt';
+import Cinema from '../images/Cinema';
+import { AiFillHome } from 'react-icons/ai';
+import { AiOutlineHome } from 'react-icons/ai';
+import CinemaFilled from '../images/CinemaFilled';
+import { Search } from '@styled-icons/octicons/Search';
+import { Search2 } from '@styled-icons/remix-fill/Search2';
 import { CameraMovie } from '@styled-icons/boxicons-regular/CameraMovie';
-import { SearchAlt } from '@styled-icons/boxicons-regular/SearchAlt';
-import { People } from '@styled-icons/octicons/People';
+import { CameraMovie as CameraMovieFilled } from '@styled-icons/boxicons-solid/CameraMovie';
 
-export default function Navigation() {
+export default function Navigation({ setOpen }) {
+  const location = useLocation();
+
   return (
-    <NavWrapper>
-      <Nav>
-        <StyledLink exact to="/">
-          <HomeAlt size="24" />
-        </StyledLink>
-        <StyledLink to="/friends">
-          <People size="24" />
-        </StyledLink>
-        <StyledLink to="/watchlist">
-          <CameraMovie size="24" />
-        </StyledLink>
-        <StyledLink to="/search">
-          <SearchAlt size="24" />
-        </StyledLink>
-      </Nav>
-    </NavWrapper>
+    <>
+      <NavWrapper>
+        <Nav>
+          <StyledLink exact to="/" onClick={() => setOpen(false)}>
+            {location.pathname === '/' ? <AiFillHome /> : <AiOutlineHome />}
+          </StyledLink>
+          <StyledLink to="/friends" onClick={() => setOpen(false)}>
+            {location.pathname === '/friends' ? (
+              <CinemaFriendsFilled />
+            ) : (
+              <CinemaFriends />
+            )}
+          </StyledLink>
+          <StyledLink to="/watchlist" onClick={() => setOpen(false)}>
+            {location.pathname === '/watchlist' ? (
+              <CameraMovieFilled />
+            ) : (
+              <CameraMovie />
+            )}
+          </StyledLink>
+          <StyledLink to="/search" onClick={() => setOpen(false)}>
+            {location.pathname === '/search' ? <Search2 /> : <Search />}
+          </StyledLink>
+        </Nav>
+      </NavWrapper>
+    </>
   );
 }
 
 const activeClassName = 'nav-item-active';
 
 const StyledLink = styled(NavLink).attrs({ activeClassName })`
-  color: white;
+  color: var(--secondary-100);
+  svg {
+    width: 25px;
+    height: 25px;
+  }
 
   &.${activeClassName} {
-    border: white 2px solid;
-    padding: 3px;
-    border-radius: 10px;
   }
+`;
+
+const CinemaFriends = styled(Cinema)`
+  width: 25px;
+  height: 25px;
+  fill: var(--secondary-100);
+`;
+
+const CinemaFriendsFilled = styled(CinemaFilled)`
+  width: 22.5px;
+  height: 22.5px;
+  fill: var(--secondary-100);
 `;
 
 const Nav = styled.nav`
   display: flex;
   justify-content: space-around;
-  border-top: white;
   align-items: center;
-  background: linear-gradient(to right, hsl(6, 66%, 35%), hsl(353, 85%, 53%));
+  border-radius: 5px;
+  height: 3rem;
+  max-width: 1080px;
+  padding: 1.5rem;
   width: 100%;
 `;
 
 const NavWrapper = styled.div`
   display: flex;
   justify-content: center;
-  position: fixed;
+  align-items: center;
+  background: var(--primary-background);
   bottom: 0;
-  z-index: 10000;
+  box-shadow: var(--boxshadow);
+  position: fixed;
   width: 100%;
-  height: 50px;
-  border-top: white 2px solid;
+  z-index: 5;
 `;

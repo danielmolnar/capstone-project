@@ -1,39 +1,54 @@
-import { Switch, Route } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
 import styled from 'styled-components';
-import { useLocalStorage } from '../src/hooks/useLocalStorage';
+import { useState, useEffect } from 'react';
+import { Switch, Route } from 'react-router-dom';
 import Home from './Pages/Home';
-import Watchlist from './Pages/Watchlist';
-import Friends from './Pages/Friends';
 import Search from './Pages/Search';
+import axios from './services/axios';
+import Friends from './Pages/Friends';
+import Ratings from './Pages/Ratings';
+import Profile from './Pages/Profile';
+import Watchlist from './Pages/Watchlist';
+import Favorites from './Pages/Favorites';
+import Sidebar from './components/Sidebar';
+import requests from './services/requests';
 import Banner from '../src/components/Banner';
-import Navigation from '../src/components/Navigation';
-import Store from './Store';
 import Searchbar from './components/Searchbar';
+import FriendsCards from './Pages/FriendsCards';
+import ScrollToTop from './services/ScrollToTop';
+import Navigation from '../src/components/Navigation';
+import { useLocalStorage } from '../src/hooks/useLocalStorage';
 
 function App() {
-  const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
-  const [search, setSearch] = useState([]);
   const [query, setQuery] = useState('');
+  const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState([]);
+  const [show, handleShow] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const baseUrl = 'https://api.themoviedb.org/3/';
-  const APIKEY = process.env.REACT_APP_APIKEY;
+  const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
+  const [favorites, setFavorites] = useLocalStorage('Favorites', []);
+
+  let fetchUrl;
+  query === ''
+    ? (fetchUrl = requests.fetchTrending)
+    : (fetchUrl = `${requests.fetchSearch}${query}&page=1&include_adult=false`);
 
   useEffect(() => {
-    const fetchSearch = async () => {
+    async function fetchSearch() {
       setIsLoading(true);
-      const result = await axios(
-        `${baseUrl}search/movie?api_key=${APIKEY}&language=en-US&query=${query}&page=1&include_adult=false`
-      );
-      setSearch(result.data.results);
+      const request = await axios.get(fetchUrl);
+      setSearch(request.data.results);
       setIsLoading(false);
-    };
-    query !== '' ? fetchSearch() : setSearch([]);
-  }, [query, APIKEY]);
+      return request;
+    }
+
+    fetchSearch();
+  }, [query, fetchUrl]);
 
   const isOnWatchList = (movieToAdd) =>
     watchlist.some((movie) => movie.id === movieToAdd.id);
+
+  const isFavorite = (movieToAdd) =>
+    favorites.some((movie) => movie.id === movieToAdd.id);
 
   const addToWatchList = (movieToAdd) => {
     !isOnWatchList(movieToAdd)
@@ -41,76 +56,130 @@ function App() {
       : setWatchList(watchlist.filter((movie) => movie.id !== movieToAdd.id));
   };
 
+  const addToFavorites = (movieToAdd) => {
+    !isFavorite(movieToAdd)
+      ? setFavorites([...favorites, movieToAdd])
+      : setFavorites(favorites.filter((movie) => movie.id !== movieToAdd.id));
+  };
+
   return (
     <>
-      <Navigation />
-      <Banner />
-      <Buffer />
-      <Switch>
-        <Store>
-          <Route exact path="/">
-            <Home
-              addToWatchList={addToWatchList}
-              isOnWatchList={isOnWatchList}
-            />
-          </Route>
-          <Route path="/watchlist">
-            <WatchlistHeadline>WATCHLIST</WatchlistHeadline>
-            <MovieWrapper>
-              <GridWrapper>
-                {watchlist.map((movie) => (
-                  <Watchlist
-                    key={movie.id}
-                    isLarge
-                    movie={movie}
-                    addToWatchList={() => addToWatchList(movie)}
-                    isOnWatchList={() => isOnWatchList(movie)}
-                  />
-                ))}
-              </GridWrapper>
-            </MovieWrapper>
-          </Route>
-          <Route path="/friends">
-            <Friends />
-          </Route>
-          <Route path="/search">
-            <Headline>SEARCH</Headline>
-            <SearchbarWrapper>
-              <Searchbar getQuery={(query) => setQuery(query)} />
-            </SearchbarWrapper>
-            <MovieWrapper>
-              <GridWrapper>
-                {search.map((movie) => (
-                  <Search
-                    isLoading={isLoading}
-                    key={movie.id}
-                    movie={movie}
-                    isLarge
-                    addToWatchList={() => addToWatchList(movie)}
-                    isOnWatchList={() => isOnWatchList(movie)}
-                  />
-                ))}
-              </GridWrapper>
-            </MovieWrapper>
-          </Route>
-        </Store>
-      </Switch>
-      <Buffer />
+      <Navigation open={open} setOpen={setOpen} />
+      <Banner show={show} handleShow={handleShow} />
+      <Sidebar
+        open={open}
+        setOpen={setOpen}
+        show={show}
+        handleShow={handleShow}
+      />
+      <ScrollToTop>
+        <Switch>
+          <MainWrapper open={open}>
+            <Route exact path="/">
+              <Home
+                isFavorite={isFavorite}
+                isOnWatchList={isOnWatchList}
+                addToWatchList={addToWatchList}
+                addToFavorites={addToFavorites}
+              />
+            </Route>
+            <Route path="/watchlist">
+              <MovieWrapper>
+                <HeadlineWrapper>WATCHLIST</HeadlineWrapper>
+                <GridWrapper>
+                  {watchlist.map((movie) => (
+                    <Watchlist
+                      isLarge
+                      key={movie.id}
+                      movie={movie}
+                      isFavorite={() => isFavorite(movie)}
+                      isOnWatchList={() => isOnWatchList(movie)}
+                      addToWatchList={() => addToWatchList(movie)}
+                      addToFavorites={() => addToFavorites(movie)}
+                    />
+                  ))}
+                </GridWrapper>
+              </MovieWrapper>
+            </Route>
+            <Route path="/friends">
+              <Friends />
+            </Route>
+            <Route path="/search">
+              <MovieWrapper>
+                <HeadlineWrapper>SEARCH</HeadlineWrapper>
+                <SearchbarWrapper>
+                  <Searchbar getQuery={(query) => setQuery(query)} />
+                </SearchbarWrapper>
+                <GridWrapper>
+                  {search.map((movie) => (
+                    <Search
+                      isLarge
+                      movie={movie}
+                      key={movie.id}
+                      isLoading={isLoading}
+                      isFavorite={() => isFavorite(movie)}
+                      isOnWatchList={() => isOnWatchList(movie)}
+                      addToWatchList={() => addToWatchList(movie)}
+                      addToFavorites={() => addToFavorites(movie)}
+                    />
+                  ))}
+                </GridWrapper>
+              </MovieWrapper>
+            </Route>
+            <Route path="/favorites">
+              <MovieWrapper>
+                <HeadlineWrapper>FAVORITES</HeadlineWrapper>
+                <GridWrapper>
+                  {favorites.map((movie) => (
+                    <Favorites
+                      isLarge
+                      movie={movie}
+                      key={movie.id}
+                      isFavorite={() => isFavorite(movie)}
+                      isOnWatchList={() => isOnWatchList(movie)}
+                      addToWatchList={() => addToWatchList(movie)}
+                      addToFavorites={() => addToFavorites(movie)}
+                    />
+                  ))}
+                </GridWrapper>
+              </MovieWrapper>
+            </Route>
+            <Route path="/ratings">
+              <Ratings />
+            </Route>
+            <Route path="/friendsinfo">
+              <FriendsCards />
+            </Route>
+            <Route path="/profile">
+              <Profile />
+            </Route>
+          </MainWrapper>
+        </Switch>
+      </ScrollToTop>
     </>
   );
 }
 
 export default App;
 
-const Buffer = styled.div`
-  height: 1px;
+const MainWrapper = styled.main`
+  margin-top: 100px;
   margin-bottom: 100px;
+  transition: transform 0.3s ease-in-out;
+  transform: ${({ open }) => (open ? 'translateX(30vH)' : 'translateX()')};
+  @media (max-width: 800px) {
+    transform: ${({ open }) => (open ? 'translateX(25vh)' : 'translateX()')};
+  }
+
+  @media (max-width: 500px) {
+    transform: ${({ open }) => (open ? 'translateX(25vh)' : 'translateX()')};
+  }
 `;
 
 const GridWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-
+  max-width: 1080px;
   @media (max-width: 800px) {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -126,27 +195,32 @@ const GridWrapper = styled.div`
 
 const MovieWrapper = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
   justify-content: flex-end;
-  width: 80%;
-  margin-left: 10%;
-  margin-right: 10%;
+  margin: 0 auto;
+  max-width: 1080px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
-const Headline = styled.h2`
-  margin-left: 20px;
-  margin-bottom: 0px;
-`;
-
-const WatchlistHeadline = styled.h2`
-  margin-left: 20px;
-  margin-bottom: 3rem;
+const HeadlineWrapper = styled.h2`
+  display: flex;
+  margin-left: 30px;
+  width: 100%;
+  max-width: 1080px;
 `;
 
 const SearchbarWrapper = styled.div`
   display: flex;
-  justify-content: flex-end;
   align-items: center;
+  justify-content: center;
   margin-bottom: 1rem;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 800px;
 `;

@@ -1,19 +1,17 @@
-import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
+import { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Logo from '../images/Logo.js';
 
-function Banner() {
-  const [show, handleShow] = useState(false);
-
+function Banner({ show, handleShow }) {
   useEffect(() => {
     const scrollDown = () =>
       window.scrollY > 120 ? handleShow(true) : handleShow(false);
-
     window.addEventListener('scroll', scrollDown, { passive: true });
     return () => {
       window.removeEventListener('scroll', scrollDown);
     };
-  }, []);
+  }, [handleShow]);
 
   return (
     <ImageWrapper show={show}>
@@ -24,19 +22,22 @@ function Banner() {
 
 export default Banner;
 
+Banner.propTypes = {
+  show: PropTypes.bool,
+  handleShow: PropTypes.func,
+};
+
 const ImageWrapper = styled.div(
   (props) => css`
     display: flex;
     justify-content: center;
-    top: 0;
     position: fixed;
+    top: 0;
     width: 100%;
-    z-index: 1;
-    background-color: white;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--boxshadow);
     transition-timing-function: ease-out;
     transition: all 0.5s;
-
+    z-index: 10;
     ${props.show &&
       css`
         opacity: 0;
@@ -45,7 +46,9 @@ const ImageWrapper = styled.div(
 );
 
 const LogoStyler = styled(Logo)`
+  background: var(--secondary-100);
+  height: 3.5rem;
   object-fit: contain;
-  max-width: 30%;
   padding: 10px;
+  width: 100%;
 `;

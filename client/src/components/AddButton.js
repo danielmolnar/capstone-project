@@ -1,32 +1,32 @@
-import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { MovieContext } from '../Store';
 
-export default function AddButton({ addToWatchList }) {
-  const [checkWatchlist, setCheckWatchlist] = useContext(MovieContext);
+export default function AddButton({ movie, isOnWatchList, addToWatchList }) {
+  const checkOnWatchList = isOnWatchList(movie);
 
   return (
     <WatchListButton onClick={addToWatchList}>
-      {checkWatchlist ? 'Remove from ' : 'Add to '}Watchlist
+      {checkOnWatchList ? 'Remove from ' : 'Add to '}Watchlist
     </WatchListButton>
   );
 }
 
 AddButton.propTypes = {
+  movie: PropTypes.object,
+  isOnWatchList: PropTypes.func,
   addToWatchList: PropTypes.func,
 };
 
 const WatchListButton = styled.button`
   background-color: var(--primary-100-opacity);
-  border: none;
-  outline: none;
   border-radius: 3px;
-  padding: 5px 10px;
-  transition: transform 250ms; // ?
-  color: white;
+  border: none;
+  color: var(--secondary-100);
   font-weight: bold;
+  outline: none;
+  padding: 5px 10px;
   text-decoration: none;
+  transition: transform 250ms;
 
   cursor: pointer;
   :hover {

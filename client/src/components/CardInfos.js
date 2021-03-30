@@ -1,12 +1,16 @@
-import React from 'react';
-import styled, { css } from 'styled-components';
 import ReactDom from 'react-dom';
 import PropTypes from 'prop-types';
+import styled, { css } from 'styled-components';
 import AddButton from '../components/AddButton';
-import AudienceScore from '../assets/Audience_score';
 import backdrop_poster from '../images/backdrop_poster.png';
 
-export default function CardInfos({ open, onClose, addToWatchList, movie }) {
+export default function CardInfos({
+  open,
+  movie,
+  onClose,
+  isOnWatchList,
+  addToWatchList,
+}) {
   if (!open) return null;
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
   const release = movie.first_air_date || movie.release_date;
@@ -22,12 +26,16 @@ export default function CardInfos({ open, onClose, addToWatchList, movie }) {
           <CloseButton onClick={onClose}>&times;</CloseButton>
         </Header>
         <BackGroundWrapper
-          background={movie.backdrop_path || movie.poster_path}
-          existingPath={existingPath}
           baseUrl={baseUrl}
+          existingPath={existingPath}
+          background={movie.backdrop_path || movie.poster_path}
         >
           <DetailsWrapper>
-            <AddButton addToWatchList={addToWatchList} />
+            <AddButton
+              movie={movie}
+              isOnWatchList={isOnWatchList}
+              addToWatchList={addToWatchList}
+            />
           </DetailsWrapper>
         </BackGroundWrapper>
         <TextContainer>
@@ -37,7 +45,6 @@ export default function CardInfos({ open, onClose, addToWatchList, movie }) {
           <p>{release.slice(0, 4)}</p>
           <ScoreWrapper>
             <p>{movie.vote_average}/10</p>
-            <CustomAudienceScore fillColor="white" />
           </ScoreWrapper>
         </TagWrapper>
       </ModalStyler>
@@ -48,56 +55,59 @@ export default function CardInfos({ open, onClose, addToWatchList, movie }) {
 
 CardInfos.propTypes = {
   open: PropTypes.bool,
-  onClose: PropTypes.func,
-  addToWatchList: PropTypes.func,
   movie: PropTypes.object,
+  onClose: PropTypes.func,
+  isFavorite: PropTypes.func,
+  isOnWatchList: PropTypes.func,
+  addToFavorites: PropTypes.func,
+  addToWatchList: PropTypes.func,
 };
 
 const BackgroundStyler = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  background-color: var(--modal-opacity);
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
   z-index: 1000;
 `;
 
 const ModalStyler = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   background: var(--primary-background);
   border-radius: 10px;
-  z-index: 1000;
-  width: 500px;
+  left: 50%;
   max-width: 80%;
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  z-index: 1000;
 `;
 
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 5px;
   margin: 0 0.8rem 0 0.8rem;
+  padding: 0px 5px;
 
   h2 {
     font-family: 'Roboto', sans-serif;
-    font-weight: 400;
     font-size: 1.5rem;
+    font-weight: 400;
   }
 `;
 
 const CloseButton = styled.button`
-  outline: none;
   background: none;
   border: none;
-  color: white;
-  font-weight: bold;
+  color: var(--secondary-100);
   cursor: pointer;
-  transition: transform 450ms;
   font-size: 1.25rem;
+  font-weight: bold;
+  outline: none;
+  transition: transform 450ms;
   width: 25px;
   &:hover {
     transform: scale(1.25);
@@ -107,13 +117,14 @@ const CloseButton = styled.button`
 const BackGroundWrapper = styled.div(
   (props) => css`
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: flex-end;
-    background-size: cover;
     background-position: center center;
-    object-fit: contain;
+    background-size: cover;
+    box-shadow: var(--boxshadow);
     height: 200px;
-    box-shadow: 10px 0px 10px rgba(0, 0, 0, 0.5);
+    object-fit: contain;
+    position: relative;
     background-image: ${(props) =>
       `url("${props.baseUrl}${props.background}")`};
     ${props.existingPath &&
@@ -138,30 +149,24 @@ const TagWrapper = styled.div`
   margin: 0 0 0.3rem 0.9rem;
 
   p {
-    border: solid white 1px;
     border-radius: 5px;
-    padding: 1px 3px;
+    border: solid var(--secondary-100) 1px;
     font-size: 0.8rem;
+    padding: 1px 3px;
   }
 `;
 
 const TextContainer = styled.div`
-  line-height: 1.3;
   font-size: 0.8rem;
+  line-height: 1.3;
   padding: 0 1rem;
-`;
-
-const CustomAudienceScore = styled(AudienceScore)`
-  width: 25px;
-  height: 25px;
 `;
 
 const ScoreWrapper = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  margin-left: 2rem;
-
   border-radius: 5px;
+  gap: 0.5rem;
   height: 40px;
+  margin-left: 2rem;
 `;

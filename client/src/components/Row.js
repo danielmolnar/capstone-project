@@ -1,15 +1,21 @@
-import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useState, useEffect } from 'react';
 import axios from '../services/axios';
-import ImageContainer from './ImageContainer';
 import Spinner from '../components/Spinner';
-import { MovieContext } from '../Store';
+import ImageContainer from './ImageContainer';
 
-function Row({ title, fetchUrl, isLarge, addToWatchList, isOnWatchList }) {
+function Row({
+  title,
+  isLarge,
+  fetchUrl,
+  isFavorite,
+  isOnWatchList,
+  addToWatchList,
+  addToFavorites,
+}) {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [checkWatchlist, setCheckWatchlist] = useContext(MovieContext);
 
   useEffect(() => {
     async function fetchMovies() {
@@ -23,15 +29,6 @@ function Row({ title, fetchUrl, isLarge, addToWatchList, isOnWatchList }) {
     fetchMovies();
   }, [fetchUrl]);
 
-  function toggleButton(movie) {
-    addToWatchList(movie);
-    setCheckWatchlist(!checkWatchlist);
-  }
-
-  function toggleWatchList(movie) {
-    setCheckWatchlist(isOnWatchList(movie));
-  }
-
   return isLoading ? (
     <>
       <HeadLineStyler>{title}</HeadLineStyler>
@@ -44,12 +41,14 @@ function Row({ title, fetchUrl, isLarge, addToWatchList, isOnWatchList }) {
         <MovieWrapper>
           {movies.map((movie) => (
             <ImageContainer
-              isLoading={isLoading}
-              key={movie.id}
               movie={movie}
+              key={movie.id}
               isLarge={isLarge}
-              addToWatchList={() => toggleButton(movie)}
-              isOnWatchList={() => toggleWatchList(movie)}
+              isLoading={isLoading}
+              isFavorite={() => isFavorite(movie)}
+              isOnWatchList={() => isOnWatchList(movie)}
+              addToWatchList={() => addToWatchList(movie)}
+              addToFavorites={() => addToFavorites(movie)}
             />
           ))}
         </MovieWrapper>
@@ -62,22 +61,23 @@ export default Row;
 
 Row.propTypes = {
   title: PropTypes.string,
-  fetchUrl: PropTypes.string,
   isLarge: PropTypes.bool,
-  addToWatchList: PropTypes.func,
+  fetchUrl: PropTypes.string,
+  isFavorite: PropTypes.func,
   isOnWatchList: PropTypes.func,
+  addToWatchList: PropTypes.func,
+  addToFavorites: PropTypes.func,
 };
 
 const Wrapper = styled.div`
-  margin-left: 20px;
+  margin-left: 25px;
 `;
 
 const MovieWrapper = styled.div`
   display: flex;
-  overflow-y: hidden;
   overflow-x: scroll;
+  overflow-y: hidden;
   padding: 20px;
-  margin-right: 15px;
   scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;

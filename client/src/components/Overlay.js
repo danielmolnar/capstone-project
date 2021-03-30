@@ -1,57 +1,59 @@
-import React, { useState, useContext } from 'react';
-import styled from 'styled-components';
-import CardInfos from '../components/CardInfos';
-import Button from '../components/Button';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { MovieContext } from '../Store';
+import styled from 'styled-components';
+import OpenButton from './OpenButton';
+import CardInfos from '../components/CardInfos';
 
-export default function Overlay({ addToWatchList, isOnWatchList, movie }) {
+export default function Overlay({
+  movie,
+  isFavorite,
+  isOnWatchList,
+  addToWatchList,
+  addToFavorites,
+}) {
   const [isOpen, setIsOpen] = useState(false);
-  const [checkWatchlist, setCheckWatchlist] = useContext(MovieContext);
-
-  function clickHandler() {
-    setIsOpen(true);
-    setCheckWatchlist(isOnWatchList);
-  }
-
-  function onClose() {
-    setIsOpen(false);
-    setCheckWatchlist(false);
-  }
 
   return (
     <OverlayStyler>
       <ButtonWrapper>
-        <Button clickHandler={clickHandler} />
+        <OpenButton
+          clickHandler={() => setIsOpen(true)}
+          movie={movie}
+          isFavorite={isFavorite}
+          addToFavorites={addToFavorites}
+        />
       </ButtonWrapper>
       <CardInfos
+        open={isOpen}
         movie={movie}
         isOnWatchList={isOnWatchList}
         addToWatchList={addToWatchList}
-        open={isOpen}
-        onClose={onClose}
+        onClose={() => setIsOpen(false)}
       />
     </OverlayStyler>
   );
 }
 
 Overlay.propTypes = {
-  addToWatchList: PropTypes.func,
-  isOnWatchList: PropTypes.func,
   movie: PropTypes.object,
+  isFavorite: PropTypes.func,
+  isOnWatchList: PropTypes.func,
+  addToWatchList: PropTypes.func,
+  addToFavorites: PropTypes.func,
 };
 
 const OverlayStyler = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  width: 100%;
-  opacity: 0;
   bottom: 0;
+  height: 100%;
+  opacity: 0;
+  width: 100%;
+  position: absolute;
 `;
 
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
+  bottom: 0;
+  width: 100%;
+  position: absolute;
 `;

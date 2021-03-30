@@ -1,48 +1,41 @@
-import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import ImageContainer from '../components/ImageContainer';
 import Spinner from '../components/Spinner';
-import { MovieContext } from '../Store';
+import ImageContainer from '../components/ImageContainer';
 
 export default function Search({
-  isLarge,
   movie,
-  addToWatchList,
-  isOnWatchList,
+  isLarge,
   isLoading,
+  isFavorite,
+  isOnWatchList,
+  addToWatchList,
+  addToFavorites,
 }) {
-  const [checkWatchlist, setCheckWatchlist] = useContext(MovieContext);
-
-  function toggleButton(movie) {
-    addToWatchList(movie);
-    setCheckWatchlist(!checkWatchlist);
-  }
-
-  function toggleWatchList(movie) {
-    setCheckWatchlist(isOnWatchList(movie));
-  }
-
   return isLoading ? (
     <Spinner />
   ) : (
     <FlexWrapper>
       <ImageContainer
-        isLarge={isLarge}
         movie={movie}
-        addToWatchList={() => toggleButton(movie)}
-        isOnWatchList={() => toggleWatchList(movie)}
+        isLarge={isLarge}
+        isFavorite={isFavorite}
+        isOnWatchList={isOnWatchList}
+        addToWatchList={addToWatchList}
+        addToFavorites={addToFavorites}
       />
     </FlexWrapper>
   );
 }
 
 Search.propTypes = {
-  isLarge: PropTypes.bool,
   movie: PropTypes.object,
-  addToWatchList: PropTypes.func,
-  isOnWatchList: PropTypes.func,
+  isLarge: PropTypes.bool,
   isLoading: PropTypes.bool,
+  isFavorite: PropTypes.func,
+  isOnWatchList: PropTypes.func,
+  addToWatchList: PropTypes.func,
+  addToFavorites: PropTypes.func,
 };
 
 const FlexWrapper = styled.div`
