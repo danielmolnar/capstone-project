@@ -28,16 +28,15 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
   const [favorites, setFavorites] = useLocalStorage('Favorites', []);
-  const [user, setUser] = useLocalStorage('UserProfile', []);
+  // const [user, setUser] = useLocalStorage('UserProfile', []);
   const [myProfile, setMyProfile] = useState({});
-  const [finalUser, setFinalUser] = useState({});
 
   const createProfile = (profile) => {
     setMyProfile({ ...profile, user_id: uuidv4() });
     debugger;
   };
   let fetchUrl;
-  query === ''
+  query < 2
     ? (fetchUrl = requests.fetchTrending)
     : (fetchUrl = `${requests.fetchSearch}${query}&page=1&include_adult=false`);
 
@@ -64,15 +63,15 @@ function App() {
     favorites.some((movie) => movie.id === movieToAdd.id);
 
   const addToWatchList = (movieToAdd) => {
-    !isOnWatchList(movieToAdd)
-      ? setWatchList([...watchlist, movieToAdd])
-      : setWatchList(watchlist.filter((movie) => movie.id !== movieToAdd.id));
+    isOnWatchList(movieToAdd)
+      ? setWatchList(watchlist.filter((movie) => movie.id !== movieToAdd.id))
+      : setWatchList([...watchlist, movieToAdd]);
   };
 
   const addToFavorites = (movieToAdd) => {
-    !isFavorite(movieToAdd)
-      ? setFavorites([...favorites, movieToAdd])
-      : setFavorites(favorites.filter((movie) => movie.id !== movieToAdd.id));
+    isFavorite(movieToAdd)
+      ? setFavorites(favorites.filter((movie) => movie.id !== movieToAdd.id))
+      : setFavorites([...favorites, movieToAdd]);
   };
 
   return (
