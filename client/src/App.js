@@ -31,10 +31,24 @@ function App() {
   // const [user, setUser] = useLocalStorage('UserProfile', []);
   const [myProfile, setMyProfile] = useState({});
 
-  const createProfile = (profile) => {
-    setMyProfile({ ...profile, user_id: uuidv4() });
-    debugger;
+  const apiServerURL = 'http://localhost:4000/api';
+
+  const addUserToDataBase = async (newUser) => {
+    const response = await fetch(apiServerURL + '/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newUser),
+    });
+    return response.json();
   };
+
+  const createProfile = (profile) => {
+    setMyProfile({ ...profile });
+    addUserToDataBase(profile);
+  };
+
   let fetchUrl;
   query < 2
     ? (fetchUrl = requests.fetchTrending)
@@ -115,7 +129,12 @@ function App() {
               </MovieWrapper>
             </Route>
             <Route path="/friends">
-              <Friends />
+              <Friends
+                isFavorite={isFavorite}
+                isOnWatchList={isOnWatchList}
+                addToWatchList={addToWatchList}
+                addToFavorites={addToFavorites}
+              />
             </Route>
             <Route path="/search">
               <MovieWrapper>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Tags from '../components/Tags';
 import { useLocalStorage } from '../hooks/useLocalStorage';
@@ -7,14 +7,22 @@ export default function Profile({ createProfile }) {
   const [favorites, setFavorites] = useLocalStorage('Favorites', []);
   const [user, setUser] = useLocalStorage('UserProfile', []);
 
+  const apiServerURL = 'http://localhost:4000/api';
+
+  useEffect(() => {
+    fetch(apiServerURL + '/users/60646e28278c5d29fd3a041f')
+      .then((result) => result.json())
+      .then((user) => setUser(user))
+      .catch((error) => console.error(error.message));
+  }, []);
+
   const initialProfile = {
     name: '',
     age: '',
-    favorite_movies: [...favorites],
     tags: [],
-    about_me: '',
+    about: '',
+    favorites: [...favorites],
   };
-
   const [profile, setProfile] = useState(initialProfile);
 
   const handleChange = (event) => {
@@ -61,6 +69,7 @@ export default function Profile({ createProfile }) {
               name="name"
               value={profile.name}
               onChange={handleChange}
+              placeholder={profile.name}
             />
           </LabelStyler>
           <LabelStyler htmlFor="">
@@ -72,6 +81,7 @@ export default function Profile({ createProfile }) {
               name="age"
               value={profile.age}
               onChange={handleChange}
+              placeholder={profile.age}
             />
           </LabelStyler>
           <Tags
@@ -85,9 +95,10 @@ export default function Profile({ createProfile }) {
             <br />
             <InputStyler
               type="text"
-              name="about_me"
-              value={profile.about_me}
+              name="about"
+              value={profile.about}
               onChange={handleChange}
+              placeholder={profile.about}
             />
           </LabelStyler>
           <ButtonContainer>
@@ -96,12 +107,12 @@ export default function Profile({ createProfile }) {
           </ButtonContainer>
         </ProfileContainer>
       </form>
-      <button onClick={() => console.table(user)}>CLICK ME!</button>
-      <button onClick={() => setUser(profile)}>CLICK ME!</button>
+      <button onClick={() => console.log(user)}>CLICK ME!</button>
+      <button onClick={() => setProfile(initialProfile)}>CLICK ME!</button>
 
       <p>You entered: {profile.name}</p>
       <p>Your age: {profile.age}</p>
-      <p>About me: {profile.about_me}</p>
+      <p>About me: {profile.about}</p>
     </>
   );
 }

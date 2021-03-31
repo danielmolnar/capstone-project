@@ -17,11 +17,11 @@ mongoose.connect(connectionString, {
   useFindAndMofidy: false,
 });
 
-server.get('/', (req, res) => {
+server.get('/api', (req, res) => {
   res.json({ status: 'Server is up and running.' });
 });
 
-server.use('/', [userRoutes]);
+server.use('/api', [userRoutes]);
 
 const port = 4000;
 server.listen(port, () => console.log(`Server listens on port ${port}.`));

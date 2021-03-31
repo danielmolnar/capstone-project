@@ -22,7 +22,9 @@ async function getUser(req, res) {
 
 async function postUser(req, res) {
   const newUser = new User({
+    userId: req.body.userId,
     name: req.body.name,
+    age: req.body.age,
     tags: req.body.tags,
     about: req.body.about,
     favorites: req.body.favorites,

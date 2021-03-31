@@ -1,10 +1,32 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import ImageContainer from '../components/ImageContainer';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
-export default function Friends() {
+export default function Friends(
+  isLarge,
+  isFavorite,
+  isOnWatchList,
+  addToWatchList,
+  addToFavorites
+) {
+  const apiServerURL = 'http://localhost:4000/api';
+  const [friends, setFriends] = useLocalStorage('Testing', []);
+
+  useEffect(() => {
+    fetch(apiServerURL + '/users')
+      .then((result) => result.json())
+      .then((friends) => setFriends(friends))
+      .catch((error) => console.error(error.message));
+  }, []);
+
   return (
     <Wrapper>
-      <h2>Friends</h2>
+      <>
+        <button>
+          onClick={() => console.log(friends[0].favorites.length)}
+        </button>
+      </>
     </Wrapper>
   );
 }
