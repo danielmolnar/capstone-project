@@ -54,7 +54,7 @@ export default function Profile({ createProfile }) {
   };
 
   return (
-    <>
+    <PageWrapper>
       <HeadlineWrapper>
         <h2>Edit Profile</h2>
       </HeadlineWrapper>
@@ -84,6 +84,7 @@ export default function Profile({ createProfile }) {
               placeholder={profile.age}
             />
           </LabelStyler>
+
           <Tags
             addProfileTag={addProfileTag}
             tags={profile.tags}
@@ -102,8 +103,8 @@ export default function Profile({ createProfile }) {
             />
           </LabelStyler>
           <ButtonContainer>
-            <button type="submit">Submit</button>
-            <button type="cancel">Cancel</button>
+            <StyledButton type="submit">Submit</StyledButton>
+            <StyledButton type="cancel">Cancel</StyledButton>
           </ButtonContainer>
         </ProfileContainer>
       </form>
@@ -113,9 +114,20 @@ export default function Profile({ createProfile }) {
       <p>You entered: {profile.name}</p>
       <p>Your age: {profile.age}</p>
       <p>About me: {profile.about}</p>
-    </>
+    </PageWrapper>
   );
 }
+
+const PageWrapper = styled.div`
+  margin: 0 auto;
+  max-width: 1020px;
+  @media (min-width: 1020px) {
+    box-shadow: var(--boxshadow);
+    height: 100%;
+    padding: 1rem 0;
+    border-radius: 5px;
+  }
+`;
 
 const HeadlineWrapper = styled.div`
   margin-left: 20px;
@@ -125,9 +137,9 @@ const ProfileContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
   gap: 2rem;
   padding: 1rem;
+  border: solid 1px white;
 `;
 
 const LabelStyler = styled.label`
@@ -138,8 +150,36 @@ const LabelStyler = styled.label`
 
 const ButtonContainer = styled.div`
   display: flex;
+  align-items: center;
+  gap: 3rem;
 `;
 
 const InputStyler = styled.input`
   max-width: 400px;
+  outline: none;
+  padding: 10px;
+  margin-bottom: 2rem;
+  height: 25px;
+  border: none;
+  border-radius: 5px;
+`;
+
+const StyledButton = styled.button`
+  background-color: var(--primary-100);
+  box-shadow: var(--boxshadow);
+  border-radius: 3px;
+  border: none;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 5px;
+  outline: none;
+  padding: 5px 10px;
+  text-decoration: none;
+  transition: transform 250ms;
+  width: 5rem;
+
+  cursor: pointer;
+  :hover {
+    background-color: var(--primary-100-opacity);
+  }
 `;

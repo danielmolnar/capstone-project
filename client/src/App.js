@@ -28,10 +28,36 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
   const [favorites, setFavorites] = useLocalStorage('Favorites', []);
-  // const [user, setUser] = useLocalStorage('UserProfile', []);
+  const [friends, setFriends] = useLocalStorage('Testing', []);
   const [myProfile, setMyProfile] = useState({});
 
   const apiServerURL = 'http://localhost:4000/api';
+  let fetchUrl;
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetch(apiServerURL + '/users')
+      .then((result) => result.json())
+      .then((friends) => setFriends(friends))
+      .then(setIsLoading(false))
+      .catch((error) => console.error(error.message));
+  }, []);
+
+  useEffect(() => {
+    async function fetchSearch() {
+      setIsLoading(true);
+      const request = await axios.get(fetchUrl);
+      setSearch(request.data.results);
+      setIsLoading(false);
+      return request;
+    }
+
+    fetchSearch();
+  }, [query, fetchUrl]);
+
+  query <= 2
+    ? (fetchUrl = requests.fetchTrending)
+    : (fetchUrl = `${requests.fetchSearch}${query}&page=1&include_adult=false`);
 
   const addUserToDataBase = async (newUser) => {
     const response = await fetch(apiServerURL + '/users', {
@@ -49,38 +75,17 @@ function App() {
     addUserToDataBase(profile);
   };
 
-  let fetchUrl;
-  query < 2
-    ? (fetchUrl = requests.fetchTrending)
-    : (fetchUrl = `${requests.fetchSearch}${query}&page=1&include_adult=false`);
-
-  useEffect(() => {
-    async function fetchSearch() {
-      setIsLoading(true);
-      const request = await axios.get(fetchUrl);
-      setSearch(request.data.results);
-      setIsLoading(false);
-      return request;
-    }
-
-    fetchSearch();
-  }, [query, fetchUrl]);
-
-  //   const userData = {
-  //     data: { user },
-  //     favs: [...favorites],
-
   const isOnWatchList = (movieToAdd) =>
     watchlist.some((movie) => movie.id === movieToAdd.id);
-
-  const isFavorite = (movieToAdd) =>
-    favorites.some((movie) => movie.id === movieToAdd.id);
 
   const addToWatchList = (movieToAdd) => {
     isOnWatchList(movieToAdd)
       ? setWatchList(watchlist.filter((movie) => movie.id !== movieToAdd.id))
       : setWatchList([...watchlist, movieToAdd]);
   };
+
+  const isFavorite = (movieToAdd) =>
+    favorites.some((movie) => movie.id === movieToAdd.id);
 
   const addToFavorites = (movieToAdd) => {
     isFavorite(movieToAdd)
@@ -101,7 +106,7 @@ function App() {
       <ScrollToTop>
         <Switch>
           <MainWrapper open={open}>
-            <button onClick={() => console.log(favorites)}></button>
+            {/* <button onClick={() => console.log(favorites)}></button> */}
             <Route exact path="/">
               <Home
                 isFavorite={isFavorite}
@@ -117,8 +122,8 @@ function App() {
                   {watchlist.map((movie) => (
                     <Watchlist
                       isLarge
-                      key={movie.id}
                       movie={movie}
+                      key={movie.id}
                       isFavorite={() => isFavorite(movie)}
                       isOnWatchList={() => isOnWatchList(movie)}
                       addToWatchList={() => addToWatchList(movie)}
@@ -129,12 +134,27 @@ function App() {
               </MovieWrapper>
             </Route>
             <Route path="/friends">
-              <Friends
-                isFavorite={isFavorite}
-                isOnWatchList={isOnWatchList}
-                addToWatchList={addToWatchList}
-                addToFavorites={addToFavorites}
-              />
+              <FriendsWrapper>
+                {friends.map((friend) => (
+                  <>
+                    <HeadlineWrapper>{friend.name}</HeadlineWrapper>
+                    <FriendsFlex>
+                      {friend.favorites.map((movie) => (
+                        <Friends
+                          isLarge
+                          movie={movie}
+                          key={movie.id}
+                          isLoading={isLoading}
+                          isFavorite={() => isFavorite(movie)}
+                          isOnWatchList={() => isOnWatchList(movie)}
+                          addToWatchList={() => addToWatchList(movie)}
+                          addToFavorites={() => addToFavorites(movie)}
+                        />
+                      ))}
+                    </FriendsFlex>
+                  </>
+                ))}
+              </FriendsWrapper>
             </Route>
             <Route path="/search">
               <MovieWrapper>
@@ -200,6 +220,34 @@ function App() {
 
 export default App;
 
+const FriendsFlex = styled.div`
+  margin-left: 25px;
+  display: flex;
+  padding: 20px;
+  overflow-x: scroll;
+  scrollbar-width: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+const FriendsWrapper = styled.div`
+  margin: 0 auto;
+  max-width: 1020px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  @media (min-width: 1020px) {
+    box-shadow: var(--boxshadow);
+    border-radius: 5px;
+    height: 100%;
+    padding: 1rem 0rem 2rem 0rem;
+  }
+`;
+
 const MainWrapper = styled.main`
   margin-top: 100px;
   margin-bottom: 100px;
@@ -208,7 +256,6 @@ const MainWrapper = styled.main`
   @media (max-width: 800px) {
     transform: ${({ open }) => (open ? 'translateX(25vh)' : 'translateX()')};
   }
-
   @media (max-width: 500px) {
     transform: ${({ open }) => (open ? 'translateX(25vh)' : 'translateX()')};
   }
@@ -221,11 +268,9 @@ const GridWrapper = styled.div`
   @media (max-width: 800px) {
     grid-template-columns: repeat(3, 1fr);
   }
-
   @media (max-width: 500px) {
     grid-template-columns: repeat(2, 1fr);
   }
-
   @media (max-width: 320px) {
     grid-template-columns: 1fr;
   }
@@ -237,18 +282,22 @@ const MovieWrapper = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   margin: 0 auto;
-  max-width: 1080px;
+  max-width: 1020px;
   overflow-x: hidden;
   overflow-y: scroll;
   scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;
   }
+  @media (min-width: 1020px) {
+    box-shadow: var(--boxshadow);
+    height: 100%;
+    padding: 1rem 0rem 2rem 0rem;
+  }
 `;
 
 const HeadlineWrapper = styled.h2`
-  display: flex;
-  margin-left: 30px;
+  margin-left: 20px;
   width: 100%;
   max-width: 1080px;
 `;

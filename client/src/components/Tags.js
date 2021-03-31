@@ -17,7 +17,7 @@ export default function Tag({ addProfileTag, tags, removeProfileTag }) {
   return (
     <>
       <div>
-        Product Tags
+        <p>Product Tags</p>
         <SectionWrapper>
           {tags.map((tag, index) => (
             <span
@@ -67,14 +67,17 @@ const SectionWrapper = styled.section`
     outline: none;
     border-radius: 5px;
     background: none;
+    border: solid 1px var(--secondardy-50-opacity);
     color: white;
     cursor: cell;
+    width: 50%;
+    max-width: 5rem;
   }
 
   span {
     padding: 5px;
-    background-color: black;
-    color: white;
+    background-color: white;
+    color: black;
     opacity: 0.7;
     border-radius: 10px;
   }

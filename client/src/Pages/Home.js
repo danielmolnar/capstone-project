@@ -75,7 +75,12 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
 
 const WrapWrapper = styled.div`
   margin: 0 auto;
-  max-width: 1920px;
+  max-width: 1020px;
+  @media (min-width: 1020px) {
+    box-shadow: var(--boxshadow);
+    height: 100%;
+    padding: 1rem 0;
+  }
 `;
 
 Home.propTypes = {
