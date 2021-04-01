@@ -3,25 +3,30 @@ import styled from 'styled-components';
 import Tags from '../components/Tags';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
-export default function Profile({ createProfile, myProfile }) {
+export default function Profile({ createProfile, updateProfile }) {
   const [favorites, setFavorites] = useLocalStorage('Favorites', []);
-  const [user, setUser] = useLocalStorage('UserProfile', []);
+  const [myProfile, setMyProfile] = useLocalStorage('My Profile', []);
+  // const [myProfile, setMyProfile] = useState({});
 
-  const apiServerURL = 'http://localhost:4000/api';
+  // const [user, setUser] = useLocalStorage('UserProfile', []);
 
-  useEffect(() => {
-    fetch(apiServerURL + '/users/60646e28278c5d29fd3a041f')
-      .then((result) => result.json())
-      .then((user) => setUser(user))
-      .catch((error) => console.error(error.message));
-  }, []);
+  // const apiServerURL = 'http://localhost:4000';
+
+  // useEffect(() => {
+  //   fetch(apiServerURL + '/users/60646e28278c5d29fd3a041f')
+  //     .then((result) => result.json())
+  //     .then((user) => setUser(user))
+  //     .catch((error) => console.error(error.message));
+  // }, []);
+
+  const isExistingProfile = myProfile.name;
 
   const initialProfile = {
-    name: '',
-    age: '',
-    tags: [],
-    about: '',
-    favorites: [...favorites],
+    name: myProfile.name ?? '',
+    age: myProfile.age ?? '',
+    tags: myProfile.tags ?? [],
+    about: myProfile.about ?? '',
+    favorites: [...favorites] ?? [],
   };
   const [profile, setProfile] = useState(initialProfile);
 
@@ -37,9 +42,14 @@ export default function Profile({ createProfile, myProfile }) {
 
   function submitProfile(event) {
     event.preventDefault();
-
     createProfile(profile);
     // setProfile(initialProfile);
+    setMyProfile(profile);
+  }
+
+  function updateMyProfile(event) {
+    event.preventDefault();
+    updateProfile(myProfile);
   }
 
   const addProfileTag = (tag) => {
@@ -102,14 +112,14 @@ export default function Profile({ createProfile, myProfile }) {
                   placeholder={profile.about}
                 />
               </LabelStyler>
-              <ButtonContainer>
+              <ButtonContainer isExistingProfile={isExistingProfile}>
                 <StyledButton type="submit">Submit</StyledButton>
-                <StyledButton type="cancel">Cancel</StyledButton>
+                <StyledButton onClick={updateMyProfile}>Edit</StyledButton>
               </ButtonContainer>
             </ProfileContainer>
           </form>
-          <button onClick={() => myProfile({})}>CLICK ME!</button>
-          <button onClick={() => setProfile(initialProfile)}>CLICK ME!</button>
+          <button onClick={() => setMyProfile({})}>CLICK ME!</button>
+          <button onClick={() => console.log(myProfile)}>CLICK ME!</button>
         </FormWrapper>
       </PageWrapper>
     </>
@@ -160,6 +170,10 @@ const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 3rem;
+
+  button:first-child {
+    display: ${({ isExistingProfile }) => (isExistingProfile ? 'none' : '')};
+  }
 `;
 
 const InputStyler = styled.input`

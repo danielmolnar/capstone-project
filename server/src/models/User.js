@@ -8,6 +8,4 @@ const userSchema = new mongoose.Schema({
   favorites: { type: Object, required: false },
 });
 
-const User = mongoose.model('User', userSchema);
-
-export { User, userSchema };
+export default mongoose.model('User', userSchema);

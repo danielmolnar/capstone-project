@@ -29,9 +29,10 @@ function App() {
   const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
   const [favorites, setFavorites] = useLocalStorage('Favorites', []);
   const [friends, setFriends] = useLocalStorage('Testing', []);
-  const [myProfile, setMyProfile] = useLocalStorage('My Profile', []);
+  // const [myProfile, setMyProfile] = useLocalStorage('My Profile', []);
+  const [myProfile, setMyProfile] = useState({});
 
-  const apiServerURL = 'http://localhost:4000/api';
+  const apiServerURL = 'http://localhost:4000';
   let fetchUrl;
 
   useEffect(() => {
@@ -58,20 +59,37 @@ function App() {
     ? (fetchUrl = requests.fetchTrending)
     : (fetchUrl = `${requests.fetchSearch}${query}&page=1&include_adult=false`);
 
-  const addUserToDataBase = async (newUser) => {
-    const response = await fetch(apiServerURL + '/users', {
+  useEffect(() => {
+    const updateFavorites = () => {
+      setMyProfile({ ...myProfile, favorites: [...favorites] });
+    };
+    updateFavorites();
+  }, [favorites]);
+
+  async function postUser(user) {
+    return fetch(apiServerURL + '/users', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newUser),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(user),
     });
-    return response.json();
-  };
+  }
+
+  async function updateUser(user) {
+    return fetch(`http://localhost:4000/users/606645949cd7861d1588953d`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(user),
+    });
+  }
 
   const createProfile = (profile) => {
     setMyProfile({ ...profile });
-    // addUserToDataBase(profile);
+    postUser(profile);
+  };
+
+  const updateProfile = (profile) => {
+    setMyProfile({ ...profile, favorites: [...favorites] });
+    updateUser(profile);
   };
 
   const isOnWatchList = (movieToAdd) =>
@@ -107,8 +125,13 @@ function App() {
 
         <Switch>
           <MainWrapper open={open}>
-            <button onClick={() => console.log(myProfile.name)}></button>
-            <button onClick={() => setMyProfile({})}></button>
+            <button onClick={() => console.log(myProfile)}></button>
+            <button
+              onClick={() =>
+                setMyProfile({ ...myProfile, favorites: [...favorites] })
+              }
+            ></button>
+            <button onClick={() => updateProfile(myProfile)}></button>
             <Route exact path="/">
               <Home
                 isFavorite={isFavorite}
@@ -218,6 +241,7 @@ function App() {
             <Route path="/createprofile">
               <FriendsWrapper>
                 <CreateProfile
+                  updateProfile={updateProfile}
                   myProfile={myProfile}
                   createProfile={createProfile}
                   favorites={favorites}
@@ -237,7 +261,7 @@ const FriendsFlex = styled.div`
   margin-left: 25px;
   display: flex;
   padding: 20px;
-  overflow-x: hidden;
+  overflow-x: scroll;
   scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;
