@@ -29,7 +29,7 @@ function App() {
   const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
   const [favorites, setFavorites] = useLocalStorage('Favorites', []);
   const [friends, setFriends] = useLocalStorage('Testing', []);
-  const [myProfile, setMyProfile] = useState({});
+  const [myProfile, setMyProfile] = useLocalStorage('My Profile', []);
 
   const apiServerURL = 'http://localhost:4000/api';
   let fetchUrl;
@@ -51,7 +51,6 @@ function App() {
       setIsLoading(false);
       return request;
     }
-
     fetchSearch();
   }, [query, fetchUrl]);
 
@@ -72,7 +71,7 @@ function App() {
 
   const createProfile = (profile) => {
     setMyProfile({ ...profile });
-    addUserToDataBase(profile);
+    // addUserToDataBase(profile);
   };
 
   const isOnWatchList = (movieToAdd) =>
@@ -95,18 +94,21 @@ function App() {
 
   return (
     <>
-      <Navigation open={open} setOpen={setOpen} />
-      <Banner show={show} handleShow={handleShow} />
-      <Sidebar
-        open={open}
-        setOpen={setOpen}
-        show={show}
-        handleShow={handleShow}
-      />
       <ScrollToTop>
+        <Navigation open={open} setOpen={setOpen} />
+        <Banner show={show} handleShow={handleShow} />
+        <Sidebar
+          open={open}
+          setOpen={setOpen}
+          show={show}
+          handleShow={handleShow}
+          myProfile={myProfile}
+        />
+
         <Switch>
           <MainWrapper open={open}>
-            {/* <button onClick={() => console.log(favorites)}></button> */}
+            <button onClick={() => console.log(myProfile.name)}></button>
+            <button onClick={() => setMyProfile({})}></button>
             <Route exact path="/">
               <Home
                 isFavorite={isFavorite}
@@ -157,11 +159,11 @@ function App() {
               </FriendsWrapper>
             </Route>
             <Route path="/search">
+              <HeadlineWrapper>SEARCH</HeadlineWrapper>
+              <SearchbarWrapper>
+                <Searchbar getQuery={(query) => setQuery(query)} open={open} />
+              </SearchbarWrapper>
               <MovieWrapper>
-                <HeadlineWrapper>SEARCH</HeadlineWrapper>
-                <SearchbarWrapper>
-                  <Searchbar getQuery={(query) => setQuery(query)} />
-                </SearchbarWrapper>
                 <GridWrapper>
                   {search.map((movie) => (
                     <Search
@@ -202,14 +204,25 @@ function App() {
             <Route path="/friendsinfo">
               <FriendsCards />
             </Route>
+
             <Route path="/profile">
-              <Profile />
+              <>
+                <Profile
+                  myProfile={myProfile}
+                  friends={friends}
+                  watchlist={watchlist}
+                  favorites={favorites}
+                />
+              </>
             </Route>
             <Route path="/createprofile">
-              <CreateProfile
-                createProfile={createProfile}
-                favorites={favorites}
-              />
+              <FriendsWrapper>
+                <CreateProfile
+                  myProfile={myProfile}
+                  createProfile={createProfile}
+                  favorites={favorites}
+                />
+              </FriendsWrapper>
             </Route>
           </MainWrapper>
         </Switch>
@@ -224,7 +237,7 @@ const FriendsFlex = styled.div`
   margin-left: 25px;
   display: flex;
   padding: 20px;
-  overflow-x: scroll;
+  overflow-x: hidden;
   scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;
@@ -248,7 +261,7 @@ const FriendsWrapper = styled.div`
   }
 `;
 
-const MainWrapper = styled.main`
+const MainWrapper = styled.div`
   margin-top: 100px;
   margin-bottom: 100px;
   transition: transform 0.3s ease-in-out;
@@ -264,7 +277,12 @@ const MainWrapper = styled.main`
 const GridWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  max-width: 1080px;
+  max-width: 1020px;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
   @media (max-width: 800px) {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -284,7 +302,7 @@ const MovieWrapper = styled.div`
   margin: 0 auto;
   max-width: 1020px;
   overflow-x: hidden;
-  overflow-y: scroll;
+
   scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;
@@ -303,11 +321,11 @@ const HeadlineWrapper = styled.h2`
 `;
 
 const SearchbarWrapper = styled.div`
-  display: flex;
+  /* display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 1rem;
   margin: 0 auto;
   width: 100%;
-  max-width: 800px;
+  max-width: 800px; */
 `;

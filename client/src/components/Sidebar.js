@@ -2,7 +2,13 @@ import PropTypes from 'prop-types';
 import Burger from './Burger';
 import Menu from './Menu';
 
-export default function Sidebar({ open, setOpen, show, handleShow }) {
+export default function Sidebar({
+  open,
+  setOpen,
+  show,
+  handleShow,
+  myProfile,
+}) {
   return (
     <>
       <Burger
@@ -11,7 +17,7 @@ export default function Sidebar({ open, setOpen, show, handleShow }) {
         show={show}
         handleShow={handleShow}
       />
-      <Menu open={open} setOpen={setOpen} />
+      <Menu open={open} setOpen={setOpen} myProfile={myProfile} />
     </>
   );
 }

@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Star } from '@styled-icons/fa-regular/Star';
 import { UserSettings } from '@styled-icons/remix-line/UserSettings';
 import { HeartCircle } from '@styled-icons/boxicons-solid/HeartCircle';
 import { PeopleFill } from '@styled-icons/bootstrap/PeopleFill';
 import { Profile } from '@styled-icons/icomoon/Profile';
 
-export default function Menu({ open, setOpen }) {
+export default function Menu({ open, setOpen, myProfile }) {
   return (
     <StyledMenu open={open}>
       <MenuWrapper>
@@ -38,7 +38,7 @@ export default function Menu({ open, setOpen }) {
         <BurgerLink to="/createprofile">
           <CloseWrapper onClick={() => setOpen(!open)}>
             <ProfileSettings />
-            <p>Edit Profile</p>
+            <p>{myProfile.name ? 'Edit Profile ' : 'Create Profile'}</p>
           </CloseWrapper>
         </BurgerLink>
       </MenuWrapper>
@@ -91,18 +91,17 @@ const StyledMenu = styled.nav`
   flex-direction: column;
   align-items: flex-start;
   background: var(--secondary-100-opacity);
-  bottom: 0;
   box-shadow: ${({ open }) => (open ? 'var(--boxshadow)' : '')};
   height: 100vh;
   left: 0;
-  overflow-x: hidden;
+  top: 0;
+  bottom: 0;
   position: fixed;
   text-align: left;
-  top: 0;
   transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
   transition: transform 0.3s ease-in-out;
   width: 30vh;
-  z-index: 1;
+  z-index: 8;
 
   @media (max-width: 800px) {
     width: 25vh;
@@ -133,6 +132,6 @@ const CloseWrapper = styled.div`
   }
 `;
 
-const BurgerLink = styled(Link)`
+const BurgerLink = styled(NavLink)`
   text-decoration: none;
 `;

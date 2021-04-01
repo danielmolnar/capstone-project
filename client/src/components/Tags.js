@@ -16,50 +16,56 @@ export default function Tag({ addProfileTag, tags, removeProfileTag }) {
 
   return (
     <>
-      <div>
-        <p>Product Tags</p>
-        <SectionWrapper>
-          {tags.map((tag, index) => (
-            <span
-              key={index}
-              tabIndex="0"
-              onKeyDown={(event) =>
-                event.key === 'Backspace' && removeProfileTag(tag)
-              }
+      <SectionWrapper>
+        {tags.map((tag, index) => (
+          <span
+            key={index}
+            tabIndex="0"
+            onKeyDown={(event) =>
+              event.key === 'Backspace' && removeProfileTag(tag)
+            }
+          >
+            {tag}
+            <i
+              // onKeyPress={(e) => e.key === 'Enter' && removeProfileTag(tag)}
+              onClick={() => removeProfileTag(tag)}
             >
-              {tag}
-              <i
-                // onKeyPress={(e) => e.key === 'Enter' && removeProfileTag(tag)}
-                onClick={() => removeProfileTag(tag)}
-              >
-                &times;
-              </i>
-            </span>
-          ))}
+              &times;
+            </i>
+          </span>
+        ))}
 
-          <input
-            // autoFocus
-            type="text"
-            name="tags"
-            onChange={handleChange}
-            value={value}
-            onKeyDown={handleKeyDown}
-          />
-        </SectionWrapper>
-      </div>
+        <input
+          // autoFocus
+          type="text"
+          name="tags"
+          onChange={handleChange}
+          value={value}
+          onKeyDown={handleKeyDown}
+        />
+      </SectionWrapper>
     </>
   );
 }
 
 const SectionWrapper = styled.section`
   display: flex;
-  /* width: 30 */
+
+  align-items: flex-start;
   flex-wrap: wrap;
+  width: 100%;
+  gap: 0.5rem;
   border-radius: 5px;
   border: none;
   cursor: pointer;
   color: white;
-  gap: 5px;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+  /* gap: 5px; */
+
+  p {
+    margin: 0;
+  }
 
   input {
     border: none;
@@ -75,6 +81,7 @@ const SectionWrapper = styled.section`
   }
 
   span {
+    font-size: 0.8rem;
     padding: 5px;
     background-color: white;
     color: black;

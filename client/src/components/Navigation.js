@@ -71,21 +71,25 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  border-radius: 5px;
+  /* border-radius: 5px; */
+  border-top: white 1px solid;
   height: 3rem;
-  max-width: 1080px;
-  padding: 1.5rem;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 20;
+  background: var(--primary-background);
   width: 100%;
 `;
 
 const NavWrapper = styled.div`
-  display: flex;
+  /* display: flex;
   justify-content: center;
   align-items: center;
   background: var(--primary-background);
   bottom: 0;
+  overflow-x: hidden;
   box-shadow: var(--boxshadow);
   position: fixed;
-  width: 100%;
-  z-index: 5;
+  width: 100%; */
 `;

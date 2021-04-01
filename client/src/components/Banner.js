@@ -37,7 +37,7 @@ const ImageWrapper = styled.div(
     box-shadow: var(--boxshadow);
     transition-timing-function: ease-out;
     transition: all 0.5s;
-    z-index: 10;
+    z-index: 9;
     ${props.show &&
       css`
         opacity: 0;

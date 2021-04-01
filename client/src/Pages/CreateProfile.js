@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Tags from '../components/Tags';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
-export default function Profile({ createProfile }) {
+export default function Profile({ createProfile, myProfile }) {
   const [favorites, setFavorites] = useLocalStorage('Favorites', []);
   const [user, setUser] = useLocalStorage('UserProfile', []);
 
@@ -37,8 +37,9 @@ export default function Profile({ createProfile }) {
 
   function submitProfile(event) {
     event.preventDefault();
+
     createProfile(profile);
-    setProfile(initialProfile);
+    // setProfile(initialProfile);
   }
 
   const addProfileTag = (tag) => {
@@ -54,78 +55,75 @@ export default function Profile({ createProfile }) {
   };
 
   return (
-    <PageWrapper>
+    <>
       <HeadlineWrapper>
-        <h2>Edit Profile</h2>
+        <h2>{myProfile.name ? 'Edit Profile ' : 'Create Profile'}</h2>
       </HeadlineWrapper>
+      <PageWrapper>
+        <FormWrapper>
+          <form onSubmit={submitProfile}>
+            <ProfileContainer>
+              <LabelStyler htmlFor="">
+                <p>Name</p>
+                <InputStyler
+                  type="text"
+                  name="name"
+                  value={profile.name}
+                  onChange={handleChange}
+                  placeholder={profile.name}
+                />
+              </LabelStyler>
+              <LabelStyler htmlFor="">
+                <p>Age</p>
+                <InputStyler
+                  type="text"
+                  name="age"
+                  value={profile.age}
+                  onChange={handleChange}
+                  placeholder={profile.age}
+                />
+                <p>User Tags</p>
+              </LabelStyler>
+              <Tags
+                addProfileTag={addProfileTag}
+                tags={profile.tags}
+                removeProfileTag={removeProfileTag}
+              />
 
-      <form onSubmit={submitProfile}>
-        <ProfileContainer>
-          <LabelStyler htmlFor="">
-            Name <br />
-            <br />
-            <InputStyler
-              type="text"
-              name="name"
-              value={profile.name}
-              onChange={handleChange}
-              placeholder={profile.name}
-            />
-          </LabelStyler>
-          <LabelStyler htmlFor="">
-            Age
-            <br />
-            <br />
-            <InputStyler
-              type="text"
-              name="age"
-              value={profile.age}
-              onChange={handleChange}
-              placeholder={profile.age}
-            />
-          </LabelStyler>
-
-          <Tags
-            addProfileTag={addProfileTag}
-            tags={profile.tags}
-            removeProfileTag={removeProfileTag}
-          />
-          <LabelStyler htmlFor="">
-            About me
-            <br />
-            <br />
-            <InputStyler
-              type="text"
-              name="about"
-              value={profile.about}
-              onChange={handleChange}
-              placeholder={profile.about}
-            />
-          </LabelStyler>
-          <ButtonContainer>
-            <StyledButton type="submit">Submit</StyledButton>
-            <StyledButton type="cancel">Cancel</StyledButton>
-          </ButtonContainer>
-        </ProfileContainer>
-      </form>
-      <button onClick={() => console.log(user)}>CLICK ME!</button>
-      <button onClick={() => setProfile(initialProfile)}>CLICK ME!</button>
-
-      <p>You entered: {profile.name}</p>
-      <p>Your age: {profile.age}</p>
-      <p>About me: {profile.about}</p>
-    </PageWrapper>
+              <LabelStyler htmlFor="">
+                About me
+                <br />
+                <br />
+                <InputStyler
+                  type="text"
+                  name="about"
+                  value={profile.about}
+                  onChange={handleChange}
+                  placeholder={profile.about}
+                />
+              </LabelStyler>
+              <ButtonContainer>
+                <StyledButton type="submit">Submit</StyledButton>
+                <StyledButton type="cancel">Cancel</StyledButton>
+              </ButtonContainer>
+            </ProfileContainer>
+          </form>
+          <button onClick={() => myProfile({})}>CLICK ME!</button>
+          <button onClick={() => setProfile(initialProfile)}>CLICK ME!</button>
+        </FormWrapper>
+      </PageWrapper>
+    </>
   );
 }
 
 const PageWrapper = styled.div`
   margin: 0 auto;
-  max-width: 1020px;
-  @media (min-width: 1020px) {
-    box-shadow: var(--boxshadow);
-    height: 100%;
-    padding: 1rem 0;
-    border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  ::-webkit-scrollbar {
+    display: none;
   }
 `;
 
@@ -134,17 +132,27 @@ const HeadlineWrapper = styled.div`
 `;
 
 const ProfileContainer = styled.div`
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  justify-content: space-around;
   padding: 1rem;
-  border: solid 1px white;
+
+  p {
+    margin: 0;
+    margin-bottom: 1rem;
+  }
+`;
+
+const FormWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
 `;
 
 const LabelStyler = styled.label`
-  text-align: left;
-
   color: white;
 `;
 
@@ -165,10 +173,9 @@ const InputStyler = styled.input`
 `;
 
 const StyledButton = styled.button`
-  background-color: var(--primary-100);
-  box-shadow: var(--boxshadow);
+  border: solid 1px white;
+  background: none;
   border-radius: 3px;
-  border: none;
   color: white;
   font-weight: bold;
   margin-bottom: 5px;
