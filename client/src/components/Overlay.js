@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import OpenButton from './OpenButton';
+import OverlayMenu from '../components/OverlayMenu';
 import CardInfos from '../components/CardInfos';
 
 export default function Overlay({
@@ -16,7 +16,7 @@ export default function Overlay({
   return (
     <OverlayStyler>
       <ButtonWrapper>
-        <OpenButton
+        <OverlayMenu
           clickHandler={() => setIsOpen(true)}
           movie={movie}
           isFavorite={isFavorite}

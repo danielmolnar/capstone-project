@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Logo from '../images/Logo.js';
+import Logo from './Ui/Logo';
 
 function Banner({ show, handleShow }) {
   useEffect(() => {
@@ -15,7 +15,7 @@ function Banner({ show, handleShow }) {
 
   return (
     <ImageWrapper show={show}>
-      <LogoStyler />
+      <Logo />
     </ImageWrapper>
   );
 }
@@ -38,17 +38,10 @@ const ImageWrapper = styled.div(
     transition-timing-function: ease-out;
     transition: all 0.5s;
     z-index: 9;
+    background: var(--secondary-100);
     ${props.show &&
       css`
         opacity: 0;
       `}
   `
 );
-
-const LogoStyler = styled(Logo)`
-  background: var(--secondary-100);
-  height: 3.5rem;
-  object-fit: contain;
-  padding: 10px;
-  width: 100%;
-`;

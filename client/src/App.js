@@ -112,18 +112,17 @@ function App() {
 
   return (
     <>
-      <ScrollToTop>
-        <Navigation open={open} setOpen={setOpen} />
-        <Banner show={show} handleShow={handleShow} />
-        <Sidebar
-          open={open}
-          setOpen={setOpen}
-          show={show}
-          handleShow={handleShow}
-          myProfile={myProfile}
-        />
-
-        <Switch>
+      <Switch>
+        <ScrollToTop>
+          <Navigation open={open} setOpen={setOpen} />
+          <Banner show={show} handleShow={handleShow} />
+          <Sidebar
+            open={open}
+            setOpen={setOpen}
+            show={show}
+            handleShow={handleShow}
+            myProfile={myProfile}
+          />
           <MainWrapper open={open}>
             <button onClick={() => console.log(myProfile)}></button>
             <button
@@ -249,8 +248,8 @@ function App() {
               </FriendsWrapper>
             </Route>
           </MainWrapper>
-        </Switch>
-      </ScrollToTop>
+        </ScrollToTop>
+      </Switch>
     </>
   );
 }

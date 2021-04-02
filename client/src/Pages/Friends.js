@@ -1,5 +1,5 @@
 import ImageContainer from '../components/ImageContainer';
-import Spinner from '../components/Spinner';
+import Spinner from '../components/Ui/Spinner';
 
 export default function Friends({
   movie,

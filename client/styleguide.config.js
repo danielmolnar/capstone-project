@@ -11,8 +11,10 @@ module.exports = {
       preview: {
         position: 'static',
         // transform: 'translate3d(0, 0, 0)',
-        outline: '1px solid #661',
-        zIndex: '100000000',
+        outline: '1px solid black',
+        zIndex: '0',
+        top: 'auto',
+        left: 'auto',
       },
     },
   },

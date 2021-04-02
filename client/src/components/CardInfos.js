@@ -1,7 +1,7 @@
 import ReactDom from 'react-dom';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import AddButton from '../components/AddButton';
+import AddToWatchList from './AddToWatchList';
 import backdrop_poster from '../images/backdrop_poster.png';
 import { BiTachometer } from 'react-icons/bi';
 
@@ -32,7 +32,7 @@ export default function CardInfos({
           background={movie.backdrop_path || movie.poster_path}
         >
           <DetailsWrapper>
-            <AddButton
+            <AddToWatchList
               movie={movie}
               isOnWatchList={isOnWatchList}
               addToWatchList={addToWatchList}

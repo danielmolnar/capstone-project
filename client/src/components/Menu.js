@@ -7,9 +7,9 @@ import { HeartCircle } from '@styled-icons/boxicons-solid/HeartCircle';
 import { PeopleFill } from '@styled-icons/bootstrap/PeopleFill';
 import { Profile } from '@styled-icons/icomoon/Profile';
 
-export default function Menu({ open, setOpen, myProfile }) {
+export default function Menu({ open, setOpen, myProfile, styleguide }) {
   return (
-    <StyledMenu open={open}>
+    <StyledMenu open={open} styleguide={styleguide}>
       <MenuWrapper>
         <BurgerLink to="/favorites">
           <CloseWrapper onClick={() => setOpen(!open)}>
@@ -90,13 +90,14 @@ const StyledMenu = styled.nav`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background: var(--secondary-100-opacity);
+  background: ${({ styleguide }) =>
+    styleguide ? 'var(--primary-100)' : 'var(--secondary-100-opacity)'};
   box-shadow: ${({ open }) => (open ? 'var(--boxshadow)' : '')};
   height: 100vh;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  position: fixed;
+  left: ${({ styleguide }) => (styleguide ? '' : '0')};
+  top: ${({ styleguide }) => (styleguide ? '' : '0')};
+  bottom: ${({ styleguide }) => (styleguide ? '' : '0')};
+  position: ${({ styleguide }) => (styleguide ? '' : 'fixed')};
   text-align: left;
   transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
   transition: transform 0.3s ease-in-out;

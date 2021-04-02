@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import spinner from '../images/spinner.gif';
+import spinner from '../../images/spinner.gif';
 
 export default function Spinner({ isNetflix }) {
   return (

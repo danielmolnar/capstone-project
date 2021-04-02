@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-export default function Burger({ open, setOpen, show, handleShow }) {
+export default function Burger({ open, setOpen, show, styleguide }) {
   return (
     <StyledBurger
       open={open}
       onClick={() => setOpen(!open)}
       show={show}
-      handleShow={handleShow}
+      styleguide={styleguide}
     >
       <div />
       <div />
@@ -24,15 +24,15 @@ Burger.propTypes = {
 };
 
 export const StyledBurger = styled.button`
-  position: fixed;
-  top: 0.725rem;
-  left: 1rem;
+  position: ${({ styleguide }) => (styleguide ? '' : 'fixed')};
+  top: ${({ styleguide }) => (styleguide ? '' : '0.725rem')};
+  left: ${({ styleguide }) => (styleguide ? '' : '1rem')};
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   width: 2rem;
   height: 2rem;
-  background: transparent;
+  background: ${({ styleguide }) => (styleguide ? 'black' : 'transparent')};
   border: none;
   cursor: pointer;
   padding: 0;

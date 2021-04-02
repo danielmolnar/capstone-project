@@ -8,6 +8,7 @@ export default function Sidebar({
   show,
   handleShow,
   myProfile,
+  styleguide,
 }) {
   return (
     <>
@@ -16,8 +17,14 @@ export default function Sidebar({
         setOpen={setOpen}
         show={show}
         handleShow={handleShow}
+        styleguide={styleguide}
       />
-      <Menu open={open} setOpen={setOpen} myProfile={myProfile} />
+      <Menu
+        open={open}
+        setOpen={setOpen}
+        myProfile={myProfile}
+        styleguide={styleguide}
+      />
     </>
   );
 }

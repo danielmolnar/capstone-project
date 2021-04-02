@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Spinner from '../components/Spinner';
+import Spinner from '../components/Ui/Spinner';
 import ImageContainer from '../components/ImageContainer';
 
 export default function Search({

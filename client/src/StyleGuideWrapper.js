@@ -1,4 +1,5 @@
 import { GlobalStyles } from './Globalstyles';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 const StyleGuideWrapper = ({ children }) => {
   const portal = document.createElement('div');
@@ -8,7 +9,7 @@ const StyleGuideWrapper = ({ children }) => {
   return (
     <>
       <GlobalStyles />
-      {children}
+      <Router>{children}</Router>
     </>
   );
 };
