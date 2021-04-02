@@ -1,3 +1,3 @@
 ```js
-<Logo />
+<Logo styleguide={true} />
 ```

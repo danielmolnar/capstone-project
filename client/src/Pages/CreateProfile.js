@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Tags from '../components/Tags';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import FormButton from '../components/Ui/Button/FormButton';
 
 export default function Profile({ createProfile, updateProfile }) {
   const [favorites, setFavorites] = useLocalStorage('Favorites', []);
@@ -22,11 +23,11 @@ export default function Profile({ createProfile, updateProfile }) {
   const isExistingProfile = myProfile.name;
 
   const initialProfile = {
-    name: myProfile.name ?? '',
-    age: myProfile.age ?? '',
-    tags: myProfile.tags ?? [],
-    about: myProfile.about ?? '',
-    favorites: [...favorites] ?? [],
+    name: '',
+    age: '',
+    tags: [],
+    about: '',
+    favorites: [...favorites],
   };
   const [profile, setProfile] = useState(initialProfile);
 
@@ -64,6 +65,11 @@ export default function Profile({ createProfile, updateProfile }) {
     setProfile({ ...profile, tags: remainingTags });
   };
 
+  function removeLastTag() {
+    const remainingTags = profile.tags.slice(0, profile.tags.length - 1);
+    setProfile({ ...profile, tags: [...remainingTags] });
+  }
+
   return (
     <>
       <HeadlineWrapper>
@@ -98,6 +104,7 @@ export default function Profile({ createProfile, updateProfile }) {
                 addProfileTag={addProfileTag}
                 tags={profile.tags}
                 removeProfileTag={removeProfileTag}
+                removeLastTag={removeLastTag}
               />
 
               <LabelStyler htmlFor="">
@@ -113,8 +120,13 @@ export default function Profile({ createProfile, updateProfile }) {
                 />
               </LabelStyler>
               <ButtonContainer isExistingProfile={isExistingProfile}>
-                <StyledButton type="submit">Submit</StyledButton>
-                <StyledButton onClick={updateMyProfile}>Edit</StyledButton>
+                <FormButton type="submit" text="Submit" />
+
+                <FormButton
+                  type="submit"
+                  text="Edit"
+                  onClick={updateMyProfile}
+                />
               </ButtonContainer>
             </ProfileContainer>
           </form>
@@ -174,6 +186,10 @@ const ButtonContainer = styled.div`
   button:first-child {
     display: ${({ isExistingProfile }) => (isExistingProfile ? 'none' : '')};
   }
+
+  button:last-child {
+    display: ${({ isExistingProfile }) => (isExistingProfile ? '' : 'none')};
+  }
 `;
 
 const InputStyler = styled.input`
@@ -184,23 +200,4 @@ const InputStyler = styled.input`
   height: 25px;
   border: none;
   border-radius: 5px;
-`;
-
-const StyledButton = styled.button`
-  border: solid 1px white;
-  background: none;
-  border-radius: 3px;
-  color: white;
-  font-weight: bold;
-  margin-bottom: 5px;
-  outline: none;
-  padding: 5px 10px;
-  text-decoration: none;
-  transition: transform 250ms;
-  width: 5rem;
-
-  cursor: pointer;
-  :hover {
-    background-color: var(--primary-100-opacity);
-  }
 `;

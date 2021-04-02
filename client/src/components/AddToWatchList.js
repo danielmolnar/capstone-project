@@ -1,11 +1,6 @@
 import CardButton from './Ui/Button/CardButton';
 
-export default function AddToWatchList({
-  movie,
-  isOnWatchList,
-  addToWatchList,
-}) {
-  const checkOnWatchList = isOnWatchList(movie);
+export default function AddToWatchList({ checkOnWatchList, addToWatchList }) {
   let buttonText;
 
   checkOnWatchList

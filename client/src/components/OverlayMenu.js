@@ -4,7 +4,7 @@ import HeartActiveButton from './Ui/Button/HeartActiveButton';
 import HeartInactiveButton from './Ui/Button/HeartInactiveButton';
 import InfoButton from './Ui/Button/InfoButton';
 
-export default function OpenButton({
+export default function OverlayMenu({
   movie,
   isFavorite,
   clickHandler,
@@ -24,7 +24,7 @@ export default function OpenButton({
   );
 }
 
-OpenButton.propTypes = {
+OverlayMenu.propTypes = {
   movie: PropTypes.object,
   isFavorite: PropTypes.func,
   clickHandler: PropTypes.func,

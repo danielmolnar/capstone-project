@@ -9,8 +9,8 @@ export default function CardInfos({
   open,
   movie,
   onClose,
-  isOnWatchList,
   addToWatchList,
+  checkOnWatchList,
 }) {
   if (!open) return null;
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
@@ -33,8 +33,7 @@ export default function CardInfos({
         >
           <DetailsWrapper>
             <AddToWatchList
-              movie={movie}
-              isOnWatchList={isOnWatchList}
+              checkOnWatchList={checkOnWatchList}
               addToWatchList={addToWatchList}
             />
           </DetailsWrapper>
@@ -62,7 +61,7 @@ CardInfos.propTypes = {
   movie: PropTypes.object,
   onClose: PropTypes.func,
   isFavorite: PropTypes.func,
-  isOnWatchList: PropTypes.func,
+  isOnWatchList: PropTypes.bool,
   addToFavorites: PropTypes.func,
   addToWatchList: PropTypes.func,
 };

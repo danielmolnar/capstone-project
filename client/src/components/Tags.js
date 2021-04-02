@@ -1,7 +1,13 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
-export default function Tag({ addProfileTag, tags, removeProfileTag }) {
+export default function Tags({
+  addProfileTag,
+  tags,
+  removeProfileTag,
+  removeLastTag,
+}) {
   const [value, setValue] = useState('');
 
   const handleChange = (event) => setValue(event.target.value);
@@ -12,31 +18,17 @@ export default function Tag({ addProfileTag, tags, removeProfileTag }) {
       addProfileTag(value);
       setValue('');
     }
+    if (event.key === 'Backspace') {
+      removeLastTag(tags);
+    }
   };
 
   return (
     <>
       <SectionWrapper>
-        {tags.map((tag, index) => (
-          <span
-            key={index}
-            tabIndex="0"
-            onKeyDown={(event) =>
-              event.key === 'Backspace' && removeProfileTag(tag)
-            }
-          >
-            {tag}
-            <i
-              // onKeyPress={(e) => e.key === 'Enter' && removeProfileTag(tag)}
-              onClick={() => removeProfileTag(tag)}
-            >
-              &times;
-            </i>
-          </span>
-        ))}
+        {tagsList(tags, removeProfileTag)}
 
         <input
-          // autoFocus
           type="text"
           name="tags"
           onChange={handleChange}
@@ -47,6 +39,29 @@ export default function Tag({ addProfileTag, tags, removeProfileTag }) {
     </>
   );
 }
+
+function tagsList(tags, removeProfileTag) {
+  return (
+    <>
+      {tags.map((tag, index) => (
+        <span
+          key={index}
+          tabIndex="0"
+          onKeyDown={(event) =>
+            event.key === 'Backspace' && removeProfileTag(tag)
+          }
+        >
+          {tag}
+          <i onClick={() => removeProfileTag(tag)}>&times;</i>
+        </span>
+      ))}
+    </>
+  );
+}
+
+Tags.propTypes = {
+  tags: PropTypes.array.isRequired,
+};
 
 const SectionWrapper = styled.section`
   display: flex;

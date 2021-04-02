@@ -2,14 +2,12 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-export default function Searchbar({ getQuery, open }) {
+export default function Searchbar({ getQuery }) {
   const [text, setText] = useState('');
   const onChange = (query) => {
     setText(query);
     getQuery(query);
   };
-
-  if (open) return null;
 
   return (
     <>

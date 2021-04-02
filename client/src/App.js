@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
 import axios from './services/axios';
 import requests from './services/requests';
 import ScrollToTop from './services/ScrollToTop';
@@ -15,10 +14,10 @@ import Watchlist from './Pages/Watchlist';
 import Favorites from './Pages/Favorites';
 import FriendsCards from './Pages/FriendsCards';
 import CreateProfile from './Pages/CreateProfile';
-import Sidebar from './components/Sidebar';
+import Sidebar from './components/Ui/Navigation/Sidebar';
 import Banner from '../src/components/Banner';
-import Searchbar from './components/Searchbar';
-import Navigation from '../src/components/Navigation';
+import Searchbar from './components/Ui/Navigation/Searchbar';
+import Navigation from './components/Ui/Navigation/Navigation';
 
 function App() {
   const [query, setQuery] = useState('');
@@ -62,6 +61,7 @@ function App() {
   useEffect(() => {
     const updateFavorites = () => {
       setMyProfile({ ...myProfile, favorites: [...favorites] });
+      updateUser(myProfile);
     };
     updateFavorites();
   }, [favorites]);
@@ -112,25 +112,25 @@ function App() {
 
   return (
     <>
-      <Switch>
-        <ScrollToTop>
-          <Navigation open={open} setOpen={setOpen} />
-          <Banner show={show} handleShow={handleShow} />
-          <Sidebar
-            open={open}
-            setOpen={setOpen}
-            show={show}
-            handleShow={handleShow}
-            myProfile={myProfile}
-          />
+      <Navigation open={open} setOpen={setOpen} />
+      <Banner show={show} handleShow={handleShow} />
+      <Sidebar
+        open={open}
+        setOpen={setOpen}
+        show={show}
+        handleShow={handleShow}
+        myProfile={myProfile}
+      />
+      <ScrollToTop>
+        <Switch>
           <MainWrapper open={open}>
-            <button onClick={() => console.log(myProfile)}></button>
+            {/* <button onClick={() => console.log(myProfile)}></button>
             <button
               onClick={() =>
                 setMyProfile({ ...myProfile, favorites: [...favorites] })
               }
             ></button>
-            <button onClick={() => updateProfile(myProfile)}></button>
+            <button onClick={() => updateProfile(myProfile)}></button> */}
             <Route exact path="/">
               <Home
                 isFavorite={isFavorite}
@@ -181,11 +181,12 @@ function App() {
               </FriendsWrapper>
             </Route>
             <Route path="/search">
-              <HeadlineWrapper>SEARCH</HeadlineWrapper>
-              <SearchbarWrapper>
-                <Searchbar getQuery={(query) => setQuery(query)} open={open} />
-              </SearchbarWrapper>
               <MovieWrapper>
+                <HeadlineWrapper>SEARCH</HeadlineWrapper>
+                <SearchbarWrapper>
+                  <Searchbar getQuery={(query) => setQuery(query)} />
+                </SearchbarWrapper>
+
                 <GridWrapper>
                   {search.map((movie) => (
                     <Search
@@ -248,8 +249,8 @@ function App() {
               </FriendsWrapper>
             </Route>
           </MainWrapper>
-        </ScrollToTop>
-      </Switch>
+        </Switch>
+      </ScrollToTop>
     </>
   );
 }
@@ -301,11 +302,7 @@ const GridWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   max-width: 1020px;
-  overflow-x: hidden;
-  scrollbar-width: none;
-  ::-webkit-scrollbar {
-    display: none;
-  }
+
   @media (max-width: 800px) {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -338,17 +335,18 @@ const MovieWrapper = styled.div`
 `;
 
 const HeadlineWrapper = styled.h2`
+  display: flex;
   margin-left: 20px;
   width: 100%;
   max-width: 1080px;
 `;
 
 const SearchbarWrapper = styled.div`
-  /* display: flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 1rem;
   margin: 0 auto;
   width: 100%;
-  max-width: 800px; */
+  max-width: 800px;
 `;

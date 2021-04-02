@@ -12,6 +12,7 @@ export default function Overlay({
   addToFavorites,
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const checkOnWatchList = isOnWatchList(movie);
 
   return (
     <OverlayStyler>
@@ -24,9 +25,9 @@ export default function Overlay({
         />
       </ButtonWrapper>
       <CardInfos
-        open={isOpen}
         movie={movie}
-        isOnWatchList={isOnWatchList}
+        open={isOpen}
+        checkOnWatchList={checkOnWatchList}
         addToWatchList={addToWatchList}
         onClose={() => setIsOpen(false)}
       />

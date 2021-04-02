@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import Burger from './Burger';
-import Menu from './Menu';
+import Menu from '../../Menu';
 
 export default function Sidebar({
   open,
