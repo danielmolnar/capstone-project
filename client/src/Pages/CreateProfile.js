@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Tags from '../components/Tags';
+import { useState, useEffect } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import FormButton from '../components/Ui/Button/FormButton';
+import isValidForm from '../lib/validateFunctions';
+import Tags from '../components/Tags';
 
-export default function Profile({ createProfile, updateProfile }) {
+export default function CreateProfile({ createProfile, updateProfile }) {
   const [favorites, setFavorites] = useLocalStorage('Favorites', []);
   const [myProfile, setMyProfile] = useLocalStorage('My Profile', []);
   // const [myProfile, setMyProfile] = useState({});
@@ -26,7 +28,7 @@ export default function Profile({ createProfile, updateProfile }) {
     name: '',
     age: '',
     tags: [],
-    about: '',
+    email: '',
     favorites: [...favorites],
   };
   const [profile, setProfile] = useState(initialProfile);
@@ -43,9 +45,13 @@ export default function Profile({ createProfile, updateProfile }) {
 
   function submitProfile(event) {
     event.preventDefault();
-    createProfile(profile);
-    // setProfile(initialProfile);
-    setMyProfile(profile);
+    if (isValidForm(profile)) {
+      createProfile(profile);
+      setMyProfile(profile);
+      // setProfile(initialProfile);
+    } else {
+      alert('Please submit valid credentials');
+    }
   }
 
   function updateMyProfile(event) {
@@ -98,6 +104,16 @@ export default function Profile({ createProfile, updateProfile }) {
                   onChange={handleChange}
                   placeholder={profile.age}
                 />
+              </LabelStyler>
+              <LabelStyler htmlFor="">
+                <p>E-Mail</p>
+                <InputStyler
+                  type="text"
+                  name="email"
+                  value={profile.email}
+                  onChange={handleChange}
+                  placeholder={profile.email}
+                />
                 <p>User Tags</p>
               </LabelStyler>
               <Tags
@@ -138,10 +154,15 @@ export default function Profile({ createProfile, updateProfile }) {
   );
 }
 
+CreateProfile.propTypes = {
+  createProfile: PropTypes.func,
+  updateProfile: PropTypes.func,
+};
+
 const PageWrapper = styled.div`
-  margin: 0 auto;
   display: flex;
   justify-content: center;
+  margin: 0 auto;
   overflow-y: scroll;
   scrollbar-width: none;
   ::-webkit-scrollbar {
@@ -153,12 +174,19 @@ const HeadlineWrapper = styled.div`
   margin-left: 20px;
 `;
 
+const FormWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+`;
+
 const ProfileContainer = styled.div`
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+  margin: 0 auto;
   padding: 1rem;
 
   p {
@@ -167,15 +195,18 @@ const ProfileContainer = styled.div`
   }
 `;
 
-const FormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 80%;
-`;
-
 const LabelStyler = styled.label`
   color: white;
+`;
+
+const InputStyler = styled.input`
+  border: none;
+  border-radius: 5px;
+  height: 25px;
+  margin-bottom: 2rem;
+  max-width: 400px;
+  outline: none;
+  padding: 10px;
 `;
 
 const ButtonContainer = styled.div`
@@ -190,14 +221,4 @@ const ButtonContainer = styled.div`
   button:last-child {
     display: ${({ isExistingProfile }) => (isExistingProfile ? '' : 'none')};
   }
-`;
-
-const InputStyler = styled.input`
-  max-width: 400px;
-  outline: none;
-  padding: 10px;
-  margin-bottom: 2rem;
-  height: 25px;
-  border: none;
-  border-radius: 5px;
 `;

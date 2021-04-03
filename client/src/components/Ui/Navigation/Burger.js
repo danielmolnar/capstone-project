@@ -17,25 +17,26 @@ export default function Burger({ open, setOpen, show, styleguide }) {
 }
 
 Burger.propTypes = {
+  show: PropTypes.bool,
   open: PropTypes.bool,
   setOpen: PropTypes.func,
-  show: PropTypes.bool,
   handleShow: PropTypes.func,
+  styleguide: PropTypes.bool,
 };
 
 export const StyledBurger = styled.button`
-  position: ${({ styleguide }) => (styleguide ? '' : 'fixed')};
-  top: ${({ styleguide }) => (styleguide ? '' : '0.725rem')};
-  left: ${({ styleguide }) => (styleguide ? '' : '1rem')};
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  width: 2rem;
-  height: 2rem;
   background: ${({ styleguide }) => (styleguide ? 'black' : 'transparent')};
   border: none;
   cursor: pointer;
+  height: 2rem;
+  left: ${({ styleguide }) => (styleguide ? '' : '1rem')};
   padding: 0;
+  position: ${({ styleguide }) => (styleguide ? '' : 'fixed')};
+  top: ${({ styleguide }) => (styleguide ? '' : '0.725rem')};
+  width: 2rem;
   z-index: 9;
 
   @media (min-width: 1920px) {
@@ -48,11 +49,12 @@ export const StyledBurger = styled.button`
 
   div {
     border-radius: 10px;
-    height: 0.25rem;
     position: relative;
     transform-origin: 1px;
-    transition: all 0.3s linear;
     width: 2rem;
+    transition: all 0.3s linear;
+    height: 0.25rem;
+
     :first-child {
       background: ${({ show }) => (show ? 'white' : 'var(--primary-100)')};
       transform: ${({ open }) => (open ? 'rotate(45deg)' : 'rotate(0)')};

@@ -13,15 +13,15 @@ function HeartActiveButton({ addToFavorites, color }) {
 export default HeartActiveButton;
 
 HeartActiveButton.propTypes = {
-  addToFavorites: PropTypes.func,
   color: PropTypes.string,
+  addToFavorites: PropTypes.func,
 };
 
 const StyledHeartActive = styled(HeartCircle)(
   (props) => css`
     cursor: pointer;
+    color: ${(props) => `("${props.color}")`};
     height: 22.5px;
     width: 22.5px;
-    color: ${(props) => `("${props.color}")`};
   `
 );

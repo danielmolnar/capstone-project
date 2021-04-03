@@ -1,13 +1,14 @@
-import { NavLink, useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Cinema from '../../../images/Cinema';
-import { AiFillHome } from 'react-icons/ai';
-import { AiOutlineHome } from 'react-icons/ai';
+import { NavLink, useLocation } from 'react-router-dom';
+import { CameraMovie as CameraMovieFilled } from '@styled-icons/boxicons-solid/CameraMovie';
+import { CameraMovie } from '@styled-icons/boxicons-regular/CameraMovie';
+import { Search2 } from '@styled-icons/remix-fill/Search2';
 import CinemaFilled from '../../../images/CinemaFilled';
 import { Search } from '@styled-icons/octicons/Search';
-import { Search2 } from '@styled-icons/remix-fill/Search2';
-import { CameraMovie } from '@styled-icons/boxicons-regular/CameraMovie';
-import { CameraMovie as CameraMovieFilled } from '@styled-icons/boxicons-solid/CameraMovie';
+import { AiOutlineHome } from 'react-icons/ai';
+import { AiFillHome } from 'react-icons/ai';
+import Cinema from '../../../images/Cinema';
 
 export default function Navigation({ setOpen, styleguide }) {
   const location = useLocation();
@@ -19,11 +20,7 @@ export default function Navigation({ setOpen, styleguide }) {
           {location.pathname === '/' ? <AiFillHome /> : <AiOutlineHome />}
         </StyledLink>
         <StyledLink to="/friends" onClick={() => setOpen(false)}>
-          {location.pathname === '/friends' ? (
-            <CinemaFriendsFilled />
-          ) : (
-            <CinemaFriends />
-          )}
+          {location.pathname === '/friends' ? <CinemaFilled /> : <Cinema />}
         </StyledLink>
         <StyledLink to="/watchlist" onClick={() => setOpen(false)}>
           {location.pathname === '/watchlist' ? (
@@ -40,41 +37,30 @@ export default function Navigation({ setOpen, styleguide }) {
   );
 }
 
-const activeClassName = 'nav-item-active';
+Navigation.propTypes = {
+  setOpen: PropTypes.func,
+  styleguide: PropTypes.bool,
+};
 
-const StyledLink = styled(NavLink).attrs({ activeClassName })`
-  color: var(--secondary-100);
+const StyledLink = styled(NavLink)`
   svg {
     width: 25px;
     height: 25px;
+    fill: var(--secondary-100);
   }
-
-  &.${activeClassName} {
-  }
-`;
-
-const CinemaFriends = styled(Cinema)`
-  width: 25px;
-  height: 25px;
-  fill: var(--secondary-100);
-`;
-
-const CinemaFriendsFilled = styled(CinemaFilled)`
-  width: 22.5px;
-  height: 22.5px;
-  fill: var(--secondary-100);
 `;
 
 const Nav = styled.nav`
   display: flex;
   justify-content: space-around;
   align-items: center;
+  background: var(--primary-background);
   border-top: white 1px solid;
+  bottom: 0;
+  box-shadow: var(--boxshadow);
   height: 3rem;
   position: ${({ styleguide }) => (styleguide ? '' : 'fixed')};
-  bottom: 0;
   right: 0;
-  z-index: 20;
-  background: var(--primary-background);
   width: 100%;
+  z-index: 20;
 `;

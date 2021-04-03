@@ -4,11 +4,11 @@ import Menu from '../../Menu';
 
 export default function Sidebar({
   open,
-  setOpen,
   show,
-  handleShow,
+  setOpen,
   myProfile,
   styleguide,
+  handleShow,
 }) {
   return (
     <>
@@ -31,7 +31,9 @@ export default function Sidebar({
 
 Sidebar.propTypes = {
   open: PropTypes.bool,
-  setOpen: PropTypes.func,
   show: PropTypes.bool,
+  setOpen: PropTypes.func,
+  styleguide: PropTypes.bool,
   handleShow: PropTypes.func,
+  myProfile: PropTypes.object,
 };

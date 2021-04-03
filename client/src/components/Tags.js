@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 export default function Tags({
-  addProfileTag,
   tags,
-  removeProfileTag,
+  addProfileTag,
   removeLastTag,
+  removeProfileTag,
 }) {
   const [value, setValue] = useState('');
 
@@ -60,62 +60,63 @@ function tagsList(tags, removeProfileTag) {
 }
 
 Tags.propTypes = {
+  addProfileTag: PropTypes.func,
+  removeLastTag: PropTypes.func,
+  removeProfileTag: PropTypes.func,
   tags: PropTypes.array.isRequired,
 };
 
 const SectionWrapper = styled.section`
   display: flex;
-
   align-items: flex-start;
   flex-wrap: wrap;
-  width: 100%;
-  gap: 0.5rem;
-  border-radius: 5px;
   border: none;
+  border-radius: 5px;
+  color: var(--secondary-100);
   cursor: pointer;
-  color: white;
+  gap: 0.5rem;
   margin-bottom: 1rem;
   padding: 0 1rem;
-  /* gap: 5px; */
+  width: 100%;
 
   p {
     margin: 0;
   }
 
   input {
-    border: none;
-    display: inline;
-    outline: none;
-    border-radius: 5px;
     background: none;
+    border: none;
     border: solid 1px var(--secondardy-50-opacity);
+    border-radius: 5px;
     color: white;
     cursor: cell;
-    width: 50%;
+    display: inline;
     max-width: 5rem;
+    outline: none;
+    width: 50%;
   }
 
   span {
-    font-size: 0.8rem;
-    padding: 5px;
-    background-color: white;
-    color: black;
-    opacity: 0.7;
+    background-color: var(--secondary-100);
     border-radius: 10px;
+    color: black;
+    font-size: 0.8rem;
+    opacity: 0.7;
+    padding: 5px;
   }
 
   span:focus {
-    background-color: white;
+    background-color: var(--secondary-100);
+    border: none;
+    border-radius: 10px;
     color: black;
     opacity: 0.7;
-    border-radius: 10px;
-    border: none;
   }
 
   span:hover {
-    background-color: white;
+    background-color: var(--secondary-100);
+    border-radius: 10px;
     color: black;
     opacity: 0.7;
-    border-radius: 10px;
   }
 `;

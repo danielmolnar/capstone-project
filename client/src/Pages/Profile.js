@@ -1,8 +1,9 @@
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { PeopleFill } from '@styled-icons/bootstrap/PeopleFill';
+import { Link } from 'react-router-dom';
 import { HeartCircle } from '@styled-icons/boxicons-regular/HeartCircle';
 import { CameraMovie } from '@styled-icons/boxicons-solid/CameraMovie';
+import { PeopleFill } from '@styled-icons/bootstrap/PeopleFill';
 
 export default function Profile({ myProfile, friends, favorites, watchlist }) {
   return !myProfile.name ? (
@@ -57,11 +58,18 @@ export default function Profile({ myProfile, friends, favorites, watchlist }) {
   );
 }
 
+Profile.propTypes = {
+  friends: PropTypes.array,
+  favorites: PropTypes.array,
+  watchlist: PropTypes.array,
+  myProfile: PropTypes.object,
+};
+
 const CreateButton = styled.button`
-  border: solid 1px white;
   background: none;
+  border: solid 1px var(--secondary-100);
   border-radius: 3px;
-  color: white;
+  color: var(--fontcolor-primary);
   font-weight: bold;
   margin-bottom: 5px;
   outline: none;
@@ -81,12 +89,12 @@ const StyledLink = styled(Link)`
 `;
 
 const ButtonContainer = styled.div`
-  margin: 0 auto;
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 80%;
+  justify-content: center;
+  margin: 0 auto;
   margin-top: 5rem;
+  width: 80%;
 `;
 
 const HeadlineWrapper = styled.div`
@@ -94,35 +102,34 @@ const HeadlineWrapper = styled.div`
 `;
 
 const Friends = styled(PeopleFill)`
-  color: black;
+  color: var(--fontcolor-secondary);
   height: 1rem;
   margin-right: 0.3rem;
   width: 1rem;
 `;
 
 const Favorites = styled(HeartCircle)`
-  color: black;
-  height: 1.1rem;
+  color: var(--fontcolor-secondary);
   margin-right: 0.3rem;
+  height: 1.1rem;
   width: 1.1rem;
 `;
 
 const WatchList = styled(CameraMovie)`
-  color: black;
+  color: var(--fontcolor-secondary);
   height: 1rem;
   margin-right: 0.3rem;
   width: 1rem;
 `;
 
 const IconWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 5px;
   background-color: var(--secondary-100);
-  box-shadow: var(--boxshadow-light);
   border-radius: 10px;
+  box-shadow: var(--boxshadow-light);
+  padding: 5px;
+
   p {
-    color: black;
+    color: var(--fontcolor-secondary);
   }
 `;
 
@@ -134,8 +141,8 @@ const Subline = styled.p`
 const SublineWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
   margin-bottom: 2rem;
+  width: 100%;
 `;
 
 const StatsWrapper = styled.div`
@@ -146,31 +153,26 @@ const StatsWrapper = styled.div`
   p {
     margin: 0;
     font-size: 0.8rem;
-    /* padding: 5px;
-    background-color: white;
-    color: black;
-    opacity: 0.7;
-    border-radius: 10px; */
   }
 `;
 
 const StyledSpan = styled.span`
+  background-color: var(--secondary-100);
+  border-radius: 10px;
+  box-shadow: var(--boxshadow-light);
+  color: var(--fontcolor-secondary);
   font-size: 0.8rem;
   padding: 5px;
-  color: black;
-  border-radius: 10px;
-  background-color: var(--secondary-100);
-  box-shadow: var(--boxshadow-light);
 `;
 
 const TagWrapper = styled.section`
   display: flex;
-  border: white solid 1px;
   flex-wrap: wrap;
-  gap: 1rem;
-  border-radius: 5px;
   border: none;
-  color: white;
+  border: var(--secondary-100) solid 1px;
+  border-radius: 5px;
+  color: var(--fontcolor-primary);
+  gap: 1rem;
 `;
 
 const MainWrapper = styled.div`
@@ -183,8 +185,8 @@ const ProfileWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 80%;
   margin: 0 auto;
+  width: 80%;
 `;
 
 const PageWrapper = styled.div`

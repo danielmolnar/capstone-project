@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 export default function FriendsCards() {
@@ -7,6 +8,8 @@ export default function FriendsCards() {
     </Wrapper>
   );
 }
+
+FriendsCards.propTypes = {};
 
 const Wrapper = styled.div`
   margin-left: 20px;

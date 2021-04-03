@@ -1,23 +1,22 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import axios from './services/axios';
-import requests from './services/requests';
-import ScrollToTop from './services/ScrollToTop';
+import Navigation from './components/Ui/Navigation/Navigation';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
-import Home from './Pages/Home';
-import Search from './Pages/Search';
-import Friends from './Pages/Friends';
-import Ratings from './Pages/Ratings';
-import Profile from './Pages/Profile';
+import Searchbar from './components/Ui/Navigation/Searchbar';
+import Sidebar from './components/Ui/Navigation/Sidebar';
+import CreateProfile from './Pages/CreateProfile';
+import ScrollToTop from './services/ScrollToTop';
+import FriendsCards from './Pages/FriendsCards';
+import Banner from '../src/components/Banner';
+import requests from './services/requests';
 import Watchlist from './Pages/Watchlist';
 import Favorites from './Pages/Favorites';
-import FriendsCards from './Pages/FriendsCards';
-import CreateProfile from './Pages/CreateProfile';
-import Sidebar from './components/Ui/Navigation/Sidebar';
-import Banner from '../src/components/Banner';
-import Searchbar from './components/Ui/Navigation/Searchbar';
-import Navigation from './components/Ui/Navigation/Navigation';
+import Friends from './Pages/Friends';
+import Profile from './Pages/Profile';
+import axios from './services/axios';
+import Search from './Pages/Search';
+import Home from './Pages/Home';
 
 function App() {
   const [query, setQuery] = useState('');
@@ -186,7 +185,6 @@ function App() {
                 <SearchbarWrapper>
                   <Searchbar getQuery={(query) => setQuery(query)} />
                 </SearchbarWrapper>
-
                 <GridWrapper>
                   {search.map((movie) => (
                     <Search
@@ -221,13 +219,9 @@ function App() {
                 </GridWrapper>
               </MovieWrapper>
             </Route>
-            <Route path="/ratings">
-              <Ratings />
-            </Route>
             <Route path="/friendsinfo">
               <FriendsCards />
             </Route>
-
             <Route path="/profile">
               <>
                 <Profile
@@ -289,12 +283,12 @@ const MainWrapper = styled.div`
   margin-top: 100px;
   margin-bottom: 100px;
   transition: transform 0.3s ease-in-out;
-  transform: ${({ open }) => (open ? 'translateX(30vH)' : 'translateX()')};
+  transform: ${({ open }) => (open ? 'translateX(40vH)' : 'translateX()')};
   @media (max-width: 800px) {
-    transform: ${({ open }) => (open ? 'translateX(25vh)' : 'translateX()')};
+    transform: ${({ open }) => (open ? 'translateX(35vh)' : 'translateX()')};
   }
   @media (max-width: 500px) {
-    transform: ${({ open }) => (open ? 'translateX(25vh)' : 'translateX()')};
+    transform: ${({ open }) => (open ? 'translateX(30vh)' : 'translateX()')};
   }
 `;
 
@@ -302,7 +296,6 @@ const GridWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   max-width: 1020px;
-
   @media (max-width: 800px) {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -322,7 +315,6 @@ const MovieWrapper = styled.div`
   margin: 0 auto;
   max-width: 1020px;
   overflow-x: hidden;
-
   scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;

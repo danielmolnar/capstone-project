@@ -1,9 +1,10 @@
-import ImageContainer from '../components/ImageContainer';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import ImageContainer from '../components/ImageContainer';
 
 export default function FriendRows({
-  isLarge,
   movie,
+  isLarge,
   isFavorite,
   isOnWatchList,
   addToWatchList,
@@ -24,6 +25,15 @@ export default function FriendRows({
     </Wrapper>
   );
 }
+
+FriendRows.propTypes = {
+  movie: PropTypes.object,
+  isLarge: PropTypes.bool,
+  isFavorite: PropTypes.func,
+  isOnWatchList: PropTypes.func,
+  addToWatchList: PropTypes.func,
+  addToFavorites: PropTypes.func,
+};
 
 const Wrapper = styled.div`
   margin-left: 25px;

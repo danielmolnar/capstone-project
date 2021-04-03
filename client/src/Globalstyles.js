@@ -14,8 +14,11 @@ export const GlobalStyles = createGlobalStyle`
   --secondardy-75-opacity: hsla(360, 100%, 100%, 0.75);
   --modal-opacity: rgba(0, 0, 0, 0.7);
   --button-hover: hsla(360, 100%, 100%, 0.3);
+  --button-hover-light: hsla(360, 100%, 100%, 0.15);
   --boxshadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   --boxshadow-light: 0px 0px 5px rgba(0, 0, 0, 0.5);
+  --fontcolor-primary: hsl(0, 100%, 100%);
+  --fontcolor-secondary: hsl(0, 100%, 0%);
 
 }
 
@@ -38,13 +41,13 @@ scrollbar-width: none;
 h2 {
   font-family: 'Bebas Neue', cursive;
   font-size: 2rem;
-  color: white;
+  color: var(--secondary-100);
 }
 
 p {
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
-  color: white;
+  color: var(--secondary-100);
 }
 
 `;

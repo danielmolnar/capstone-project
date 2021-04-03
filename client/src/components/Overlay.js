@@ -47,14 +47,14 @@ const OverlayStyler = styled.div`
   bottom: 0;
   height: 100%;
   opacity: 0;
-  width: 100%;
   position: absolute;
+  width: 100%;
 `;
 
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   bottom: 0;
-  width: 100%;
   position: absolute;
+  width: 100%;
 `;

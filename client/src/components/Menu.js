@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
-import { Star } from '@styled-icons/fa-regular/Star';
-import { UserSettings } from '@styled-icons/remix-line/UserSettings';
 import { HeartCircle } from '@styled-icons/boxicons-solid/HeartCircle';
+import { UserSettings } from '@styled-icons/remix-line/UserSettings';
 import { PeopleFill } from '@styled-icons/bootstrap/PeopleFill';
 import { Profile } from '@styled-icons/icomoon/Profile';
 
@@ -15,12 +14,6 @@ export default function Menu({ open, setOpen, myProfile, styleguide }) {
           <CloseWrapper onClick={() => setOpen(!open)}>
             <Heart />
             <p>Favorites</p>
-          </CloseWrapper>
-        </BurgerLink>
-        <BurgerLink to="/ratings">
-          <CloseWrapper onClick={() => setOpen(!open)}>
-            <StyledStar />
-            <p>Ratings</p>
           </CloseWrapper>
         </BurgerLink>
         <BurgerLink to="/friendsinfo">
@@ -49,16 +42,11 @@ export default function Menu({ open, setOpen, myProfile, styleguide }) {
 Menu.propTypes = {
   open: PropTypes.bool,
   setOpen: PropTypes.func,
+  myProfile: PropTypes.object,
+  styleguide: PropTypes.bool,
 };
 
 const Heart = styled(HeartCircle)`
-  color: var(--secondary-100);
-  height: 30px;
-  margin-left: 20px;
-  width: 30px;
-`;
-
-const StyledStar = styled(Star)`
   color: var(--secondary-100);
   height: 30px;
   margin-left: 20px;
@@ -92,8 +80,9 @@ const StyledMenu = styled.nav`
   align-items: flex-start;
   background: ${({ styleguide }) =>
     styleguide ? 'var(--primary-100)' : 'var(--secondary-100-opacity)'};
-  box-shadow: ${({ open }) => (open ? 'var(--boxshadow)' : '')};
+  box-shadow: var(--boxshadow);
   height: 100vh;
+
   left: ${({ styleguide }) => (styleguide ? '' : '0')};
   top: ${({ styleguide }) => (styleguide ? '' : '0')};
   bottom: ${({ styleguide }) => (styleguide ? '' : '0')};
@@ -101,15 +90,15 @@ const StyledMenu = styled.nav`
   text-align: left;
   transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
   transition: transform 0.3s ease-in-out;
-  width: 30vh;
+  width: 40vh;
   z-index: 8;
 
   @media (max-width: 800px) {
-    width: 25vh;
+    width: 35vh;
   }
 
   @media (max-width: 500px) {
-    width: 25vh;
+    width: 30vh;
   }
 `;
 
@@ -121,18 +110,17 @@ const MenuWrapper = styled.div`
   width: 100%;
 `;
 
+const BurgerLink = styled(NavLink)`
+  text-decoration: none;
+`;
+
 const CloseWrapper = styled.div`
   display: flex;
   align-items: center;
-  height: 3rem;
   gap: 1rem;
-
+  height: 3rem;
   &:active,
   &:hover {
     background-color: var(--button-hover);
   }
-`;
-
-const BurgerLink = styled(NavLink)`
-  text-decoration: none;
 `;

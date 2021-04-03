@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import Overlay from '../components/Overlay';
 import Poster from '../components/Poster.js';
+import Overlay from '../components/Overlay';
 
 function ImageContainer({
   movie,

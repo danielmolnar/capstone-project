@@ -14,15 +14,15 @@ export default InfoButton;
 
 InfoButton.propTypes = {
   color: PropTypes.string,
-  addToFavorites: PropTypes.func,
+  clickHandler: PropTypes.func,
 };
 
 const StyledHeartInActive = styled(InfoCircle)(
   (props) => css`
     cursor: pointer;
-    height: 22.5px;
-    width: 22.5px;
     margin-right: 5px;
     color: ${(props) => `("${props.color}")`};
+    height: 22.5px;
+    width: 22.5px;
   `
 );

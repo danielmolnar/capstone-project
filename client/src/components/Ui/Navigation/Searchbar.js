@@ -27,15 +27,15 @@ Searchbar.propTypes = {
 };
 
 const Inputstyler = styled.input`
-  width: 40%;
-  outline: none;
-  padding: 10px;
-  margin-bottom: 2rem;
-  height: 25px;
   border: none;
   border-radius: 5px;
-  transition: width 0.4s ease-in-out;
+  height: 25px;
+  margin-bottom: 2rem;
   max-width: 800px;
+  outline: none;
+  padding: 10px;
+  transition: width 0.4s ease-in-out;
+  width: 40%;
 
   &:focus,
   &:hover {

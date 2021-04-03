@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 function FormButton({ text, onClick }) {
@@ -6,11 +7,16 @@ function FormButton({ text, onClick }) {
 
 export default FormButton;
 
+FormButton.propTypes = {
+  text: PropTypes.string,
+  onClick: PropTypes.func,
+};
+
 const StyledButton = styled.button`
-  border: solid 1px white;
   background: none;
+  border: solid 1px var(--secondary-100);
   border-radius: 3px;
-  color: white;
+  color: var(--secondary-100);
   font-weight: bold;
   margin-bottom: 5px;
   outline: none;
@@ -20,7 +26,8 @@ const StyledButton = styled.button`
   width: 5rem;
 
   cursor: pointer;
-  :hover {
-    background-color: var(--primary-100-opacity);
+  :hover,
+  :active {
+    background-color: var(--button-hover-light);
   }
 `;

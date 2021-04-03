@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import ImageContainer from '../components/ImageContainer';
 import Spinner from '../components/Ui/Spinner';
 
@@ -25,3 +26,13 @@ export default function Friends({
     </>
   );
 }
+
+Friends.propTypes = {
+  movie: PropTypes.object,
+  isLarge: PropTypes.bool,
+  isLoading: PropTypes.bool,
+  isFavorite: PropTypes.func,
+  isOnWatchList: PropTypes.func,
+  addToWatchList: PropTypes.func,
+  addToFavorites: PropTypes.func,
+};

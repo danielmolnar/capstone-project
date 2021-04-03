@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import HeartActiveButton from './Ui/Button/HeartActiveButton';
 import HeartInactiveButton from './Ui/Button/HeartInactiveButton';
+import HeartActiveButton from './Ui/Button/HeartActiveButton';
 import InfoButton from './Ui/Button/InfoButton';
 
 export default function OverlayMenu({

@@ -20,8 +20,8 @@ HeartInactiveButton.propTypes = {
 const StyledHeartInActive = styled(HeartCircle)(
   (props) => css`
     cursor: pointer;
+    color: ${(props) => `("${props.color}")`};
     height: 22.5px;
     width: 22.5px;
-    color: ${(props) => `("${props.color}")`};
   `
 );

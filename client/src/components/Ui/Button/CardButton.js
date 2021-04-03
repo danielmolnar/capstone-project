@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 export default function CardButton({ buttonText, addToWatchList }) {
   return <StyledButton onClick={addToWatchList}>{buttonText}</StyledButton>;
@@ -12,8 +12,8 @@ CardButton.propTypes = {
 
 const StyledButton = styled.button`
   background-color: var(--primary-100-opacity);
-  border-radius: 3px;
   border: none;
+  border-radius: 3px;
   color: var(--secondary-100);
   font-weight: bold;
   margin-bottom: 5px;
