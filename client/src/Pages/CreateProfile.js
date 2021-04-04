@@ -54,9 +54,9 @@ export default function CreateProfile({ createProfile, updateProfile }) {
     }
   }
 
-  function updateMyProfile(event) {
-    event.preventDefault();
-    updateProfile(myProfile);
+  function updateMyProfile(profile) {
+    setMyProfile({ ...profile, favorites: [...favorites] });
+    updateProfile(profile);
   }
 
   const addProfileTag = (tag) => {
@@ -71,11 +71,6 @@ export default function CreateProfile({ createProfile, updateProfile }) {
     setProfile({ ...profile, tags: remainingTags });
   };
 
-  function removeLastTag() {
-    const remainingTags = profile.tags.slice(0, profile.tags.length - 1);
-    setProfile({ ...profile, tags: [...remainingTags] });
-  }
-
   return (
     <>
       <HeadlineWrapper>
@@ -85,7 +80,7 @@ export default function CreateProfile({ createProfile, updateProfile }) {
         <FormWrapper>
           <form onSubmit={submitProfile}>
             <ProfileContainer>
-              <LabelStyler htmlFor="">
+              <LabelStyler htmlFor="Name">
                 <p>Name</p>
                 <InputStyler
                   type="text"
@@ -95,7 +90,7 @@ export default function CreateProfile({ createProfile, updateProfile }) {
                   placeholder={profile.name}
                 />
               </LabelStyler>
-              <LabelStyler htmlFor="">
+              <LabelStyler htmlFor="Age">
                 <p>Age</p>
                 <InputStyler
                   type="text"
@@ -105,7 +100,7 @@ export default function CreateProfile({ createProfile, updateProfile }) {
                   placeholder={profile.age}
                 />
               </LabelStyler>
-              <LabelStyler htmlFor="">
+              <LabelStyler htmlFor="E-Mail">
                 <p>E-Mail</p>
                 <InputStyler
                   type="text"
@@ -114,16 +109,15 @@ export default function CreateProfile({ createProfile, updateProfile }) {
                   onChange={handleChange}
                   placeholder={profile.email}
                 />
-                <p>User Tags</p>
               </LabelStyler>
               <Tags
+                headline="User Tags"
                 addProfileTag={addProfileTag}
                 tags={profile.tags}
                 removeProfileTag={removeProfileTag}
-                removeLastTag={removeLastTag}
               />
 
-              <LabelStyler htmlFor="">
+              <LabelStyler htmlFor="About me">
                 About me
                 <br />
                 <br />
@@ -146,7 +140,7 @@ export default function CreateProfile({ createProfile, updateProfile }) {
               </ButtonContainer>
             </ProfileContainer>
           </form>
-          <button onClick={() => setMyProfile({})}>CLICK ME!</button>
+          <button onClick={() => updateMyProfile(myProfile)}>CLICK ME!</button>
           <button onClick={() => console.log(myProfile)}>CLICK ME!</button>
         </FormWrapper>
       </PageWrapper>

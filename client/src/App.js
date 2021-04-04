@@ -63,7 +63,7 @@ function App() {
       updateUser(myProfile);
     };
     updateFavorites();
-  }, [favorites]);
+  }, []);
 
   async function postUser(user) {
     return fetch(apiServerURL + '/users', {
@@ -74,7 +74,7 @@ function App() {
   }
 
   async function updateUser(user) {
-    return fetch(`http://localhost:4000/users/606645949cd7861d1588953d`, {
+    return fetch(`http://localhost:4000/users/6068db64385e830e158d3e16`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(user),
