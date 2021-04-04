@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { HeartCircle } from '@styled-icons/boxicons-solid/HeartCircle';
 import { UserSettings } from '@styled-icons/remix-line/UserSettings';
 import { PeopleFill } from '@styled-icons/bootstrap/PeopleFill';
@@ -110,7 +110,7 @@ const MenuWrapper = styled.div`
   width: 100%;
 `;
 
-const BurgerLink = styled(NavLink)`
+const BurgerLink = styled(Link)`
   text-decoration: none;
 `;
 

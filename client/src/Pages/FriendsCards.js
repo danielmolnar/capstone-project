@@ -1,16 +1,188 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { HeartCircle } from '@styled-icons/boxicons-regular/HeartCircle';
+import { CameraMovie } from '@styled-icons/boxicons-solid/CameraMovie';
+import { PeopleFill } from '@styled-icons/bootstrap/PeopleFill';
 
-export default function FriendsCards() {
+export default function FriendsCards({ friend }) {
   return (
-    <Wrapper>
-      <h2>My Friends</h2>
-    </Wrapper>
+    <ProfileWrapper>
+      <SublineWrapper>
+        <Subline>{friend.name}</Subline>
+        <StatsWrapper>
+          <IconWrapper>
+            <Friends />
+            <p>{friend.friendsNumber} Friends</p>
+          </IconWrapper>
+          <IconWrapper>
+            <Favorites />
+            <p>{friend.favoritesNumber} Favorites</p>
+          </IconWrapper>
+          <IconWrapper>
+            <WatchList />
+            <p>{friend.watchlistNumber} on Watchlist</p>
+          </IconWrapper>
+        </StatsWrapper>
+      </SublineWrapper>
+      <MainWrapper>
+        <p>FLIXTAGS</p>
+        <TagWrapper>
+          {friend.tags.map((tag) => (
+            <StyledSpan key={tag.index}>{tag}</StyledSpan>
+          ))}
+        </TagWrapper>
+      </MainWrapper>
+    </ProfileWrapper>
   );
 }
 
 FriendsCards.propTypes = {};
 
-const Wrapper = styled.div`
-  margin-left: 20px;
+const Friends = styled(PeopleFill)`
+  color: var(--fontcolor-secondary);
+  height: 1rem;
+  margin-right: 0.3rem;
+  width: 1rem;
 `;
+
+const Favorites = styled(HeartCircle)`
+  color: var(--fontcolor-secondary);
+  margin-right: 0.3rem;
+  height: 1.1rem;
+  width: 1.1rem;
+`;
+
+const WatchList = styled(CameraMovie)`
+  color: var(--fontcolor-secondary);
+  height: 1rem;
+  margin-right: 0.3rem;
+  width: 1rem;
+`;
+
+const IconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--secondary-100);
+  border-radius: 10px;
+  box-shadow: var(--boxshadow-light);
+  padding: 5px;
+
+  p {
+    color: var(--fontcolor-secondary);
+  }
+`;
+
+const Subline = styled.p`
+  font-size: 1.4rem;
+  font-weight: bold;
+`;
+
+const SublineWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+  width: 100%;
+`;
+
+const StatsWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  p {
+    margin: 0;
+    font-size: 0.8rem;
+  }
+`;
+
+const StyledSpan = styled.span`
+  background-color: var(--secondary-100);
+  border-radius: 10px;
+  box-shadow: var(--boxshadow-light);
+  color: var(--fontcolor-secondary);
+  font-size: 0.8rem;
+  padding: 5px;
+`;
+
+const TagWrapper = styled.section`
+  display: flex;
+  flex-wrap: wrap;
+  border: none;
+  border-radius: 5px;
+  color: var(--fontcolor-primary);
+  gap: 1rem;
+`;
+
+const MainWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
+const ProfileWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  width: 50%;
+  max-width: 500px;
+  border: transparent solid 1px;
+  border-radius: 10px;
+  margin-bottom: 3rem;
+  padding: 1rem;
+  box-shadow: var(--boxshadow);
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+// const CardContainer = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: space-around;
+//   border: solid white 1px;
+//   width: 80%;
+// `;
+
+// const Wrapper = styled.div`
+//   display: flex;
+//   justify-content: center;
+// `;
+
+// const TagContainer = styled.div`
+//   display: flex;
+// `;
+
+// const Tags = styled.span`
+//   background-color: var(--secondary-100);
+//   color: var(--fontcolor-secondary);
+//   margin: 0.2rem;
+//   padding: 5px;
+//   outline: none;
+//   font-size: 0.8rem;
+//   border-radius: 10px;
+//   box-shadow: var(--boxshadow-light);
+// `;
+
+// <Wrapper>
+// <CardContainer>
+//   <h2>{friend.name}</h2>
+//   <p>Tags</p>
+//   <TagContainer>
+//     {friend.tags.map((tag) => (
+//       <Tags>{tag}</Tags>
+//     ))}
+//   </TagContainer>
+//   <p>Watchlist</p>
+//   <p>{friend.watchlistNumber}</p>
+//   <p>Friends</p>
+//   <p>{friend.friendsNumber}</p>
+//   <p>Favorites</p>
+//   <p>{friend.favoritesNumber}</p>
+// </CardContainer>
+// </Wrapper>

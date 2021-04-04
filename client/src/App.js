@@ -26,7 +26,9 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
   const [favorites, setFavorites] = useLocalStorage('Favorites', []);
-  const [friends, setFriends] = useLocalStorage('Testing', []);
+  // const [friends, setFriends] = useLocalStorage('Testing', []);
+
+  const [friends, setFriends] = useState([]);
   // const [myProfile, setMyProfile] = useLocalStorage('My Profile', []);
   const [myProfile, setMyProfile] = useState({});
 
@@ -111,20 +113,21 @@ function App() {
 
   return (
     <>
-      <Navigation open={open} setOpen={setOpen} />
-      <Banner show={show} handleShow={handleShow} />
-      <Sidebar
-        open={open}
-        setOpen={setOpen}
-        show={show}
-        handleShow={handleShow}
-        myProfile={myProfile}
-      />
       <ScrollToTop>
         <Switch>
+          <Navigation open={open} setOpen={setOpen} />
+          <Banner show={show} handleShow={handleShow} />
+          <Sidebar
+            open={open}
+            setOpen={setOpen}
+            show={show}
+            handleShow={handleShow}
+            myProfile={myProfile}
+          />
+
           <MainWrapper open={open}>
-            {/* <button onClick={() => console.log(myProfile)}></button>
-            <button
+            <button onClick={() => console.log(favorites)}></button>
+            {/* <button
               onClick={() =>
                 setMyProfile({ ...myProfile, favorites: [...favorites] })
               }
@@ -158,11 +161,11 @@ function App() {
             </Route>
             <Route path="/friends">
               <FriendsWrapper>
-                {friends.map((friend) => (
+                {friends?.map((friend) => (
                   <>
                     <HeadlineWrapper>{friend.name}</HeadlineWrapper>
                     <FriendsFlex>
-                      {friend.favorites.map((movie) => (
+                      {friend?.favorites.map((movie) => (
                         <Friends
                           isLarge
                           movie={movie}
@@ -220,7 +223,12 @@ function App() {
               </MovieWrapper>
             </Route>
             <Route path="/friendsinfo">
-              <FriendsCards />
+              <FriendsWrapper>
+                <HeadlineWrapper>MY FRIENDS</HeadlineWrapper>
+                {friends?.map((friend) => (
+                  <FriendsCards key={friend._id} friend={friend} />
+                ))}
+              </FriendsWrapper>
             </Route>
             <Route path="/profile">
               <>
@@ -235,6 +243,8 @@ function App() {
             <Route path="/createprofile">
               <FriendsWrapper>
                 <CreateProfile
+                  friends={friends}
+                  watchlist={watchlist}
                   updateProfile={updateProfile}
                   myProfile={myProfile}
                   createProfile={createProfile}
@@ -273,7 +283,7 @@ const FriendsWrapper = styled.div`
   }
   @media (min-width: 1020px) {
     box-shadow: var(--boxshadow);
-    border-radius: 5px;
+    border-radius: 10px;
     height: 100%;
     padding: 1rem 0rem 2rem 0rem;
   }
@@ -321,6 +331,7 @@ const MovieWrapper = styled.div`
   }
   @media (min-width: 1020px) {
     box-shadow: var(--boxshadow);
+    border-radius: 10px;
     height: 100%;
     padding: 1rem 0rem 2rem 0rem;
   }

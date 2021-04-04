@@ -41,7 +41,6 @@ export default function Tags({
 
   return (
     <>
-      <label htmlFor="tags">{headline}</label>
       <SectionWrapper>
         {tags?.map((tag, index) => (
           <Tag
@@ -51,7 +50,7 @@ export default function Tags({
             key={index + tag}
           >
             {tag}
-            <span onClick={() => removeProfileTag(tag)}>&times;</span>
+            <i onClick={() => removeProfileTag(tag)}>&times;</i>
           </Tag>
         ))}
         <input
@@ -77,56 +76,48 @@ Tags.propTypes = {
 
 const SectionWrapper = styled.section`
   display: flex;
-  align-items: flex-start;
   flex-wrap: wrap;
-  border: none;
+  background: none;
   border-radius: 5px;
-  color: var(--secondary-100);
-  cursor: pointer;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-  padding: 0 1rem;
-  width: 100%;
-
-  p {
-    margin: 0;
-  }
+  width: 80%;
+  max-width: 20rem;
 
   input {
-    background: none;
     border: none;
-    border: solid 1px var(--secondardy-50-opacity);
-    border-radius: 5px;
-    color: white;
-    cursor: cell;
+    border-radius: 10px;
     display: inline;
-    max-width: 5rem;
+    color: var(--secondary-100);
+    width: 80px;
+    margin-left: 5px;
+    font-size: 0.8rem;
+    padding: 5px;
+    margin: 0.2rem;
+    background: none;
+    border: solid var(--secondary-100) 1px;
+    cursor: cell;
     outline: none;
-    width: 50%;
   }
 `;
 
 const Tag = styled.span`
-  background: ${(prop) => (prop.selected ? 'blue' : 'green')};
-  /* background-color: var(--secondary-100); */
-  border-radius: 10px;
-  color: black;
-  font-size: 0.8rem;
-  opacity: 0.7;
+  background-color: ${(prop) =>
+    prop.selected ? 'var(--secondary-100)' : 'var(--secondardy-85-opacity)'};
+  color: var(--fontcolor-secondary);
+  margin: 0.2rem;
   padding: 5px;
-  :focus {
-    background-color: var(--secondary-100);
-    border: none;
-    border-radius: 10px;
-    color: black;
-    opacity: 0.7;
-  }
+  outline: none;
+  font-size: 0.8rem;
+  border-radius: 10px;
+
+  box-shadow: var(--boxshadow-light);
+  cursor: pointer;
+
+  :focus,
   :hover {
     background-color: var(--secondary-100);
-    border-radius: 10px;
-    color: black;
-    font-size: 0.8rem;
-    opacity: 0.7;
-    padding: 5px;
+  }
+
+  i {
+    margin: 0 3px;
   }
 `;

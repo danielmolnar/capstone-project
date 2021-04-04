@@ -7,7 +7,7 @@ const server = express();
 server.use(cors());
 server.use(express.json());
 
-const connectionString = 'mongodb://localhost:27017/users';
+const connectionString = 'mongodb://localhost:27017';
 mongoose.connect(connectionString, {
   useNewUrlParser: true,
   useUnifiedTopology: true,

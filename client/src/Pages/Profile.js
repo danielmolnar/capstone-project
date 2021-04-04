@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import FormButton from '../components/Ui/Button/FormButton';
 import { HeartCircle } from '@styled-icons/boxicons-regular/HeartCircle';
 import { CameraMovie } from '@styled-icons/boxicons-solid/CameraMovie';
 import { PeopleFill } from '@styled-icons/bootstrap/PeopleFill';
@@ -17,9 +18,12 @@ export default function Profile({ myProfile, friends, favorites, watchlist }) {
           pathname: '/createprofile',
         }}
       >
-        <ButtonContainer>
-          <CreateButton>Create Profile</CreateButton>
-        </ButtonContainer>
+        <Wrapper>
+          <ButtonContainer>
+            <FormButton text="Create Profile" />
+            {/* <CreateButton>Create Profile</CreateButton> */}
+          </ButtonContainer>
+        </Wrapper>
       </StyledLink>
     </>
   ) : (
@@ -65,23 +69,15 @@ Profile.propTypes = {
   myProfile: PropTypes.object,
 };
 
-const CreateButton = styled.button`
-  background: none;
-  border: solid 1px var(--secondary-100);
-  border-radius: 3px;
-  color: var(--fontcolor-primary);
-  font-weight: bold;
-  margin-bottom: 5px;
-  outline: none;
-  padding: 5px 10px;
-  text-decoration: none;
-  transition: transform 250ms;
-  width: 10rem;
-
-  cursor: pointer;
-  :hover {
-    background-color: var(--primary-100-opacity);
-  }
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 10rem;
+  margin: 0 auto;
+  max-width: 15rem;
+  width: 50%;
 `;
 
 const StyledLink = styled(Link)`
@@ -89,11 +85,6 @@ const StyledLink = styled(Link)`
 `;
 
 const ButtonContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-  margin-top: 5rem;
   width: 80%;
 `;
 
@@ -123,6 +114,9 @@ const WatchList = styled(CameraMovie)`
 `;
 
 const IconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   background-color: var(--secondary-100);
   border-radius: 10px;
   box-shadow: var(--boxshadow-light);

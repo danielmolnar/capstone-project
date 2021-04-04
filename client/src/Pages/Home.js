@@ -78,6 +78,7 @@ const Wrapper = styled.div`
   max-width: 1020px;
   @media (min-width: 1020px) {
     box-shadow: var(--boxshadow);
+    border-radius: 10px;
     height: 100%;
     padding: 1rem 0;
   }

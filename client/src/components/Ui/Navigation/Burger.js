@@ -37,7 +37,7 @@ export const StyledBurger = styled.button`
   position: ${({ styleguide }) => (styleguide ? '' : 'fixed')};
   top: ${({ styleguide }) => (styleguide ? '' : '0.725rem')};
   width: 2rem;
-  z-index: 9;
+  z-index: 21;
 
   @media (min-width: 1920px) {
     left: 5%;

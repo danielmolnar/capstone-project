@@ -13,6 +13,7 @@ export const GlobalStyles = createGlobalStyle`
   --secondary-00-opacity: hsla(360, 100%, 100%, 0);
   --secondardy-50-opacity: hsla(360, 100%, 100%, 0.5);
   --secondardy-75-opacity: hsla(360, 100%, 100%, 0.75);
+  --secondardy-85-opacity: hsla(360, 100%, 100%, 0.85);
   --modal-opacity: rgba(0, 0, 0, 0.7);
   --button-hover: hsla(360, 100%, 100%, 0.3);
   --button-hover-light: hsla(360, 100%, 100%, 0.15);
