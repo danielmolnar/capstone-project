@@ -36,7 +36,9 @@ export default function FriendsCards({ friend }) {
   );
 }
 
-FriendsCards.propTypes = {};
+FriendsCards.propTypes = {
+  friend: PropTypes.object,
+};
 
 const Friends = styled(PeopleFill)`
   color: var(--fontcolor-secondary);

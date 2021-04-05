@@ -26,6 +26,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
   const [favorites, setFavorites] = useLocalStorage('Favorites', []);
+  const [showType, setShowType] = useState(false);
   // const [friends, setFriends] = useLocalStorage('Testing', []);
 
   const [friends, setFriends] = useState([]);
@@ -33,7 +34,6 @@ function App() {
   const [myProfile, setMyProfile] = useState({});
 
   const apiServerURL = 'http://localhost:4000';
-  let fetchUrl;
 
   useEffect(() => {
     setIsLoading(true);
@@ -44,6 +44,7 @@ function App() {
       .catch((error) => console.error(error.message));
   }, []);
 
+  let fetchUrl;
   useEffect(() => {
     async function fetchSearch() {
       setIsLoading(true);
@@ -57,7 +58,9 @@ function App() {
 
   query <= 2
     ? (fetchUrl = requests.fetchTrending)
-    : (fetchUrl = `${requests.fetchSearch}${query}&page=1&include_adult=false`);
+    : showType
+    ? (fetchUrl = `${requests.fetchSearch}${query}&page=1&include_adult=false`)
+    : (fetchUrl = `${requests.fetchShows}${query}&page=1&include_adult=false`);
 
   useEffect(() => {
     const updateFavorites = () => {
@@ -119,7 +122,7 @@ function App() {
         <Sidebar open={open} setOpen={setOpen} myProfile={myProfile} />
         <Switch>
           <MainWrapper open={open}>
-            {/* <button onClick={() => console.log(favorites)}></button> */}
+            <button onClick={() => console.log(favorites)}></button>
             {/* <button
               onClick={() =>
                 setMyProfile({ ...myProfile, favorites: [...favorites] })
@@ -157,7 +160,7 @@ function App() {
             <Route path="/friends">
               <FriendsWrapper>
                 {friends?.map((friend) => (
-                  <>
+                  <div key={friend._id}>
                     <FriendsHeadline>{friend.name}</FriendsHeadline>
                     <FriendsFlex>
                       {friend?.favorites.map((movie) => (
@@ -173,7 +176,7 @@ function App() {
                         />
                       ))}
                     </FriendsFlex>
-                  </>
+                  </div>
                 ))}
               </FriendsWrapper>
             </Route>
@@ -181,7 +184,11 @@ function App() {
               <MovieWrapper>
                 <HeadlineWrapper>SEARCH</HeadlineWrapper>
                 <SearchbarWrapper>
-                  <Searchbar getQuery={(query) => setQuery(query)} />
+                  <Searchbar
+                    getQuery={(query) => setQuery(query)}
+                    showType={showType}
+                    setShowType={setShowType}
+                  />
                 </SearchbarWrapper>
                 <GridWrapper>
                   {search.map((movie) => (
@@ -271,7 +278,8 @@ const FriendsWrapper = styled.div`
   margin: 0 auto;
   max-width: 1020px;
   width: 100%;
-  overflow-y: scroll;
+  overflow-x: hidden;
+
   scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;
@@ -306,8 +314,9 @@ const MovieWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  justify-content: flex-end;
-  margin: 0 auto;
+  /* justify-content: flex-end; */
+  /* margin: 0 auto; */
+
   width: 100%;
   max-width: 1020px;
   overflow-x: hidden;
@@ -332,11 +341,8 @@ const FriendsHeadline = styled.h2`
 `;
 
 const SearchbarWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1rem;
   margin: 0 auto;
-  width: 100%;
-  max-width: 800px;
+  margin: 0 auto;
+  width: 80%;
+  max-width: 450px;
 `;

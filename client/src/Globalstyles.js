@@ -33,8 +33,6 @@ export const GlobalStyles = createGlobalStyle`
 body {
 margin: 0;
 background: var(--primary-background);
-overflow-x: hidden;
-overflow-y: scroll;
 scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;

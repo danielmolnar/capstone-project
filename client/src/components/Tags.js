@@ -76,7 +76,6 @@ Tags.propTypes = {
 
 const SectionWrapper = styled.section`
   display: flex;
-  flex-wrap: wrap;
   background: none;
   border-radius: 5px;
   width: 80%;
@@ -108,7 +107,6 @@ const Tag = styled.span`
   outline: none;
   font-size: 0.8rem;
   border-radius: 10px;
-
   box-shadow: var(--boxshadow-light);
   cursor: pointer;
 
