@@ -125,8 +125,8 @@ const ProfileWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   margin: 0 auto;
-  width: 50%;
-  max-width: 500px;
+  width: 80%;
+  max-width: 450px;
   border: transparent solid 1px;
   border-radius: 10px;
   margin-bottom: 3rem;
@@ -139,50 +139,3 @@ const ProfileWrapper = styled.div`
     display: none;
   }
 `;
-
-// const CardContainer = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: space-around;
-//   border: solid white 1px;
-//   width: 80%;
-// `;
-
-// const Wrapper = styled.div`
-//   display: flex;
-//   justify-content: center;
-// `;
-
-// const TagContainer = styled.div`
-//   display: flex;
-// `;
-
-// const Tags = styled.span`
-//   background-color: var(--secondary-100);
-//   color: var(--fontcolor-secondary);
-//   margin: 0.2rem;
-//   padding: 5px;
-//   outline: none;
-//   font-size: 0.8rem;
-//   border-radius: 10px;
-//   box-shadow: var(--boxshadow-light);
-// `;
-
-// <Wrapper>
-// <CardContainer>
-//   <h2>{friend.name}</h2>
-//   <p>Tags</p>
-//   <TagContainer>
-//     {friend.tags.map((tag) => (
-//       <Tags>{tag}</Tags>
-//     ))}
-//   </TagContainer>
-//   <p>Watchlist</p>
-//   <p>{friend.watchlistNumber}</p>
-//   <p>Friends</p>
-//   <p>{friend.friendsNumber}</p>
-//   <p>Favorites</p>
-//   <p>{friend.favoritesNumber}</p>
-// </CardContainer>
-// </Wrapper>

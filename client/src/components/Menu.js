@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { HeartCircle } from '@styled-icons/boxicons-solid/HeartCircle';
 import { UserSettings } from '@styled-icons/remix-line/UserSettings';
 import { PeopleFill } from '@styled-icons/bootstrap/PeopleFill';
@@ -79,7 +79,7 @@ const StyledMenu = styled.nav`
   flex-direction: column;
   align-items: flex-start;
   background: ${({ styleguide }) =>
-    styleguide ? 'var(--primary-100)' : 'var(--secondary-100-opacity)'};
+    styleguide ? 'var(--primary-100)' : 'var(--secondary-background)'};
   box-shadow: var(--boxshadow);
   height: 100vh;
 
@@ -110,7 +110,7 @@ const MenuWrapper = styled.div`
   width: 100%;
 `;
 
-const BurgerLink = styled(Link)`
+const BurgerLink = styled(NavLink)`
   text-decoration: none;
 `;
 

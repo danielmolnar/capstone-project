@@ -114,19 +114,12 @@ function App() {
   return (
     <>
       <ScrollToTop>
+        <Navigation setOpen={setOpen} />
+        <Banner show={show} handleShow={handleShow} open={open} />
+        <Sidebar open={open} setOpen={setOpen} myProfile={myProfile} />
         <Switch>
-          <Navigation open={open} setOpen={setOpen} />
-          <Banner show={show} handleShow={handleShow} />
-          <Sidebar
-            open={open}
-            setOpen={setOpen}
-            show={show}
-            handleShow={handleShow}
-            myProfile={myProfile}
-          />
-
           <MainWrapper open={open}>
-            <button onClick={() => console.log(favorites)}></button>
+            {/* <button onClick={() => console.log(favorites)}></button> */}
             {/* <button
               onClick={() =>
                 setMyProfile({ ...myProfile, favorites: [...favorites] })
@@ -134,12 +127,14 @@ function App() {
             ></button>
             <button onClick={() => updateProfile(myProfile)}></button> */}
             <Route exact path="/">
-              <Home
-                isFavorite={isFavorite}
-                isOnWatchList={isOnWatchList}
-                addToWatchList={addToWatchList}
-                addToFavorites={addToFavorites}
-              />
+              <HomeWrapper>
+                <Home
+                  isFavorite={isFavorite}
+                  isOnWatchList={isOnWatchList}
+                  addToWatchList={addToWatchList}
+                  addToFavorites={addToFavorites}
+                />
+              </HomeWrapper>
             </Route>
             <Route path="/watchlist">
               <MovieWrapper>
@@ -163,7 +158,7 @@ function App() {
               <FriendsWrapper>
                 {friends?.map((friend) => (
                   <>
-                    <HeadlineWrapper>{friend.name}</HeadlineWrapper>
+                    <FriendsHeadline>{friend.name}</FriendsHeadline>
                     <FriendsFlex>
                       {friend?.favorites.map((movie) => (
                         <Friends
@@ -231,14 +226,14 @@ function App() {
               </FriendsWrapper>
             </Route>
             <Route path="/profile">
-              <>
+              <FriendsWrapper>
                 <Profile
                   myProfile={myProfile}
                   friends={friends}
                   watchlist={watchlist}
                   favorites={favorites}
                 />
-              </>
+              </FriendsWrapper>
             </Route>
             <Route path="/createprofile">
               <FriendsWrapper>
@@ -275,31 +270,21 @@ const FriendsFlex = styled.div`
 const FriendsWrapper = styled.div`
   margin: 0 auto;
   max-width: 1020px;
-  overflow-x: hidden;
+  width: 100%;
   overflow-y: scroll;
   scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;
-  }
-  @media (min-width: 1020px) {
-    box-shadow: var(--boxshadow);
-    border-radius: 10px;
-    height: 100%;
-    padding: 1rem 0rem 2rem 0rem;
   }
 `;
 
 const MainWrapper = styled.div`
   margin-top: 100px;
   margin-bottom: 100px;
-  transition: transform 0.3s ease-in-out;
-  transform: ${({ open }) => (open ? 'translateX(40vH)' : 'translateX()')};
-  @media (max-width: 800px) {
-    transform: ${({ open }) => (open ? 'translateX(35vh)' : 'translateX()')};
-  }
-  @media (max-width: 500px) {
-    transform: ${({ open }) => (open ? 'translateX(30vh)' : 'translateX()')};
-  }
+`;
+
+const HomeWrapper = styled.div`
+  margin-top: 128px;
 `;
 
 const GridWrapper = styled.div`
@@ -323,25 +308,27 @@ const MovieWrapper = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   margin: 0 auto;
+  width: 100%;
   max-width: 1020px;
   overflow-x: hidden;
   scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;
   }
-  @media (min-width: 1020px) {
-    box-shadow: var(--boxshadow);
-    border-radius: 10px;
-    height: 100%;
-    padding: 1rem 0rem 2rem 0rem;
-  }
 `;
 
 const HeadlineWrapper = styled.h2`
   display: flex;
+  margin-left: 30px;
+  width: 100%;
+  max-width: 1020px;
+`;
+
+const FriendsHeadline = styled.h2`
+  display: flex;
   margin-left: 20px;
   width: 100%;
-  max-width: 1080px;
+  max-width: 1020px;
 `;
 
 const SearchbarWrapper = styled.div`

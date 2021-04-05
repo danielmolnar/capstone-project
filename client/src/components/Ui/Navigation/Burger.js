@@ -1,12 +1,11 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-export default function Burger({ open, setOpen, show, styleguide }) {
+export default function Burger({ open, setOpen, styleguide }) {
   return (
     <StyledBurger
       open={open}
       onClick={() => setOpen(!open)}
-      show={show}
       styleguide={styleguide}
     >
       <div />
@@ -17,10 +16,8 @@ export default function Burger({ open, setOpen, show, styleguide }) {
 }
 
 Burger.propTypes = {
-  show: PropTypes.bool,
   open: PropTypes.bool,
   setOpen: PropTypes.func,
-  handleShow: PropTypes.func,
   styleguide: PropTypes.bool,
 };
 
@@ -56,18 +53,21 @@ export const StyledBurger = styled.button`
     height: 0.25rem;
 
     :first-child {
-      background: ${({ show }) => (show ? 'white' : 'var(--primary-100)')};
+      background: ${({ open }) =>
+        open || window.scrollY < 120 ? 'var(--primary-100)' : 'white'};
       transform: ${({ open }) => (open ? 'rotate(45deg)' : 'rotate(0)')};
     }
 
     :nth-child(2) {
-      background: ${({ show }) => (show ? 'white' : 'var(--primary-100)')};
+      background: ${({ open }) =>
+        open || window.scrollY < 120 ? 'var(--primary-100)' : 'white'};
       opacity: ${({ open }) => (open ? '0' : '1')};
       transform: ${({ open }) => (open ? 'translateX(20px)' : 'translateX(0)')};
     }
 
     :nth-child(3) {
-      background: ${({ show }) => (show ? 'white' : 'var(--primary-100)')};
+      background: ${({ open }) =>
+        open || window.scrollY < 120 ? 'var(--primary-100)' : 'white'};
       transform: ${({ open }) => (open ? 'rotate(-45deg)' : 'rotate(0)')};
     }
   }

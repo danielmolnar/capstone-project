@@ -34,12 +34,12 @@ const Inputstyler = styled.input`
   max-width: 800px;
   outline: none;
   padding: 10px;
-  /* transition: width 0.4s ease-in-out; */
+  transition: width 0.4s ease-in-out;
   width: 40%;
 
-  /* &:focus,
+  &:focus,
   &:hover {
     width: 60%;
     max-width: 800px;
-  } */
+  }
 `;

@@ -14,7 +14,7 @@ export default function Navigation({ setOpen, styleguide }) {
   const location = useLocation();
 
   return (
-    <>
+    <NavWrapper>
       <Nav styleguide={styleguide}>
         <StyledLink exact to="/" onClick={() => setOpen(false)}>
           {location.pathname === '/' ? <AiFillHome /> : <AiOutlineHome />}
@@ -33,7 +33,7 @@ export default function Navigation({ setOpen, styleguide }) {
           {location.pathname === '/search' ? <Search2 /> : <Search />}
         </StyledLink>
       </Nav>
-    </>
+    </NavWrapper>
   );
 }
 
@@ -54,13 +54,20 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-around;
   align-items: center;
+  width: 100%;
+  max-width: 800px;
+`;
+
+const NavWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
   background: var(--primary-background);
-  border-top: white 1px solid;
-  bottom: 0;
   box-shadow: var(--boxshadow);
   height: 3rem;
-  position: ${({ styleguide }) => (styleguide ? '' : 'fixed')};
-  right: 0;
   width: 100%;
   z-index: 20;
+  position: fixed;
+  bottom: 0;
+  position: ${({ styleguide }) => (styleguide ? '' : 'fixed')};
 `;

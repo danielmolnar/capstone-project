@@ -27,38 +27,40 @@ export default function Profile({ myProfile, friends, favorites, watchlist }) {
       </StyledLink>
     </>
   ) : (
-    <PageWrapper>
+    <>
       <HeadlineWrapper>
         <h2>My Profile</h2>
       </HeadlineWrapper>
-      <ProfileWrapper>
-        <SublineWrapper>
-          <Subline>{myProfile.name}</Subline>
-          <StatsWrapper>
-            <IconWrapper>
-              <Friends />
-              <p>{friends.length} Friends</p>
-            </IconWrapper>
-            <IconWrapper>
-              <Favorites />
-              <p>{favorites.length} Favorites</p>
-            </IconWrapper>
-            <IconWrapper>
-              <WatchList />
-              <p>{watchlist.length} on Watchlist</p>
-            </IconWrapper>
-          </StatsWrapper>
-        </SublineWrapper>
-        <MainWrapper>
-          <p>FLIXTAGS</p>
-          <TagWrapper>
-            {myProfile.tags.map((tag) => (
-              <StyledSpan key={tag.index}>{tag}</StyledSpan>
-            ))}
-          </TagWrapper>
-        </MainWrapper>
-      </ProfileWrapper>
-    </PageWrapper>
+      <PageWrapper>
+        <ProfileWrapper>
+          <SublineWrapper>
+            <Subline>{myProfile.name}</Subline>
+            <StatsWrapper>
+              <IconWrapper>
+                <Friends />
+                <p>{friends.length} Friends</p>
+              </IconWrapper>
+              <IconWrapper>
+                <Favorites />
+                <p>{favorites.length} Favorites</p>
+              </IconWrapper>
+              <IconWrapper>
+                <WatchList />
+                <p>{watchlist.length} on Watchlist</p>
+              </IconWrapper>
+            </StatsWrapper>
+          </SublineWrapper>
+          <MainWrapper>
+            <p>FLIXTAGS</p>
+            <TagWrapper>
+              {myProfile.tags.map((tag) => (
+                <StyledSpan key={tag.index}>{tag}</StyledSpan>
+              ))}
+            </TagWrapper>
+          </MainWrapper>
+        </ProfileWrapper>
+      </PageWrapper>
+    </>
   );
 }
 
@@ -89,7 +91,12 @@ const ButtonContainer = styled.div`
 `;
 
 const HeadlineWrapper = styled.div`
-  margin-left: 20px;
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1020px;
+  h2 {
+    margin-left: 20px;
+  }
 `;
 
 const Friends = styled(PeopleFill)`
@@ -163,7 +170,6 @@ const TagWrapper = styled.section`
   display: flex;
   flex-wrap: wrap;
   border: none;
-  border: var(--secondary-100) solid 1px;
   border-radius: 5px;
   color: var(--fontcolor-primary);
   gap: 1rem;
@@ -181,21 +187,18 @@ const ProfileWrapper = styled.div`
   align-items: center;
   margin: 0 auto;
   width: 80%;
-`;
-
-const PageWrapper = styled.div`
-  margin: 0 auto;
-  max-width: 1020px;
+  max-width: 450px;
+  border: transparent solid 1px;
+  border-radius: 10px;
+  margin-bottom: 3rem;
+  padding: 1rem;
+  box-shadow: var(--boxshadow);
   overflow-x: hidden;
   overflow-y: scroll;
   scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;
   }
-  @media (min-width: 1020px) {
-    box-shadow: var(--boxshadow);
-    border-radius: 5px;
-    height: 100%;
-    padding: 1rem 0rem 2rem 0rem;
-  }
 `;
+
+const PageWrapper = styled.div``;
