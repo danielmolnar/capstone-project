@@ -1,60 +1,43 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import ImageContainer from '../components/ImageContainer';
+import Spinner from '../components/Spinner';
 
-export default function Friends() {
-  return (
-    <Wrapper>
-      <h2>Friends</h2>
-    </Wrapper>
+export default function Friends({
+  movie,
+  isLarge,
+  isLoading,
+  isFavorite,
+  isOnWatchList,
+  addToWatchList,
+  addToFavorites,
+}) {
+  return isLoading ? (
+    <Spinner />
+  ) : (
+    <MarginContainer>
+      <ImageContainer
+        movie={movie}
+        isLarge={isLarge}
+        isFavorite={isFavorite}
+        isOnWatchList={isOnWatchList}
+        addToWatchList={addToWatchList}
+        addToFavorites={addToFavorites}
+      />
+    </MarginContainer>
   );
 }
 
-const Wrapper = styled.div`
-  margin-left: 25px;
+Friends.propTypes = {
+  movie: PropTypes.object,
+  isLarge: PropTypes.bool,
+  isLoading: PropTypes.bool,
+  isFavorite: PropTypes.func,
+  isOnWatchList: PropTypes.func,
+  addToWatchList: PropTypes.func,
+  addToFavorites: PropTypes.func,
+};
+
+const MarginContainer = styled.div`
+  margin-right: 15px;
 `;
-
-//   return isLoading ? (
-//     <>
-//       <HeadLineStyler>{title}</HeadLineStyler>
-//       <Spinner isLarge={isLarge} />
-//     </>
-//   ) : (
-//     <>
-//       <HeadLineStyler>{title}</HeadLineStyler>
-//       <Wrapper>
-//         <MovieWrapper>
-//           {movies.map((movie) => (
-//             <ImageContainer
-//               movie={movie}
-//               key={movie.id}
-//               isLarge={isLarge}
-//               isLoading={isLoading}
-//               isFavorite={() => isFavorite(movie)}
-//               isOnWatchList={() => isOnWatchList(movie)}
-//               addToWatchList={() => addToWatchList(movie)}
-//               addToFavorites={() => addToFavorites(movie)}
-//             />
-//           ))}
-//         </MovieWrapper>
-//       </Wrapper>
-//     </>
-//   );
-// }
-// const Wrapper = styled.div`
-//   margin-left: 25px;
-// `;
-
-// const MovieWrapper = styled.div`
-//   display: flex;
-//   overflow-x: scroll;
-//   overflow-y: hidden;
-//   padding: 20px;
-//   scrollbar-width: none;
-//   ::-webkit-scrollbar {
-//     display: none;
-//   }
-// `;
-
-// const HeadLineStyler = styled.h2`
-//   margin-left: 20px;
-// `;

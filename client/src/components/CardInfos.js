@@ -1,16 +1,16 @@
 import ReactDom from 'react-dom';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import AddButton from '../components/AddButton';
-import backdrop_poster from '../images/backdrop_poster.png';
+import backdrop_poster from '../assets/backdrop_poster.png';
 import { BiTachometer } from 'react-icons/bi';
+import AddToWatchList from './AddToWatchList';
 
 export default function CardInfos({
   open,
   movie,
   onClose,
-  isOnWatchList,
   addToWatchList,
+  checkOnWatchList,
 }) {
   if (!open) return null;
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
@@ -32,9 +32,8 @@ export default function CardInfos({
           background={movie.backdrop_path || movie.poster_path}
         >
           <DetailsWrapper>
-            <AddButton
-              movie={movie}
-              isOnWatchList={isOnWatchList}
+            <AddToWatchList
+              checkOnWatchList={checkOnWatchList}
               addToWatchList={addToWatchList}
             />
           </DetailsWrapper>
@@ -61,10 +60,8 @@ CardInfos.propTypes = {
   open: PropTypes.bool,
   movie: PropTypes.object,
   onClose: PropTypes.func,
-  isFavorite: PropTypes.func,
-  isOnWatchList: PropTypes.func,
-  addToFavorites: PropTypes.func,
   addToWatchList: PropTypes.func,
+  checkOnWatchList: PropTypes.bool,
 };
 
 const BackgroundStyler = styled.div`
@@ -174,7 +171,7 @@ const ScoreWrapper = styled.div`
 `;
 
 const Score = styled(BiTachometer)`
-  color: white;
+  color: var(--secondary-100);
 `;
 
 const ReleaseWrapper = styled.div`

@@ -1,26 +1,19 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-export default function AddButton({ movie, isOnWatchList, addToWatchList }) {
-  const checkOnWatchList = isOnWatchList(movie);
-
-  return (
-    <WatchListButton onClick={addToWatchList}>
-      {checkOnWatchList ? 'Remove from ' : 'Add to '}Watchlist
-    </WatchListButton>
-  );
+export default function CardButton({ buttonText, addToWatchList }) {
+  return <StyledButton onClick={addToWatchList}>{buttonText}</StyledButton>;
 }
 
-AddButton.propTypes = {
-  movie: PropTypes.object,
-  isOnWatchList: PropTypes.func,
+CardButton.propTypes = {
+  buttonText: PropTypes.string,
   addToWatchList: PropTypes.func,
 };
 
-const WatchListButton = styled.button`
+const StyledButton = styled.button`
   background-color: var(--primary-100-opacity);
-  border-radius: 3px;
   border: none;
+  border-radius: 3px;
   color: var(--secondary-100);
   font-weight: bold;
   margin-bottom: 5px;

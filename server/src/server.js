@@ -1,40 +1,64 @@
 import express from 'express';
-import mongodb from 'mongodb';
-import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import User from './models/User.js';
+import dotenv from 'dotenv';
 
-const connectionString = 'mongodb://localhost:27017/';
-const databaseName = 'flix-buddies';
-
-const mongoClient = mongodb.MongoClient;
-
+dotenv.config();
 const server = express();
-server.use(bodyParser.json());
+server.use(cors());
+server.use(express.json());
 
-server.get('/', (request, response) => {
-  response.json({ status: 'Server is running...' });
+const connectionString = 'mongodb://localhost:27017';
+// const connectionString = process.env.mongourl
+
+mongoose.connect(connectionString, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndMofidy: false,
 });
 
-server.get('/users', (request, response) => {
-  mongoClient.connect(connectionString, async (error, client) => {
-    const db = client.db(databaseName);
-    const users = await db.collection('users').find().toArray();
-    response.json(users);
-  });
+server.get('/', (req, res) => {
+  res.json({ status: 'Server is up and running.' });
 });
 
-server.post('/users', (request, response) => {
-  const user = {
-    name: request.body.name,
-    tags: request.body.tags,
-    about: request.body.about,
-    favorites: request.body.favorites,
-  };
-  mongoClient.connect(connectionString, (error, client) => {
-    const db = client.db(databaseName);
-    db.collection('flix-buddies')
-      .insertOne(user)
-      .then((result) => response.json(result.ops[o]));
-  });
+server.get('/users', (req, res) => {
+  User.find().then((users) => res.json(users));
 });
 
-server.listen(4000, () => console.log('Server started'));
+server.get('/users/:userId', (req, res) => {
+  const { userId } = req.params;
+  User.findById(userId)
+    .then((user) => res.json(user))
+    .catch((error) => res.json({ error: 'User not found' }));
+});
+
+server.post('/users', (req, res) => {
+  const newUser = req.body;
+  User.create(newUser)
+    .then((data) => res.json(data))
+    .catch((error) => console.log(error));
+});
+
+server.put('/users/:id', (req, res) => {
+  const { id } = req.params;
+  const updatedUser = req.body;
+
+  User.findByIdAndUpdate({ _id: id }, updatedUser, {
+    new: true,
+  })
+
+    .then((user) => res.json(user))
+    .catch((error) => {
+      console.error(error.message);
+      res.send('An error occured');
+    });
+});
+
+server.delete('/users/:id', (req, res) => {
+  const { id } = req.params;
+  User.findByIdAndDelete({ _id: id }).then((data) => res.json(data));
+});
+
+const port = 4000;
+server.listen(port, () => console.log(`Server listens on port ${port}.`));
