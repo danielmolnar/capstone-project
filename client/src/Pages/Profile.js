@@ -1,11 +1,19 @@
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { PeopleFill } from '@styled-icons/bootstrap/PeopleFill';
+import { Link } from 'react-router-dom';
 import { HeartCircle } from '@styled-icons/boxicons-regular/HeartCircle';
 import { CameraMovie } from '@styled-icons/boxicons-solid/CameraMovie';
+import { PeopleFill } from '@styled-icons/bootstrap/PeopleFill';
+import FormButton from '../components/Ui/Button/FormButton';
 
-export default function Profile({ myProfile, friends, favorites, watchlist }) {
-  return !myProfile.name ? (
+export default function Profile({
+  friends,
+  favorites,
+  watchlist,
+  isLoggedIn,
+  userProfile,
+}) {
+  return !isLoggedIn ? (
     <>
       <HeadlineWrapper>
         <h2>Please Create A Profile</h2>
@@ -16,19 +24,21 @@ export default function Profile({ myProfile, friends, favorites, watchlist }) {
           pathname: '/createprofile',
         }}
       >
-        <ButtonContainer>
-          <CreateButton>Create Profile</CreateButton>
-        </ButtonContainer>
+        <Wrapper>
+          <ButtonContainer>
+            <FormButton text="Create Profile" />
+          </ButtonContainer>
+        </Wrapper>
       </StyledLink>
     </>
   ) : (
-    <PageWrapper>
+    <>
       <HeadlineWrapper>
         <h2>My Profile</h2>
       </HeadlineWrapper>
       <ProfileWrapper>
         <SublineWrapper>
-          <Subline>{myProfile.name}</Subline>
+          <Subline>{userProfile?.name}</Subline>
           <StatsWrapper>
             <IconWrapper>
               <Friends />
@@ -47,33 +57,33 @@ export default function Profile({ myProfile, friends, favorites, watchlist }) {
         <MainWrapper>
           <p>FLIXTAGS</p>
           <TagWrapper>
-            {myProfile.tags.map((tag) => (
+            {userProfile?.tags?.map((tag) => (
               <StyledSpan key={tag.index}>{tag}</StyledSpan>
             ))}
           </TagWrapper>
         </MainWrapper>
       </ProfileWrapper>
-    </PageWrapper>
+    </>
   );
 }
 
-const CreateButton = styled.button`
-  border: solid 1px white;
-  background: none;
-  border-radius: 3px;
-  color: white;
-  font-weight: bold;
-  margin-bottom: 5px;
-  outline: none;
-  padding: 5px 10px;
-  text-decoration: none;
-  transition: transform 250ms;
-  width: 10rem;
+Profile.propTypes = {
+  friends: PropTypes.array,
+  favorites: PropTypes.array,
+  watchlist: PropTypes.array,
+  isLoggedIn: PropTypes.bool,
+  userProfile: PropTypes.object,
+};
 
-  cursor: pointer;
-  :hover {
-    background-color: var(--primary-100-opacity);
-  }
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 10rem;
+  margin: 0 auto;
+  max-width: 15rem;
+  width: 50%;
 `;
 
 const StyledLink = styled(Link)`
@@ -81,34 +91,34 @@ const StyledLink = styled(Link)`
 `;
 
 const ButtonContainer = styled.div`
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 80%;
-  margin-top: 5rem;
 `;
 
 const HeadlineWrapper = styled.div`
-  margin-left: 20px;
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1020px;
+  h2 {
+    margin-left: 20px;
+  }
 `;
 
 const Friends = styled(PeopleFill)`
-  color: black;
+  color: var(--fontcolor-secondary);
   height: 1rem;
   margin-right: 0.3rem;
   width: 1rem;
 `;
 
 const Favorites = styled(HeartCircle)`
-  color: black;
-  height: 1.1rem;
+  color: var(--fontcolor-secondary);
   margin-right: 0.3rem;
+  height: 1.1rem;
   width: 1.1rem;
 `;
 
 const WatchList = styled(CameraMovie)`
-  color: black;
+  color: var(--fontcolor-secondary);
   height: 1rem;
   margin-right: 0.3rem;
   width: 1rem;
@@ -117,12 +127,14 @@ const WatchList = styled(CameraMovie)`
 const IconWrapper = styled.div`
   display: flex;
   align-items: center;
-  padding: 5px;
+  justify-content: space-between;
   background-color: var(--secondary-100);
-  box-shadow: var(--boxshadow-light);
   border-radius: 10px;
+  box-shadow: var(--boxshadow-light);
+  padding: 5px;
+
   p {
-    color: black;
+    color: var(--fontcolor-secondary);
   }
 `;
 
@@ -134,8 +146,8 @@ const Subline = styled.p`
 const SublineWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
   margin-bottom: 2rem;
+  width: 100%;
 `;
 
 const StatsWrapper = styled.div`
@@ -146,31 +158,25 @@ const StatsWrapper = styled.div`
   p {
     margin: 0;
     font-size: 0.8rem;
-    /* padding: 5px;
-    background-color: white;
-    color: black;
-    opacity: 0.7;
-    border-radius: 10px; */
   }
 `;
 
 const StyledSpan = styled.span`
+  background-color: var(--secondary-100);
+  border-radius: 10px;
+  box-shadow: var(--boxshadow-light);
+  color: var(--fontcolor-secondary);
   font-size: 0.8rem;
   padding: 5px;
-  color: black;
-  border-radius: 10px;
-  background-color: var(--secondary-100);
-  box-shadow: var(--boxshadow-light);
 `;
 
 const TagWrapper = styled.section`
   display: flex;
-  border: white solid 1px;
   flex-wrap: wrap;
-  gap: 1rem;
-  border-radius: 5px;
   border: none;
-  color: white;
+  border-radius: 5px;
+  color: var(--fontcolor-primary);
+  gap: 1rem;
 `;
 
 const MainWrapper = styled.div`
@@ -183,23 +189,18 @@ const ProfileWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0 auto;
   width: 80%;
-  margin: 0 auto;
-`;
-
-const PageWrapper = styled.div`
-  margin: 0 auto;
-  max-width: 1020px;
+  max-width: 450px;
+  border: transparent solid 1px;
+  border-radius: 10px;
+  margin-bottom: 3rem;
+  padding: 1rem;
+  box-shadow: var(--boxshadow);
   overflow-x: hidden;
   overflow-y: scroll;
   scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;
-  }
-  @media (min-width: 1020px) {
-    box-shadow: var(--boxshadow);
-    border-radius: 5px;
-    height: 100%;
-    padding: 1rem 0rem 2rem 0rem;
   }
 `;

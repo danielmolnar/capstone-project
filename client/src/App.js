@@ -1,78 +1,104 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
-import axios from './services/axios';
-import requests from './services/requests';
-import ScrollToTop from './services/ScrollToTop';
+import Navigation from './components/Ui/Navigation/Navigation';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
-import Home from './Pages/Home';
-import Search from './Pages/Search';
-import Friends from './Pages/Friends';
-import Ratings from './Pages/Ratings';
-import Profile from './Pages/Profile';
+import Searchbar from './components/Ui/Navigation/Searchbar';
+import Sidebar from './components/Ui/Navigation/Sidebar';
+import CreateProfile from './Pages/CreateProfile';
+import ScrollToTop from './hooks/useScrollToTop';
+import FriendsCards from './Pages/FriendsCards';
+import Banner from '../src/components/Banner';
+import instance from './services/axiosMovies';
+import serverApi from './services/axiosServer';
+import requests from './services/requests';
 import Watchlist from './Pages/Watchlist';
 import Favorites from './Pages/Favorites';
-import FriendsCards from './Pages/FriendsCards';
-import CreateProfile from './Pages/CreateProfile';
-import Sidebar from './components/Sidebar';
-import Banner from '../src/components/Banner';
-import Searchbar from './components/Searchbar';
-import Navigation from '../src/components/Navigation';
+import Friends from './Pages/Friends';
+import Profile from './Pages/Profile';
+import Search from './Pages/Search';
+import About from './Pages/About';
+import Home from './Pages/Home';
 
 function App() {
-  const [query, setQuery] = useState('');
-  const [open, setOpen] = useState(false);
-  const [search, setSearch] = useState([]);
-  const [show, handleShow] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [userProfile, setUserProfile] = useLocalStorage('UserProfile', []);
   const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
   const [favorites, setFavorites] = useLocalStorage('Favorites', []);
-  const [friends, setFriends] = useLocalStorage('Testing', []);
-  const [myProfile, setMyProfile] = useLocalStorage('My Profile', []);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isMovie, setIsMovie] = useState(false);
+  const [friends, setFriends] = useState([]);
+  const [show, handleShow] = useState(false);
+  const [search, setSearch] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState('');
 
-  const apiServerURL = 'http://localhost:4000/api';
-  let fetchUrl;
+  const userUrl = `${requests.user}${userProfile._id}`;
 
   useEffect(() => {
-    setIsLoading(true);
-    fetch(apiServerURL + '/users')
-      .then((result) => result.json())
-      .then((friends) => setFriends(friends))
-      .then(setIsLoading(false))
-      .catch((error) => console.error(error.message));
+    async function getFriends() {
+      setIsLoading(true);
+      const response = await serverApi.get(requests.fetchUsers);
+      const data = response.data;
+      setFriends(data.filter((friend) => friend._id !== userProfile._id));
+      setIsLoading(false);
+    }
+    getFriends();
   }, []);
+
+  useEffect(() => {
+    async function getUser() {
+      setIsLoggedIn(false);
+      const response = await serverApi.get(userUrl);
+      const data = response.data;
+      data?.name === undefined ? console.log(data) : setUserProfile(data);
+      data?.name === undefined ? setIsLoggedIn(false) : setIsLoggedIn(true);
+    }
+    getUser();
+  }, []);
+
+  useEffect(() => {
+    async function updateUser() {
+      const response = await serverApi.put(userUrl, {
+        favorites: [...favorites],
+        favoritesNumber: favorites.length,
+        watchlist: [...watchlist],
+        watchlistNumber: watchlist.length,
+      });
+      const data = response.data;
+      setUserProfile(data);
+    }
+    updateUser();
+  }, [favorites, watchlist]);
+
+  async function createProfile(profile) {
+    const response = await serverApi.post(requests.fetchUsers, profile);
+    const data = response.data;
+    setUserProfile(data);
+  }
+
+  function createHandler(profile) {
+    createProfile(profile);
+    setIsLoggedIn(true);
+  }
+
+  let fetchUrl;
+  query <= 2
+    ? (fetchUrl = requests.fetchTrending)
+    : isMovie
+    ? (fetchUrl = `${requests.fetchMovies}${query}&page=1&include_adult=false`)
+    : (fetchUrl = `${requests.fetchShows}${query}&page=1&include_adult=false`);
 
   useEffect(() => {
     async function fetchSearch() {
       setIsLoading(true);
-      const request = await axios.get(fetchUrl);
+      const request = await instance.get(fetchUrl);
       setSearch(request.data.results);
       setIsLoading(false);
       return request;
     }
     fetchSearch();
   }, [query, fetchUrl]);
-
-  query <= 2
-    ? (fetchUrl = requests.fetchTrending)
-    : (fetchUrl = `${requests.fetchSearch}${query}&page=1&include_adult=false`);
-
-  const addUserToDataBase = async (newUser) => {
-    const response = await fetch(apiServerURL + '/users', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newUser),
-    });
-    return response.json();
-  };
-
-  const createProfile = (profile) => {
-    setMyProfile({ ...profile });
-    // addUserToDataBase(profile);
-  };
 
   const isOnWatchList = (movieToAdd) =>
     watchlist.some((movie) => movie.id === movieToAdd.id);
@@ -95,27 +121,20 @@ function App() {
   return (
     <>
       <ScrollToTop>
-        <Navigation open={open} setOpen={setOpen} />
-        <Banner show={show} handleShow={handleShow} />
-        <Sidebar
-          open={open}
-          setOpen={setOpen}
-          show={show}
-          handleShow={handleShow}
-          myProfile={myProfile}
-        />
-
+        <Navigation setOpen={setOpen} />
+        <Banner show={show} handleShow={handleShow} open={open} />
+        <Sidebar open={open} setOpen={setOpen} isLoggedIn={isLoggedIn} />
         <Switch>
           <MainWrapper open={open}>
-            <button onClick={() => console.log(myProfile.name)}></button>
-            <button onClick={() => setMyProfile({})}></button>
             <Route exact path="/">
-              <Home
-                isFavorite={isFavorite}
-                isOnWatchList={isOnWatchList}
-                addToWatchList={addToWatchList}
-                addToFavorites={addToFavorites}
-              />
+              <HomeWrapper>
+                <Home
+                  isFavorite={isFavorite}
+                  isOnWatchList={isOnWatchList}
+                  addToWatchList={addToWatchList}
+                  addToFavorites={addToFavorites}
+                />
+              </HomeWrapper>
             </Route>
             <Route path="/watchlist">
               <MovieWrapper>
@@ -136,12 +155,12 @@ function App() {
               </MovieWrapper>
             </Route>
             <Route path="/friends">
-              <FriendsWrapper>
-                {friends.map((friend) => (
-                  <>
-                    <HeadlineWrapper>{friend.name}</HeadlineWrapper>
+              <ProfileWrapper>
+                {friends?.map((friend) => (
+                  <div key={friend._id}>
+                    <FriendsHeadline>{friend.name}</FriendsHeadline>
                     <FriendsFlex>
-                      {friend.favorites.map((movie) => (
+                      {friend.favorites?.map((movie) => (
                         <Friends
                           isLarge
                           movie={movie}
@@ -154,16 +173,20 @@ function App() {
                         />
                       ))}
                     </FriendsFlex>
-                  </>
+                  </div>
                 ))}
-              </FriendsWrapper>
+              </ProfileWrapper>
             </Route>
             <Route path="/search">
-              <HeadlineWrapper>SEARCH</HeadlineWrapper>
-              <SearchbarWrapper>
-                <Searchbar getQuery={(query) => setQuery(query)} open={open} />
-              </SearchbarWrapper>
               <MovieWrapper>
+                <HeadlineWrapper>SEARCH</HeadlineWrapper>
+                <SearchbarWrapper>
+                  <Searchbar
+                    isMovie={isMovie}
+                    setIsMovie={setIsMovie}
+                    getQuery={(query) => setQuery(query)}
+                  />
+                </SearchbarWrapper>
                 <GridWrapper>
                   {search.map((movie) => (
                     <Search
@@ -198,31 +221,40 @@ function App() {
                 </GridWrapper>
               </MovieWrapper>
             </Route>
-            <Route path="/ratings">
-              <Ratings />
-            </Route>
             <Route path="/friendsinfo">
-              <FriendsCards />
+              <ProfileWrapper>
+                <HeadlineWrapper>MY FRIENDS</HeadlineWrapper>
+                {friends?.map((friend) => (
+                  <FriendsCards key={friend._id} friend={friend} />
+                ))}
+              </ProfileWrapper>
             </Route>
-
             <Route path="/profile">
-              <>
+              <ProfileWrapper>
                 <Profile
-                  myProfile={myProfile}
+                  userProfile={userProfile}
+                  isLoggedIn={isLoggedIn}
                   friends={friends}
                   watchlist={watchlist}
                   favorites={favorites}
                 />
-              </>
+              </ProfileWrapper>
             </Route>
             <Route path="/createprofile">
-              <FriendsWrapper>
+              <ProfileWrapper>
                 <CreateProfile
-                  myProfile={myProfile}
-                  createProfile={createProfile}
+                  friends={friends}
+                  watchlist={watchlist}
                   favorites={favorites}
+                  createHandler={createHandler}
+                  isLoggedIn={isLoggedIn}
+                  userProfile={userProfile}
+                  setUserProfile={setUserProfile}
                 />
-              </FriendsWrapper>
+              </ProfileWrapper>
+            </Route>
+            <Route path="/about">
+              <About />
             </Route>
           </MainWrapper>
         </Switch>
@@ -237,52 +269,39 @@ const FriendsFlex = styled.div`
   margin-left: 25px;
   display: flex;
   padding: 20px;
-  overflow-x: hidden;
+  overflow-x: scroll;
   scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;
   }
 `;
 
-const FriendsWrapper = styled.div`
+const ProfileWrapper = styled.div`
   margin: 0 auto;
   max-width: 1020px;
+  width: 100%;
   overflow-x: hidden;
-  overflow-y: scroll;
   scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;
-  }
-  @media (min-width: 1020px) {
-    box-shadow: var(--boxshadow);
-    border-radius: 5px;
-    height: 100%;
-    padding: 1rem 0rem 2rem 0rem;
   }
 `;
 
 const MainWrapper = styled.div`
   margin-top: 100px;
   margin-bottom: 100px;
-  transition: transform 0.3s ease-in-out;
-  transform: ${({ open }) => (open ? 'translateX(30vH)' : 'translateX()')};
-  @media (max-width: 800px) {
-    transform: ${({ open }) => (open ? 'translateX(25vh)' : 'translateX()')};
-  }
-  @media (max-width: 500px) {
-    transform: ${({ open }) => (open ? 'translateX(25vh)' : 'translateX()')};
-  }
+`;
+
+const HomeWrapper = styled.div`
+  margin-top: 128px;
 `;
 
 const GridWrapper = styled.div`
   display: grid;
+  gap: 20px;
+  justify-items: center;
   grid-template-columns: repeat(4, 1fr);
   max-width: 1020px;
-  overflow-x: hidden;
-  scrollbar-width: none;
-  ::-webkit-scrollbar {
-    display: none;
-  }
   @media (max-width: 800px) {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -298,34 +317,35 @@ const MovieWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  justify-content: flex-end;
   margin: 0 auto;
+  padding: 10px;
+  width: 100%;
   max-width: 1020px;
   overflow-x: hidden;
-
+  overflow-y: scroll;
   scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;
   }
-  @media (min-width: 1020px) {
-    box-shadow: var(--boxshadow);
-    height: 100%;
-    padding: 1rem 0rem 2rem 0rem;
-  }
 `;
 
 const HeadlineWrapper = styled.h2`
+  display: flex;
+  margin-left: 30px;
+  width: 100%;
+  max-width: 1020px;
+`;
+
+const FriendsHeadline = styled.h2`
+  display: flex;
   margin-left: 20px;
   width: 100%;
-  max-width: 1080px;
+  max-width: 1020px;
 `;
 
 const SearchbarWrapper = styled.div`
-  /* display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1rem;
   margin: 0 auto;
-  width: 100%;
-  max-width: 800px; */
+  margin: 0 auto;
+  width: 80%;
+  max-width: 450px;
 `;

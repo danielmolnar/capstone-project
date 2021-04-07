@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import ImageContainer from '../components/ImageContainer';
 
 export default function Watchlist({
@@ -11,16 +10,14 @@ export default function Watchlist({
   addToFavorites,
 }) {
   return (
-    <FlexWrapper>
-      <ImageContainer
-        movie={movie}
-        isLarge={isLarge}
-        isFavorite={isFavorite}
-        isOnWatchList={isOnWatchList}
-        addToWatchList={addToWatchList}
-        addToFavorites={addToFavorites}
-      />
-    </FlexWrapper>
+    <ImageContainer
+      movie={movie}
+      isLarge={isLarge}
+      isFavorite={isFavorite}
+      isOnWatchList={isOnWatchList}
+      addToWatchList={addToWatchList}
+      addToFavorites={addToFavorites}
+    />
   );
 }
 
@@ -32,8 +29,3 @@ Watchlist.propTypes = {
   addToWatchList: PropTypes.func,
   addToFavorites: PropTypes.func,
 };
-
-const FlexWrapper = styled.div`
-  display: flex;
-  margin-bottom: 15px;
-`;

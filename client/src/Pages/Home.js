@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Row from '../components/Row';
 import requests from '../services/requests';
+import Row from '../components/Row';
 
 function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
   return (
-    <WrapWrapper>
+    <Wrapper>
       <Row
         isLarge
         title="NETFLIX ORIGINALS"
@@ -69,18 +69,14 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchDocumentaries}
       />
-    </WrapWrapper>
+    </Wrapper>
   );
 }
 
-const WrapWrapper = styled.div`
+const Wrapper = styled.div`
   margin: 0 auto;
+  width: 100%;
   max-width: 1020px;
-  @media (min-width: 1020px) {
-    box-shadow: var(--boxshadow);
-    height: 100%;
-    padding: 1rem 0;
-  }
 `;
 
 Home.propTypes = {

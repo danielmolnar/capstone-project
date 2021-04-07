@@ -1,45 +1,74 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { StarOfLife } from '@styled-icons/fa-solid/StarOfLife';
+import FormButton from '../components/Ui/Button/FormButton';
+import isValidForm from '../lib/validateFunctions';
+import serverApi from '../services/axiosServer';
+import requests from '../services/requests';
 import Tags from '../components/Tags';
-import { useLocalStorage } from '../hooks/useLocalStorage';
 
-export default function Profile({ createProfile, myProfile }) {
-  const [favorites, setFavorites] = useLocalStorage('Favorites', []);
-  const [user, setUser] = useLocalStorage('UserProfile', []);
-
-  const apiServerURL = 'http://localhost:4000/api';
-
-  useEffect(() => {
-    fetch(apiServerURL + '/users/60646e28278c5d29fd3a041f')
-      .then((result) => result.json())
-      .then((user) => setUser(user))
-      .catch((error) => console.error(error.message));
-  }, []);
+export default function CreateProfile({
+  friends,
+  createHandler,
+  favorites,
+  watchlist,
+  isLoggedIn,
+  userProfile,
+  setUserProfile,
+}) {
+  const [infoClicked, setInfoClicked] = useState(false);
+  const userUrl = `${requests.user}${userProfile._id}`;
 
   const initialProfile = {
-    name: '',
-    age: '',
-    tags: [],
-    about: '',
+    age: userProfile?.age ?? '',
+    email: userProfile?.email ?? '',
     favorites: [...favorites],
+    favoritesNumber: favorites?.length,
+    friendsNumber: friends?.length,
+    name: userProfile?.name ?? '',
+    tags: userProfile?.tags ?? [],
+    watchlist: [...watchlist],
+    watchlistNumber: watchlist.length,
   };
   const [profile, setProfile] = useState(initialProfile);
 
   const handleChange = (event) => {
     const field = event.target;
     let value = event.target.value;
-
     setProfile({
       ...profile,
       [field.name]: value,
     });
   };
 
-  function submitProfile(event) {
-    event.preventDefault();
+  async function updateUserInfos(profile) {
+    const response = await serverApi.put(userUrl, {
+      age: profile.age,
+      email: profile.email,
+      name: profile.name,
+      tags: profile.tags,
+    });
+    const data = response.data;
+    setUserProfile(data);
+  }
 
-    createProfile(profile);
-    // setProfile(initialProfile);
+  function createProfile(event) {
+    event.preventDefault();
+    if (isValidForm(profile)) {
+      createHandler(profile);
+    } else {
+      alert('Please submit valid credentials');
+    }
+  }
+
+  function upDateProfile(event) {
+    event.preventDefault();
+    if (isValidForm(profile)) {
+      updateUserInfos(profile);
+    } else {
+      alert('Please submit valid credentials');
+    }
   }
 
   const addProfileTag = (tag) => {
@@ -57,136 +86,157 @@ export default function Profile({ createProfile, myProfile }) {
   return (
     <>
       <HeadlineWrapper>
-        <h2>{myProfile.name ? 'Edit Profile ' : 'Create Profile'}</h2>
+        <h2>{isLoggedIn ? 'Edit Profile' : 'Create Profile'}</h2>
       </HeadlineWrapper>
       <PageWrapper>
-        <FormWrapper>
-          <form onSubmit={submitProfile}>
-            <ProfileContainer>
-              <LabelStyler htmlFor="">
-                <p>Name</p>
-                <InputStyler
-                  type="text"
-                  name="name"
-                  value={profile.name}
-                  onChange={handleChange}
-                  placeholder={profile.name}
-                />
-              </LabelStyler>
-              <LabelStyler htmlFor="">
-                <p>Age</p>
-                <InputStyler
-                  type="text"
-                  name="age"
-                  value={profile.age}
-                  onChange={handleChange}
-                  placeholder={profile.age}
-                />
-                <p>User Tags</p>
-              </LabelStyler>
-              <Tags
-                addProfileTag={addProfileTag}
-                tags={profile.tags}
-                removeProfileTag={removeProfileTag}
-              />
+        <Form>
+          <label htmlFor="name">
+            <p>Name</p>
+            <br />
+            <InputStyler
+              type="text"
+              name="name"
+              value={profile.name}
+              onChange={handleChange}
+              placeholder={userProfile?.name}
+            />
+          </label>
+          <label htmlFor="age">
+            <p>Age</p>
+            <br />
+            <InputStyler
+              type="text"
+              name="age"
+              value={profile.age}
+              onChange={handleChange}
+              placeholder={userProfile?.age}
+            />
+          </label>
+          <label htmlFor="age">
+            <p>E-Mail*</p>
+            <br />
+            <InputStyler
+              type="text"
+              name="email"
+              value={profile.email}
+              onChange={handleChange}
+              placeholder={userProfile?.email}
+            />
+          </label>
+          <label htmlFor="tags">
+            <p>User Tags</p>
+            <br />
 
-              <LabelStyler htmlFor="">
-                About me
-                <br />
-                <br />
-                <InputStyler
-                  type="text"
-                  name="about"
-                  value={profile.about}
-                  onChange={handleChange}
-                  placeholder={profile.about}
-                />
-              </LabelStyler>
-              <ButtonContainer>
-                <StyledButton type="submit">Submit</StyledButton>
-                <StyledButton type="cancel">Cancel</StyledButton>
-              </ButtonContainer>
-            </ProfileContainer>
-          </form>
-          <button onClick={() => myProfile({})}>CLICK ME!</button>
-          <button onClick={() => setProfile(initialProfile)}>CLICK ME!</button>
-        </FormWrapper>
+            <Tags
+              headline="User Tags"
+              addProfileTag={addProfileTag}
+              tags={profile?.tags}
+              removeProfileTag={removeProfileTag}
+            />
+          </label>
+          <ButtonContainer isLoggedIn={isLoggedIn}>
+            <FormButton onClick={createProfile} text="Submit" />
+            <FormButton onClick={upDateProfile} text="Edit" />
+          </ButtonContainer>
+          <InfoContainer infoClicked={infoClicked}>
+            <span onClick={() => setInfoClicked(!infoClicked)}>
+              <Information />
+            </span>
+
+            <p>
+              Information gathered on this page is for form validation practice
+              only, and won't be otherwise used or shared. Feel free to populate
+              imaginary information when creating a profile.
+            </p>
+          </InfoContainer>
+        </Form>
       </PageWrapper>
     </>
   );
 }
 
+CreateProfile.propTypes = {
+  friends: PropTypes.array,
+  createHandler: PropTypes.func,
+  favorites: PropTypes.array,
+  watchlist: PropTypes.array,
+  isLoggedIn: PropTypes.bool,
+  userProfile: PropTypes.object,
+  setUserProfile: PropTypes.func,
+};
+
+const Form = styled.form`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-around;
+
+  p {
+    margin: 0;
+  }
+
+  label {
+    margin: 0;
+    margin-bottom: 1rem;
+    max-width: 20rem;
+    width: 100%;
+  }
+`;
+
 const PageWrapper = styled.div`
   margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  overflow-y: scroll;
-  scrollbar-width: none;
-  ::-webkit-scrollbar {
-    display: none;
-  }
+  width: 80%;
 `;
 
 const HeadlineWrapper = styled.div`
   margin-left: 20px;
 `;
 
-const ProfileContainer = styled.div`
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  padding: 1rem;
-
-  p {
-    margin: 0;
-    margin-bottom: 1rem;
-  }
-`;
-
-const FormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 80%;
-`;
-
-const LabelStyler = styled.label`
-  color: white;
+const InputStyler = styled.input`
+  border: none;
+  border-radius: 5px;
+  height: 25px;
+  max-width: 20rem;
+  outline: none;
+  padding: 10px;
+  width: 100%;
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 3rem;
-`;
+  width: 80%;
+  max-width: 10rem;
+  margin-top: 1rem;
 
-const InputStyler = styled.input`
-  max-width: 400px;
-  outline: none;
-  padding: 10px;
-  margin-bottom: 2rem;
-  height: 25px;
-  border: none;
-  border-radius: 5px;
-`;
-
-const StyledButton = styled.button`
-  border: solid 1px white;
-  background: none;
-  border-radius: 3px;
-  color: white;
-  font-weight: bold;
-  margin-bottom: 5px;
-  outline: none;
-  padding: 5px 10px;
-  text-decoration: none;
-  transition: transform 250ms;
-  width: 5rem;
-
-  cursor: pointer;
-  :hover {
-    background-color: var(--primary-100-opacity);
+  button:first-child {
+    display: ${({ isLoggedIn }) => (isLoggedIn ? 'none' : '')};
   }
+
+  button:last-child {
+    display: ${({ isLoggedIn }) => (isLoggedIn ? '' : 'none')};
+  }
+`;
+
+const InfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  width: 20rem;
+  max-width: 20rem;
+  span {
+    cursor: pointer;
+  }
+  p {
+    display: ${({ infoClicked }) => (infoClicked ? '' : 'none')};
+    margin-left: 10px;
+    font-size: 0.7rem;
+  }
+`;
+const Information = styled(StarOfLife)`
+  color: var(--secondary-100);
+  height: 10px;
+  width: 10px;
 `;
