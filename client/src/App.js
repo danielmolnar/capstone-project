@@ -8,93 +8,104 @@ import Sidebar from './components/Ui/Navigation/Sidebar';
 import CreateProfile from './Pages/CreateProfile';
 import ScrollToTop from './services/ScrollToTop';
 import FriendsCards from './Pages/FriendsCards';
+import About from './Pages/About';
 import Banner from '../src/components/Banner';
+import instance from './services/axiosMovies';
+import dataBase from './services/axiosServer';
 import requests from './services/requests';
 import Watchlist from './Pages/Watchlist';
 import Favorites from './Pages/Favorites';
 import Friends from './Pages/Friends';
 import Profile from './Pages/Profile';
-import axios from './services/axios';
 import Search from './Pages/Search';
 import Home from './Pages/Home';
+// import axios from 'axios';
 
 function App() {
-  const [query, setQuery] = useState('');
-  const [open, setOpen] = useState(false);
-  const [search, setSearch] = useState([]);
-  const [show, handleShow] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [userProfile, setUserProfile] = useLocalStorage('UserProfile', []);
+  // const [userProfile, setUserProfile] = useState({});
   const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
   const [favorites, setFavorites] = useLocalStorage('Favorites', []);
-  const [showType, setShowType] = useState(false);
-  // const [friends, setFriends] = useLocalStorage('Testing', []);
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isMovie, setIsMovie] = useState(false);
   const [friends, setFriends] = useState([]);
-  // const [myProfile, setMyProfile] = useLocalStorage('My Profile', []);
-  const [myProfile, setMyProfile] = useState({});
+  const [show, handleShow] = useState(false);
+  const [search, setSearch] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState('');
 
-  const apiServerURL = 'http://localhost:4000';
+  //${userProfile._id}
+  // const usersUrl = 'http://localhost:4000/users';
+  //const userUrl = `${apiServerURL}/users/606cf9a9c9f55958a11d9f32`;
+
+  const userUrl = `${requests.user}${userProfile._id}`;
 
   useEffect(() => {
-    setIsLoading(true);
-    fetch(apiServerURL + '/users')
-      .then((result) => result.json())
-      .then((friends) => setFriends(friends))
-      .then(setIsLoading(false))
-      .catch((error) => console.error(error.message));
+    async function getFriends() {
+      setIsLoading(true);
+      const response = await dataBase.get(requests.fetchUsers);
+      const data = response.data;
+      setFriends(data.filter((friend) => friend._id !== userProfile._id));
+      setIsLoading(false);
+    }
+    getFriends();
   }, []);
 
+  useEffect(() => {
+    async function getUser() {
+      setIsLoggedIn(false);
+      const response = await dataBase.get(userUrl);
+      const data = response.data;
+      data?.name === undefined ? console.log(data) : setUserProfile(data);
+      data?.name === undefined ? setIsLoggedIn(false) : setIsLoggedIn(true);
+    }
+    getUser();
+  }, []);
+
+  useEffect(() => {
+    async function updateUser() {
+      const response = await dataBase.put(userUrl, {
+        favorites: [...favorites],
+        favoritesNumber: favorites.length,
+        watchlist: [...watchlist],
+        watchlistNumber: watchlist.length,
+      });
+      const data = response.data;
+      setUserProfile(data);
+    }
+    updateUser();
+  }, [favorites, watchlist]);
+
+  async function createProfile(profile) {
+    const response = await dataBase.post(requests.fetchUsers, profile);
+    const data = response.data;
+    console.log(data);
+    setUserProfile(data);
+  }
+
+  function creator(profile) {
+    createProfile(profile);
+    setIsLoggedIn(true);
+  }
+
   let fetchUrl;
+  query <= 2
+    ? (fetchUrl = requests.fetchTrending)
+    : isMovie
+    ? (fetchUrl = `${requests.fetchMovies}${query}&page=1&include_adult=false`)
+    : (fetchUrl = `${requests.fetchShows}${query}&page=1&include_adult=false`);
+
   useEffect(() => {
     async function fetchSearch() {
       setIsLoading(true);
-      const request = await axios.get(fetchUrl);
+      const request = await instance.get(fetchUrl);
       setSearch(request.data.results);
       setIsLoading(false);
       return request;
     }
     fetchSearch();
   }, [query, fetchUrl]);
-
-  query <= 2
-    ? (fetchUrl = requests.fetchTrending)
-    : showType
-    ? (fetchUrl = `${requests.fetchSearch}${query}&page=1&include_adult=false`)
-    : (fetchUrl = `${requests.fetchShows}${query}&page=1&include_adult=false`);
-
-  useEffect(() => {
-    const updateFavorites = () => {
-      setMyProfile({ ...myProfile, favorites: [...favorites] });
-      updateUser(myProfile);
-    };
-    updateFavorites();
-  }, []);
-
-  async function postUser(user) {
-    return fetch(apiServerURL + '/users', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(user),
-    });
-  }
-
-  async function updateUser(user) {
-    return fetch(`http://localhost:4000/users/6068db64385e830e158d3e16`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(user),
-    });
-  }
-
-  const createProfile = (profile) => {
-    setMyProfile({ ...profile });
-    postUser(profile);
-  };
-
-  const updateProfile = (profile) => {
-    setMyProfile({ ...profile, favorites: [...favorites] });
-    updateUser(profile);
-  };
 
   const isOnWatchList = (movieToAdd) =>
     watchlist.some((movie) => movie.id === movieToAdd.id);
@@ -119,16 +130,14 @@ function App() {
       <ScrollToTop>
         <Navigation setOpen={setOpen} />
         <Banner show={show} handleShow={handleShow} open={open} />
-        <Sidebar open={open} setOpen={setOpen} myProfile={myProfile} />
+        <Sidebar open={open} setOpen={setOpen} isLoggedIn={isLoggedIn} />
         <Switch>
           <MainWrapper open={open}>
-            <button onClick={() => console.log(favorites)}></button>
-            {/* <button
-              onClick={() =>
-                setMyProfile({ ...myProfile, favorites: [...favorites] })
-              }
-            ></button>
-            <button onClick={() => updateProfile(myProfile)}></button> */}
+            <button onClick={() => console.log(isLoggedIn)}>logged in?</button>
+            <button onClick={() => console.log(userProfile)}>
+              User Profile
+            </button>
+            {/* <button onClick={() => getUser()></button> */}
             <Route exact path="/">
               <HomeWrapper>
                 <Home
@@ -158,12 +167,12 @@ function App() {
               </MovieWrapper>
             </Route>
             <Route path="/friends">
-              <FriendsWrapper>
+              <ProfileWrapper>
                 {friends?.map((friend) => (
                   <div key={friend._id}>
                     <FriendsHeadline>{friend.name}</FriendsHeadline>
                     <FriendsFlex>
-                      {friend?.favorites.map((movie) => (
+                      {friend?.favorites?.map((movie) => (
                         <Friends
                           isLarge
                           movie={movie}
@@ -178,16 +187,16 @@ function App() {
                     </FriendsFlex>
                   </div>
                 ))}
-              </FriendsWrapper>
+              </ProfileWrapper>
             </Route>
             <Route path="/search">
               <MovieWrapper>
                 <HeadlineWrapper>SEARCH</HeadlineWrapper>
                 <SearchbarWrapper>
                   <Searchbar
+                    isMovie={isMovie}
+                    setIsMovie={setIsMovie}
                     getQuery={(query) => setQuery(query)}
-                    showType={showType}
-                    setShowType={setShowType}
                   />
                 </SearchbarWrapper>
                 <GridWrapper>
@@ -225,34 +234,39 @@ function App() {
               </MovieWrapper>
             </Route>
             <Route path="/friendsinfo">
-              <FriendsWrapper>
+              <ProfileWrapper>
                 <HeadlineWrapper>MY FRIENDS</HeadlineWrapper>
                 {friends?.map((friend) => (
                   <FriendsCards key={friend._id} friend={friend} />
                 ))}
-              </FriendsWrapper>
+              </ProfileWrapper>
             </Route>
             <Route path="/profile">
-              <FriendsWrapper>
+              <ProfileWrapper>
                 <Profile
-                  myProfile={myProfile}
+                  userProfile={userProfile}
+                  isLoggedIn={isLoggedIn}
                   friends={friends}
                   watchlist={watchlist}
                   favorites={favorites}
                 />
-              </FriendsWrapper>
+              </ProfileWrapper>
             </Route>
             <Route path="/createprofile">
-              <FriendsWrapper>
+              <ProfileWrapper>
                 <CreateProfile
                   friends={friends}
                   watchlist={watchlist}
-                  updateProfile={updateProfile}
-                  myProfile={myProfile}
-                  createProfile={createProfile}
                   favorites={favorites}
+                  creator={creator}
+                  isLoggedIn={isLoggedIn}
+                  userProfile={userProfile}
+                  setUserProfile={setUserProfile}
                 />
-              </FriendsWrapper>
+              </ProfileWrapper>
+            </Route>
+            <Route path="/about">
+              <About />
             </Route>
           </MainWrapper>
         </Switch>
@@ -274,12 +288,11 @@ const FriendsFlex = styled.div`
   }
 `;
 
-const FriendsWrapper = styled.div`
+const ProfileWrapper = styled.div`
   margin: 0 auto;
   max-width: 1020px;
   width: 100%;
   overflow-x: hidden;
-
   scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;
@@ -297,6 +310,8 @@ const HomeWrapper = styled.div`
 
 const GridWrapper = styled.div`
   display: grid;
+  gap: 20px;
+  justify-items: center;
   grid-template-columns: repeat(4, 1fr);
   max-width: 1020px;
   @media (max-width: 800px) {
@@ -314,12 +329,12 @@ const MovieWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  /* justify-content: flex-end; */
-  /* margin: 0 auto; */
-
+  margin: 0 auto;
+  padding: 10px;
   width: 100%;
   max-width: 1020px;
   overflow-x: hidden;
+  overflow-y: scroll;
   scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;
@@ -346,3 +361,54 @@ const SearchbarWrapper = styled.div`
   width: 80%;
   max-width: 450px;
 `;
+
+// return fetch(userUrl, {
+//   method: 'GET',
+//   headers: { 'Content-Type': 'application/json' },
+//   body:  JSON.stringify(user),
+// })
+//   .then((response) => response.json())
+//   .then((mainUser) => setUserProfile(mainUser));
+
+// async function postUser(user) {
+//   return fetch(apiServerURL + '/users', {
+//     method: 'POST',
+//     headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify(user),
+//   })
+//     .then((response) => response.json())
+//     .then((createdUser) => setUserProfile(createdUser));
+// }
+
+// useEffect(() => {
+//   async function updateUser() {
+//     return fetch(userUrl, {
+//       method: 'PUT',
+//       headers: { 'Content-Type': 'application/json' },
+//       body: JSON.stringify({
+//         favorites: [...favorites],
+//         favoritesNumber: favorites.length,
+//         watchlist: [...watchlist],
+//         watchlistNumber: watchlist.length,
+//       }),
+//     })
+//       .then((response) => response.json())
+//       .then((updatedUser) => setUserProfile(updatedUser));
+//   }
+//   updateUser();
+// }, [favorites, watchlist]);
+
+// NEU
+
+// async function createProfile(profile) {
+//   const response = await axios.post(usersUrl, profile);
+//   const data = response.data;
+//   console.log(data);
+//   setUserProfile(data);
+// }
+
+// async function updateUserInfos(profile) {
+//   const response = await axios.put(userUrl, profile);
+//   const data = response.data;
+//   setUserProfile(data);
+// }

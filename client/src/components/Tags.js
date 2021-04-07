@@ -76,9 +76,9 @@ Tags.propTypes = {
 
 const SectionWrapper = styled.section`
   display: flex;
+  flex-wrap: wrap;
   background: none;
   border-radius: 5px;
-  width: 80%;
   max-width: 20rem;
 
   input {

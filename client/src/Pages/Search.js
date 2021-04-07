@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import Spinner from '../components/Ui/Spinner';
 import ImageContainer from '../components/ImageContainer';
 
@@ -15,16 +14,14 @@ export default function Search({
   return isLoading ? (
     <Spinner />
   ) : (
-    <FlexWrapper>
-      <ImageContainer
-        movie={movie}
-        isLarge={isLarge}
-        isFavorite={isFavorite}
-        isOnWatchList={isOnWatchList}
-        addToWatchList={addToWatchList}
-        addToFavorites={addToFavorites}
-      />
-    </FlexWrapper>
+    <ImageContainer
+      movie={movie}
+      isLarge={isLarge}
+      isFavorite={isFavorite}
+      isOnWatchList={isOnWatchList}
+      addToWatchList={addToWatchList}
+      addToFavorites={addToFavorites}
+    />
   );
 }
 
@@ -37,8 +34,3 @@ Search.propTypes = {
   addToWatchList: PropTypes.func,
   addToFavorites: PropTypes.func,
 };
-
-const FlexWrapper = styled.div`
-  display: flex;
-  margin-bottom: 20px;
-`;

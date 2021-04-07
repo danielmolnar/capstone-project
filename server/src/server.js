@@ -2,12 +2,16 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import User from './models/User.js';
+import dotenv from 'dotenv';
 
+dotenv.config();
 const server = express();
 server.use(cors());
 server.use(express.json());
 
 const connectionString = 'mongodb://localhost:27017';
+// const connectionString = process.env.mongourl
+
 mongoose.connect(connectionString, {
   useNewUrlParser: true,
   useUnifiedTopology: true,

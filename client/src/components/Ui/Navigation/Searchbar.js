@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { ArrowSwitch } from '@styled-icons/octicons/ArrowSwitch';
 
-export default function Searchbar({ getQuery, showType, setShowType }) {
+export default function Searchbar({ getQuery, isMovie, setIsMovie }) {
   const [text, setText] = useState('');
   const onChange = (query) => {
     setText(query);
@@ -11,7 +11,7 @@ export default function Searchbar({ getQuery, showType, setShowType }) {
   };
 
   const clickHandler = () => {
-    setShowType(!showType);
+    setIsMovie(!isMovie);
     setText('');
   };
 
@@ -19,13 +19,13 @@ export default function Searchbar({ getQuery, showType, setShowType }) {
     <SearchWrapper>
       <Inputstyler
         type="text"
-        placeholder={showType ? 'Search for Movies' : 'Search for TV Shows'}
+        placeholder={isMovie ? 'Search for Movies' : 'Search for TV Shows'}
         value={text}
         onChange={(event) => onChange(event.target.value)}
         autoFocus
       />
       <button onClick={clickHandler}>
-        <SwitchIcon /> {showType ? 'Shows' : 'Movies'}
+        <SwitchIcon /> {isMovie ? 'Shows' : 'Movies'}
       </button>
     </SearchWrapper>
   );

@@ -5,67 +5,80 @@ import { useLocalStorage } from '../hooks/useLocalStorage';
 import FormButton from '../components/Ui/Button/FormButton';
 import isValidForm from '../lib/validateFunctions';
 import Tags from '../components/Tags';
+// import axios from 'axios';
+import dataBase from '../services/axiosServer';
+import requests from '../services/requests';
 
 export default function CreateProfile({
-  createProfile,
-  updateProfile,
-  watchlist,
   friends,
+  creator,
+  favorites,
+  watchlist,
+  isLoggedIn,
+  userProfile,
+  setUserProfile,
 }) {
-  const [favorites, setFavorites] = useLocalStorage('Favorites', []);
-  // const [myProfile, setMyProfile] = useLocalStorage('My Profile', []);
-  const [myProfile, setMyProfile] = useState({});
+  // const [favorites, setFavorites] = useLocalStorage('Favorites', []);
+  // const [userProfile, setUserProfile] = useLocalStorage('UserProfile', []);
+  // const [userProfile, setUserProfile] = useState({});
 
-  // const [user, setUser] = useLocalStorage('UserProfile', []);
-
-  // const apiServerURL = 'http://localhost:4000';
-
-  // useEffect(() => {
-  //   fetch(apiServerURL + '/users/60646e28278c5d29fd3a041f')
-  //     .then((result) => result.json())
-  //     .then((user) => setUser(user))
-  //     .catch((error) => console.error(error.message));
-  // }, []);
-
-  const isExistingProfile = myProfile.name;
+  const userUrl = `${requests.user}${userProfile._id}`;
+  // const userUrl = 'http://localhost:4000/users/606cf9a9c9f55958a11d9f32';
+  // const userUrl = `${apiServerURL}/users/${userProfile?._id}`;
+  // const usersUrl = 'http://localhost:4000/users';
 
   const initialProfile = {
-    name: '',
-    age: '',
-    tags: [],
-    email: '',
+    age: userProfile?.age ?? '',
+    email: userProfile?.email ?? '',
     favorites: [...favorites],
+    favoritesNumber: favorites?.length,
+    friendsNumber: friends?.length,
+    name: userProfile?.name ?? '',
+    tags: userProfile?.tags ?? [],
+    watchlist: [...watchlist],
     watchlistNumber: watchlist.length,
-    friendsNumber: friends.length,
-    favoritesNumber: favorites.length,
   };
   const [profile, setProfile] = useState(initialProfile);
 
   const handleChange = (event) => {
     const field = event.target;
     let value = event.target.value;
-
     setProfile({
       ...profile,
       [field.name]: value,
     });
   };
 
-  function submitProfile(event) {
+  async function updateUserInfos(profile) {
+    const response = await dataBase.put(userUrl, {
+      age: profile.age,
+      email: profile.email,
+      name: profile.name,
+      tags: profile.tags,
+    });
+    const data = response.data;
+    setUserProfile(data);
+  }
+
+  function createProfile(event) {
     event.preventDefault();
     if (isValidForm(profile)) {
-      createProfile(profile);
-      setMyProfile(profile);
-      // setProfile(initialProfile);
+      creator(profile);
     } else {
       alert('Please submit valid credentials');
     }
   }
 
-  function updateMyProfile(profile) {
-    setMyProfile({ ...profile, favorites: [...favorites] });
-    updateProfile(profile);
+  function upDateProfile(event) {
+    event.preventDefault();
+    if (isValidForm(profile)) {
+      updateUserInfos(profile);
+    } else {
+      alert('Please submit valid credentials');
+    }
   }
+
+  //isLoggedIn ? updateUserInfos(profile) :
 
   const addProfileTag = (tag) => {
     setProfile({
@@ -82,10 +95,11 @@ export default function CreateProfile({
   return (
     <>
       <HeadlineWrapper>
-        <h2>{myProfile.name ? 'Edit Profile ' : 'Create Profile'}</h2>
+        <h2>{isLoggedIn ? 'Edit Profile' : 'Create Profile'}</h2>
       </HeadlineWrapper>
       <PageWrapper>
-        <Form onSubmit={submitProfile}>
+        <h2>{profile.name}</h2>
+        <Form>
           <label htmlFor="name">
             <p>Name</p>
             <br />
@@ -94,7 +108,7 @@ export default function CreateProfile({
               name="name"
               value={profile.name}
               onChange={handleChange}
-              placeholder={profile.name}
+              placeholder={userProfile?.name}
             />
           </label>
           <label htmlFor="age">
@@ -105,7 +119,7 @@ export default function CreateProfile({
               name="age"
               value={profile.age}
               onChange={handleChange}
-              placeholder={profile.age}
+              placeholder={userProfile?.age}
             />
           </label>
           <label htmlFor="age">
@@ -116,12 +130,13 @@ export default function CreateProfile({
               name="email"
               value={profile.email}
               onChange={handleChange}
-              placeholder={profile.email}
+              placeholder={userProfile?.email}
             />
           </label>
           <label htmlFor="tags">
             <p>User Tags</p>
             <br />
+
             <Tags
               headline="User Tags"
               addProfileTag={addProfileTag}
@@ -129,21 +144,27 @@ export default function CreateProfile({
               removeProfileTag={removeProfileTag}
             />
           </label>
-          <ButtonContainer isExistingProfile={isExistingProfile}>
-            <FormButton type="submit" text="Submit" />
-            <FormButton type="submit" text="Edit" onClick={updateMyProfile} />
+          <ButtonContainer isLoggedIn={isLoggedIn}>
+            <FormButton onClick={createProfile} text="Submit" />
+            <FormButton onClick={upDateProfile} text="Edit" />
           </ButtonContainer>
         </Form>
-        <button onClick={() => updateMyProfile(myProfile)}>CLICK ME!</button>
-        <button onClick={() => setMyProfile({})}>CLICK ME!</button>
+
+        <button onClick={() => console.log(isLoggedIn)}>CLICK ME!</button>
+        {/* <button onClick={() => createProfile(profile)}>CLICK ME!</button> */}
       </PageWrapper>
     </>
   );
 }
 
 CreateProfile.propTypes = {
-  createProfile: PropTypes.func,
-  updateProfile: PropTypes.func,
+  friends: PropTypes.array,
+  creator: PropTypes.func,
+  favorites: PropTypes.array,
+  watchlist: PropTypes.array,
+  isLoggedIn: PropTypes.bool,
+  userProfile: PropTypes.object,
+  setUserProfile: PropTypes.func,
 };
 
 const Form = styled.form`
@@ -193,10 +214,20 @@ const ButtonContainer = styled.div`
   margin-top: 1.5rem;
 
   button:first-child {
-    display: ${({ isExistingProfile }) => (isExistingProfile ? 'none' : '')};
+    display: ${({ isLoggedIn }) => (isLoggedIn ? 'none' : '')};
   }
 
   button:last-child {
-    display: ${({ isExistingProfile }) => (isExistingProfile ? '' : 'none')};
+    display: ${({ isLoggedIn }) => (isLoggedIn ? '' : 'none')};
   }
 `;
+
+// async function updateUser(profile) {
+//   return fetch(userUrl, {
+//     method: 'PUT',
+//     headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify(profile),
+//   })
+//     .then((response) => response.json())
+//     .then((updatedUser) => setUserProfile(updatedUser));
+// }

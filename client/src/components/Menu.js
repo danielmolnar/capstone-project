@@ -6,7 +6,9 @@ import { UserSettings } from '@styled-icons/remix-line/UserSettings';
 import { PeopleFill } from '@styled-icons/bootstrap/PeopleFill';
 import { Profile } from '@styled-icons/icomoon/Profile';
 
-export default function Menu({ open, setOpen, myProfile, styleguide }) {
+import { PermDeviceInformation } from '@styled-icons/material/PermDeviceInformation';
+
+export default function Menu({ open, setOpen, styleguide, isLoggedIn }) {
   return (
     <StyledMenu open={open} styleguide={styleguide}>
       <MenuWrapper>
@@ -31,7 +33,13 @@ export default function Menu({ open, setOpen, myProfile, styleguide }) {
         <BurgerLink to="/createprofile">
           <CloseWrapper onClick={() => setOpen(!open)}>
             <ProfileSettings />
-            <p>{myProfile.name ? 'Edit Profile ' : 'Create Profile'}</p>
+            <p>{isLoggedIn ? 'Edit Profile' : 'Create Profile'}</p>
+          </CloseWrapper>
+        </BurgerLink>
+        <BurgerLink to="/about">
+          <CloseWrapper onClick={() => setOpen(!open)}>
+            <AboutIcon />
+            <p>About</p>
           </CloseWrapper>
         </BurgerLink>
       </MenuWrapper>
@@ -71,6 +79,13 @@ const ProfileSettings = styled(UserSettings)`
   color: var(--secondary-100);
   height: 30px;
   margin-left: 22.5px;
+  width: 30px;
+`;
+
+const AboutIcon = styled(PermDeviceInformation)`
+  color: var(--secondary-100);
+  height: 30px;
+  margin-left: 20px;
   width: 30px;
 `;
 

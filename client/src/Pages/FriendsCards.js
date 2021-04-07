@@ -27,7 +27,7 @@ export default function FriendsCards({ friend }) {
       <MainWrapper>
         <p>FLIXTAGS</p>
         <TagWrapper>
-          {friend.tags.map((tag) => (
+          {friend?.tags.map((tag) => (
             <StyledSpan key={tag.index}>{tag}</StyledSpan>
           ))}
         </TagWrapper>

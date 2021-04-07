@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import ImageContainer from '../components/ImageContainer';
 import Spinner from '../components/Ui/Spinner';
 
@@ -14,7 +15,7 @@ export default function Friends({
   return isLoading ? (
     <Spinner />
   ) : (
-    <>
+    <MarginContainer>
       <ImageContainer
         movie={movie}
         isLarge={isLarge}
@@ -23,7 +24,7 @@ export default function Friends({
         addToWatchList={addToWatchList}
         addToFavorites={addToFavorites}
       />
-    </>
+    </MarginContainer>
   );
 }
 
@@ -36,3 +37,7 @@ Friends.propTypes = {
   addToWatchList: PropTypes.func,
   addToFavorites: PropTypes.func,
 };
+
+const MarginContainer = styled.div`
+  margin-right: 15px;
+`;

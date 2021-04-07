@@ -38,7 +38,6 @@ ImageContainer.propTypes = {
 
 const MovieContainer = styled.div(
   (props) => css`
-    margin-right: 15px;
     max-height: 200px;
     position: relative;
     transition: transform 450ms;

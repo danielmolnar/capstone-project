@@ -6,8 +6,15 @@ import { HeartCircle } from '@styled-icons/boxicons-regular/HeartCircle';
 import { CameraMovie } from '@styled-icons/boxicons-solid/CameraMovie';
 import { PeopleFill } from '@styled-icons/bootstrap/PeopleFill';
 
-export default function Profile({ myProfile, friends, favorites, watchlist }) {
-  return !myProfile.name ? (
+export default function Profile({
+  friends,
+  favorites,
+  watchlist,
+  isLoggedIn,
+  userProfile,
+}) {
+  //
+  return !isLoggedIn ? (
     <>
       <HeadlineWrapper>
         <h2>Please Create A Profile</h2>
@@ -21,7 +28,6 @@ export default function Profile({ myProfile, friends, favorites, watchlist }) {
         <Wrapper>
           <ButtonContainer>
             <FormButton text="Create Profile" />
-            {/* <CreateButton>Create Profile</CreateButton> */}
           </ButtonContainer>
         </Wrapper>
       </StyledLink>
@@ -31,35 +37,33 @@ export default function Profile({ myProfile, friends, favorites, watchlist }) {
       <HeadlineWrapper>
         <h2>My Profile</h2>
       </HeadlineWrapper>
-      <PageWrapper>
-        <ProfileWrapper>
-          <SublineWrapper>
-            <Subline>{myProfile.name}</Subline>
-            <StatsWrapper>
-              <IconWrapper>
-                <Friends />
-                <p>{friends.length} Friends</p>
-              </IconWrapper>
-              <IconWrapper>
-                <Favorites />
-                <p>{favorites.length} Favorites</p>
-              </IconWrapper>
-              <IconWrapper>
-                <WatchList />
-                <p>{watchlist.length} on Watchlist</p>
-              </IconWrapper>
-            </StatsWrapper>
-          </SublineWrapper>
-          <MainWrapper>
-            <p>FLIXTAGS</p>
-            <TagWrapper>
-              {myProfile.tags.map((tag) => (
-                <StyledSpan key={tag.index}>{tag}</StyledSpan>
-              ))}
-            </TagWrapper>
-          </MainWrapper>
-        </ProfileWrapper>
-      </PageWrapper>
+      <ProfileWrapper>
+        <SublineWrapper>
+          <Subline>{userProfile?.name}</Subline>
+          <StatsWrapper>
+            <IconWrapper>
+              <Friends />
+              <p>{friends.length} Friends</p>
+            </IconWrapper>
+            <IconWrapper>
+              <Favorites />
+              <p>{favorites.length} Favorites</p>
+            </IconWrapper>
+            <IconWrapper>
+              <WatchList />
+              <p>{watchlist.length} on Watchlist</p>
+            </IconWrapper>
+          </StatsWrapper>
+        </SublineWrapper>
+        <MainWrapper>
+          <p>FLIXTAGS</p>
+          <TagWrapper>
+            {userProfile?.tags?.map((tag) => (
+              <StyledSpan key={tag.index}>{tag}</StyledSpan>
+            ))}
+          </TagWrapper>
+        </MainWrapper>
+      </ProfileWrapper>
     </>
   );
 }
@@ -68,7 +72,8 @@ Profile.propTypes = {
   friends: PropTypes.array,
   favorites: PropTypes.array,
   watchlist: PropTypes.array,
-  myProfile: PropTypes.object,
+  isLoggedIn: PropTypes.bool,
+  userProfile: PropTypes.object,
 };
 
 const Wrapper = styled.div`
@@ -200,5 +205,3 @@ const ProfileWrapper = styled.div`
     display: none;
   }
 `;
-
-const PageWrapper = styled.div``;
