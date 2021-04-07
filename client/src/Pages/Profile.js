@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import FormButton from '../components/Ui/Button/FormButton';
 import { HeartCircle } from '@styled-icons/boxicons-regular/HeartCircle';
 import { CameraMovie } from '@styled-icons/boxicons-solid/CameraMovie';
 import { PeopleFill } from '@styled-icons/bootstrap/PeopleFill';
+import FormButton from '../components/Ui/Button/FormButton';
 
 export default function Profile({
   friends,
@@ -13,7 +13,6 @@ export default function Profile({
   isLoggedIn,
   userProfile,
 }) {
-  //
   return !isLoggedIn ? (
     <>
       <HeadlineWrapper>

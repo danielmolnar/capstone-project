@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ImageContainer from '../components/ImageContainer';
-import Spinner from '../components/Ui/Spinner';
+import Spinner from '../components/Spinner';
 
 export default function Friends({
   movie,

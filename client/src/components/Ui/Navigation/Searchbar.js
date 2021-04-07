@@ -24,23 +24,23 @@ export default function Searchbar({ getQuery, isMovie, setIsMovie }) {
         onChange={(event) => onChange(event.target.value)}
         autoFocus
       />
-      <button onClick={clickHandler}>
+      <SearchButton onClick={clickHandler}>
         <SwitchIcon /> {isMovie ? 'Shows' : 'Movies'}
-      </button>
+      </SearchButton>
     </SearchWrapper>
   );
 }
 
 Searchbar.propTypes = {
   getQuery: PropTypes.func,
-  showType: PropTypes.bool,
-  setShowType: PropTypes.func,
+  isMovie: PropTypes.bool,
+  setIsMovie: PropTypes.func,
 };
 
 const SwitchIcon = styled(ArrowSwitch)`
   height: 20px;
   width: 20px;
-  color: white;
+  color: var(--secondary-100);
 `;
 
 const SearchWrapper = styled.div`
@@ -48,29 +48,29 @@ const SearchWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   box-shadow: var(--boxshadow);
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   border-radius: 10px;
-  width: 95%;
+  width: 100%;
+`;
 
-  button {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    background-color: var(--primary-100-opacity);
-    border: none;
-    border-radius: 0px 5px 5px 0px;
-    width: 10rem;
-    color: var(--secondary-100);
-    font-weight: bold;
-    height: 30px;
-    outline: none;
-    text-decoration: none;
-    transition: transform 250ms;
-    font-size: 0.7rem;
-    cursor: pointer;
-    :hover {
-      background-color: var(--primary-100);
-    }
+const SearchButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: var(--primary-100-opacity);
+  border: none;
+  border-radius: 0px 5px 5px 0px;
+  width: 10rem;
+  color: var(--secondary-100);
+  font-weight: bold;
+  height: 30px;
+  outline: none;
+  text-decoration: none;
+  transition: transform 250ms;
+  font-size: 0.7rem;
+  cursor: pointer;
+  :hover {
+    background-color: var(--primary-100);
   }
 `;
 
@@ -80,14 +80,7 @@ const Inputstyler = styled.input`
   height: 30px;
   max-width: 800px;
   outline: none;
-  transition: width 0.4s ease-in-out;
   width: 100%;
-  background: white;
+  background: var(--secondary-100);
   padding: 5px;
-
-  /* &:focus,
-  &:hover {
-    width: 60%;
-    max-width: 800px;
-  } */
 `;

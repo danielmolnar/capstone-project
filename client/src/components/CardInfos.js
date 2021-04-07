@@ -1,7 +1,7 @@
 import ReactDom from 'react-dom';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import backdrop_poster from '../images/backdrop_poster.png';
+import backdrop_poster from '../assets/backdrop_poster.png';
 import { BiTachometer } from 'react-icons/bi';
 import AddToWatchList from './AddToWatchList';
 

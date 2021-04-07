@@ -4,11 +4,11 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { CameraMovie as CameraMovieFilled } from '@styled-icons/boxicons-solid/CameraMovie';
 import { CameraMovie } from '@styled-icons/boxicons-regular/CameraMovie';
 import { Search2 } from '@styled-icons/remix-fill/Search2';
-import CinemaFilled from '../../../images/CinemaFilled';
+import CinemaFilled from '../../../assets/CinemaFilled';
 import { Search } from '@styled-icons/octicons/Search';
 import { AiOutlineHome } from 'react-icons/ai';
 import { AiFillHome } from 'react-icons/ai';
-import Cinema from '../../../images/Cinema';
+import Cinema from '../../../assets/Cinema';
 
 export default function Navigation({ setOpen, styleguide }) {
   const location = useLocation();

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Logo from './Ui/Logo';
+import Logo from './Logo';
 
 function Banner({ show, handleShow, open }) {
   useEffect(() => {

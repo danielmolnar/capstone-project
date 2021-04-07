@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const dataBase = axios.create({
+const serverApi = axios.create({
   baseURL: 'http://localhost:4000',
 });
 
-export default dataBase;
+export default serverApi;

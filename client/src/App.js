@@ -6,24 +6,22 @@ import { useLocalStorage } from '../src/hooks/useLocalStorage';
 import Searchbar from './components/Ui/Navigation/Searchbar';
 import Sidebar from './components/Ui/Navigation/Sidebar';
 import CreateProfile from './Pages/CreateProfile';
-import ScrollToTop from './services/ScrollToTop';
+import ScrollToTop from './hooks/useScrollToTop';
 import FriendsCards from './Pages/FriendsCards';
-import About from './Pages/About';
 import Banner from '../src/components/Banner';
 import instance from './services/axiosMovies';
-import dataBase from './services/axiosServer';
+import serverApi from './services/axiosServer';
 import requests from './services/requests';
 import Watchlist from './Pages/Watchlist';
 import Favorites from './Pages/Favorites';
 import Friends from './Pages/Friends';
 import Profile from './Pages/Profile';
 import Search from './Pages/Search';
+import About from './Pages/About';
 import Home from './Pages/Home';
-// import axios from 'axios';
 
 function App() {
   const [userProfile, setUserProfile] = useLocalStorage('UserProfile', []);
-  // const [userProfile, setUserProfile] = useState({});
   const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
   const [favorites, setFavorites] = useLocalStorage('Favorites', []);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -35,16 +33,12 @@ function App() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
 
-  //${userProfile._id}
-  // const usersUrl = 'http://localhost:4000/users';
-  //const userUrl = `${apiServerURL}/users/606cf9a9c9f55958a11d9f32`;
-
   const userUrl = `${requests.user}${userProfile._id}`;
 
   useEffect(() => {
     async function getFriends() {
       setIsLoading(true);
-      const response = await dataBase.get(requests.fetchUsers);
+      const response = await serverApi.get(requests.fetchUsers);
       const data = response.data;
       setFriends(data.filter((friend) => friend._id !== userProfile._id));
       setIsLoading(false);
@@ -55,7 +49,7 @@ function App() {
   useEffect(() => {
     async function getUser() {
       setIsLoggedIn(false);
-      const response = await dataBase.get(userUrl);
+      const response = await serverApi.get(userUrl);
       const data = response.data;
       data?.name === undefined ? console.log(data) : setUserProfile(data);
       data?.name === undefined ? setIsLoggedIn(false) : setIsLoggedIn(true);
@@ -65,7 +59,7 @@ function App() {
 
   useEffect(() => {
     async function updateUser() {
-      const response = await dataBase.put(userUrl, {
+      const response = await serverApi.put(userUrl, {
         favorites: [...favorites],
         favoritesNumber: favorites.length,
         watchlist: [...watchlist],
@@ -78,13 +72,12 @@ function App() {
   }, [favorites, watchlist]);
 
   async function createProfile(profile) {
-    const response = await dataBase.post(requests.fetchUsers, profile);
+    const response = await serverApi.post(requests.fetchUsers, profile);
     const data = response.data;
-    console.log(data);
     setUserProfile(data);
   }
 
-  function creator(profile) {
+  function createHandler(profile) {
     createProfile(profile);
     setIsLoggedIn(true);
   }
@@ -133,11 +126,6 @@ function App() {
         <Sidebar open={open} setOpen={setOpen} isLoggedIn={isLoggedIn} />
         <Switch>
           <MainWrapper open={open}>
-            <button onClick={() => console.log(isLoggedIn)}>logged in?</button>
-            <button onClick={() => console.log(userProfile)}>
-              User Profile
-            </button>
-            {/* <button onClick={() => getUser()></button> */}
             <Route exact path="/">
               <HomeWrapper>
                 <Home
@@ -172,7 +160,7 @@ function App() {
                   <div key={friend._id}>
                     <FriendsHeadline>{friend.name}</FriendsHeadline>
                     <FriendsFlex>
-                      {friend?.favorites?.map((movie) => (
+                      {friend.favorites?.map((movie) => (
                         <Friends
                           isLarge
                           movie={movie}
@@ -258,7 +246,7 @@ function App() {
                   friends={friends}
                   watchlist={watchlist}
                   favorites={favorites}
-                  creator={creator}
+                  createHandler={createHandler}
                   isLoggedIn={isLoggedIn}
                   userProfile={userProfile}
                   setUserProfile={setUserProfile}
@@ -361,54 +349,3 @@ const SearchbarWrapper = styled.div`
   width: 80%;
   max-width: 450px;
 `;
-
-// return fetch(userUrl, {
-//   method: 'GET',
-//   headers: { 'Content-Type': 'application/json' },
-//   body:  JSON.stringify(user),
-// })
-//   .then((response) => response.json())
-//   .then((mainUser) => setUserProfile(mainUser));
-
-// async function postUser(user) {
-//   return fetch(apiServerURL + '/users', {
-//     method: 'POST',
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify(user),
-//   })
-//     .then((response) => response.json())
-//     .then((createdUser) => setUserProfile(createdUser));
-// }
-
-// useEffect(() => {
-//   async function updateUser() {
-//     return fetch(userUrl, {
-//       method: 'PUT',
-//       headers: { 'Content-Type': 'application/json' },
-//       body: JSON.stringify({
-//         favorites: [...favorites],
-//         favoritesNumber: favorites.length,
-//         watchlist: [...watchlist],
-//         watchlistNumber: watchlist.length,
-//       }),
-//     })
-//       .then((response) => response.json())
-//       .then((updatedUser) => setUserProfile(updatedUser));
-//   }
-//   updateUser();
-// }, [favorites, watchlist]);
-
-// NEU
-
-// async function createProfile(profile) {
-//   const response = await axios.post(usersUrl, profile);
-//   const data = response.data;
-//   console.log(data);
-//   setUserProfile(data);
-// }
-
-// async function updateUserInfos(profile) {
-//   const response = await axios.put(userUrl, profile);
-//   const data = response.data;
-//   setUserProfile(data);
-// }

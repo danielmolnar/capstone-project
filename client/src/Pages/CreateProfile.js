@@ -1,31 +1,24 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
-import { useLocalStorage } from '../hooks/useLocalStorage';
+import { StarOfLife } from '@styled-icons/fa-solid/StarOfLife';
 import FormButton from '../components/Ui/Button/FormButton';
 import isValidForm from '../lib/validateFunctions';
-import Tags from '../components/Tags';
-// import axios from 'axios';
-import dataBase from '../services/axiosServer';
+import serverApi from '../services/axiosServer';
 import requests from '../services/requests';
+import Tags from '../components/Tags';
 
 export default function CreateProfile({
   friends,
-  creator,
+  createHandler,
   favorites,
   watchlist,
   isLoggedIn,
   userProfile,
   setUserProfile,
 }) {
-  // const [favorites, setFavorites] = useLocalStorage('Favorites', []);
-  // const [userProfile, setUserProfile] = useLocalStorage('UserProfile', []);
-  // const [userProfile, setUserProfile] = useState({});
-
+  const [infoClicked, setInfoClicked] = useState(false);
   const userUrl = `${requests.user}${userProfile._id}`;
-  // const userUrl = 'http://localhost:4000/users/606cf9a9c9f55958a11d9f32';
-  // const userUrl = `${apiServerURL}/users/${userProfile?._id}`;
-  // const usersUrl = 'http://localhost:4000/users';
 
   const initialProfile = {
     age: userProfile?.age ?? '',
@@ -50,7 +43,7 @@ export default function CreateProfile({
   };
 
   async function updateUserInfos(profile) {
-    const response = await dataBase.put(userUrl, {
+    const response = await serverApi.put(userUrl, {
       age: profile.age,
       email: profile.email,
       name: profile.name,
@@ -63,7 +56,7 @@ export default function CreateProfile({
   function createProfile(event) {
     event.preventDefault();
     if (isValidForm(profile)) {
-      creator(profile);
+      createHandler(profile);
     } else {
       alert('Please submit valid credentials');
     }
@@ -77,8 +70,6 @@ export default function CreateProfile({
       alert('Please submit valid credentials');
     }
   }
-
-  //isLoggedIn ? updateUserInfos(profile) :
 
   const addProfileTag = (tag) => {
     setProfile({
@@ -98,7 +89,6 @@ export default function CreateProfile({
         <h2>{isLoggedIn ? 'Edit Profile' : 'Create Profile'}</h2>
       </HeadlineWrapper>
       <PageWrapper>
-        <h2>{profile.name}</h2>
         <Form>
           <label htmlFor="name">
             <p>Name</p>
@@ -123,7 +113,7 @@ export default function CreateProfile({
             />
           </label>
           <label htmlFor="age">
-            <p>E-Mail</p>
+            <p>E-Mail*</p>
             <br />
             <InputStyler
               type="text"
@@ -140,7 +130,7 @@ export default function CreateProfile({
             <Tags
               headline="User Tags"
               addProfileTag={addProfileTag}
-              tags={profile.tags}
+              tags={profile?.tags}
               removeProfileTag={removeProfileTag}
             />
           </label>
@@ -148,10 +138,18 @@ export default function CreateProfile({
             <FormButton onClick={createProfile} text="Submit" />
             <FormButton onClick={upDateProfile} text="Edit" />
           </ButtonContainer>
-        </Form>
+          <InfoContainer infoClicked={infoClicked}>
+            <span onClick={() => setInfoClicked(!infoClicked)}>
+              <Information />
+            </span>
 
-        <button onClick={() => console.log(isLoggedIn)}>CLICK ME!</button>
-        {/* <button onClick={() => createProfile(profile)}>CLICK ME!</button> */}
+            <p>
+              Information gathered on this page is for form validation practice
+              only, and won't be otherwise used or shared. Feel free to populate
+              imaginary information when creating a profile.
+            </p>
+          </InfoContainer>
+        </Form>
       </PageWrapper>
     </>
   );
@@ -159,7 +157,7 @@ export default function CreateProfile({
 
 CreateProfile.propTypes = {
   friends: PropTypes.array,
-  creator: PropTypes.func,
+  createHandler: PropTypes.func,
   favorites: PropTypes.array,
   watchlist: PropTypes.array,
   isLoggedIn: PropTypes.bool,
@@ -211,7 +209,7 @@ const ButtonContainer = styled.div`
   gap: 3rem;
   width: 80%;
   max-width: 10rem;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
 
   button:first-child {
     display: ${({ isLoggedIn }) => (isLoggedIn ? 'none' : '')};
@@ -222,12 +220,23 @@ const ButtonContainer = styled.div`
   }
 `;
 
-// async function updateUser(profile) {
-//   return fetch(userUrl, {
-//     method: 'PUT',
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify(profile),
-//   })
-//     .then((response) => response.json())
-//     .then((updatedUser) => setUserProfile(updatedUser));
-// }
+const InfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  width: 20rem;
+  max-width: 20rem;
+  span {
+    cursor: pointer;
+  }
+  p {
+    display: ${({ infoClicked }) => (infoClicked ? '' : 'none')};
+    margin-left: 10px;
+    font-size: 0.7rem;
+  }
+`;
+const Information = styled(StarOfLife)`
+  color: var(--secondary-100);
+  height: 10px;
+  width: 10px;
+`;

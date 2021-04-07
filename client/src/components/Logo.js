@@ -1,5 +1,6 @@
+import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import FlixbuddiesLogo from '../../images/FlixbuddiesLogo';
+import FlixbuddiesLogo from '../assets/FlixbuddiesLogo';
 
 function Logo({ show, styleguide }) {
   return (
@@ -10,6 +11,11 @@ function Logo({ show, styleguide }) {
 }
 
 export default Logo;
+
+Logo.propTypes = {
+  show: PropTypes.bool,
+  styleguide: PropTypes.bool,
+};
 
 const StyledLogo = styled(FlixbuddiesLogo)(
   (props) => css`

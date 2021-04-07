@@ -50,8 +50,8 @@ export default function Menu({ open, setOpen, styleguide, isLoggedIn }) {
 Menu.propTypes = {
   open: PropTypes.bool,
   setOpen: PropTypes.func,
-  myProfile: PropTypes.object,
   styleguide: PropTypes.bool,
+  isLoggedIn: PropTypes.bool,
 };
 
 const Heart = styled(HeartCircle)`
@@ -78,7 +78,7 @@ const MyProfile = styled(Profile)`
 const ProfileSettings = styled(UserSettings)`
   color: var(--secondary-100);
   height: 30px;
-  margin-left: 22.5px;
+  margin-left: 20px;
   width: 30px;
 `;
 

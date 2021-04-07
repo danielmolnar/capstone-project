@@ -11,7 +11,7 @@ function About() {
     'Jest',
     'Cypress',
     'LocalStorage',
-    'node',
+    'Node.js',
     'MongoDB',
     'Express',
     'Mongoose',

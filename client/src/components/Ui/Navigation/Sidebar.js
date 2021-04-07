@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import Burger from './Burger';
-import Menu from '../../Menu';
+import Menu from './Menu';
 
 export default function Sidebar({ open, setOpen, styleguide, isLoggedIn }) {
   return (
@@ -20,5 +20,5 @@ Sidebar.propTypes = {
   open: PropTypes.bool,
   setOpen: PropTypes.func,
   styleguide: PropTypes.bool,
-  userProfile: PropTypes.object,
+  isLoggedIn: PropTypes.bool,
 };

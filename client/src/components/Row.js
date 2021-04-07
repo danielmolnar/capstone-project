@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import instance from '../services/axiosMovies';
 import ImageContainer from './ImageContainer';
-import Spinner from './Ui/Spinner';
+import Spinner from './Spinner';
 
 function Row({
   title,
