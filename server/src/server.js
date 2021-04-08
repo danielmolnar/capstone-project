@@ -1,25 +1,26 @@
+import path from 'path';
+import cors from 'cors';
+import axios from 'axios';
+import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
-import cors from 'cors';
 import User from './models/User.js';
-import dotenv from 'dotenv';
+import { dirname } from './lib/pathHelpers.js';
 
 dotenv.config();
+
+// const connectionString = "mongodb://localhost:27017";
+const connectionString = process.env.MONGO_URL;
+const APIKEY = process.env.REACT_APP_APIKEY;
+const __dirname = dirname(import.meta.url);
 const server = express();
 server.use(cors());
 server.use(express.json());
-
-const connectionString = 'mongodb://localhost:27017';
-// const connectionString = process.env.mongourl
 
 mongoose.connect(connectionString, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndMofidy: false,
-});
-
-server.get('/', (req, res) => {
-  res.json({ status: 'Server is up and running.' });
 });
 
 server.get('/users', (req, res) => {
@@ -60,5 +61,190 @@ server.delete('/users/:id', (req, res) => {
   User.findByIdAndDelete({ _id: id }).then((data) => res.json(data));
 });
 
-const port = 4000;
+server.get('/trending', (req, res) => {
+  axios
+    .get(
+      `https://api.themoviedb.org/3/trending/all/week?api_key=${APIKEY}&language=en-US`
+    )
+    .then((res) => res.data)
+    .then((movie) => res.status(200).send(movie))
+    .catch((error) => res.json(error));
+});
+
+server.get('/netflix', (req, res) => {
+  const queryParams = req.query;
+  axios
+    .get(
+      `https://api.themoviedb.org/3/discover/tv?api_key=${APIKEY}&with_networks=213`,
+      {
+        params: {
+          query: queryParams.query,
+          include_adult: queryParams.include_adult,
+          page: queryParams.page,
+        },
+      }
+    )
+    .then((res) => res.data)
+    .then((movie) => res.status(200).send(movie))
+    .catch((error) => res.json(error));
+});
+
+server.get('/toprated', (req, res) => {
+  const queryParams = req.query;
+  axios
+    .get(
+      `https://api.themoviedb.org/3/movie/top_rated?api_key=${APIKEY}&language=en-US`,
+      {
+        params: {
+          query: queryParams.query,
+          include_adult: queryParams.include_adult,
+          page: queryParams.page,
+        },
+      }
+    )
+    .then((res) => res.data)
+    .then((movie) => res.status(200).send(movie))
+    .catch((error) => res.json(error));
+});
+
+server.get('/action', (req, res) => {
+  const queryParams = req.query;
+  axios
+    .get(
+      `https://api.themoviedb.org/3/discover/movie?api_key=${APIKEY}&with_genres=28`,
+      {
+        params: {
+          query: queryParams.query,
+          include_adult: queryParams.include_adult,
+          page: queryParams.page,
+        },
+      }
+    )
+    .then((res) => res.data)
+    .then((movie) => res.status(200).send(movie))
+    .catch((error) => res.json(error));
+});
+
+server.get('/comedy', (req, res) => {
+  const queryParams = req.query;
+  axios
+    .get(
+      `https://api.themoviedb.org/3/discover/movie?api_key=${APIKEY}&with_genres=35`,
+      {
+        params: {
+          query: queryParams.query,
+          include_adult: queryParams.include_adult,
+          page: queryParams.page,
+        },
+      }
+    )
+    .then((res) => res.data)
+    .then((movie) => res.status(200).send(movie))
+    .catch((error) => res.json(error));
+});
+
+server.get('/horror', (req, res) => {
+  const queryParams = req.query;
+  axios
+    .get(
+      `https://api.themoviedb.org/3/discover/movie?api_key=${APIKEY}&with_genres=27`,
+      {
+        params: {
+          query: queryParams.query,
+          include_adult: queryParams.include_adult,
+          page: queryParams.page,
+        },
+      }
+    )
+    .then((res) => res.data)
+    .then((movie) => res.status(200).send(movie))
+    .catch((error) => res.json(error));
+});
+
+server.get('/documentaries', (req, res) => {
+  const queryParams = req.query;
+  axios
+    .get(
+      `https://api.themoviedb.org/3/discover/movie?api_key=${APIKEY}&with_genres=99`,
+      {
+        params: {
+          query: queryParams.query,
+          include_adult: queryParams.include_adult,
+          page: queryParams.page,
+        },
+      }
+    )
+    .then((res) => res.data)
+    .then((movie) => res.status(200).send(movie))
+    .catch((error) => res.json(error));
+});
+
+server.get('/documentaries', (req, res) => {
+  const queryParams = req.query;
+  axios
+    .get(
+      `https://api.themoviedb.org/3/discover/movie?api_key=${APIKEY}&with_genres=99`,
+      {
+        params: {
+          query: queryParams.query,
+          include_adult: queryParams.include_adult,
+          page: queryParams.page,
+        },
+      }
+    )
+    .then((res) => res.data)
+    .then((movie) => res.status(200).send(movie))
+    .catch((error) => res.json(error));
+});
+
+server.get('/searchmovies', (req, res) => {
+  const queryParams = req.query;
+
+  axios
+    .get(
+      `https://api.themoviedb.org/3/search/movie?api_key=${APIKEY}&language=en-US&query=`,
+      {
+        params: {
+          query: queryParams.query,
+          include_adult: queryParams.include_adult,
+          page: queryParams.page,
+        },
+      }
+    )
+    .then((res) => res.data)
+    .then((movie) => res.status(200).send(movie))
+    .catch((error) => res.json(error));
+});
+
+server.get('/searchshows', (req, res) => {
+  const queryParams = req.query;
+
+  axios
+    .get(
+      `https://api.themoviedb.org/3/search/tv?api_key=${APIKEY}&language=en-US`,
+      {
+        params: {
+          query: queryParams.query,
+          include_adult: queryParams.include_adult,
+          page: queryParams.page,
+        },
+      }
+    )
+    .then((res) => res.data)
+    .then((movie) => res.status(200).send(movie))
+    .catch((error) => res.json(error));
+});
+
+server.get('/', (req, res) => {
+  res.json({ status: 'Server is up and running.' });
+});
+
+server.use(express.static(path.join(__dirname, '../../client/build')));
+
+server.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, '../../client/build', 'index.html'));
+});
+
+const port = process.env.PORT || 4000;
+
 server.listen(port, () => console.log(`Server listens on port ${port}.`));

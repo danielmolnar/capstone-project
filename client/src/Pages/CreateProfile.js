@@ -1,20 +1,20 @@
+import axios from 'axios';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { StarOfLife } from '@styled-icons/fa-solid/StarOfLife';
 import FormButton from '../components/Ui/Button/FormButton';
 import isValidForm from '../lib/validateFunctions';
-import serverApi from '../services/axiosServer';
 import requests from '../services/requests';
 import Tags from '../components/Tags';
 
 export default function CreateProfile({
   friends,
-  createHandler,
   favorites,
   watchlist,
   isLoggedIn,
   userProfile,
+  createHandler,
   setUserProfile,
 }) {
   const [infoClicked, setInfoClicked] = useState(false);
@@ -43,7 +43,7 @@ export default function CreateProfile({
   };
 
   async function updateUserInfos(profile) {
-    const response = await serverApi.put(userUrl, {
+    const response = await axios.put(userUrl, {
       age: profile.age,
       email: profile.email,
       name: profile.name,
@@ -144,9 +144,9 @@ export default function CreateProfile({
             </span>
 
             <p>
-              Information gathered on this page is for form validation practice
-              only, and won't be otherwise used or shared. Feel free to populate
-              imaginary information when creating a profile.
+              Fields populated on this page are for form validation practice
+              only. The email address won't be submitted or stored. Therefore,
+              feel free to use imaginary profile details.
             </p>
           </InfoContainer>
         </Form>
@@ -157,10 +157,10 @@ export default function CreateProfile({
 
 CreateProfile.propTypes = {
   friends: PropTypes.array,
-  createHandler: PropTypes.func,
   favorites: PropTypes.array,
   watchlist: PropTypes.array,
   isLoggedIn: PropTypes.bool,
+  createHandler: PropTypes.func,
   userProfile: PropTypes.object,
   setUserProfile: PropTypes.func,
 };

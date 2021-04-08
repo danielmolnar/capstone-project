@@ -1,3 +1,4 @@
+import axios from 'axios';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
@@ -9,8 +10,6 @@ import CreateProfile from './Pages/CreateProfile';
 import ScrollToTop from './hooks/useScrollToTop';
 import FriendsCards from './Pages/FriendsCards';
 import Banner from '../src/components/Banner';
-import instance from './services/axiosMovies';
-import serverApi from './services/axiosServer';
 import requests from './services/requests';
 import Watchlist from './Pages/Watchlist';
 import Favorites from './Pages/Favorites';
@@ -38,7 +37,7 @@ function App() {
   useEffect(() => {
     async function getFriends() {
       setIsLoading(true);
-      const response = await serverApi.get(requests.fetchUsers);
+      const response = await axios.get(requests.fetchUsers);
       const data = response.data;
       setFriends(data.filter((friend) => friend._id !== userProfile._id));
       setIsLoading(false);
@@ -49,7 +48,7 @@ function App() {
   useEffect(() => {
     async function getUser() {
       setIsLoggedIn(false);
-      const response = await serverApi.get(userUrl);
+      const response = await axios.get(userUrl);
       const data = response.data;
       data?.name === undefined ? console.log(data) : setUserProfile(data);
       data?.name === undefined ? setIsLoggedIn(false) : setIsLoggedIn(true);
@@ -59,7 +58,7 @@ function App() {
 
   useEffect(() => {
     async function updateUser() {
-      const response = await serverApi.put(userUrl, {
+      const response = await axios.put(userUrl, {
         favorites: [...favorites],
         favoritesNumber: favorites.length,
         watchlist: [...watchlist],
@@ -72,7 +71,7 @@ function App() {
   }, [favorites, watchlist]);
 
   async function createProfile(profile) {
-    const response = await serverApi.post(requests.fetchUsers, profile);
+    const response = await axios.post(requests.fetchUsers, profile);
     const data = response.data;
     setUserProfile(data);
   }
@@ -86,13 +85,19 @@ function App() {
   query <= 2
     ? (fetchUrl = requests.fetchTrending)
     : isMovie
-    ? (fetchUrl = `${requests.fetchMovies}${query}&page=1&include_adult=false`)
-    : (fetchUrl = `${requests.fetchShows}${query}&page=1&include_adult=false`);
+    ? (fetchUrl = requests.fetchMovies)
+    : (fetchUrl = requests.fetchShows);
 
   useEffect(() => {
     async function fetchSearch() {
       setIsLoading(true);
-      const request = await instance.get(fetchUrl);
+      const request = await axios.get(fetchUrl, {
+        params: {
+          query: query,
+          page: 1,
+          include_adult: false,
+        },
+      });
       setSearch(request.data.results);
       setIsLoading(false);
       return request;
@@ -126,7 +131,6 @@ function App() {
         <Sidebar open={open} setOpen={setOpen} isLoggedIn={isLoggedIn} />
         <Switch>
           <MainWrapper open={open}>
-            <button onClick={() => console.log(favorites)}>LOGGER</button>
             <Route exact path="/">
               <HomeWrapper>
                 <Home
@@ -189,7 +193,7 @@ function App() {
                   />
                 </SearchbarWrapper>
                 <GridWrapper>
-                  {search.map((movie) => (
+                  {search?.map((movie) => (
                     <Search
                       isLarge
                       movie={movie}

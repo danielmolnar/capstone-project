@@ -14,6 +14,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
         addToWatchList={addToWatchList}
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchNetflixOriginals}
+        page="1"
       />
 
       <Row
@@ -23,6 +24,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
         addToWatchList={addToWatchList}
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchTrending}
+        page="1"
       />
 
       <Row
@@ -32,6 +34,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
         addToWatchList={addToWatchList}
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchTopRated}
+        page="1"
       />
 
       <Row
@@ -41,6 +44,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
         addToWatchList={addToWatchList}
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchActionMovies}
+        page="1"
       />
 
       <Row
@@ -50,6 +54,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
         addToWatchList={addToWatchList}
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchComedyMovies}
+        page="1"
       />
 
       <Row
@@ -59,6 +64,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
         addToWatchList={addToWatchList}
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchHorrorMovies}
+        page="1"
       />
 
       <Row
@@ -68,6 +74,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
         addToWatchList={addToWatchList}
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchDocumentaries}
+        page="1"
       />
     </Wrapper>
   );
