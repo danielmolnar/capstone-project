@@ -12,6 +12,7 @@ export default function Searchbar({ getQuery }) {
   return (
     <Inputstyler
       type="text"
+      autofocus="false"
       placeholder="Search for Movies"
       value={text}
       onChange={(event) => onChange(event.target.value)}
@@ -35,9 +36,15 @@ const Inputstyler = styled.input`
   transition: width 0.4s ease-in-out;
   max-width: 800px;
 
-  &:focus,
-  &:hover {
-    width: 60%;
-    max-width: 800px;
+  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+    select,
+    textarea,
+    input {
+      font-size: 16px;
+    }
+  }
+
+  &:focus {
+    outline: none;
   }
 `;
