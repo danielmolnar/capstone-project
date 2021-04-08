@@ -33,7 +33,7 @@ function App() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
 
-  const userUrl = `${requests.user}${userProfile._id}`;
+  const userUrl = `${requests.user}${userProfile?._id}`;
 
   useEffect(() => {
     async function getFriends() {
@@ -126,6 +126,7 @@ function App() {
         <Sidebar open={open} setOpen={setOpen} isLoggedIn={isLoggedIn} />
         <Switch>
           <MainWrapper open={open}>
+            <button onClick={() => console.log(favorites)}>LOGGER</button>
             <Route exact path="/">
               <HomeWrapper>
                 <Home
@@ -157,10 +158,10 @@ function App() {
             <Route path="/friends">
               <ProfileWrapper>
                 {friends?.map((friend) => (
-                  <div key={friend._id}>
-                    <FriendsHeadline>{friend.name}</FriendsHeadline>
+                  <div key={friend?._id}>
+                    <FriendsHeadline>{friend?.name}</FriendsHeadline>
                     <FriendsFlex>
-                      {friend.favorites?.map((movie) => (
+                      {friend?.favorites?.map((movie) => (
                         <Friends
                           isLarge
                           movie={movie}

@@ -11,8 +11,8 @@ function Row({
   fetchUrl,
   isFavorite,
   isOnWatchList,
-  addToWatchList,
   addToFavorites,
+  addToWatchList,
 }) {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);

@@ -21,8 +21,6 @@ export const GlobalStyles = createGlobalStyle`
   --boxshadow-light: 0px 0px 5px rgba(0, 0, 0, 0.5);
   --primary-background: linear-gradient(to right, hsl(6, 66%, 35%), hsl(353, 85%, 53%));
   --secondary-background: linear-gradient(to left, hsl(6, 66%, 35%), hsl(353, 85%, 53%));
-
-
 }
 
 *{
