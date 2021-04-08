@@ -118,7 +118,7 @@ const StyledMenu = styled.nav`
 `;
 
 const MenuWrapper = styled.div`
-  margin-top: 2rem;
+  margin-top: 2.75rem;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
