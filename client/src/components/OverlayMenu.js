@@ -14,12 +14,12 @@ export default function OverlayMenu({
 
   return (
     <IconWrapper>
-      <InfoButton clickHandler={clickHandler} color="white" />
       {favoriteCheck ? (
         <HeartActiveButton addToFavorites={addToFavorites} color="white" />
       ) : (
         <HeartInactiveButton addToFavorites={addToFavorites} color="white" />
       )}
+      <InfoButton clickHandler={clickHandler} color="white" />
     </IconWrapper>
   );
 }
@@ -36,8 +36,8 @@ const IconWrapper = styled.div`
   justify-content: center;
   align-items: center;
   background-color: var(--primary-100-opacity);
+  box-shadow: var(--boxshadow);
   margin-bottom: 0.5rem;
-  padding: 1px;
   position: relative;
   width: 100%;
 `;

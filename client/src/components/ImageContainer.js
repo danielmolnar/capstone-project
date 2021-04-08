@@ -49,6 +49,7 @@ const MovieContainer = styled.div(
 
     :hover {
       transform: scale(1.08);
+      box-shadow: var(--boxshadow-light);
     }
     :hover div {
       opacity: 1;
@@ -57,6 +58,7 @@ const MovieContainer = styled.div(
       css`
         :hover {
           transform: scale(1.1);
+          box-shadow: var(--boxshadow-light);
         }
       `}
   `
