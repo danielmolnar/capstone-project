@@ -25,7 +25,7 @@ function App() {
   const [favorites, setFavorites] = useLocalStorage('Favorites', []);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [isMovie, setIsMovie] = useState(false);
+  const [isMovie, setIsMovie] = useState(true);
   const [friends, setFriends] = useState([]);
   const [show, handleShow] = useState(false);
   const [search, setSearch] = useState([]);
