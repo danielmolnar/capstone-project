@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import backdrop_poster from '../images/backdrop_poster.png';
-import flixbuddies_poster from '../images/flixbuddies_poster.png';
+import flixbuddies_poster from '../assets/flixbuddies_poster.png';
+import backdrop_poster from '../assets/backdrop_poster.png';
 
 function Poster({ movie, isLarge }) {
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
@@ -33,8 +33,8 @@ function Poster({ movie, isLarge }) {
 export default Poster;
 
 Poster.propTyes = {
-  isLarge: PropTypes.bool,
   movie: PropTypes.object,
+  isLarge: PropTypes.bool,
 };
 
 const Title = styled.p`

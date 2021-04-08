@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
-import axios from '../services/axios';
-import Spinner from '../components/Spinner';
+import instance from '../services/axiosMovies';
 import ImageContainer from './ImageContainer';
+import Spinner from './Spinner';
 
 function Row({
   title,
@@ -11,8 +11,8 @@ function Row({
   fetchUrl,
   isFavorite,
   isOnWatchList,
-  addToWatchList,
   addToFavorites,
+  addToWatchList,
 }) {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -20,7 +20,7 @@ function Row({
   useEffect(() => {
     async function fetchMovies() {
       setIsLoading(true);
-      const request = await axios.get(fetchUrl);
+      const request = await instance.get(fetchUrl);
       setMovies(request.data.results);
       setIsLoading(false);
       return request;
@@ -40,16 +40,18 @@ function Row({
       <Wrapper>
         <MovieWrapper>
           {movies.map((movie) => (
-            <ImageContainer
-              movie={movie}
-              key={movie.id}
-              isLarge={isLarge}
-              isLoading={isLoading}
-              isFavorite={() => isFavorite(movie)}
-              isOnWatchList={() => isOnWatchList(movie)}
-              addToWatchList={() => addToWatchList(movie)}
-              addToFavorites={() => addToFavorites(movie)}
-            />
+            <MarginContainer>
+              <ImageContainer
+                movie={movie}
+                key={movie.id}
+                isLarge={isLarge}
+                isLoading={isLoading}
+                isFavorite={() => isFavorite(movie)}
+                isOnWatchList={() => isOnWatchList(movie)}
+                addToWatchList={() => addToWatchList(movie)}
+                addToFavorites={() => addToFavorites(movie)}
+              />
+            </MarginContainer>
           ))}
         </MovieWrapper>
       </Wrapper>
@@ -68,6 +70,10 @@ Row.propTypes = {
   addToWatchList: PropTypes.func,
   addToFavorites: PropTypes.func,
 };
+
+const MarginContainer = styled.div`
+  margin-right: 15px;
+`;
 
 const Wrapper = styled.div`
   margin-left: 25px;

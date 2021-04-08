@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import OpenButton from './OpenButton';
+import OverlayMenu from '../components/OverlayMenu';
 import CardInfos from '../components/CardInfos';
+import { isMobile } from 'react-device-detect';
 
 export default function Overlay({
   movie,
@@ -12,11 +13,12 @@ export default function Overlay({
   addToFavorites,
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const checkOnWatchList = isOnWatchList(movie);
 
   return (
-    <OverlayStyler>
+    <OverlayStyler isMobile={isMobile}>
       <ButtonWrapper>
-        <OpenButton
+        <OverlayMenu
           clickHandler={() => setIsOpen(true)}
           movie={movie}
           isFavorite={isFavorite}
@@ -24,9 +26,9 @@ export default function Overlay({
         />
       </ButtonWrapper>
       <CardInfos
-        open={isOpen}
         movie={movie}
-        isOnWatchList={isOnWatchList}
+        open={isOpen}
+        checkOnWatchList={checkOnWatchList}
         addToWatchList={addToWatchList}
         onClose={() => setIsOpen(false)}
       />
@@ -45,15 +47,15 @@ Overlay.propTypes = {
 const OverlayStyler = styled.div`
   bottom: 0;
   height: 100%;
-  opacity: 0;
-  width: 100%;
+  opacity: ${({ isMobile }) => (isMobile ? '1' : '0')};
   position: absolute;
+  width: 100%;
 `;
 
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   bottom: 0;
-  width: 100%;
   position: absolute;
+  width: 100%;
 `;

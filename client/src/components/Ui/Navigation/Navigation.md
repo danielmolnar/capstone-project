@@ -1,0 +1,3 @@
+```jsx
+<Navigation styleguide={true} />
+```

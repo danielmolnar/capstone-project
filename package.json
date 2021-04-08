@@ -2,7 +2,7 @@
   "name": "capstone-project",
   "version": "1.0.0",
   "description": "",
-  "main": "server/src/server.js",
+  "main": "index.js",
   "scripts": {
     "postinstall": "cd ./client && npm install && cd ../src/server && npm install",
     "client": "cd ./client && npm start",
@@ -16,7 +16,7 @@
     "type": "git",
     "url": "git+https://github.com/danielmolnar/capstone-project.git"
   },
-  "author": "",
+  "author": "Daniel Molnar",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/danielmolnar/capstone-project/issues"
@@ -24,6 +24,11 @@
   "homepage": "https://github.com/danielmolnar/capstone-project#readme",
   "devDependencies": {
     "concurrently": "^6.0.0",
+    "mongodb": "^3.6.5",
     "nodemon": "^2.0.7"
-  }
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0"
+  },
+  "proxy": "http://localhost:4000"
 }

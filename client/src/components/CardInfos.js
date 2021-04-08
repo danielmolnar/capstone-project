@@ -1,15 +1,16 @@
 import ReactDom from 'react-dom';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import AddButton from '../components/AddButton';
-import backdrop_poster from '../images/backdrop_poster.png';
+import backdrop_poster from '../assets/backdrop_poster.png';
+import { BiTachometer } from 'react-icons/bi';
+import AddToWatchList from './AddToWatchList';
 
 export default function CardInfos({
   open,
   movie,
   onClose,
-  isOnWatchList,
   addToWatchList,
+  checkOnWatchList,
 }) {
   if (!open) return null;
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
@@ -31,9 +32,8 @@ export default function CardInfos({
           background={movie.backdrop_path || movie.poster_path}
         >
           <DetailsWrapper>
-            <AddButton
-              movie={movie}
-              isOnWatchList={isOnWatchList}
+            <AddToWatchList
+              checkOnWatchList={checkOnWatchList}
               addToWatchList={addToWatchList}
             />
           </DetailsWrapper>
@@ -42,8 +42,11 @@ export default function CardInfos({
           <p>{movie.overview}</p>
         </TextContainer>
         <TagWrapper>
-          <p>{release.slice(0, 4)}</p>
+          <ReleaseWrapper>
+            <p>{release.slice(0, 4)}</p>
+          </ReleaseWrapper>
           <ScoreWrapper>
+            <Score />
             <p>{movie.vote_average}/10</p>
           </ScoreWrapper>
         </TagWrapper>
@@ -57,10 +60,8 @@ CardInfos.propTypes = {
   open: PropTypes.bool,
   movie: PropTypes.object,
   onClose: PropTypes.func,
-  isFavorite: PropTypes.func,
-  isOnWatchList: PropTypes.func,
-  addToFavorites: PropTypes.func,
   addToWatchList: PropTypes.func,
+  checkOnWatchList: PropTypes.bool,
 };
 
 const BackgroundStyler = styled.div`
@@ -146,14 +147,7 @@ const TagWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   height: 25px;
-  margin: 0 0 0.3rem 0.9rem;
-
-  p {
-    border-radius: 5px;
-    border: solid var(--secondary-100) 1px;
-    font-size: 0.8rem;
-    padding: 1px 3px;
-  }
+  margin: 0 0 0.5rem 0.9rem;
 `;
 
 const TextContainer = styled.div`
@@ -166,7 +160,29 @@ const ScoreWrapper = styled.div`
   display: flex;
   align-items: center;
   border-radius: 5px;
+  border: solid var(--secondary-100) 1px;
   gap: 0.5rem;
-  height: 40px;
-  margin-left: 2rem;
+  height: 25px;
+  margin-left: 1rem;
+  padding: 0.3rem;
+  p {
+    font-size: 0.8rem;
+  }
+`;
+
+const Score = styled(BiTachometer)`
+  color: var(--secondary-100);
+`;
+
+const ReleaseWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  border: solid var(--secondary-100) 1px;
+  height: 25px;
+  padding: 0.3rem;
+
+  p {
+    font-size: 0.8rem;
+  }
 `;
