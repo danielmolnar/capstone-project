@@ -177,7 +177,7 @@ const TagWrapper = styled.section`
   border: none;
   border-radius: 5px;
   color: var(--fontcolor-primary);
-  gap: 1rem;
+  margin: 7.5px;
 `;
 
 const MainWrapper = styled.div`
