@@ -93,7 +93,7 @@ const StyledMenu = styled.nav`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: flex-start;
   background: ${({ styleguide }) =>
     styleguide ? 'var(--primary-100)' : 'var(--secondary-background)'};
   box-shadow: var(--boxshadow);
@@ -118,6 +118,7 @@ const StyledMenu = styled.nav`
 `;
 
 const MenuWrapper = styled.div`
+  margin-top: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
