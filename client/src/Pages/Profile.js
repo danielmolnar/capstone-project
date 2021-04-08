@@ -132,6 +132,7 @@ const IconWrapper = styled.div`
   border-radius: 10px;
   box-shadow: var(--boxshadow-light);
   padding: 5px;
+  margin: 7.5px;
 
   p {
     color: var(--fontcolor-secondary);
@@ -153,7 +154,7 @@ const SublineWrapper = styled.div`
 const StatsWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  /* gap: 1rem; */
 
   p {
     margin: 0;

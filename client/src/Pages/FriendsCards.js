@@ -69,6 +69,7 @@ const IconWrapper = styled.div`
   border-radius: 10px;
   box-shadow: var(--boxshadow-light);
   padding: 5px;
+  margin: 7.5px;
 
   p {
     color: var(--fontcolor-secondary);
@@ -90,7 +91,8 @@ const SublineWrapper = styled.div`
 const StatsWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  /* gap: 1rem; */
+  /* margin: 10px; */
 
   p {
     margin: 0;
@@ -105,6 +107,7 @@ const StyledSpan = styled.span`
   color: var(--fontcolor-secondary);
   font-size: 0.8rem;
   padding: 5px;
+  margin: 5px;
 `;
 
 const TagWrapper = styled.section`
