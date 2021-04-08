@@ -57,47 +57,47 @@ Menu.propTypes = {
 const Heart = styled(HeartCircle)`
   color: var(--secondary-100);
   height: 30px;
-  margin-left: 20px;
+  margin: 0 20px;
   width: 30px;
 `;
 
 const Friends = styled(PeopleFill)`
   color: var(--secondary-100);
   height: 30px;
-  margin-left: 20px;
+  margin: 0 20px;
   width: 30px;
 `;
 
 const MyProfile = styled(Profile)`
   color: var(--secondary-100);
   height: 30px;
-  margin-left: 22.5px;
+  margin: 0 20px;
   width: 30px;
 `;
 
 const ProfileSettings = styled(UserSettings)`
   color: var(--secondary-100);
   height: 30px;
-  margin-left: 20px;
+  margin: 0 20px;
   width: 30px;
 `;
 
 const AboutIcon = styled(PermDeviceInformation)`
   color: var(--secondary-100);
   height: 30px;
-  margin-left: 20px;
   width: 30px;
+  margin: 0 20px;
 `;
 
 const StyledMenu = styled.nav`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: center;
   background: ${({ styleguide }) =>
     styleguide ? 'var(--primary-100)' : 'var(--secondary-background)'};
   box-shadow: var(--boxshadow);
   height: 100vh;
-
   left: ${({ styleguide }) => (styleguide ? '' : '0')};
   top: ${({ styleguide }) => (styleguide ? '' : '0')};
   bottom: ${({ styleguide }) => (styleguide ? '' : '0')};
@@ -121,7 +121,7 @@ const MenuWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  height: 100%;
+  height: 80%;
   width: 100%;
 `;
 
@@ -132,7 +132,6 @@ const BurgerLink = styled(NavLink)`
 const CloseWrapper = styled.div`
   display: flex;
   align-items: center;
-  gap: 1rem;
   height: 3rem;
   &:active,
   &:hover {

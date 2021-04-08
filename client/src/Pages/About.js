@@ -129,7 +129,7 @@ const TagWrapper = styled.section`
   border: none;
   border-radius: 5px;
   color: var(--fontcolor-primary);
-  gap: 1rem;
+
   margin-bottom: 2rem;
 `;
 
@@ -140,6 +140,8 @@ const StyledSpan = styled.span`
   color: var(--fontcolor-secondary);
   font-size: 0.8rem;
   padding: 5px;
+  margin-right: 10px;
+  margin-bottom: 10px;
 `;
 
 const HeadlineWrapper = styled.div`
