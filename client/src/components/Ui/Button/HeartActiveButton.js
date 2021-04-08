@@ -21,7 +21,7 @@ const StyledHeartActive = styled(HeartCircle)(
   (props) => css`
     cursor: pointer;
     color: ${(props) => `("${props.color}")`};
-    height: 22.5px;
-    width: 22.5px;
+    height: 30px;
+    width: 30px;
   `
 );
