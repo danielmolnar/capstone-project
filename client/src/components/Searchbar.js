@@ -35,13 +35,9 @@ const Inputstyler = styled.input`
   border-radius: 5px;
   transition: width 0.4s ease-in-out;
   max-width: 800px;
+  font-size: 16px;
 
-  @media screen and (-webkit-min-device-pixel-ratio: 0) {
-    select,
-    textarea,
-    input {
-      font-size: 16px;
-    }
+
   }
 
   &:focus {
