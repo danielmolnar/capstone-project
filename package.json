@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "cd ./client && npm install && cd ../src/server && npm install",
+    "postinstall": "cd ./client && npm install && cd ../server && npm install",
     "client": "cd ./client && npm start",
     "server": "nodemon ./server/src/server.js",
     "dev": "concurrently \"npm run server\" \"npm run client\"",

@@ -235,9 +235,9 @@ server.get('/searchshows', (req, res) => {
     .catch((error) => res.json(error));
 });
 
-server.get('/', (req, res) => {
-  res.json({ status: 'Server is up and running.' });
-});
+// server.get('/', (req, res) => {
+//   res.json({ status: 'Server is up and running.' });
+// });
 
 server.use(express.static(path.join(__dirname, '../../client/build')));
 
