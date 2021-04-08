@@ -7,7 +7,6 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.1",
-    "cypress": "^6.8.0",
     "react": "^17.0.1",
     "react-device-detect": "^1.17.0",
     "react-dom": "^17.0.1",
@@ -16,7 +15,6 @@
     "react-scripts": "4.0.3",
     "styled-components": "^5.2.1",
     "styled-icons": "^10.29.0",
-    "uuidv4": "^6.2.7",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
@@ -48,6 +46,7 @@
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.10",
+    "cypress": "^7.0.1",
     "eslint-plugin-cypress": "^2.11.2",
     "react-styleguidist": "^11.1.5",
     "styled-svg": "^2.4.7",
