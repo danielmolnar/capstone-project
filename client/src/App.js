@@ -35,39 +35,51 @@ function App() {
 
   useEffect(() => {
     async function getFriends() {
-      setIsLoading(true);
-      const response = await axios.get(requests.fetchUsers);
-      const data = response.data;
-      setFriends(data.filter((friend) => friend._id !== userProfile._id));
-      setIsLoading(false);
+      try {
+        setIsLoading(true);
+        const response = await axios.get(requests.fetchUsers);
+        const data = response.data;
+        setFriends(data.filter((friend) => friend._id !== userProfile._id));
+        setIsLoading(false);
+      } catch (e) {
+        console.log(e);
+      }
     }
     getFriends();
   }, []);
 
   useEffect(() => {
     async function getUser() {
-      setIsLoggedIn(false);
-      const response = await axios.get(userUrl);
-      const data = response.data;
-      data?.name === undefined ? console.log(data) : setUserProfile(data);
-      data?.name === undefined ? setIsLoggedIn(false) : setIsLoggedIn(true);
+      try {
+        setIsLoggedIn(false);
+        const response = await axios.get(userUrl);
+        const data = response.data;
+        data?.name === undefined ? console.log(data) : setUserProfile(data);
+        data?.name === undefined ? setIsLoggedIn(false) : setIsLoggedIn(true);
+      } catch (e) {
+        console.log(e);
+      }
     }
     getUser();
   }, []);
 
   useEffect(() => {
     async function updateUser() {
-      const response = await axios.put(userUrl, {
-        favorites: [...favorites],
-        favoritesNumber: favorites.length,
-        watchlist: [...watchlist],
-        watchlistNumber: watchlist.length,
-      });
-      const data = response.data;
-      setUserProfile(data);
+      try {
+        const response = await axios.put(userUrl, {
+          favorites: [...favorites],
+          favoritesNumber: favorites.length,
+          watchlist: [...watchlist],
+          watchlistNumber: watchlist.length,
+        });
+        const data = response.data;
+        setUserProfile(data);
+      } catch (e) {
+        console.log(e);
+      }
     }
     updateUser();
-  }, [favorites, watchlist]);
+  }, []);
 
   async function createProfile(profile) {
     const response = await axios.post(requests.fetchUsers, profile);
