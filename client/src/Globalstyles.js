@@ -49,7 +49,7 @@ p {
   color: var(--secondary-100);
 }
 
-@media screen and (device-aspect-ratio: 375/667) {
+@media screen and (device-aspect-ratio: 375/667) and (device-aspect-ratio: 9/16) {
     select, textarea, input[type="text"], input[type="password"],
     input[type="datetime"], input[type="datetime-local"],
     input[type="date"], input[type="month"], input[type="time"],
@@ -58,12 +58,5 @@ p {
 }
 
 
-@media screen and (device-aspect-ratio: 9/16) {
-    select, textarea, input[type="text"], input[type="password"],
-    input[type="datetime"], input[type="datetime-local"],
-    input[type="date"], input[type="month"], input[type="time"],
-    input[type="week"], input[type="number"], input[type="email"],
-    input[type="tel"], input[type="url"]{ font-size: 16px; }
-}
 
 `;

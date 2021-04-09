@@ -74,7 +74,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
         addToWatchList={addToWatchList}
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchDocumentaries}
-        page="1"
+        page="2"
       />
     </Wrapper>
   );

@@ -57,8 +57,8 @@ export default function Profile({
         <MainWrapper>
           <p>FLIXTAGS</p>
           <TagWrapper>
-            {userProfile?.tags?.map((tag) => (
-              <StyledSpan key={tag.index}>{tag}</StyledSpan>
+            {userProfile?.tags?.map((tag, index) => (
+              <StyledSpan key={index + tag}>{tag}</StyledSpan>
             ))}
           </TagWrapper>
         </MainWrapper>
@@ -72,7 +72,7 @@ Profile.propTypes = {
   favorites: PropTypes.array,
   watchlist: PropTypes.array,
   isLoggedIn: PropTypes.bool,
-  userProfile: PropTypes.object,
+  userProfile: PropTypes.object || PropTypes.string,
 };
 
 const Wrapper = styled.div`

@@ -31,14 +31,18 @@ server.get('/users/:userId', (req, res) => {
   const { userId } = req.params;
   User.findById(userId)
     .then((user) => res.json(user))
-    .catch((error) => res.json({ error: 'User not found' }));
+    .catch((error) => {
+      console.error(error.message);
+    });
 });
 
 server.post('/users', (req, res) => {
   const newUser = req.body;
   User.create(newUser)
     .then((data) => res.json(data))
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      console.error(error.message);
+    });
 });
 
 server.put('/users/:id', (req, res) => {
@@ -52,7 +56,6 @@ server.put('/users/:id', (req, res) => {
     .then((user) => res.json(user))
     .catch((error) => {
       console.error(error.message);
-      res.send('An error occured');
     });
 });
 
@@ -68,7 +71,9 @@ server.get('/trending', (req, res) => {
     )
     .then((res) => res.data)
     .then((movie) => res.status(200).send(movie))
-    .catch((error) => res.json(error));
+    .catch((error) => {
+      console.error(error.message);
+    });
 });
 
 server.get('/netflix', (req, res) => {
@@ -86,7 +91,9 @@ server.get('/netflix', (req, res) => {
     )
     .then((res) => res.data)
     .then((movie) => res.status(200).send(movie))
-    .catch((error) => res.json(error));
+    .catch((error) => {
+      console.error(error.message);
+    });
 });
 
 server.get('/toprated', (req, res) => {
@@ -104,7 +111,9 @@ server.get('/toprated', (req, res) => {
     )
     .then((res) => res.data)
     .then((movie) => res.status(200).send(movie))
-    .catch((error) => res.json(error));
+    .catch((error) => {
+      console.error(error.message);
+    });
 });
 
 server.get('/action', (req, res) => {
@@ -122,7 +131,9 @@ server.get('/action', (req, res) => {
     )
     .then((res) => res.data)
     .then((movie) => res.status(200).send(movie))
-    .catch((error) => res.json(error));
+    .catch((error) => {
+      console.error(error.message);
+    });
 });
 
 server.get('/comedy', (req, res) => {
@@ -140,7 +151,9 @@ server.get('/comedy', (req, res) => {
     )
     .then((res) => res.data)
     .then((movie) => res.status(200).send(movie))
-    .catch((error) => res.json(error));
+    .catch((error) => {
+      console.error(error.message);
+    });
 });
 
 server.get('/horror', (req, res) => {
@@ -158,7 +171,9 @@ server.get('/horror', (req, res) => {
     )
     .then((res) => res.data)
     .then((movie) => res.status(200).send(movie))
-    .catch((error) => res.json(error));
+    .catch((error) => {
+      console.error(error.message);
+    });
 });
 
 server.get('/documentaries', (req, res) => {
@@ -176,7 +191,9 @@ server.get('/documentaries', (req, res) => {
     )
     .then((res) => res.data)
     .then((movie) => res.status(200).send(movie))
-    .catch((error) => res.json(error));
+    .catch((error) => {
+      console.error(error.message);
+    });
 });
 
 server.get('/documentaries', (req, res) => {
@@ -194,7 +211,9 @@ server.get('/documentaries', (req, res) => {
     )
     .then((res) => res.data)
     .then((movie) => res.status(200).send(movie))
-    .catch((error) => res.json(error));
+    .catch((error) => {
+      console.error(error.message);
+    });
 });
 
 server.get('/searchmovies', (req, res) => {
@@ -213,7 +232,9 @@ server.get('/searchmovies', (req, res) => {
     )
     .then((res) => res.data)
     .then((movie) => res.status(200).send(movie))
-    .catch((error) => res.json(error));
+    .catch((error) => {
+      console.error(error.message);
+    });
 });
 
 server.get('/searchshows', (req, res) => {
@@ -232,12 +253,10 @@ server.get('/searchshows', (req, res) => {
     )
     .then((res) => res.data)
     .then((movie) => res.status(200).send(movie))
-    .catch((error) => res.json(error));
+    .catch((error) => {
+      console.error(error.message);
+    });
 });
-
-// server.get('/', (req, res) => {
-//   res.json({ status: 'Server is up and running.' });
-// });
 
 server.use(express.static(path.join(__dirname, '../../client/build')));
 

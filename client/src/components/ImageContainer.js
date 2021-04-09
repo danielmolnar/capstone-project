@@ -49,16 +49,17 @@ const MovieContainer = styled.div(
 
     :hover {
       transform: scale(1.08);
-      box-shadow: var(--boxshadow-light);
+      /* box-shadow: var(--boxshadow-light); */
     }
     :hover div {
       opacity: 1;
+      /* box-shadow: var(--boxshadow); */
     }
     ${props.isLarge &&
       css`
         :hover {
           transform: scale(1.1);
-          box-shadow: var(--boxshadow-light);
+          /* box-shadow: var(--boxshadow-light); */
         }
       `}
   `

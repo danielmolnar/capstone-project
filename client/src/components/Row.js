@@ -46,10 +46,10 @@ function Row({
       <Wrapper>
         <MovieWrapper>
           {movies?.map((movie) => (
-            <MarginContainer>
+            <MarginContainer key={movie.id}>
               <ImageContainer
                 movie={movie}
-                key={movie.id}
+                key={movie?.id}
                 isLarge={isLarge}
                 isLoading={isLoading}
                 isFavorite={() => isFavorite(movie)}

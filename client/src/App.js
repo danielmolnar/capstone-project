@@ -23,15 +23,14 @@ function App() {
   const [userProfile, setUserProfile] = useLocalStorage('UserProfile', []);
   const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
   const [favorites, setFavorites] = useLocalStorage('Favorites', []);
+  const [friends, setFriends] = useLocalStorage('Friends', []);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isMovie, setIsMovie] = useState(true);
-  const [friends, setFriends] = useState([]);
   const [show, handleShow] = useState(false);
   const [search, setSearch] = useState([]);
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
-
   const userUrl = `${requests.user}${userProfile?._id}`;
 
   useEffect(() => {
@@ -131,6 +130,7 @@ function App() {
         <Sidebar open={open} setOpen={setOpen} isLoggedIn={isLoggedIn} />
         <Switch>
           <MainWrapper open={open}>
+            <button onClick={() => console.log(userProfile)}>logger</button>
             <Route exact path="/">
               <HomeWrapper>
                 <Home
@@ -162,7 +162,7 @@ function App() {
             <Route path="/friends">
               <ProfileWrapper>
                 {friends?.map((friend) => (
-                  <div key={friend?._id}>
+                  <div key={friend._id}>
                     <FriendsHeadline>{friend?.name}</FriendsHeadline>
                     <FriendsFlex>
                       {friend?.favorites?.map((movie) => (

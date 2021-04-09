@@ -42,8 +42,8 @@ function About() {
           <Subline>Technologies</Subline>
         </SublineWrapper>
         <TagWrapper>
-          {Technologies.map((tag) => (
-            <StyledSpan key={tag.index}>{tag}</StyledSpan>
+          {Technologies.map((tag, index) => (
+            <StyledSpan key={tag + index}>{tag}</StyledSpan>
           ))}
         </TagWrapper>
         <SublineWrapper>
