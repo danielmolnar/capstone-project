@@ -130,7 +130,6 @@ function App() {
         <Sidebar open={open} setOpen={setOpen} isLoggedIn={isLoggedIn} />
         <Switch>
           <MainWrapper open={open}>
-            <button onClick={() => console.log(userProfile)}>logger</button>
             <Route exact path="/">
               <HomeWrapper>
                 <Home
