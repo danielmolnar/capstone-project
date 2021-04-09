@@ -24,7 +24,6 @@ function Row({
       const request = await axios.get(fetchUrl, {
         params: {
           page: page,
-          include_adult: false,
         },
       });
       setMovies(request.data.results);
@@ -69,6 +68,7 @@ export default Row;
 
 Row.propTypes = {
   page: PropTypes.string,
+  adult: PropTypes.bool,
   title: PropTypes.string,
   isLarge: PropTypes.bool,
   fetchUrl: PropTypes.string,

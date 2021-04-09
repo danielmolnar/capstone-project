@@ -50,37 +50,41 @@ function App() {
 
   useEffect(() => {
     async function getUser() {
-      try {
-        const response = await axios.get(userUrl);
-        const data = response.data;
-        setUserProfile(data);
-        setIsLoggedIn(true);
-      } catch (e) {
-        setUserProfile({});
-        setIsLoggedIn(false);
-        console.log(e);
+      if (isLoggedIn) {
+        try {
+          const response = await axios.get(userUrl);
+          const data = response.data;
+          setUserProfile(data);
+        } catch (e) {
+          setUserProfile({});
+          console.log(e);
+        }
+      } else {
+        console.log('Please create a profile.');
       }
     }
     getUser();
-  }, []);
+  }, [isLoggedIn]);
 
   useEffect(() => {
     async function updateUser() {
-      try {
-        const response = await axios.put(userUrl, {
-          favorites: [...favorites],
-          favoritesNumber: favorites.length,
-          watchlist: [...watchlist],
-          watchlistNumber: watchlist.length,
-        });
-        const data = response.data;
-        setUserProfile(data);
-      } catch (e) {
-        console.log(e);
+      if (isLoggedIn) {
+        try {
+          const response = await axios.put(userUrl, {
+            favorites: [...favorites],
+            favoritesNumber: favorites.length,
+            watchlist: [...watchlist],
+            watchlistNumber: watchlist.length,
+          });
+          const data = response.data;
+          setUserProfile(data);
+        } catch (e) {
+          console.log(e);
+        }
       }
     }
     updateUser();
-  }, []);
+  }, [favorites, watchlist]);
 
   let fetchUrl;
   query.length <= 2

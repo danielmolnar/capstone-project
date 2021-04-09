@@ -14,7 +14,6 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
         addToWatchList={addToWatchList}
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchNetflixOriginals}
-        page="1"
       />
 
       <Row
@@ -24,7 +23,6 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
         addToWatchList={addToWatchList}
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchTrending}
-        page="1"
       />
 
       <Row
@@ -34,7 +32,6 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
         addToWatchList={addToWatchList}
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchTopRated}
-        page="1"
       />
 
       <Row
@@ -48,23 +45,31 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
       />
 
       <Row
+        title="ADVENTURES"
+        isFavorite={isFavorite}
+        isOnWatchList={isOnWatchList}
+        addToWatchList={addToWatchList}
+        addToFavorites={addToFavorites}
+        fetchUrl={requests.fetchAdventures}
+        page="2"
+      />
+
+      <Row
         title="COMEDY"
         isFavorite={isFavorite}
         isOnWatchList={isOnWatchList}
         addToWatchList={addToWatchList}
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchComedyMovies}
-        page="1"
       />
 
       <Row
-        title="HORROR"
+        title="Crime"
         isFavorite={isFavorite}
         isOnWatchList={isOnWatchList}
         addToWatchList={addToWatchList}
         addToFavorites={addToFavorites}
-        fetchUrl={requests.fetchHorrorMovies}
-        page="1"
+        fetchUrl={requests.fetchCrimeMovies}
       />
 
       <Row
@@ -74,6 +79,63 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
         addToWatchList={addToWatchList}
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchDocumentaries}
+        page="1"
+      />
+
+      <Row
+        title="DRAMA"
+        isFavorite={isFavorite}
+        isOnWatchList={isOnWatchList}
+        addToWatchList={addToWatchList}
+        addToFavorites={addToFavorites}
+        fetchUrl={requests.fetchDramas}
+        page="2"
+      />
+
+      <Row
+        title="FANTASY"
+        isFavorite={isFavorite}
+        isOnWatchList={isOnWatchList}
+        addToWatchList={addToWatchList}
+        addToFavorites={addToFavorites}
+        fetchUrl={requests.fetchFantasy}
+        page="3"
+      />
+
+      <Row
+        title="HORROR"
+        isFavorite={isFavorite}
+        isOnWatchList={isOnWatchList}
+        addToWatchList={addToWatchList}
+        addToFavorites={addToFavorites}
+        fetchUrl={requests.fetchHorrorMovies}
+      />
+
+      <Row
+        title="MUSIC"
+        isFavorite={isFavorite}
+        isOnWatchList={isOnWatchList}
+        addToWatchList={addToWatchList}
+        addToFavorites={addToFavorites}
+        fetchUrl={requests.fetchMusic}
+      />
+
+      <Row
+        title="SCIENCE FICTION"
+        isFavorite={isFavorite}
+        isOnWatchList={isOnWatchList}
+        addToWatchList={addToWatchList}
+        addToFavorites={addToFavorites}
+        fetchUrl={requests.fetchScienceFiction}
+      />
+
+      <Row
+        title="Thriller"
+        isFavorite={isFavorite}
+        isOnWatchList={isOnWatchList}
+        addToWatchList={addToWatchList}
+        addToFavorites={addToFavorites}
+        fetchUrl={requests.fetchThriller}
         page="2"
       />
     </Wrapper>

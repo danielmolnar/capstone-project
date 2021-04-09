@@ -32,7 +32,7 @@ server.get('/users/:userId', (req, res) => {
   User.findById(userId)
     .then((user) => res.json(user))
     .catch((error) => {
-      console.error(error.message);
+      console.log('User not yet registered');
     });
 });
 
@@ -136,11 +136,111 @@ server.get('/action', (req, res) => {
     });
 });
 
+server.get('/adventure', (req, res) => {
+  const queryParams = req.query;
+  axios
+    .get(
+      `https://api.themoviedb.org/3/discover/movie?api_key=${APIKEY}&with_genres=12`,
+      {
+        params: {
+          query: queryParams.query,
+          include_adult: queryParams.include_adult,
+          page: queryParams.page,
+        },
+      }
+    )
+    .then((res) => res.data)
+    .then((movie) => res.status(200).send(movie))
+    .catch((error) => {
+      console.error(error.message);
+    });
+});
+
 server.get('/comedy', (req, res) => {
   const queryParams = req.query;
   axios
     .get(
       `https://api.themoviedb.org/3/discover/movie?api_key=${APIKEY}&with_genres=35`,
+      {
+        params: {
+          query: queryParams.query,
+          include_adult: queryParams.include_adult,
+          page: queryParams.page,
+        },
+      }
+    )
+    .then((res) => res.data)
+    .then((movie) => res.status(200).send(movie))
+    .catch((error) => {
+      console.error(error.message);
+    });
+});
+
+server.get('/crimemovies', (req, res) => {
+  const queryParams = req.query;
+  axios
+    .get(
+      `https://api.themoviedb.org/3/discover/movie?api_key=${APIKEY}&with_genres=80`,
+      {
+        params: {
+          query: queryParams.query,
+          include_adult: queryParams.include_adult,
+          page: queryParams.page,
+        },
+      }
+    )
+    .then((res) => res.data)
+    .then((movie) => res.status(200).send(movie))
+    .catch((error) => {
+      console.error(error.message);
+    });
+});
+
+server.get('/documentaries', (req, res) => {
+  const queryParams = req.query;
+  axios
+    .get(
+      `https://api.themoviedb.org/3/discover/movie?api_key=${APIKEY}&with_genres=99`,
+      {
+        params: {
+          query: queryParams.query,
+          include_adult: queryParams.include_adult,
+          page: queryParams.page,
+        },
+      }
+    )
+    .then((res) => res.data)
+    .then((movie) => res.status(200).send(movie))
+    .catch((error) => {
+      console.error(error.message);
+    });
+});
+
+server.get('/dramas', (req, res) => {
+  const queryParams = req.query;
+  axios
+    .get(
+      `https://api.themoviedb.org/3/discover/movie?api_key=${APIKEY}&with_genres=18`,
+      {
+        params: {
+          query: queryParams.query,
+          include_adult: queryParams.include_adult,
+          page: queryParams.page,
+        },
+      }
+    )
+    .then((res) => res.data)
+    .then((movie) => res.status(200).send(movie))
+    .catch((error) => {
+      console.error(error.message);
+    });
+});
+
+server.get('/fantasy', (req, res) => {
+  const queryParams = req.query;
+  axios
+    .get(
+      `https://api.themoviedb.org/3/discover/movie?api_key=${APIKEY}&with_genres=14`,
       {
         params: {
           query: queryParams.query,
@@ -176,11 +276,11 @@ server.get('/horror', (req, res) => {
     });
 });
 
-server.get('/documentaries', (req, res) => {
+server.get('/music', (req, res) => {
   const queryParams = req.query;
   axios
     .get(
-      `https://api.themoviedb.org/3/discover/movie?api_key=${APIKEY}&with_genres=99`,
+      `https://api.themoviedb.org/3/discover/movie?api_key=${APIKEY}&with_genres=10402`,
       {
         params: {
           query: queryParams.query,
@@ -196,11 +296,31 @@ server.get('/documentaries', (req, res) => {
     });
 });
 
-server.get('/documentaries', (req, res) => {
+server.get('/sciencefiction', (req, res) => {
   const queryParams = req.query;
   axios
     .get(
-      `https://api.themoviedb.org/3/discover/movie?api_key=${APIKEY}&with_genres=99`,
+      `https://api.themoviedb.org/3/discover/movie?api_key=${APIKEY}&with_genres=878`,
+      {
+        params: {
+          query: queryParams.query,
+          include_adult: queryParams.include_adult,
+          page: queryParams.page,
+        },
+      }
+    )
+    .then((res) => res.data)
+    .then((movie) => res.status(200).send(movie))
+    .catch((error) => {
+      console.error(error.message);
+    });
+});
+
+server.get('/thriller', (req, res) => {
+  const queryParams = req.query;
+  axios
+    .get(
+      `https://api.themoviedb.org/3/discover/movie?api_key=${APIKEY}&with_genres=53`,
       {
         params: {
           query: queryParams.query,
