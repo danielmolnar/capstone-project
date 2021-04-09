@@ -20,10 +20,11 @@ import About from './Pages/About';
 import Home from './Pages/Home';
 
 function App() {
-  const [userProfile, setUserProfile] = useLocalStorage('UserProfile', []);
+  const [userProfile, setUserProfile] = useLocalStorage('UserProfile', {});
   const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
   const [favorites, setFavorites] = useLocalStorage('Favorites', []);
   const [friends, setFriends] = useLocalStorage('Friends', []);
+  const userUrl = `${requests.user}${userProfile?._id}`;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isMovie, setIsMovie] = useState(true);
@@ -31,7 +32,6 @@ function App() {
   const [search, setSearch] = useState([]);
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
-  const userUrl = `${requests.user}${userProfile?._id}`;
 
   useEffect(() => {
     async function getFriends() {
@@ -51,12 +51,13 @@ function App() {
   useEffect(() => {
     async function getUser() {
       try {
-        setIsLoggedIn(false);
         const response = await axios.get(userUrl);
         const data = response.data;
-        data?.name === undefined ? console.log(data) : setUserProfile(data);
-        data?.name === undefined ? setIsLoggedIn(false) : setIsLoggedIn(true);
+        setUserProfile(data);
+        setIsLoggedIn(true);
       } catch (e) {
+        setUserProfile({});
+        setIsLoggedIn(false);
         console.log(e);
       }
     }
@@ -81,19 +82,8 @@ function App() {
     updateUser();
   }, []);
 
-  async function createProfile(profile) {
-    const response = await axios.post(requests.fetchUsers, profile);
-    const data = response.data;
-    setUserProfile(data);
-  }
-
-  function createHandler(profile) {
-    createProfile(profile);
-    setIsLoggedIn(true);
-  }
-
   let fetchUrl;
-  query <= 2
+  query.length <= 2
     ? (fetchUrl = requests.fetchTrending)
     : isMovie
     ? (fetchUrl = requests.fetchMovies)
@@ -101,17 +91,21 @@ function App() {
 
   useEffect(() => {
     async function fetchSearch() {
-      setIsLoading(true);
-      const request = await axios.get(fetchUrl, {
-        params: {
-          query: query,
-          page: 1,
-          include_adult: false,
-        },
-      });
-      setSearch(request.data.results);
-      setIsLoading(false);
-      return request;
+      try {
+        setIsLoading(true);
+        const request = await axios.get(fetchUrl, {
+          params: {
+            query: query,
+            page: 1,
+            include_adult: false,
+          },
+        });
+        setSearch(request.data.results);
+        setIsLoading(false);
+        return request;
+      } catch (e) {
+        console.log(e);
+      }
     }
     fetchSearch();
   }, [query, fetchUrl]);
@@ -248,11 +242,11 @@ function App() {
             <Route path="/profile">
               <ProfileWrapper>
                 <Profile
-                  userProfile={userProfile}
-                  isLoggedIn={isLoggedIn}
                   friends={friends}
                   watchlist={watchlist}
                   favorites={favorites}
+                  isLoggedIn={isLoggedIn}
+                  userProfile={userProfile}
                 />
               </ProfileWrapper>
             </Route>
@@ -262,9 +256,9 @@ function App() {
                   friends={friends}
                   watchlist={watchlist}
                   favorites={favorites}
-                  createHandler={createHandler}
                   isLoggedIn={isLoggedIn}
                   userProfile={userProfile}
+                  setIsLoggedIn={setIsLoggedIn}
                   setUserProfile={setUserProfile}
                 />
               </ProfileWrapper>

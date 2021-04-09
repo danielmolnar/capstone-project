@@ -41,25 +41,20 @@ const MovieContainer = styled.div(
     max-height: 200px;
     position: relative;
     transition: transform 450ms;
-
     p {
       font-size: 0.7rem;
       position: absolute;
     }
-
     :hover {
       transform: scale(1.08);
-      /* box-shadow: var(--boxshadow-light); */
     }
     :hover div {
       opacity: 1;
-      /* box-shadow: var(--boxshadow); */
     }
     ${props.isLarge &&
       css`
         :hover {
           transform: scale(1.1);
-          /* box-shadow: var(--boxshadow-light); */
         }
       `}
   `

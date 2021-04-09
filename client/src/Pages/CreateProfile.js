@@ -10,11 +10,11 @@ import Tags from '../components/Tags';
 
 export default function CreateProfile({
   friends,
-  favorites,
   watchlist,
+  favorites,
   isLoggedIn,
   userProfile,
-  createHandler,
+  setIsLoggedIn,
   setUserProfile,
 }) {
   const [infoClicked, setInfoClicked] = useState(false);
@@ -42,21 +42,36 @@ export default function CreateProfile({
     });
   };
 
-  async function updateUserInfos(profile) {
-    const response = await axios.put(userUrl, {
-      age: profile.age,
-      email: profile.email,
-      name: profile.name,
-      tags: profile.tags,
-    });
-    const data = response.data;
-    setUserProfile(data);
+  async function createProfile(profile) {
+    try {
+      const response = await axios.post(requests.fetchUsers, profile);
+      const data = response.data;
+      setUserProfile(data);
+      setIsLoggedIn(true);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
-  function createProfile(event) {
+  async function updateUserInfos(profile) {
+    try {
+      const response = await axios.put(userUrl, {
+        age: profile.age,
+        email: profile.email,
+        name: profile.name,
+        tags: profile.tags,
+      });
+      const data = response.data;
+      setUserProfile(data);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  function createHandler(event) {
     event.preventDefault();
     if (isValidForm(profile)) {
-      createHandler(profile);
+      createProfile(profile);
     } else {
       alert('Please submit valid credentials');
     }
@@ -135,7 +150,7 @@ export default function CreateProfile({
             />
           </label>
           <ButtonContainer isLoggedIn={isLoggedIn}>
-            <FormButton onClick={createProfile} text="Submit" />
+            <FormButton onClick={createHandler} text="Submit" />
             <FormButton onClick={upDateProfile} text="Edit" />
           </ButtonContainer>
           <InfoContainer infoClicked={infoClicked}>

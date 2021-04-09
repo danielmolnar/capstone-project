@@ -8,8 +8,8 @@ import FormButton from '../components/Ui/Button/FormButton';
 
 export default function Profile({
   friends,
-  favorites,
   watchlist,
+  favorites,
   isLoggedIn,
   userProfile,
 }) {

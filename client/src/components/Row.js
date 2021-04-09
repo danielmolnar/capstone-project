@@ -68,7 +68,7 @@ function Row({
 export default Row;
 
 Row.propTypes = {
-  page: PropTypes.number,
+  page: PropTypes.string,
   title: PropTypes.string,
   isLarge: PropTypes.bool,
   fetchUrl: PropTypes.string,
