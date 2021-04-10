@@ -1,11 +1,27 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { isMobile } from 'react-device-detect';
+import { PermDeviceInformation } from '@styled-icons/material/PermDeviceInformation';
 import requests from '../services/requests';
 import Row from '../components/Row';
 
 function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
+  const [desktopInfo, setDesktopInfo] = useState(false);
+
   return (
     <Wrapper>
+      <>
+        <InfoContainer desktopInfo={desktopInfo} isMobile={isMobile}>
+          <p>
+            Use "shift" + "mousewheel" in order to scroll through the movies
+            horizontally
+          </p>
+          <span onClick={() => setDesktopInfo(!desktopInfo)}>
+            <InfoIcon />
+          </span>
+        </InfoContainer>
+      </>
       <Row
         isLarge
         title="NETFLIX ORIGINALS"
@@ -146,6 +162,29 @@ const Wrapper = styled.div`
   margin: 0 auto;
   width: 100%;
   max-width: 1020px;
+`;
+
+const InfoContainer = styled.div`
+  display: ${({ isMobile }) => (isMobile ? 'none' : 'flex')};
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  max-width: 1020px;
+  span {
+    cursor: pointer;
+  }
+  p {
+    visibility: ${({ desktopInfo }) => (desktopInfo ? '' : 'hidden')};
+    font-size: 0.7rem;
+    margin: 0 0 0 20px;
+  }
+`;
+
+const InfoIcon = styled(PermDeviceInformation)`
+  color: var(--secondary-100);
+  height: 30px;
+  width: 30px;
+  margin: 0 20px;
 `;
 
 Home.propTypes = {
