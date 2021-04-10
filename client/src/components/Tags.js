@@ -2,12 +2,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-export default function Tags({
-  tags,
-  addProfileTag,
-  removeProfileTag,
-  headline,
-}) {
+export default function Tags({ tags, addProfileTag, removeProfileTag }) {
   const [value, setValue] = useState('');
   const [selectedTagIndex, setSelectedTagIndex] = useState(-1);
 
@@ -16,7 +11,7 @@ export default function Tags({
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
-      addProfileTag(value);
+      addProfileTag(value.toUpperCase());
       setValue('');
       setSelectedTagIndex(-1);
     }

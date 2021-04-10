@@ -1,16 +1,16 @@
+import axios from 'axios';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Navigation from './components/Ui/Navigation/Navigation';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
-import Searchbar from './components/Ui/Navigation/Searchbar';
+import Searchbar from './components/Ui/Searchbar';
 import Sidebar from './components/Ui/Navigation/Sidebar';
 import CreateProfile from './Pages/CreateProfile';
 import ScrollToTop from './hooks/useScrollToTop';
 import FriendsCards from './Pages/FriendsCards';
+import sortFilter from './lib/friendsFunctions';
 import Banner from '../src/components/Banner';
-import instance from './services/axiosMovies';
-import serverApi from './services/axiosServer';
 import requests from './services/requests';
 import Watchlist from './Pages/Watchlist';
 import Favorites from './Pages/Favorites';
@@ -21,84 +21,104 @@ import About from './Pages/About';
 import Home from './Pages/Home';
 
 function App() {
-  const [userProfile, setUserProfile] = useLocalStorage('UserProfile', []);
+  const [userProfile, setUserProfile] = useLocalStorage('UserProfile', {});
   const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
   const [favorites, setFavorites] = useLocalStorage('Favorites', []);
+  const [friends, setFriends] = useLocalStorage('Friends', []);
+  const userUrl = `${requests.user}${userProfile?._id}`;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [isMovie, setIsMovie] = useState(false);
-  const [friends, setFriends] = useState([]);
+  const [isMovie, setIsMovie] = useState(true);
   const [show, handleShow] = useState(false);
   const [search, setSearch] = useState([]);
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
 
-  const userUrl = `${requests.user}${userProfile?._id}`;
-
   useEffect(() => {
     async function getFriends() {
-      setIsLoading(true);
-      const response = await serverApi.get(requests.fetchUsers);
-      const data = response.data;
-      setFriends(data.filter((friend) => friend._id !== userProfile._id));
-      setIsLoading(false);
+      try {
+        setIsLoading(true);
+        const response = await axios.get(requests.fetchUsers);
+        const data = response.data;
+        sortFilter(data, userProfile, setFriends);
+        setIsLoading(false);
+      } catch (e) {
+        console.log(e);
+      }
     }
+
     getFriends();
   }, []);
 
   useEffect(() => {
     async function getUser() {
-      setIsLoggedIn(false);
-      const response = await serverApi.get(userUrl);
-      const data = response.data;
-      data?.name === undefined ? console.log(data) : setUserProfile(data);
-      data?.name === undefined ? setIsLoggedIn(false) : setIsLoggedIn(true);
+      if (isLoggedIn) {
+        try {
+          const response = await axios.get(userUrl);
+          const data = response.data;
+          setUserProfile(data);
+        } catch (e) {
+          setUserProfile({});
+          console.log(e);
+        }
+      } else {
+        console.log('Please create a profile.');
+      }
     }
     getUser();
-  }, []);
+  }, [isLoggedIn]);
 
   useEffect(() => {
     async function updateUser() {
-      const response = await serverApi.put(userUrl, {
-        favorites: [...favorites],
-        favoritesNumber: favorites.length,
-        watchlist: [...watchlist],
-        watchlistNumber: watchlist.length,
-      });
-      const data = response.data;
-      setUserProfile(data);
+      if (isLoggedIn) {
+        try {
+          const response = await axios.put(userUrl, {
+            favorites: [...favorites],
+            favoritesNumber: favorites.length,
+            watchlist: [...watchlist],
+            watchlistNumber: watchlist.length,
+          });
+          const data = response.data;
+          setUserProfile(data);
+        } catch (e) {
+          console.log(e);
+        }
+      }
     }
     updateUser();
   }, [favorites, watchlist]);
 
-  async function createProfile(profile) {
-    const response = await serverApi.post(requests.fetchUsers, profile);
-    const data = response.data;
-    setUserProfile(data);
-  }
-
-  function createHandler(profile) {
-    createProfile(profile);
-    setIsLoggedIn(true);
-  }
-
   let fetchUrl;
-  query <= 2
+  query.length <= 2
     ? (fetchUrl = requests.fetchTrending)
     : isMovie
-    ? (fetchUrl = `${requests.fetchMovies}${query}&page=1&include_adult=false`)
-    : (fetchUrl = `${requests.fetchShows}${query}&page=1&include_adult=false`);
+    ? (fetchUrl = requests.fetchMovies)
+    : (fetchUrl = requests.fetchShows);
 
   useEffect(() => {
     async function fetchSearch() {
-      setIsLoading(true);
-      const request = await instance.get(fetchUrl);
-      setSearch(request.data.results);
-      setIsLoading(false);
-      return request;
+      try {
+        setIsLoading(true);
+        const request = await axios.get(fetchUrl, {
+          params: {
+            query: query,
+            page: 1,
+            include_adult: false,
+          },
+        });
+        setSearch(request.data.results);
+        setIsLoading(false);
+        return request;
+      } catch (e) {
+        console.log(e);
+      }
     }
     fetchSearch();
   }, [query, fetchUrl]);
+
+  const friendsFavorites = friends.filter(
+    (list) => list.favorites.length !== 0
+  );
 
   const isOnWatchList = (movieToAdd) =>
     watchlist.some((movie) => movie.id === movieToAdd.id);
@@ -126,7 +146,6 @@ function App() {
         <Sidebar open={open} setOpen={setOpen} isLoggedIn={isLoggedIn} />
         <Switch>
           <MainWrapper open={open}>
-            <button onClick={() => console.log(favorites)}>LOGGER</button>
             <Route exact path="/">
               <HomeWrapper>
                 <Home
@@ -157,8 +176,8 @@ function App() {
             </Route>
             <Route path="/friends">
               <ProfileWrapper>
-                {friends?.map((friend) => (
-                  <div key={friend?._id}>
+                {friendsFavorites?.map((friend) => (
+                  <div key={friend._id}>
                     <FriendsHeadline>{friend?.name}</FriendsHeadline>
                     <FriendsFlex>
                       {friend?.favorites?.map((movie) => (
@@ -189,7 +208,7 @@ function App() {
                   />
                 </SearchbarWrapper>
                 <GridWrapper>
-                  {search.map((movie) => (
+                  {search?.map((movie) => (
                     <Search
                       isLarge
                       movie={movie}
@@ -233,11 +252,11 @@ function App() {
             <Route path="/profile">
               <ProfileWrapper>
                 <Profile
-                  userProfile={userProfile}
-                  isLoggedIn={isLoggedIn}
                   friends={friends}
                   watchlist={watchlist}
                   favorites={favorites}
+                  isLoggedIn={isLoggedIn}
+                  userProfile={userProfile}
                 />
               </ProfileWrapper>
             </Route>
@@ -247,9 +266,9 @@ function App() {
                   friends={friends}
                   watchlist={watchlist}
                   favorites={favorites}
-                  createHandler={createHandler}
                   isLoggedIn={isLoggedIn}
                   userProfile={userProfile}
+                  setIsLoggedIn={setIsLoggedIn}
                   setUserProfile={setUserProfile}
                 />
               </ProfileWrapper>

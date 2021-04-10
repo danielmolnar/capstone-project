@@ -1,20 +1,20 @@
+import axios from 'axios';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { StarOfLife } from '@styled-icons/fa-solid/StarOfLife';
 import FormButton from '../components/Ui/Button/FormButton';
 import isValidForm from '../lib/validateFunctions';
-import serverApi from '../services/axiosServer';
 import requests from '../services/requests';
 import Tags from '../components/Tags';
 
 export default function CreateProfile({
   friends,
-  createHandler,
-  favorites,
   watchlist,
+  favorites,
   isLoggedIn,
   userProfile,
+  setIsLoggedIn,
   setUserProfile,
 }) {
   const [infoClicked, setInfoClicked] = useState(false);
@@ -42,21 +42,36 @@ export default function CreateProfile({
     });
   };
 
-  async function updateUserInfos(profile) {
-    const response = await serverApi.put(userUrl, {
-      age: profile.age,
-      email: profile.email,
-      name: profile.name,
-      tags: profile.tags,
-    });
-    const data = response.data;
-    setUserProfile(data);
+  async function createProfile(profile) {
+    try {
+      const response = await axios.post(requests.fetchUsers, profile);
+      const data = response.data;
+      setUserProfile(data);
+      setIsLoggedIn(true);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
-  function createProfile(event) {
+  async function updateUserInfos(profile) {
+    try {
+      const response = await axios.put(userUrl, {
+        age: profile.age,
+        email: profile.email,
+        name: profile.name,
+        tags: profile.tags,
+      });
+      const data = response.data;
+      setUserProfile(data);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  function createHandler(event) {
     event.preventDefault();
     if (isValidForm(profile)) {
-      createHandler(profile);
+      createProfile(profile);
     } else {
       alert('Please submit valid credentials');
     }
@@ -128,14 +143,13 @@ export default function CreateProfile({
             <br />
 
             <Tags
-              headline="User Tags"
               addProfileTag={addProfileTag}
               tags={profile?.tags}
               removeProfileTag={removeProfileTag}
             />
           </label>
           <ButtonContainer isLoggedIn={isLoggedIn}>
-            <FormButton onClick={createProfile} text="Submit" />
+            <FormButton onClick={createHandler} text="Submit" />
             <FormButton onClick={upDateProfile} text="Edit" />
           </ButtonContainer>
           <InfoContainer infoClicked={infoClicked}>
@@ -144,9 +158,9 @@ export default function CreateProfile({
             </span>
 
             <p>
-              Information gathered on this page is for form validation practice
-              only, and won't be otherwise used or shared. Feel free to populate
-              imaginary information when creating a profile.
+              Fields populated on this page are for form validation practice
+              only. The email address won't be submitted or stored. Therefore,
+              feel free to use imaginary profile details.
             </p>
           </InfoContainer>
         </Form>
@@ -157,10 +171,10 @@ export default function CreateProfile({
 
 CreateProfile.propTypes = {
   friends: PropTypes.array,
-  createHandler: PropTypes.func,
   favorites: PropTypes.array,
   watchlist: PropTypes.array,
   isLoggedIn: PropTypes.bool,
+  createHandler: PropTypes.func,
   userProfile: PropTypes.object,
   setUserProfile: PropTypes.func,
 };

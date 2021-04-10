@@ -8,8 +8,8 @@ import FormButton from '../components/Ui/Button/FormButton';
 
 export default function Profile({
   friends,
-  favorites,
   watchlist,
+  favorites,
   isLoggedIn,
   userProfile,
 }) {
@@ -18,7 +18,6 @@ export default function Profile({
       <HeadlineWrapper>
         <h2>Please Create A Profile</h2>
       </HeadlineWrapper>
-
       <StyledLink
         to={{
           pathname: '/createprofile',
@@ -57,8 +56,8 @@ export default function Profile({
         <MainWrapper>
           <p>FLIXTAGS</p>
           <TagWrapper>
-            {userProfile?.tags?.map((tag) => (
-              <StyledSpan key={tag.index}>{tag}</StyledSpan>
+            {userProfile?.tags?.map((tag, index) => (
+              <StyledSpan key={index + tag}>{tag}</StyledSpan>
             ))}
           </TagWrapper>
         </MainWrapper>
@@ -72,7 +71,7 @@ Profile.propTypes = {
   favorites: PropTypes.array,
   watchlist: PropTypes.array,
   isLoggedIn: PropTypes.bool,
-  userProfile: PropTypes.object,
+  userProfile: PropTypes.object || PropTypes.string,
 };
 
 const Wrapper = styled.div`
@@ -132,6 +131,7 @@ const IconWrapper = styled.div`
   border-radius: 10px;
   box-shadow: var(--boxshadow-light);
   padding: 5px;
+  margin: 7.5px;
 
   p {
     color: var(--fontcolor-secondary);
@@ -153,7 +153,7 @@ const SublineWrapper = styled.div`
 const StatsWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  /* gap: 1rem; */
 
   p {
     margin: 0;
@@ -168,6 +168,8 @@ const StyledSpan = styled.span`
   color: var(--fontcolor-secondary);
   font-size: 0.8rem;
   padding: 5px;
+  margin-right: 7.5px;
+  margin-bottom: 7.5px;
 `;
 
 const TagWrapper = styled.section`
@@ -176,7 +178,6 @@ const TagWrapper = styled.section`
   border: none;
   border-radius: 5px;
   color: var(--fontcolor-primary);
-  gap: 1rem;
 `;
 
 const MainWrapper = styled.div`

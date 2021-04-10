@@ -1,8 +1,12 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-function FormButton({ text, onClick }) {
-  return <StyledButton onClick={onClick}>{text}</StyledButton>;
+function FormButton({ text, onClick, styleguide }) {
+  return (
+    <StyledButton onClick={onClick} styleguide={styleguide}>
+      {text}
+    </StyledButton>
+  );
 }
 
 export default FormButton;
@@ -13,7 +17,8 @@ FormButton.propTypes = {
 };
 
 const StyledButton = styled.button`
-  background: none;
+  background: ${({ styleguide }) =>
+    styleguide ? 'var(--primary-100)' : 'none'};
   border: solid 1px var(--secondary-100);
   border-radius: 3px;
   color: var(--secondary-100);
@@ -28,6 +33,7 @@ const StyledButton = styled.button`
   cursor: pointer;
   :hover,
   :active {
-    background-color: var(--button-hover-light);
+    ${({ styleguide }) =>
+      styleguide ? '--primary-100-opacity' : 'var(--button-hover-light)'};
   }
 `;

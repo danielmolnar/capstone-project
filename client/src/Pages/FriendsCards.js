@@ -27,8 +27,8 @@ export default function FriendsCards({ friend }) {
       <MainWrapper>
         <p>FLIXTAGS</p>
         <TagWrapper>
-          {friend?.tags.map((tag) => (
-            <StyledSpan key={tag.index}>{tag}</StyledSpan>
+          {friend?.tags.map((tag, index) => (
+            <StyledSpan key={tag + index}>{tag}</StyledSpan>
           ))}
         </TagWrapper>
       </MainWrapper>
@@ -69,6 +69,7 @@ const IconWrapper = styled.div`
   border-radius: 10px;
   box-shadow: var(--boxshadow-light);
   padding: 5px;
+  margin: 7.5px;
 
   p {
     color: var(--fontcolor-secondary);
@@ -90,8 +91,6 @@ const SublineWrapper = styled.div`
 const StatsWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
-
   p {
     margin: 0;
     font-size: 0.8rem;
@@ -105,6 +104,8 @@ const StyledSpan = styled.span`
   color: var(--fontcolor-secondary);
   font-size: 0.8rem;
   padding: 5px;
+  margin-right: 7.5px;
+  margin-bottom: 7.5px;
 `;
 
 const TagWrapper = styled.section`
@@ -113,7 +114,6 @@ const TagWrapper = styled.section`
   border: none;
   border-radius: 5px;
   color: var(--fontcolor-primary);
-  gap: 1rem;
 `;
 
 const MainWrapper = styled.div`

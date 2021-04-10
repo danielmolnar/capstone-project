@@ -20,9 +20,9 @@ InfoButton.propTypes = {
 const StyledHeartInActive = styled(InfoCircle)(
   (props) => css`
     cursor: pointer;
-    margin-right: 5px;
+    margin-right: 10px;
     color: ${(props) => `("${props.color}")`};
-    height: 22.5px;
-    width: 22.5px;
+    height: 30px;
+    width: 30px;
   `
 );

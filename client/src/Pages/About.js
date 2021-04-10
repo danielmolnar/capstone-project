@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 function About() {
@@ -42,8 +43,8 @@ function About() {
           <Subline>Technologies</Subline>
         </SublineWrapper>
         <TagWrapper>
-          {Technologies.map((tag) => (
-            <StyledSpan key={tag.index}>{tag}</StyledSpan>
+          {Technologies.map((tag, index) => (
+            <StyledSpan key={tag + index}>{tag}</StyledSpan>
           ))}
         </TagWrapper>
         <SublineWrapper>
@@ -71,6 +72,10 @@ function About() {
     </>
   );
 }
+
+About.propTypes = {
+  Technologies: PropTypes.array,
+};
 
 const PageWrapper = styled.div`
   display: flex;
@@ -129,7 +134,6 @@ const TagWrapper = styled.section`
   border: none;
   border-radius: 5px;
   color: var(--fontcolor-primary);
-  gap: 1rem;
   margin-bottom: 2rem;
 `;
 
@@ -140,6 +144,8 @@ const StyledSpan = styled.span`
   color: var(--fontcolor-secondary);
   font-size: 0.8rem;
   padding: 5px;
+  margin-right: 7.5px;
+  margin-bottom: 7.5px;
 `;
 
 const HeadlineWrapper = styled.div`

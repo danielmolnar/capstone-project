@@ -1,11 +1,12 @@
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
-import instance from '../services/axiosMovies';
 import ImageContainer from './ImageContainer';
 import Spinner from './Spinner';
 
 function Row({
+  page,
   title,
   isLarge,
   fetchUrl,
@@ -20,14 +21,18 @@ function Row({
   useEffect(() => {
     async function fetchMovies() {
       setIsLoading(true);
-      const request = await instance.get(fetchUrl);
+      const request = await axios.get(fetchUrl, {
+        params: {
+          page: page,
+        },
+      });
       setMovies(request.data.results);
       setIsLoading(false);
       return request;
     }
 
     fetchMovies();
-  }, [fetchUrl]);
+  }, [fetchUrl, page]);
 
   return isLoading ? (
     <>
@@ -39,11 +44,11 @@ function Row({
       <HeadLineStyler>{title}</HeadLineStyler>
       <Wrapper>
         <MovieWrapper>
-          {movies.map((movie) => (
-            <MarginContainer>
+          {movies?.map((movie) => (
+            <MarginContainer key={movie.id}>
               <ImageContainer
                 movie={movie}
-                key={movie.id}
+                key={movie?.id}
                 isLarge={isLarge}
                 isLoading={isLoading}
                 isFavorite={() => isFavorite(movie)}
@@ -62,6 +67,8 @@ function Row({
 export default Row;
 
 Row.propTypes = {
+  page: PropTypes.string,
+  adult: PropTypes.bool,
   title: PropTypes.string,
   isLarge: PropTypes.bool,
   fetchUrl: PropTypes.string,
