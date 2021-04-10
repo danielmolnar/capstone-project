@@ -237,14 +237,13 @@ const ButtonContainer = styled.div`
 const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
-
   width: 20rem;
   max-width: 20rem;
   span {
     cursor: pointer;
   }
   p {
-    display: ${({ infoClicked }) => (infoClicked ? '' : 'none')};
+    visibility: ${({ infoClicked }) => (infoClicked ? '' : 'hidden')};
     margin-left: 10px;
     font-size: 0.7rem;
   }

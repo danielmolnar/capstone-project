@@ -129,6 +129,14 @@ function App() {
       : setWatchList([...watchlist, movieToAdd]);
   };
 
+  const addToList = (list, movieToAdd, setState) => {
+    const isOnList = (movieToAdd) =>
+      list.some((movie) => movie.id === movieToAdd);
+    isOnList(movieToAdd)
+      ? setState(list.filter((movie) => movie.id !== movieToAdd))
+      : setState([...list, movieToAdd]);
+  };
+
   const isFavorite = (movieToAdd) =>
     favorites.some((movie) => movie.id === movieToAdd.id);
 
@@ -168,7 +176,7 @@ function App() {
                       isFavorite={() => isFavorite(movie)}
                       isOnWatchList={() => isOnWatchList(movie)}
                       addToWatchList={() => addToWatchList(movie)}
-                      addToFavorites={() => addToFavorites(movie)}
+                      addToFavorites={addToList(favorites, movie, setFavorites)}
                     />
                   ))}
                 </GridWrapper>
@@ -313,7 +321,7 @@ const MainWrapper = styled.div`
 `;
 
 const HomeWrapper = styled.div`
-  margin-top: 128px;
+  /* margin-top: 128px; */
 `;
 
 const GridWrapper = styled.div`
