@@ -18,7 +18,6 @@ export default function Profile({
       <HeadlineWrapper>
         <h2>Please Create A Profile</h2>
       </HeadlineWrapper>
-
       <StyledLink
         to={{
           pathname: '/createprofile',
@@ -169,6 +168,8 @@ const StyledSpan = styled.span`
   color: var(--fontcolor-secondary);
   font-size: 0.8rem;
   padding: 5px;
+  margin-right: 7.5px;
+  margin-bottom: 7.5px;
 `;
 
 const TagWrapper = styled.section`
@@ -177,7 +178,6 @@ const TagWrapper = styled.section`
   border: none;
   border-radius: 5px;
   color: var(--fontcolor-primary);
-  margin: 7.5px;
 `;
 
 const MainWrapper = styled.div`

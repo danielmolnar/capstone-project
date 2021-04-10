@@ -2,11 +2,6 @@ import { fireEvent, render } from '@testing-library/react';
 import Tags from './Tags';
 
 describe('<Tags /> component', () => {
-  it('should display a headline', () => {
-    const { getByText } = render(<Tags headline="This is the Headline" />);
-    expect(getByText(/headline/i)).toBeInTheDocument();
-  });
-
   it('should show three tags when they are passed as props', () => {
     const tags = ['one', 'two', 'three'];
     const { getAllByTestId } = render(<Tags tags={tags} />);

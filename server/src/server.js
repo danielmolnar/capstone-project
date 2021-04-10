@@ -9,7 +9,6 @@ import { dirname } from './lib/pathHelpers.js';
 
 dotenv.config();
 
-// const connectionString = "mongodb://localhost:27017";
 const connectionString = process.env.MONGO_URL;
 const APIKEY = process.env.REACT_APP_APIKEY;
 const __dirname = dirname(import.meta.url);

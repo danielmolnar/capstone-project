@@ -14,8 +14,8 @@ export default function Navigation({ setOpen, styleguide }) {
   const location = useLocation();
 
   return (
-    <NavWrapper>
-      <Nav styleguide={styleguide}>
+    <NavWrapper styleguide={styleguide}>
+      <Nav>
         <StyledLink exact to="/" onClick={() => setOpen(false)}>
           {location.pathname === '/' ? <AiFillHome /> : <AiOutlineHome />}
         </StyledLink>
@@ -67,7 +67,6 @@ const NavWrapper = styled.div`
   height: 3rem;
   width: 100%;
   z-index: 20;
-  position: fixed;
-  bottom: 0;
-  position: ${({ styleguide }) => (styleguide ? '' : 'fixed')};
+  bottom: ${({ styleguide }) => (styleguide ? '' : '0')};
+  position: ${({ styleguide }) => (styleguide ? 'static' : 'fixed')};
 `;

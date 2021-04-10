@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Navigation from './components/Ui/Navigation/Navigation';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
-import Searchbar from './components/Ui/Navigation/Searchbar';
+import Searchbar from './components/Ui/Searchbar';
 import Sidebar from './components/Ui/Navigation/Sidebar';
 import CreateProfile from './Pages/CreateProfile';
 import ScrollToTop from './hooks/useScrollToTop';
@@ -18,6 +18,7 @@ import Profile from './Pages/Profile';
 import Search from './Pages/Search';
 import About from './Pages/About';
 import Home from './Pages/Home';
+import sortFilter from './lib/userHelpers';
 
 function App() {
   const [userProfile, setUserProfile] = useLocalStorage('UserProfile', {});
@@ -39,12 +40,13 @@ function App() {
         setIsLoading(true);
         const response = await axios.get(requests.fetchUsers);
         const data = response.data;
-        setFriends(data.filter((friend) => friend._id !== userProfile._id));
+        sortFilter(data, userProfile, setFriends);
         setIsLoading(false);
       } catch (e) {
         console.log(e);
       }
     }
+
     getFriends();
   }, []);
 
@@ -114,6 +116,10 @@ function App() {
     fetchSearch();
   }, [query, fetchUrl]);
 
+  const friendsFavorites = friends.filter(
+    (list) => list.favorites.length !== 0
+  );
+
   const isOnWatchList = (movieToAdd) =>
     watchlist.some((movie) => movie.id === movieToAdd.id);
 
@@ -140,6 +146,7 @@ function App() {
         <Sidebar open={open} setOpen={setOpen} isLoggedIn={isLoggedIn} />
         <Switch>
           <MainWrapper open={open}>
+            <button onClick={() => console.log(friends)}></button>
             <Route exact path="/">
               <HomeWrapper>
                 <Home
@@ -170,7 +177,7 @@ function App() {
             </Route>
             <Route path="/friends">
               <ProfileWrapper>
-                {friends?.map((friend) => (
+                {friendsFavorites?.map((friend) => (
                   <div key={friend._id}>
                     <FriendsHeadline>{friend?.name}</FriendsHeadline>
                     <FriendsFlex>

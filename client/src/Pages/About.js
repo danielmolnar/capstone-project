@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 function About() {
@@ -72,6 +73,10 @@ function About() {
   );
 }
 
+About.propTypes = {
+  Technologies: PropTypes.array,
+};
+
 const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -129,7 +134,6 @@ const TagWrapper = styled.section`
   border: none;
   border-radius: 5px;
   color: var(--fontcolor-primary);
-
   margin-bottom: 2rem;
 `;
 
@@ -140,8 +144,8 @@ const StyledSpan = styled.span`
   color: var(--fontcolor-secondary);
   font-size: 0.8rem;
   padding: 5px;
-  margin-right: 10px;
-  margin-bottom: 10px;
+  margin-right: 7.5px;
+  margin-bottom: 7.5px;
 `;
 
 const HeadlineWrapper = styled.div`

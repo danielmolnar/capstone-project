@@ -143,7 +143,6 @@ export default function CreateProfile({
             <br />
 
             <Tags
-              headline="User Tags"
               addProfileTag={addProfileTag}
               tags={profile?.tags}
               removeProfileTag={removeProfileTag}
