@@ -9,6 +9,7 @@ import Sidebar from './components/Ui/Navigation/Sidebar';
 import CreateProfile from './Pages/CreateProfile';
 import ScrollToTop from './hooks/useScrollToTop';
 import FriendsCards from './Pages/FriendsCards';
+import sortFilter from './lib/friendsFunctions';
 import Banner from '../src/components/Banner';
 import requests from './services/requests';
 import Watchlist from './Pages/Watchlist';
@@ -18,7 +19,6 @@ import Profile from './Pages/Profile';
 import Search from './Pages/Search';
 import About from './Pages/About';
 import Home from './Pages/Home';
-import sortFilter from './lib/userHelpers';
 
 function App() {
   const [userProfile, setUserProfile] = useLocalStorage('UserProfile', {});
