@@ -52,21 +52,19 @@ function App() {
     getFriends();
   }, []);
 
-  const checkUser = userProfile.name !== undefined;
-
   useEffect(() => {
     async function getUser() {
-      if (checkUser) {
-        setIsLoggedIn(true);
-        try {
-          const response = await axios.get(userUrl);
-          const data = response.data;
-          setUserProfile(data);
-        } catch (e) {
-          console.log(e);
-        }
-      } else {
-        console.log('Please create a profile');
+      try {
+        const response = await axios.get(userUrl);
+        const data = response.data;
+        data.name === undefined || null
+          ? setIsLoggedIn(false)
+          : setIsLoggedIn(true);
+        data.name === undefined || null
+          ? setUserProfile({})
+          : setUserProfile(data);
+      } catch (e) {
+        console.log(e);
       }
     }
 
@@ -75,19 +73,17 @@ function App() {
 
   useEffect(() => {
     async function updateUser() {
-      if (checkUser) {
-        try {
-          const response = await axios.put(userUrl, {
-            favorites: [...favorites],
-            favoritesNumber: favorites.length,
-            watchlist: [...watchlist],
-            watchlistNumber: watchlist.length,
-          });
-          const data = response.data;
-          setUserProfile(data);
-        } catch (e) {
-          console.log(e);
-        }
+      try {
+        const response = await axios.put(userUrl, {
+          favorites: [...favorites],
+          favoritesNumber: favorites.length,
+          watchlist: [...watchlist],
+          watchlistNumber: watchlist.length,
+        });
+        const data = response.data;
+        setUserProfile(data);
+      } catch (e) {
+        console.log(e);
       }
     }
     updateUser();
@@ -162,6 +158,7 @@ function App() {
         <Sidebar open={open} setOpen={setOpen} isLoggedIn={isLoggedIn} />
         <Switch>
           <MainWrapper open={open}>
+            <button onClick={() => console.log(userProfile)}></button>
             <Route exact path="/">
               <HomeWrapper>
                 <Home
