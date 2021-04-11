@@ -20,6 +20,8 @@ import Search from './Pages/Search';
 import About from './Pages/About';
 import Home from './Pages/Home';
 
+import { friendsFavorites } from './lib/friendsFunctions';
+
 function App() {
   const [userProfile, setUserProfile] = useLocalStorage('UserProfile', {});
   const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
@@ -50,27 +52,30 @@ function App() {
     getFriends();
   }, []);
 
+  const checkUser = userProfile.name !== undefined;
+
   useEffect(() => {
     async function getUser() {
-      if (isLoggedIn) {
+      if (checkUser) {
+        setIsLoggedIn(true);
         try {
           const response = await axios.get(userUrl);
           const data = response.data;
           setUserProfile(data);
         } catch (e) {
-          setUserProfile({});
           console.log(e);
         }
       } else {
-        console.log('Please create a profile.');
+        console.log('Please create a profile');
       }
     }
+
     getUser();
-  }, [isLoggedIn]);
+  }, []);
 
   useEffect(() => {
     async function updateUser() {
-      if (isLoggedIn) {
+      if (checkUser) {
         try {
           const response = await axios.put(userUrl, {
             favorites: [...favorites],
@@ -116,9 +121,12 @@ function App() {
     fetchSearch();
   }, [query, fetchUrl]);
 
-  const friendsFavorites = friends.filter(
-    (list) => list.favorites.length !== 0
-  );
+  // friendsFavorites(friends);
+
+  // const friendsFavorites = (friends) => {
+  //   const newFavorites = friends.filter((list) => list.favorites.length !== 0);
+  //   return newFavorites;
+  // };
 
   const isOnWatchList = (movieToAdd) =>
     watchlist.some((movie) => movie.id === movieToAdd.id);
@@ -168,7 +176,7 @@ function App() {
               <MovieWrapper>
                 <HeadlineWrapper>WATCHLIST</HeadlineWrapper>
                 <GridWrapper>
-                  {watchlist.map((movie) => (
+                  {watchlist?.map((movie) => (
                     <Watchlist
                       isLarge
                       movie={movie}
@@ -184,11 +192,11 @@ function App() {
             </Route>
             <Route path="/friends">
               <ProfileWrapper>
-                {friendsFavorites?.map((friend) => (
+                {friendsFavorites(friends)?.map((friend) => (
                   <div key={friend._id}>
                     <FriendsHeadline>{friend?.name}</FriendsHeadline>
                     <FriendsFlex>
-                      {friend?.favorites?.map((movie) => (
+                      {friend.favorites?.map((movie) => (
                         <Friends
                           isLarge
                           movie={movie}
@@ -235,7 +243,7 @@ function App() {
               <MovieWrapper>
                 <HeadlineWrapper>FAVORITES</HeadlineWrapper>
                 <GridWrapper>
-                  {favorites.map((movie) => (
+                  {favorites?.map((movie) => (
                     <Favorites
                       isLarge
                       movie={movie}

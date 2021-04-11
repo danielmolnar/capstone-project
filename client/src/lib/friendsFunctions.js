@@ -7,3 +7,8 @@ function sortFilter(data, profile, setState) {
 }
 
 export default sortFilter;
+
+export const friendsFavorites = (friends) => {
+  const newFavorites = friends.filter((list) => list.favorites.length !== 0);
+  return newFavorites;
+};

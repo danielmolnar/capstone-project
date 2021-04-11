@@ -240,12 +240,24 @@ const InfoContainer = styled.div`
   width: 20rem;
   max-width: 20rem;
   span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
+    height: 20px;
+    width: 20px;
+    border: white solid 1px;
+    border-radius: 50%;
+    transition: transform 450ms;
+    &:hover {
+      transform: scale(1.25);
+    }
   }
   p {
     visibility: ${({ infoClicked }) => (infoClicked ? '' : 'hidden')};
     margin-left: 10px;
     font-size: 0.7rem;
+    padding: 5px;
   }
 `;
 const Information = styled(StarOfLife)`

@@ -168,6 +168,7 @@ const InfoContainer = styled.div`
   display: ${({ isMobile }) => (isMobile ? 'none' : 'flex')};
   justify-content: flex-end;
   align-items: center;
+  /* margin: 0; */
   width: 100%;
   max-width: 1020px;
   span {
@@ -175,7 +176,7 @@ const InfoContainer = styled.div`
   }
   p {
     visibility: ${({ desktopInfo }) => (desktopInfo ? '' : 'hidden')};
-    font-size: 0.7rem;
+    font-size: 1rem;
     margin: 0 0 0 20px;
   }
 `;
@@ -185,6 +186,10 @@ const InfoIcon = styled(PermDeviceInformation)`
   height: 30px;
   width: 30px;
   margin: 0 20px;
+  transition: transform 450ms;
+  &:hover {
+    transform: scale(1.25);
+  }
 `;
 
 Home.propTypes = {
