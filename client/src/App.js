@@ -20,8 +20,6 @@ import Search from './Pages/Search';
 import About from './Pages/About';
 import Home from './Pages/Home';
 
-import { friendsFavorites } from './lib/friendsFunctions';
-
 function App() {
   const [userProfile, setUserProfile] = useLocalStorage('UserProfile', {});
   const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
@@ -67,7 +65,6 @@ function App() {
         console.log(e);
       }
     }
-
     getUser();
   }, []);
 
@@ -126,14 +123,6 @@ function App() {
       : setWatchList([...watchlist, movieToAdd]);
   };
 
-  const addToList = (list, movieToAdd, setState) => {
-    const isOnList = (movieToAdd) =>
-      list.some((movie) => movie.id === movieToAdd);
-    isOnList(movieToAdd)
-      ? setState(list.filter((movie) => movie.id !== movieToAdd))
-      : setState([...list, movieToAdd]);
-  };
-
   const isFavorite = (movieToAdd) =>
     favorites.some((movie) => movie.id === movieToAdd.id);
 
@@ -142,6 +131,8 @@ function App() {
       ? setFavorites(favorites.filter((movie) => movie.id !== movieToAdd.id))
       : setFavorites([...favorites, movieToAdd]);
   };
+
+  const newFavorites = friends.filter((list) => list.favorites.length !== 0);
 
   return (
     <>
@@ -173,7 +164,7 @@ function App() {
                       isFavorite={() => isFavorite(movie)}
                       isOnWatchList={() => isOnWatchList(movie)}
                       addToWatchList={() => addToWatchList(movie)}
-                      addToFavorites={addToList(favorites, movie, setFavorites)}
+                      addToFavorites={() => addToFavorites(movie)}
                     />
                   ))}
                 </GridWrapper>
@@ -181,7 +172,7 @@ function App() {
             </Route>
             <Route path="/friends">
               <ProfileWrapper>
-                {friendsFavorites(friends)?.map((friend) => (
+                {newFavorites?.map((friend) => (
                   <div key={friend._id}>
                     <FriendsHeadline>{friend?.name}</FriendsHeadline>
                     <FriendsFlex>

@@ -23,6 +23,7 @@ export default function Searchbar({ getQuery, isMovie, setIsMovie }) {
         value={text}
         onChange={(event) => onChange(event.target.value)}
         autoFocus
+        data-testid="search-input"
       />
       <SearchButton onClick={clickHandler}>
         <SwitchIcon /> {isMovie ? 'Shows' : 'Movies'}

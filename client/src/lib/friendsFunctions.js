@@ -12,3 +12,11 @@ export const friendsFavorites = (friends) => {
   const newFavorites = friends.filter((list) => list.favorites.length !== 0);
   return newFavorites;
 };
+
+export const addToList = (list, movieToAdd, setState) => {
+  const isOnList = (movieToAdd) =>
+    list.some((movie) => movie.id === movieToAdd);
+  isOnList(movieToAdd)
+    ? setState(list.filter((movie) => movie.id !== movieToAdd))
+    : setState([...list, movieToAdd]);
+};
