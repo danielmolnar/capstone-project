@@ -101,16 +101,19 @@ export default function CreateProfile({
   return (
     <>
       <HeadlineWrapper>
-        <h2>{isLoggedIn ? 'Edit Profile' : 'Create Profile'}</h2>
+        <h2 data-testid="headline">
+          {isLoggedIn ? 'Edit Profile' : 'Create Profile'}
+        </h2>
       </HeadlineWrapper>
       <PageWrapper>
-        <Form>
+        <Form data-testid="form">
           <label htmlFor="name">
             <p>Name</p>
             <br />
             <InputStyler
               type="text"
               name="name"
+              data-testid="name"
               value={profile.name}
               onChange={handleChange}
               placeholder={userProfile?.name}
@@ -122,17 +125,19 @@ export default function CreateProfile({
             <InputStyler
               type="text"
               name="age"
+              data-testid="age"
               value={profile.age}
               onChange={handleChange}
               placeholder={userProfile?.age}
             />
           </label>
-          <label htmlFor="age">
+          <label htmlFor="email">
             <p>E-Mail*</p>
             <br />
             <InputStyler
               type="text"
               name="email"
+              data-testid="email"
               value={profile.email}
               onChange={handleChange}
               placeholder={userProfile?.email}
@@ -148,7 +153,7 @@ export default function CreateProfile({
               removeProfileTag={removeProfileTag}
             />
           </label>
-          <ButtonContainer isLoggedIn={isLoggedIn}>
+          <ButtonContainer isLoggedIn={isLoggedIn} data-testid="button">
             <FormButton onClick={createHandler} text="Submit" />
             <FormButton onClick={upDateProfile} text="Edit" />
           </ButtonContainer>

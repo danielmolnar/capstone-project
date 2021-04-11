@@ -24,6 +24,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
       </>
       <Row
         isLarge
+        data-testid="netflix"
         title="NETFLIX ORIGINALS"
         isFavorite={isFavorite}
         isOnWatchList={isOnWatchList}
@@ -34,6 +35,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
 
       <Row
         title="TRENDING"
+        data-testid="trending"
         isFavorite={isFavorite}
         isOnWatchList={isOnWatchList}
         addToWatchList={addToWatchList}
@@ -43,6 +45,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
 
       <Row
         title="TOP RATED"
+        data-testid="top-rated"
         isFavorite={isFavorite}
         isOnWatchList={isOnWatchList}
         addToWatchList={addToWatchList}
@@ -52,6 +55,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
 
       <Row
         title="ACTION"
+        data-testid="action"
         isFavorite={isFavorite}
         isOnWatchList={isOnWatchList}
         addToWatchList={addToWatchList}
@@ -62,6 +66,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
 
       <Row
         title="ADVENTURES"
+        data-testid="adventures"
         isFavorite={isFavorite}
         isOnWatchList={isOnWatchList}
         addToWatchList={addToWatchList}
@@ -72,6 +77,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
 
       <Row
         title="COMEDY"
+        data-testid="comedy"
         isFavorite={isFavorite}
         isOnWatchList={isOnWatchList}
         addToWatchList={addToWatchList}
@@ -81,6 +87,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
 
       <Row
         title="Crime"
+        data-testid="crime"
         isFavorite={isFavorite}
         isOnWatchList={isOnWatchList}
         addToWatchList={addToWatchList}
@@ -91,6 +98,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
       <Row
         title="DOCUMENTARIES"
         isFavorite={isFavorite}
+        data-testid="documentaries"
         isOnWatchList={isOnWatchList}
         addToWatchList={addToWatchList}
         addToFavorites={addToFavorites}
@@ -100,6 +108,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
 
       <Row
         title="DRAMA"
+        data-testid="drama"
         isFavorite={isFavorite}
         isOnWatchList={isOnWatchList}
         addToWatchList={addToWatchList}
@@ -110,6 +119,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
 
       <Row
         title="FANTASY"
+        data-testid="fantasy"
         isFavorite={isFavorite}
         isOnWatchList={isOnWatchList}
         addToWatchList={addToWatchList}
@@ -120,6 +130,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
 
       <Row
         title="HORROR"
+        data-testid="horror"
         isFavorite={isFavorite}
         isOnWatchList={isOnWatchList}
         addToWatchList={addToWatchList}
@@ -129,6 +140,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
 
       <Row
         title="MUSIC"
+        data-testid="music"
         isFavorite={isFavorite}
         isOnWatchList={isOnWatchList}
         addToWatchList={addToWatchList}
@@ -139,6 +151,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
       <Row
         title="SCIENCE FICTION"
         isFavorite={isFavorite}
+        data-testid="science-fiction"
         isOnWatchList={isOnWatchList}
         addToWatchList={addToWatchList}
         addToFavorites={addToFavorites}
@@ -147,6 +160,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
 
       <Row
         title="Thriller"
+        data-testid="thriller"
         isFavorite={isFavorite}
         isOnWatchList={isOnWatchList}
         addToWatchList={addToWatchList}

@@ -8,18 +8,18 @@ export default function FriendsCards({ friend }) {
   return (
     <ProfileWrapper>
       <SublineWrapper>
-        <Subline>{friend.name}</Subline>
+        <Subline data-testid="name">{friend.name}</Subline>
         <StatsWrapper>
           <IconWrapper>
-            <Friends />
+            <Friends data-testid="friends" />
             <p>{friend.friendsNumber} Friends</p>
           </IconWrapper>
           <IconWrapper>
-            <Favorites />
+            <Favorites data-testid="favorites" />
             <p>{friend.favoritesNumber} Favorites</p>
           </IconWrapper>
           <IconWrapper>
-            <WatchList />
+            <WatchList data-testid="watchlist" />
             <p>{friend.watchlistNumber} on Watchlist</p>
           </IconWrapper>
         </StatsWrapper>
@@ -28,7 +28,9 @@ export default function FriendsCards({ friend }) {
         <p>FLIXTAGS</p>
         <TagWrapper>
           {friend?.tags.map((tag, index) => (
-            <StyledSpan key={tag + index}>{tag}</StyledSpan>
+            <StyledSpan data-testid="tag" key={tag + index}>
+              {tag}
+            </StyledSpan>
           ))}
         </TagWrapper>
       </MainWrapper>

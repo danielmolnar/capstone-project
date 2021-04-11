@@ -21,14 +21,14 @@ function About() {
 
   return (
     <>
-      <HeadlineWrapper>
+      <HeadlineWrapper data-testid="headline">
         <h2>About</h2>
       </HeadlineWrapper>
 
       <PageWrapper>
         <SublineWrapper>
           <Subline>FLIXBUDDIES</Subline>
-          <Story>
+          <Story data-testid="story">
             This app is a digital journeyman's piece and marks the successful
             completion of my 3 month coding bootcamp at neue fische, upon which
             I became a certified Junior Web Developer. The functionalities used
@@ -44,7 +44,9 @@ function About() {
         </SublineWrapper>
         <TagWrapper>
           {Technologies.map((tag, index) => (
-            <StyledSpan key={tag + index}>{tag}</StyledSpan>
+            <StyledSpan data-testid="tag" key={tag + index}>
+              {tag}
+            </StyledSpan>
           ))}
         </TagWrapper>
         <SublineWrapper>

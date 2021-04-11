@@ -12,7 +12,7 @@ function ImageContainer({
   addToFavorites,
 }) {
   return (
-    <MovieContainer isLarge={isLarge}>
+    <MovieContainer isLarge={isLarge} data-testid="movie-container">
       <Poster isLarge={isLarge} movie={movie} />
       <Overlay
         movie={movie}

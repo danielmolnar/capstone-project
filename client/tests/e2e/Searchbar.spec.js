@@ -1,16 +1,5 @@
 describe('<Searchbar /> Component E2E tested', () => {
   const SEARCH_INPUT_FIELD = '[data-testid="search-input"]';
-  // const TAG_SELECTOR = '[data-testid="tag"]';
-
-  // const addThreeTags = () => {
-  //   cy.get(TAG_INPUT_FIELD)
-  //     .type('One')
-  //     .type('{enter}')
-  //     .type('Two')
-  //     .type('{enter}')
-  //     .type('Three')
-  //     .type('{enter}');
-  // };
 
   beforeEach(() => {
     cy.visit('/search');
@@ -25,5 +14,12 @@ describe('<Searchbar /> Component E2E tested', () => {
       .type('Harry')
       .type('{enter}');
     cy.get(SEARCH_INPUT_FIELD).should('have.value', 'Harry');
+  });
+
+  it('should empty the input field when pressing backspace', () => {
+    cy.get(SEARCH_INPUT_FIELD)
+      .type('Harry')
+      .type('{backspace}{backspace}{backspace}{backspace}{backspace}');
+    cy.get(SEARCH_INPUT_FIELD).should('have.value', '');
   });
 });

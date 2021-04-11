@@ -16,7 +16,7 @@ function Row({
   addToWatchList,
 }) {
   const [movies, setMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function fetchMovies() {
@@ -36,13 +36,13 @@ function Row({
 
   return isLoading ? (
     <>
-      <HeadLineStyler>{title}</HeadLineStyler>
+      <HeadLineStyler data-testid="headline">{title}</HeadLineStyler>
       <Spinner isLarge={isLarge} />
     </>
   ) : (
     <>
-      <HeadLineStyler>{title}</HeadLineStyler>
-      <Wrapper>
+      <HeadLineStyler data-testid="headline">{title}</HeadLineStyler>
+      <Wrapper data-testid="row">
         <MovieWrapper>
           {movies?.map((movie) => (
             <MarginContainer key={movie.id}>

@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Navigation from './components/Ui/Navigation/Navigation';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
-import Searchbar from './components/Ui/Searchbar';
 import Sidebar from './components/Ui/Navigation/Sidebar';
+import Searchbar from './components/Ui/Searchbar';
 import CreateProfile from './Pages/CreateProfile';
 import ScrollToTop from './hooks/useScrollToTop';
 import FriendsCards from './Pages/FriendsCards';
@@ -27,7 +27,7 @@ function App() {
   const [friends, setFriends] = useLocalStorage('Friends', []);
   const userUrl = `${requests.user}${userProfile?._id}`;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isMovie, setIsMovie] = useState(true);
   const [show, handleShow] = useState(false);
   const [search, setSearch] = useState([]);
