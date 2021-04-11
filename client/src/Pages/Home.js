@@ -168,7 +168,6 @@ const InfoContainer = styled.div`
   display: ${({ isMobile }) => (isMobile ? 'none' : 'flex')};
   justify-content: flex-end;
   align-items: center;
-  /* margin: 0; */
   width: 100%;
   max-width: 1020px;
   span {
@@ -177,7 +176,6 @@ const InfoContainer = styled.div`
   p {
     visibility: ${({ desktopInfo }) => (desktopInfo ? '' : 'hidden')};
     font-size: 1rem;
-    margin: 0 0 0 20px;
   }
 `;
 

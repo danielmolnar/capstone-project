@@ -1,12 +1,11 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import { Book } from '@styled-icons/fa-solid/Book';
 import { HeartCircle } from '@styled-icons/boxicons-solid/HeartCircle';
 import { UserSettings } from '@styled-icons/remix-line/UserSettings';
 import { PeopleFill } from '@styled-icons/bootstrap/PeopleFill';
 import { Profile } from '@styled-icons/icomoon/Profile';
-import { PermDeviceInformation } from '@styled-icons/material/PermDeviceInformation';
-import { Book } from '@styled-icons/fa-solid/Book';
 
 export default function Menu({ open, setOpen, styleguide, isLoggedIn }) {
   return (

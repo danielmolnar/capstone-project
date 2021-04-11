@@ -117,13 +117,6 @@ function App() {
     fetchSearch();
   }, [query, fetchUrl]);
 
-  // friendsFavorites(friends);
-
-  // const friendsFavorites = (friends) => {
-  //   const newFavorites = friends.filter((list) => list.favorites.length !== 0);
-  //   return newFavorites;
-  // };
-
   const isOnWatchList = (movieToAdd) =>
     watchlist.some((movie) => movie.id === movieToAdd.id);
 
@@ -158,7 +151,6 @@ function App() {
         <Sidebar open={open} setOpen={setOpen} isLoggedIn={isLoggedIn} />
         <Switch>
           <MainWrapper open={open}>
-            <button onClick={() => console.log(userProfile)}></button>
             <Route exact path="/">
               <HomeWrapper>
                 <Home
@@ -326,7 +318,7 @@ const MainWrapper = styled.div`
 `;
 
 const HomeWrapper = styled.div`
-  /* margin-top: 128px; */
+  margin: 0;
 `;
 
 const GridWrapper = styled.div`
