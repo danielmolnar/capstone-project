@@ -34,8 +34,8 @@ const ImageWrapper = styled.div(
     top: 0;
     width: 100%;
     box-shadow: var(--boxshadow);
-    transition-timing-function: ease-out;
     transition: all 0.5s;
+    transition-timing-function: ease-out;
     z-index: 20;
     background: var(--secondary-100);
 

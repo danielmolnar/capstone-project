@@ -15,7 +15,7 @@ export default function Profile({
 }) {
   return !isLoggedIn ? (
     <>
-      <HeadlineWrapper>
+      <HeadlineWrapper data-testid="headline">
         <h2>Please Create A Profile</h2>
       </HeadlineWrapper>
       <StyledLink
@@ -24,7 +24,7 @@ export default function Profile({
         }}
       >
         <Wrapper>
-          <ButtonContainer>
+          <ButtonContainer data-testid="button">
             <FormButton text="Create Profile" />
           </ButtonContainer>
         </Wrapper>
@@ -32,7 +32,7 @@ export default function Profile({
     </>
   ) : (
     <>
-      <HeadlineWrapper>
+      <HeadlineWrapper data-testid="headline">
         <h2>My Profile</h2>
       </HeadlineWrapper>
       <ProfileWrapper>
@@ -55,7 +55,7 @@ export default function Profile({
         </SublineWrapper>
         <MainWrapper>
           <p>FLIXTAGS</p>
-          <TagWrapper>
+          <TagWrapper data-testid="tags">
             {userProfile?.tags?.map((tag, index) => (
               <StyledSpan key={index + tag}>{tag}</StyledSpan>
             ))}
@@ -71,7 +71,7 @@ Profile.propTypes = {
   favorites: PropTypes.array,
   watchlist: PropTypes.array,
   isLoggedIn: PropTypes.bool,
-  userProfile: PropTypes.object || PropTypes.string,
+  userProfile: PropTypes.object,
 };
 
 const Wrapper = styled.div`
@@ -153,7 +153,6 @@ const SublineWrapper = styled.div`
 const StatsWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  /* gap: 1rem; */
 
   p {
     margin: 0;

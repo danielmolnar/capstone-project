@@ -15,8 +15,7 @@ export default function CardInfos({
   if (!open) return null;
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
   const release = movie.first_air_date || movie.release_date;
-  const existingPath =
-    movie.poster_path === null && movie.backdrop_path === null;
+  const noBackDropPath = movie.backdrop_path === null;
 
   return ReactDom.createPortal(
     <>
@@ -28,7 +27,7 @@ export default function CardInfos({
         </Header>
         <BackGroundWrapper
           baseUrl={baseUrl}
-          existingPath={existingPath}
+          noBackDropPath={noBackDropPath}
           background={movie.backdrop_path || movie.poster_path}
         >
           <DetailsWrapper>
@@ -128,7 +127,7 @@ const BackGroundWrapper = styled.div(
     position: relative;
     background-image: ${(props) =>
       `url("${props.baseUrl}${props.background}")`};
-    ${props.existingPath &&
+    ${props.noBackDropPath &&
       css`
         background-image: url(${backdrop_poster});
       `}

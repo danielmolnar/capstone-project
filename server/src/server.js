@@ -23,7 +23,11 @@ mongoose.connect(connectionString, {
 });
 
 server.get('/users', (req, res) => {
-  User.find().then((users) => res.json(users));
+  User.find()
+    .then((users) => res.json(users))
+    .catch((error) => {
+      console.error(error.message);
+    });
 });
 
 server.get('/users/:userId', (req, res) => {
@@ -31,7 +35,9 @@ server.get('/users/:userId', (req, res) => {
   User.findById(userId)
     .then((user) => res.json(user))
     .catch((error) => {
-      console.log('User not yet registered');
+      console.log(
+        'User not yet registered. Please consider creating a profile'
+      );
     });
 });
 
@@ -54,7 +60,9 @@ server.put('/users/:id', (req, res) => {
 
     .then((user) => res.json(user))
     .catch((error) => {
-      console.error(error.message);
+      console.log(
+        'User not yet registered. Please consider creating a profile'
+      );
     });
 });
 

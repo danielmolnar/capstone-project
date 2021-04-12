@@ -2,12 +2,19 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import flixbuddies_poster from '../assets/flixbuddies_poster.png';
 import backdrop_poster from '../assets/backdrop_poster.png';
+import spinner from '../assets/LoadingSpinner.gif';
 
-function Poster({ movie, isLarge }) {
+function Poster({ movie, isLarge, isLoading }) {
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
-  let existingPath = movie.poster_path === null && movie.backdrop_path === null;
+  let existingPath = movie.poster_path === null;
 
-  return existingPath ? (
+  return isLoading ? (
+    <ImageStyler
+      netflixStyle={isLarge}
+      src={spinner}
+      alt={movie?.name || movie?.title || movie?.original_name}
+    />
+  ) : existingPath ? (
     <>
       <Title>{movie?.name || movie?.title || movie?.original_name}</Title>
       <ImageStyler
@@ -20,11 +27,7 @@ function Poster({ movie, isLarge }) {
     <ImageStyler
       netflixStyle={isLarge}
       key={movie.id}
-      src={`${baseUrl}${
-        isLarge
-          ? movie?.poster_path
-          : movie?.backdrop_path || movie?.poster_path
-      }`}
+      src={`${baseUrl}${isLarge ? movie?.poster_path : movie?.backdrop_path}`}
       alt={movie?.name || movie?.title || movie?.original_name}
     />
   );
@@ -35,6 +38,7 @@ export default Poster;
 Poster.propTyes = {
   movie: PropTypes.object,
   isLarge: PropTypes.bool,
+  isLoading: PropTypes.bool,
 };
 
 const Title = styled.p`

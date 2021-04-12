@@ -3,6 +3,7 @@
 ```js
 <Poster
   isLarge
+  isLoading={false}
   movie={{
     name: 'Lucifer',
     title: 'Lucifer',
@@ -23,6 +24,7 @@
 
 ```js
 <Poster
+  isLoading={false}
   movie={{
     name: 'Lucifer',
     title: 'Lucifer',
@@ -43,6 +45,7 @@
 
 ```js
 <Poster
+  isLoading={false}
   isLarge
   movie={{
     name: 'Lucifer',
@@ -64,6 +67,7 @@
 
 ```js
 <Poster
+  isLoading={false}
   movie={{
     name: 'Lucifer',
     title: 'Lucifer',

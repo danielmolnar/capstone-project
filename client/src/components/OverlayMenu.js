@@ -15,11 +15,17 @@ export default function OverlayMenu({
   return (
     <IconWrapper>
       {favoriteCheck ? (
-        <HeartActiveButton addToFavorites={addToFavorites} color="white" />
+        <HeartActiveButton
+          addToFavorites={addToFavorites}
+          color="var(--secondary-100)"
+        />
       ) : (
-        <HeartInactiveButton addToFavorites={addToFavorites} color="white" />
+        <HeartInactiveButton
+          addToFavorites={addToFavorites}
+          color="var(--secondary-100)"
+        />
       )}
-      <InfoButton clickHandler={clickHandler} color="white" />
+      <InfoButton clickHandler={clickHandler} color="var(--secondary-100)" />
     </IconWrapper>
   );
 }

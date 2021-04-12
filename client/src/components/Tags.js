@@ -77,12 +77,10 @@ const SectionWrapper = styled.section`
   max-width: 20rem;
 
   input {
-    border: none;
     border-radius: 10px;
     display: inline;
     color: var(--secondary-100);
     width: 80px;
-    margin-left: 5px;
     font-size: 0.8rem;
     padding: 5px;
     margin: 0.2rem;
