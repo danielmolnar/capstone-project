@@ -71,6 +71,7 @@ Profile.propTypes = {
   favorites: PropTypes.array,
   watchlist: PropTypes.array,
   isLoggedIn: PropTypes.bool,
+  userProfile: PropTypes.object,
 };
 
 const Wrapper = styled.div`

@@ -24,6 +24,8 @@ function App() {
   const [userProfile, setUserProfile] = useLocalStorage('UserProfile', {});
   const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
   const [favorites, setFavorites] = useLocalStorage('Favorites', []);
+  const [isLoadingFriends, setIsLoadingFriends] = useState(false);
+  const isExistingUser = userProfile.name !== undefined || null;
   const [friends, setFriends] = useLocalStorage('Friends', []);
   const userUrl = `${requests.user}${userProfile?._id}`;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -36,14 +38,14 @@ function App() {
 
   useEffect(() => {
     async function getFriends() {
+      setIsLoadingFriends(true);
       try {
-        setIsLoading(true);
         const response = await axios.get(requests.fetchUsers);
         const data = response.data;
         sortFilter(data, userProfile, setFriends);
-        setIsLoading(false);
-      } catch (e) {
-        console.log(e);
+        setIsLoadingFriends(false);
+      } catch (error) {
+        console.error(error.message);
       }
     }
 
@@ -52,17 +54,15 @@ function App() {
 
   useEffect(() => {
     async function getUser() {
-      try {
-        const response = await axios.get(userUrl);
-        const data = response.data;
-        data.name === undefined || null
-          ? setIsLoggedIn(false)
-          : setIsLoggedIn(true);
-        data.name === undefined || null
-          ? setUserProfile({})
-          : setUserProfile(data);
-      } catch (e) {
-        console.log(e);
+      if (isExistingUser) {
+        setIsLoggedIn(true);
+        try {
+          const response = await axios.get(userUrl);
+          const data = response.data;
+          setUserProfile(data);
+        } catch (error) {
+          console.error(error.message);
+        }
       }
     }
     getUser();
@@ -70,17 +70,19 @@ function App() {
 
   useEffect(() => {
     async function updateUser() {
-      try {
-        const response = await axios.put(userUrl, {
-          favorites: [...favorites],
-          favoritesNumber: favorites.length,
-          watchlist: [...watchlist],
-          watchlistNumber: watchlist.length,
-        });
-        const data = response.data;
-        setUserProfile(data);
-      } catch (e) {
-        console.log(e);
+      if (isExistingUser) {
+        try {
+          const response = await axios.put(userUrl, {
+            favorites: [...favorites],
+            favoritesNumber: favorites.length,
+            watchlist: [...watchlist],
+            watchlistNumber: watchlist.length,
+          });
+          const data = response.data;
+          setUserProfile(data);
+        } catch (error) {
+          console.error(error.message);
+        }
       }
     }
     updateUser();
@@ -95,8 +97,8 @@ function App() {
 
   useEffect(() => {
     async function fetchSearch() {
+      setIsLoading(true);
       try {
-        setIsLoading(true);
         const request = await axios.get(fetchUrl, {
           params: {
             query: query,
@@ -105,8 +107,8 @@ function App() {
         setSearch(request.data.results);
         setIsLoading(false);
         return request;
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        console.error(error.message);
       }
     }
     fetchSearch();
@@ -181,7 +183,7 @@ function App() {
                           isLarge
                           movie={movie}
                           key={movie.id}
-                          isLoading={isLoading}
+                          isLoadingFriends={isLoadingFriends}
                           isFavorite={() => isFavorite(movie)}
                           isOnWatchList={() => isOnWatchList(movie)}
                           addToWatchList={() => addToWatchList(movie)}

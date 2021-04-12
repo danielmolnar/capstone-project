@@ -20,14 +20,18 @@ function Row({
   useEffect(() => {
     async function fetchMovies() {
       setIsLoading(true);
-      const request = await axios.get(fetchUrl, {
-        params: {
-          page: page,
-        },
-      });
-      setMovies(request.data.results);
-      setIsLoading(false);
-      return request;
+      try {
+        const request = await axios.get(fetchUrl, {
+          params: {
+            page: page,
+          },
+        });
+        setMovies(request.data.results);
+        setIsLoading(false);
+        return request;
+      } catch (error) {
+        console.error(error.message);
+      }
     }
     fetchMovies();
   }, [fetchUrl, page]);
