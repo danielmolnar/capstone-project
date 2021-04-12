@@ -1,6 +1,7 @@
 {
   "name": "capstone-project",
   "version": "1.0.0",
+  "homepage": "http://flixbuddies.herokuapp.com/",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -21,7 +22,6 @@
   "bugs": {
     "url": "https://github.com/danielmolnar/capstone-project/issues"
   },
-  "homepage": "https://github.com/danielmolnar/capstone-project#readme",
   "devDependencies": {
     "concurrently": "^6.0.0",
     "mongodb": "^3.6.5",
