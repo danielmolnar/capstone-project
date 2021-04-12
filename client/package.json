@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "homepage": "http://flixbuddies.herokuapp.com/",
   "private": true,
-  "proxy": "http://localhost:4000",
   "dependencies": {
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -55,5 +54,6 @@
     "stylelint-config-recommended": "^4.0.0",
     "stylelint-config-styled-components": "^0.1.1",
     "stylelint-processor-styled-components": "^1.10.0"
-  }
+  },
+  "proxy": "http://localhost:4000"
 }

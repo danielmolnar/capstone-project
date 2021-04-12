@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "homepage": "http://flixbuddies.herokuapp.com/",
   "description": "",
-  "main": "index.js",
+  "main": "server/src/server.js",
   "scripts": {
     "postinstall": "cd ./client && npm install && cd ../server && npm install",
     "client": "cd ./client && npm start",
