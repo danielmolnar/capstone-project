@@ -101,16 +101,19 @@ export default function CreateProfile({
   return (
     <>
       <HeadlineWrapper>
-        <h2>{isLoggedIn ? 'Edit Profile' : 'Create Profile'}</h2>
+        <h2 data-testid="headline">
+          {isLoggedIn ? 'Edit Profile' : 'Create Profile'}
+        </h2>
       </HeadlineWrapper>
       <PageWrapper>
-        <Form>
+        <Form data-testid="form">
           <label htmlFor="name">
             <p>Name</p>
             <br />
             <InputStyler
               type="text"
               name="name"
+              data-testid="name"
               value={profile.name}
               onChange={handleChange}
               placeholder={userProfile?.name}
@@ -122,17 +125,19 @@ export default function CreateProfile({
             <InputStyler
               type="text"
               name="age"
+              data-testid="age"
               value={profile.age}
               onChange={handleChange}
               placeholder={userProfile?.age}
             />
           </label>
-          <label htmlFor="age">
+          <label htmlFor="email">
             <p>E-Mail*</p>
             <br />
             <InputStyler
               type="text"
               name="email"
+              data-testid="email"
               value={profile.email}
               onChange={handleChange}
               placeholder={userProfile?.email}
@@ -148,7 +153,7 @@ export default function CreateProfile({
               removeProfileTag={removeProfileTag}
             />
           </label>
-          <ButtonContainer isLoggedIn={isLoggedIn}>
+          <ButtonContainer isLoggedIn={isLoggedIn} data-testid="button">
             <FormButton onClick={createHandler} text="Submit" />
             <FormButton onClick={upDateProfile} text="Edit" />
           </ButtonContainer>
@@ -237,16 +242,27 @@ const ButtonContainer = styled.div`
 const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
-
   width: 20rem;
   max-width: 20rem;
   span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
+    height: 20px;
+    width: 20px;
+    border: var(--secondary-100) solid 1px;
+    border-radius: 50%;
+    transition: transform 450ms;
+    &:hover {
+      transform: scale(1.25);
+    }
   }
   p {
-    display: ${({ infoClicked }) => (infoClicked ? '' : 'none')};
+    visibility: ${({ infoClicked }) => (infoClicked ? '' : 'hidden')};
     margin-left: 10px;
     font-size: 0.7rem;
+    padding: 5px;
   }
 `;
 const Information = styled(StarOfLife)`

@@ -6,13 +6,13 @@ import Spinner from '../components/Spinner';
 export default function Friends({
   movie,
   isLarge,
-  isLoading,
+  isLoadingFriends,
   isFavorite,
   isOnWatchList,
   addToWatchList,
   addToFavorites,
 }) {
-  return isLoading ? (
+  return isLoadingFriends ? (
     <Spinner />
   ) : (
     <MarginContainer>
@@ -31,11 +31,11 @@ export default function Friends({
 Friends.propTypes = {
   movie: PropTypes.object,
   isLarge: PropTypes.bool,
-  isLoading: PropTypes.bool,
   isFavorite: PropTypes.func,
   isOnWatchList: PropTypes.func,
   addToWatchList: PropTypes.func,
   addToFavorites: PropTypes.func,
+  isLoadingFriends: PropTypes.bool,
 };
 
 const MarginContainer = styled.div`

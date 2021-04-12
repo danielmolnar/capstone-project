@@ -8,18 +8,18 @@ export default function FriendsCards({ friend }) {
   return (
     <ProfileWrapper>
       <SublineWrapper>
-        <Subline>{friend.name}</Subline>
+        <Subline data-testid="name">{friend.name}</Subline>
         <StatsWrapper>
           <IconWrapper>
-            <Friends />
+            <Friends data-testid="friends" />
             <p>{friend.friendsNumber} Friends</p>
           </IconWrapper>
           <IconWrapper>
-            <Favorites />
+            <Favorites data-testid="favorites" />
             <p>{friend.favoritesNumber} Favorites</p>
           </IconWrapper>
           <IconWrapper>
-            <WatchList />
+            <WatchList data-testid="watchlist" />
             <p>{friend.watchlistNumber} on Watchlist</p>
           </IconWrapper>
         </StatsWrapper>
@@ -28,7 +28,9 @@ export default function FriendsCards({ friend }) {
         <p>FLIXTAGS</p>
         <TagWrapper>
           {friend?.tags.map((tag, index) => (
-            <StyledSpan key={tag + index}>{tag}</StyledSpan>
+            <StyledSpan data-testid="tag" key={tag + index}>
+              {tag}
+            </StyledSpan>
           ))}
         </TagWrapper>
       </MainWrapper>
@@ -41,14 +43,14 @@ FriendsCards.propTypes = {
 };
 
 const Friends = styled(PeopleFill)`
-  color: var(--fontcolor-secondary);
+  color: var(--tertiary-100);
   height: 1rem;
   margin-right: 0.3rem;
   width: 1rem;
 `;
 
 const Favorites = styled(HeartCircle)`
-  color: var(--fontcolor-secondary);
+  color: var(--tertiary-100);
   margin-right: 0.3rem;
   height: 1.1rem;
   width: 1.1rem;

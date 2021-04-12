@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Navigation from './components/Ui/Navigation/Navigation';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
-import Searchbar from './components/Ui/Searchbar';
 import Sidebar from './components/Ui/Navigation/Sidebar';
+import Searchbar from './components/Ui/Searchbar';
 import CreateProfile from './Pages/CreateProfile';
 import ScrollToTop from './hooks/useScrollToTop';
 import FriendsCards from './Pages/FriendsCards';
@@ -24,10 +24,12 @@ function App() {
   const [userProfile, setUserProfile] = useLocalStorage('UserProfile', {});
   const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
   const [favorites, setFavorites] = useLocalStorage('Favorites', []);
+  const [isLoadingFriends, setIsLoadingFriends] = useState(false);
+  const isExistingUser = userProfile.name !== undefined || null;
   const [friends, setFriends] = useLocalStorage('Friends', []);
   const userUrl = `${requests.user}${userProfile?._id}`;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isMovie, setIsMovie] = useState(true);
   const [show, handleShow] = useState(false);
   const [search, setSearch] = useState([]);
@@ -36,14 +38,14 @@ function App() {
 
   useEffect(() => {
     async function getFriends() {
+      setIsLoadingFriends(true);
       try {
-        setIsLoading(true);
         const response = await axios.get(requests.fetchUsers);
         const data = response.data;
         sortFilter(data, userProfile, setFriends);
-        setIsLoading(false);
-      } catch (e) {
-        console.log(e);
+        setIsLoadingFriends(false);
+      } catch (error) {
+        console.error(error.message);
       }
     }
 
@@ -52,25 +54,23 @@ function App() {
 
   useEffect(() => {
     async function getUser() {
-      if (isLoggedIn) {
+      if (isExistingUser) {
+        setIsLoggedIn(true);
         try {
           const response = await axios.get(userUrl);
           const data = response.data;
           setUserProfile(data);
-        } catch (e) {
-          setUserProfile({});
-          console.log(e);
+        } catch (error) {
+          console.error(error.message);
         }
-      } else {
-        console.log('Please create a profile.');
       }
     }
     getUser();
-  }, [isLoggedIn]);
+  }, []);
 
   useEffect(() => {
     async function updateUser() {
-      if (isLoggedIn) {
+      if (isExistingUser) {
         try {
           const response = await axios.put(userUrl, {
             favorites: [...favorites],
@@ -80,8 +80,8 @@ function App() {
           });
           const data = response.data;
           setUserProfile(data);
-        } catch (e) {
-          console.log(e);
+        } catch (error) {
+          console.error(error.message);
         }
       }
     }
@@ -97,28 +97,22 @@ function App() {
 
   useEffect(() => {
     async function fetchSearch() {
+      setIsLoading(true);
       try {
-        setIsLoading(true);
         const request = await axios.get(fetchUrl, {
           params: {
             query: query,
-            page: 1,
-            include_adult: false,
           },
         });
         setSearch(request.data.results);
         setIsLoading(false);
         return request;
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        console.error(error.message);
       }
     }
     fetchSearch();
   }, [query, fetchUrl]);
-
-  const friendsFavorites = friends.filter(
-    (list) => list.favorites.length !== 0
-  );
 
   const isOnWatchList = (movieToAdd) =>
     watchlist.some((movie) => movie.id === movieToAdd.id);
@@ -138,6 +132,10 @@ function App() {
       : setFavorites([...favorites, movieToAdd]);
   };
 
+  const filteredFriendsFavorites = friends.filter(
+    (list) => list.favorites.length !== 0
+  );
+
   return (
     <>
       <ScrollToTop>
@@ -145,7 +143,7 @@ function App() {
         <Banner show={show} handleShow={handleShow} open={open} />
         <Sidebar open={open} setOpen={setOpen} isLoggedIn={isLoggedIn} />
         <Switch>
-          <MainWrapper open={open}>
+          <MainWrapper>
             <Route exact path="/">
               <HomeWrapper>
                 <Home
@@ -160,7 +158,7 @@ function App() {
               <MovieWrapper>
                 <HeadlineWrapper>WATCHLIST</HeadlineWrapper>
                 <GridWrapper>
-                  {watchlist.map((movie) => (
+                  {watchlist?.map((movie) => (
                     <Watchlist
                       isLarge
                       movie={movie}
@@ -176,16 +174,16 @@ function App() {
             </Route>
             <Route path="/friends">
               <ProfileWrapper>
-                {friendsFavorites?.map((friend) => (
+                {filteredFriendsFavorites?.map((friend) => (
                   <div key={friend._id}>
                     <FriendsHeadline>{friend?.name}</FriendsHeadline>
                     <FriendsFlex>
-                      {friend?.favorites?.map((movie) => (
+                      {friend.favorites?.map((movie) => (
                         <Friends
                           isLarge
                           movie={movie}
                           key={movie.id}
-                          isLoading={isLoading}
+                          isLoadingFriends={isLoadingFriends}
                           isFavorite={() => isFavorite(movie)}
                           isOnWatchList={() => isOnWatchList(movie)}
                           addToWatchList={() => addToWatchList(movie)}
@@ -227,7 +225,7 @@ function App() {
               <MovieWrapper>
                 <HeadlineWrapper>FAVORITES</HeadlineWrapper>
                 <GridWrapper>
-                  {favorites.map((movie) => (
+                  {favorites?.map((movie) => (
                     <Favorites
                       isLarge
                       movie={movie}
@@ -313,7 +311,7 @@ const MainWrapper = styled.div`
 `;
 
 const HomeWrapper = styled.div`
-  margin-top: 128px;
+  margin: 0;
 `;
 
 const GridWrapper = styled.div`
@@ -364,7 +362,6 @@ const FriendsHeadline = styled.h2`
 `;
 
 const SearchbarWrapper = styled.div`
-  margin: 0 auto;
   margin: 0 auto;
   width: 80%;
   max-width: 450px;

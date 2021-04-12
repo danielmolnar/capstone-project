@@ -47,7 +47,7 @@ Overlay.propTypes = {
 const OverlayStyler = styled.div`
   bottom: 0;
   height: 100%;
-  opacity: ${({ isMobile }) => (isMobile ? '0' : '0')};
+  opacity: 0;
   position: absolute;
   width: 100%;
 `;

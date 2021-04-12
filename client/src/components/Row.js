@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import ImageContainer from './ImageContainer';
-import Spinner from './Spinner';
 
 function Row({
   page,
@@ -16,33 +15,31 @@ function Row({
   addToWatchList,
 }) {
   const [movies, setMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function fetchMovies() {
       setIsLoading(true);
-      const request = await axios.get(fetchUrl, {
-        params: {
-          page: page,
-        },
-      });
-      setMovies(request.data.results);
-      setIsLoading(false);
-      return request;
+      try {
+        const request = await axios.get(fetchUrl, {
+          params: {
+            page: page,
+          },
+        });
+        setMovies(request.data.results);
+        setIsLoading(false);
+        return request;
+      } catch (error) {
+        console.error(error.message);
+      }
     }
-
     fetchMovies();
   }, [fetchUrl, page]);
 
-  return isLoading ? (
+  return (
     <>
-      <HeadLineStyler>{title}</HeadLineStyler>
-      <Spinner isLarge={isLarge} />
-    </>
-  ) : (
-    <>
-      <HeadLineStyler>{title}</HeadLineStyler>
-      <Wrapper>
+      <HeadLineStyler data-testid="headline">{title}</HeadLineStyler>
+      <Wrapper data-testid="row">
         <MovieWrapper>
           {movies?.map((movie) => (
             <MarginContainer key={movie.id}>
