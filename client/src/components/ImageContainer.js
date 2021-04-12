@@ -6,6 +6,7 @@ import Overlay from '../components/Overlay';
 function ImageContainer({
   movie,
   isLarge,
+  isLoading,
   isFavorite,
   isOnWatchList,
   addToWatchList,
@@ -13,7 +14,7 @@ function ImageContainer({
 }) {
   return (
     <MovieContainer isLarge={isLarge} data-testid="movie-container">
-      <Poster isLarge={isLarge} movie={movie} />
+      <Poster isLarge={isLarge} movie={movie} isLoading={isLoading} />
       <Overlay
         movie={movie}
         isFavorite={isFavorite}
@@ -30,6 +31,7 @@ export default ImageContainer;
 ImageContainer.propTypes = {
   movie: PropTypes.object,
   isLarge: PropTypes.bool,
+  isLoading: PropTypes.bool,
   isFavorite: PropTypes.func,
   isOnWatchList: PropTypes.func,
   addToWatchList: PropTypes.func,

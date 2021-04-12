@@ -71,7 +71,6 @@ Profile.propTypes = {
   favorites: PropTypes.array,
   watchlist: PropTypes.array,
   isLoggedIn: PropTypes.bool,
-  userProfile: PropTypes.object || PropTypes.string,
 };
 
 const Wrapper = styled.div`
@@ -153,7 +152,6 @@ const SublineWrapper = styled.div`
 const StatsWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  /* gap: 1rem; */
 
   p {
     margin: 0;

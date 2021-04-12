@@ -7,5 +7,5 @@
 ### Is Netflix Original
 
 ```js
-<Spinner isNetflix />
+<Spinner isLarge />
 ```

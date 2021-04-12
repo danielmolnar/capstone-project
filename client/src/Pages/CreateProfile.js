@@ -251,7 +251,7 @@ const InfoContainer = styled.div`
     cursor: pointer;
     height: 20px;
     width: 20px;
-    border: white solid 1px;
+    border: var(--secondary-100) solid 1px;
     border-radius: 50%;
     transition: transform 450ms;
     &:hover {

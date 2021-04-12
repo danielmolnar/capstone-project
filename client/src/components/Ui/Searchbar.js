@@ -22,7 +22,6 @@ export default function Searchbar({ getQuery, isMovie, setIsMovie }) {
         placeholder={isMovie ? 'Search for Movies' : 'Search for TV Shows'}
         value={text}
         onChange={(event) => onChange(event.target.value)}
-        autoFocus
         data-testid="search-input"
       />
       <SearchButton onClick={clickHandler}>
@@ -63,7 +62,6 @@ const SearchButton = styled.button`
   border-radius: 0px 5px 5px 0px;
   width: 10rem;
   color: var(--secondary-100);
-  font-weight: bold;
   height: 30px;
   outline: none;
   text-decoration: none;

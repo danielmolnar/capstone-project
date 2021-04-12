@@ -43,14 +43,14 @@ FriendsCards.propTypes = {
 };
 
 const Friends = styled(PeopleFill)`
-  color: var(--fontcolor-secondary);
+  color: var(--tertiary-100);
   height: 1rem;
   margin-right: 0.3rem;
   width: 1rem;
 `;
 
 const Favorites = styled(HeartCircle)`
-  color: var(--fontcolor-secondary);
+  color: var(--tertiary-100);
   margin-right: 0.3rem;
   height: 1.1rem;
   width: 1.1rem;

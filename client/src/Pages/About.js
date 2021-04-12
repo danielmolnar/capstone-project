@@ -11,7 +11,7 @@ function About() {
     'axios',
     'Jest',
     'Cypress',
-    'LocalStorage',
+    'Local Storage',
     'Node.js',
     'MongoDB',
     'Express',
@@ -33,7 +33,7 @@ function About() {
             completion of my 3 month coding bootcamp at neue fische, upon which
             I became a certified Junior Web Developer. The functionalities used
             in this app represent my coding skills of April 2021. Many thanks to
-            neuefische for giving me the opportunity to attend their bootcamp
+            neue fische for giving me the opportunity to attend their bootcamp
             and a huge shoutout to my incredibly gifted (and patient) coaches
             Miriam and Thomas.
             <br /> <br />- Daniel Molnar, April 2021
@@ -52,6 +52,12 @@ function About() {
         <SublineWrapper>
           <p>Credits</p>
           <ul>
+            <Credits>
+              {' '}
+              <a href="https://www.neuefische.de/" title="neuefische">
+                neuefische GmbH
+              </a>
+            </Credits>
             <Credits>
               {' '}
               <a href="https://www.themoviedb.org//" title="TMDB">

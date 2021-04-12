@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import ImageContainer from './ImageContainer';
-import Spinner from './Spinner';
 
 function Row({
   page,
@@ -30,16 +29,10 @@ function Row({
       setIsLoading(false);
       return request;
     }
-
     fetchMovies();
   }, [fetchUrl, page]);
 
-  return isLoading ? (
-    <>
-      <HeadLineStyler data-testid="headline">{title}</HeadLineStyler>
-      <Spinner isLarge={isLarge} />
-    </>
-  ) : (
+  return (
     <>
       <HeadLineStyler data-testid="headline">{title}</HeadLineStyler>
       <Wrapper data-testid="row">

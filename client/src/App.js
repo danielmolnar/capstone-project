@@ -100,8 +100,6 @@ function App() {
         const request = await axios.get(fetchUrl, {
           params: {
             query: query,
-            page: 1,
-            include_adult: false,
           },
         });
         setSearch(request.data.results);
@@ -132,7 +130,9 @@ function App() {
       : setFavorites([...favorites, movieToAdd]);
   };
 
-  const newFavorites = friends.filter((list) => list.favorites.length !== 0);
+  const filteredFriendsFavorites = friends.filter(
+    (list) => list.favorites.length !== 0
+  );
 
   return (
     <>
@@ -141,7 +141,7 @@ function App() {
         <Banner show={show} handleShow={handleShow} open={open} />
         <Sidebar open={open} setOpen={setOpen} isLoggedIn={isLoggedIn} />
         <Switch>
-          <MainWrapper open={open}>
+          <MainWrapper>
             <Route exact path="/">
               <HomeWrapper>
                 <Home
@@ -172,7 +172,7 @@ function App() {
             </Route>
             <Route path="/friends">
               <ProfileWrapper>
-                {newFavorites?.map((friend) => (
+                {filteredFriendsFavorites?.map((friend) => (
                   <div key={friend._id}>
                     <FriendsHeadline>{friend?.name}</FriendsHeadline>
                     <FriendsFlex>
@@ -360,7 +360,6 @@ const FriendsHeadline = styled.h2`
 `;
 
 const SearchbarWrapper = styled.div`
-  margin: 0 auto;
   margin: 0 auto;
   width: 80%;
   max-width: 450px;
