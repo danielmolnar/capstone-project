@@ -15,7 +15,7 @@ export default function Tags({ tags, addProfileTag, removeProfileTag }) {
       setValue('');
       setSelectedTagIndex(-1);
     }
-    if (event.key === 'Backspace') {
+    if (event.key === 'Backspace' && event.target.value === '') {
       selectedTagIndex >= 0
         ? removeProfileTag(tags[selectedTagIndex])
         : removeProfileTag(tags[tags.length - 1]);
