@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import ImageContainer from './ImageContainer';
-import { LeftArrow } from '@styled-icons/boxicons-regular/LeftArrow';
 import { RightArrow } from '@styled-icons/boxicons-regular/RightArrow';
+import { LeftArrow } from '@styled-icons/boxicons-regular/LeftArrow';
 
 function Row({
   title,
@@ -16,8 +16,8 @@ function Row({
   addToFavorites,
   addToWatchList,
 }) {
-  const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
@@ -67,7 +67,7 @@ function Row({
           <ArrowContainer isLoading={isLoading}>
             <NextArrow
               onClick={() => setPage((prevPage) => prevPage + 1)}
-              hasNoPages={hasNoPages}
+              showNext={movies.length >= 20 && !hasNoPages}
             />
           </ArrowContainer>
         </MovieWrapper>
@@ -102,9 +102,10 @@ const BackArrow = styled(LeftArrow)`
 `;
 
 const NextArrow = styled(RightArrow)`
-  visibility: ${({ hasNoPages }) => (hasNoPages ? 'hidden' : 'visible')};
+  visibility: ${({ showNext }) => (showNext ? 'visible' : 'hidden')};
   width: 30px;
   height: 30px;
+  right: 0;
   color: var(--secondary-100);
   cursor: pointer;
   transition: transform 450ms;
@@ -113,12 +114,12 @@ const NextArrow = styled(RightArrow)`
   }
 `;
 
-const ArrowContainer = styled.span`
+const ArrowContainer = styled.div`
   display: ${({ isLoading }) => (isLoading ? 'none' : 'flex')};
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 13px;
+  padding: 5px;
 `;
 const MarginContainer = styled.div`
   margin-right: 15px;

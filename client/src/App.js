@@ -150,6 +150,11 @@ function App() {
     (list) => list.favorites.length !== 0
   );
 
+  const nextHandler = () => {
+    setPage((prevPage) => prevPage + 1);
+    window.scroll({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <>
       <ScrollToTop>
@@ -241,8 +246,8 @@ function App() {
                 </GridWrapper>
                 <ArrowContainer isLoading={isLoading}>
                   <NextArrow
-                    onClick={() => setPage((prevPage) => prevPage + 1)}
-                    isSearching={isSearching}
+                    onClick={nextHandler}
+                    showNext={search.length >= 20 && isSearching}
                   />
                 </ArrowContainer>
               </MovieWrapper>
@@ -347,7 +352,7 @@ const SearchbarWrapper = styled.div`
   max-width: 450px;
 `;
 
-const ArrowContainer = styled.span`
+const ArrowContainer = styled.div`
   display: ${({ isLoading }) => (isLoading ? 'none' : 'flex')};
   align-items: center;
   justify-content: center;
@@ -355,7 +360,7 @@ const ArrowContainer = styled.span`
 `;
 
 const NextArrow = styled(DownArrow)`
-  visibility: ${({ isSearching }) => (isSearching ? 'visible' : 'hidden')};
+  visibility: ${({ showNext }) => (showNext ? 'visible' : 'hidden')};
   width: 30px;
   height: 30px;
   color: var(--secondary-100);

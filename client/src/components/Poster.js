@@ -6,7 +6,7 @@ import spinner from '../assets/LoadingSpinner.gif';
 
 function Poster({ movie, isLarge, isLoading }) {
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
-  let existingPath = movie.poster_path === null;
+  let existingPath = movie?.poster_path === null;
 
   return isLoading ? (
     <ImageStyler
