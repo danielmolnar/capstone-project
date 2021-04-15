@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import ImageContainer from './ImageContainer';
+import { LeftArrow } from '@styled-icons/boxicons-regular/LeftArrow';
+import { RightArrow } from '@styled-icons/boxicons-regular/RightArrow';
 
 function Row({
-  page,
   title,
   isLarge,
   fetchUrl,
+  hasNoPages,
   isFavorite,
   isOnWatchList,
   addToFavorites,
@@ -16,6 +18,7 @@ function Row({
 }) {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     async function fetchMovies() {
@@ -36,11 +39,26 @@ function Row({
     fetchMovies();
   }, [fetchUrl, page]);
 
+  const isFirstPage = page === 1;
+
+  function prevPage() {
+    if (!isFirstPage) {
+      setPage((prevPage) => prevPage - 1);
+    }
+  }
+
+  function nextPage() {
+    setPage((prevPage) => prevPage + 1);
+  }
+
   return (
     <>
       <HeadLineStyler data-testid="headline">{title}</HeadLineStyler>
       <Wrapper data-testid="row">
         <MovieWrapper>
+          <ArrowContainer isLoading={isLoading}>
+            <BackArrow isFirstPage={isFirstPage} onClick={prevPage} />
+          </ArrowContainer>
           {movies?.map((movie) => (
             <MarginContainer key={movie.id}>
               <ImageContainer
@@ -55,6 +73,9 @@ function Row({
               />
             </MarginContainer>
           ))}
+          <ArrowContainer isLoading={isLoading}>
+            <NextArrow onClick={nextPage} hasNoPages={hasNoPages} />
+          </ArrowContainer>
         </MovieWrapper>
       </Wrapper>
     </>
@@ -64,17 +85,47 @@ function Row({
 export default Row;
 
 Row.propTypes = {
-  page: PropTypes.string,
-  adult: PropTypes.bool,
   title: PropTypes.string,
   isLarge: PropTypes.bool,
   fetchUrl: PropTypes.string,
+  hasNoPages: PropTypes.bool,
   isFavorite: PropTypes.func,
   isOnWatchList: PropTypes.func,
   addToWatchList: PropTypes.func,
   addToFavorites: PropTypes.func,
 };
 
+const BackArrow = styled(LeftArrow)`
+  visibility: ${({ isFirstPage }) => (isFirstPage ? 'hidden' : 'visible')};
+  width: 30px;
+  height: 30px;
+  color: white;
+  cursor: pointer;
+  transition: transform 450ms;
+  &:hover {
+    transform: scale(1.2);
+  }
+`;
+
+const NextArrow = styled(RightArrow)`
+  visibility: ${({ hasNoPages }) => (hasNoPages ? 'hidden' : 'visible')};
+  width: 30px;
+  height: 30px;
+  color: white;
+  cursor: pointer;
+  transition: transform 450ms;
+  &:hover {
+    transform: scale(1.2);
+  }
+`;
+
+const ArrowContainer = styled.span`
+  display: ${({ isLoading }) => (isLoading ? 'none' : 'flex')};
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 13px;
+`;
 const MarginContainer = styled.div`
   margin-right: 15px;
 `;

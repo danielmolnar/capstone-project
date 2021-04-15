@@ -41,6 +41,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
         addToWatchList={addToWatchList}
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchTrending}
+        hasNoPages
       />
 
       <Row
@@ -61,7 +62,6 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
         addToWatchList={addToWatchList}
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchActionMovies}
-        page="1"
       />
 
       <Row
@@ -72,7 +72,6 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
         addToWatchList={addToWatchList}
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchAdventures}
-        page="2"
       />
 
       <Row
@@ -103,7 +102,6 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
         addToWatchList={addToWatchList}
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchDocumentaries}
-        page="1"
       />
 
       <Row
@@ -114,7 +112,6 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
         addToWatchList={addToWatchList}
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchDramas}
-        page="2"
       />
 
       <Row
@@ -125,7 +122,6 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
         addToWatchList={addToWatchList}
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchFantasy}
-        page="3"
       />
 
       <Row
@@ -166,7 +162,6 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
         addToWatchList={addToWatchList}
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchThriller}
-        page="2"
       />
     </Wrapper>
   );
