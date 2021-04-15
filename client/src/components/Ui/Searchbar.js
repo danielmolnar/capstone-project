@@ -48,7 +48,7 @@ const SearchWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   box-shadow: var(--boxshadow);
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   border-radius: 10px;
   width: 100%;
 `;

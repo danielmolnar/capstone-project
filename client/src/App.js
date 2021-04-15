@@ -2,6 +2,8 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
+import { DownArrow } from '@styled-icons/boxicons-regular/DownArrow';
+import { UpArrow } from '@styled-icons/boxicons-regular/UpArrow';
 import Navigation from './components/Ui/Navigation/Navigation';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
 import Sidebar from './components/Ui/Navigation/Sidebar';
@@ -28,6 +30,7 @@ function App() {
   const isExistingUser = userProfile.name !== undefined || null;
   const [friends, setFriends] = useLocalStorage('Friends', []);
   const userUrl = `${requests.user}${userProfile?._id}`;
+  const [isSearching, setIsSearching] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isMovie, setIsMovie] = useState(true);
@@ -35,6 +38,7 @@ function App() {
   const [search, setSearch] = useState([]);
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     async function getFriends() {
@@ -48,7 +52,6 @@ function App() {
         console.error(error.message);
       }
     }
-
     getFriends();
   }, []);
 
@@ -88,8 +91,18 @@ function App() {
     updateUser();
   }, [favorites, watchlist]);
 
+  useEffect(() => {
+    if (query === '') {
+      setSearch([]);
+      setIsSearching(false);
+      setPage(1);
+    } else {
+      setIsSearching(true);
+    }
+  }, [query]);
+
   let fetchUrl;
-  query.length <= 2
+  !isSearching
     ? (fetchUrl = requests.fetchTrending)
     : isMovie
     ? (fetchUrl = requests.fetchMovies)
@@ -102,6 +115,7 @@ function App() {
         const request = await axios.get(fetchUrl, {
           params: {
             query: query,
+            page: page,
           },
         });
         setSearch(request.data.results);
@@ -112,7 +126,7 @@ function App() {
       }
     }
     fetchSearch();
-  }, [query, fetchUrl]);
+  }, [query, fetchUrl, page]);
 
   const isOnWatchList = (movieToAdd) =>
     watchlist.some((movie) => movie.id === movieToAdd.id);
@@ -205,6 +219,12 @@ function App() {
                     getQuery={(query) => setQuery(query)}
                   />
                 </SearchbarWrapper>
+                <ArrowContainer isLoading={isLoading}>
+                  <BackArrow
+                    isFirstPage={page === 1}
+                    onClick={() => setPage((prevPage) => prevPage - 1)}
+                  />
+                </ArrowContainer>
                 <GridWrapper>
                   {search?.map((movie) => (
                     <Search
@@ -219,6 +239,12 @@ function App() {
                     />
                   ))}
                 </GridWrapper>
+                <ArrowContainer isLoading={isLoading}>
+                  <NextArrow
+                    onClick={() => setPage((prevPage) => prevPage + 1)}
+                    isSearching={isSearching}
+                  />
+                </ArrowContainer>
               </MovieWrapper>
             </Route>
             <Route path="/favorites">
@@ -283,28 +309,6 @@ function App() {
 
 export default App;
 
-const FriendsFlex = styled.div`
-  margin-left: 25px;
-  display: flex;
-  padding: 20px;
-  overflow-x: scroll;
-  scrollbar-width: none;
-  ::-webkit-scrollbar {
-    display: none;
-  }
-`;
-
-const ProfileWrapper = styled.div`
-  margin: 0 auto;
-  max-width: 1020px;
-  width: 100%;
-  overflow-x: hidden;
-  scrollbar-width: none;
-  ::-webkit-scrollbar {
-    display: none;
-  }
-`;
-
 const MainWrapper = styled.div`
   margin-top: 100px;
   margin-bottom: 100px;
@@ -312,23 +316,6 @@ const MainWrapper = styled.div`
 
 const HomeWrapper = styled.div`
   margin: 0;
-`;
-
-const GridWrapper = styled.div`
-  display: grid;
-  gap: 20px;
-  justify-items: center;
-  grid-template-columns: repeat(4, 1fr);
-  max-width: 1020px;
-  @media (max-width: 800px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  @media (max-width: 500px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  @media (max-width: 320px) {
-    grid-template-columns: 1fr;
-  }
 `;
 
 const MovieWrapper = styled.div`
@@ -354,6 +341,71 @@ const HeadlineWrapper = styled.h2`
   max-width: 1020px;
 `;
 
+const SearchbarWrapper = styled.div`
+  margin: 0 auto;
+  width: 80%;
+  max-width: 450px;
+`;
+
+const ArrowContainer = styled.span`
+  display: ${({ isLoading }) => (isLoading ? 'none' : 'flex')};
+  align-items: center;
+  justify-content: center;
+  padding: 13px;
+`;
+
+const NextArrow = styled(DownArrow)`
+  visibility: ${({ isSearching }) => (isSearching ? 'visible' : 'hidden')};
+  width: 30px;
+  height: 30px;
+  color: var(--secondary-100);
+  cursor: pointer;
+  transition: transform 450ms;
+  &:hover {
+    transform: scale(1.2);
+  }
+`;
+
+const BackArrow = styled(UpArrow)`
+  visibility: ${({ isFirstPage }) => (isFirstPage ? 'hidden' : 'visible')};
+  width: 30px;
+  height: 30px;
+  color: var(--secondary-100);
+  cursor: pointer;
+  transition: transform 450ms;
+  &:hover {
+    transform: scale(1.2);
+  }
+`;
+
+const GridWrapper = styled.div`
+  display: grid;
+  gap: 20px;
+  justify-items: center;
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 1020px;
+  @media (max-width: 800px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (max-width: 500px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: 320px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const ProfileWrapper = styled.div`
+  margin: 0 auto;
+  max-width: 1020px;
+  width: 100%;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
 const FriendsHeadline = styled.h2`
   display: flex;
   margin-left: 20px;
@@ -361,8 +413,13 @@ const FriendsHeadline = styled.h2`
   max-width: 1020px;
 `;
 
-const SearchbarWrapper = styled.div`
-  margin: 0 auto;
-  width: 80%;
-  max-width: 450px;
+const FriendsFlex = styled.div`
+  margin-left: 25px;
+  display: flex;
+  padding: 20px;
+  overflow-x: scroll;
+  scrollbar-width: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;

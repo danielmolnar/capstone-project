@@ -10,8 +10,8 @@ function Row({
   title,
   isLarge,
   fetchUrl,
-  hasNoPages,
   isFavorite,
+  hasNoPages,
   isOnWatchList,
   addToFavorites,
   addToWatchList,
@@ -39,25 +39,16 @@ function Row({
     fetchMovies();
   }, [fetchUrl, page]);
 
-  const isFirstPage = page === 1;
-
-  function prevPage() {
-    if (!isFirstPage) {
-      setPage((prevPage) => prevPage - 1);
-    }
-  }
-
-  function nextPage() {
-    setPage((prevPage) => prevPage + 1);
-  }
-
   return (
     <>
       <HeadLineStyler data-testid="headline">{title}</HeadLineStyler>
       <Wrapper data-testid="row">
         <MovieWrapper>
           <ArrowContainer isLoading={isLoading}>
-            <BackArrow isFirstPage={isFirstPage} onClick={prevPage} />
+            <BackArrow
+              isFirstPage={page === 1}
+              onClick={() => setPage((prevPage) => prevPage - 1)}
+            />
           </ArrowContainer>
           {movies?.map((movie) => (
             <MarginContainer key={movie.id}>
@@ -74,7 +65,10 @@ function Row({
             </MarginContainer>
           ))}
           <ArrowContainer isLoading={isLoading}>
-            <NextArrow onClick={nextPage} hasNoPages={hasNoPages} />
+            <NextArrow
+              onClick={() => setPage((prevPage) => prevPage + 1)}
+              hasNoPages={hasNoPages}
+            />
           </ArrowContainer>
         </MovieWrapper>
       </Wrapper>
@@ -99,7 +93,7 @@ const BackArrow = styled(LeftArrow)`
   visibility: ${({ isFirstPage }) => (isFirstPage ? 'hidden' : 'visible')};
   width: 30px;
   height: 30px;
-  color: white;
+  color: var(--secondary-100);
   cursor: pointer;
   transition: transform 450ms;
   &:hover {
@@ -111,7 +105,7 @@ const NextArrow = styled(RightArrow)`
   visibility: ${({ hasNoPages }) => (hasNoPages ? 'hidden' : 'visible')};
   width: 30px;
   height: 30px;
-  color: white;
+  color: var(--secondary-100);
   cursor: pointer;
   transition: transform 450ms;
   &:hover {
