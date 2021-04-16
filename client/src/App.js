@@ -150,7 +150,7 @@ function App() {
     (list) => list.favorites.length !== 0
   );
 
-  const nextHandler = () => {
+  const handleNextPage = () => {
     setPage((prevPage) => prevPage + 1);
     window.scroll({ top: 0, behavior: 'smooth' });
   };
@@ -246,7 +246,7 @@ function App() {
                 </GridWrapper>
                 <ArrowContainer isLoading={isLoading}>
                   <NextArrow
-                    onClick={nextHandler}
+                    onClick={handleNextPage}
                     showNext={search.length >= 20 && isSearching}
                   />
                 </ArrowContainer>
