@@ -167,6 +167,13 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
   );
 }
 
+Home.propTypes = {
+  isFavorite: PropTypes.func,
+  isOnWatchList: PropTypes.func,
+  addToWatchList: PropTypes.func,
+  addToFavorites: PropTypes.func,
+};
+
 const Wrapper = styled.div`
   margin: 0 auto;
   width: 100%;
@@ -198,12 +205,5 @@ const InfoIcon = styled(PermDeviceInformation)`
     transform: scale(1.25);
   }
 `;
-
-Home.propTypes = {
-  isFavorite: PropTypes.func,
-  isOnWatchList: PropTypes.func,
-  addToWatchList: PropTypes.func,
-  addToFavorites: PropTypes.func,
-};
 
 export default Home;

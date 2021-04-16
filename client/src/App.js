@@ -27,7 +27,7 @@ function App() {
   const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
   const [favorites, setFavorites] = useLocalStorage('Favorites', []);
   const [isLoadingFriends, setIsLoadingFriends] = useState(false);
-  const isExistingUser = userProfile.name !== undefined || null;
+  const isExistingUser = userProfile?.name !== undefined || null;
   const [friends, setFriends] = useLocalStorage('Friends', []);
   const userUrl = `${requests.user}${userProfile?._id}`;
   const [isSearching, setIsSearching] = useState(false);
