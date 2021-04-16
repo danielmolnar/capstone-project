@@ -27,7 +27,6 @@ function App() {
   const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
   const [favorites, setFavorites] = useLocalStorage('Favorites', []);
   const [isLoadingFriends, setIsLoadingFriends] = useState(false);
-  const isExistingUser = Object.keys(userProfile).length !== 0;
   const [friends, setFriends] = useLocalStorage('Friends', []);
   const userUrl = `${requests.user}${userProfile?._id}`;
   const [isSearching, setIsSearching] = useState(false);
@@ -39,6 +38,14 @@ function App() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
+
+  function checkExistingUser(userProfile) {
+    if (userProfile === null) {
+      return false;
+    } else if (Object.keys(userProfile).length === 0) {
+      return false;
+    } else return true;
+  }
 
   useEffect(() => {
     async function getFriends() {
@@ -57,7 +64,7 @@ function App() {
 
   useEffect(() => {
     async function getUser() {
-      if (isExistingUser) {
+      if (checkExistingUser(userProfile)) {
         setIsLoggedIn(true);
         try {
           const response = await axios.get(userUrl);
@@ -73,7 +80,7 @@ function App() {
 
   useEffect(() => {
     async function updateUser() {
-      if (isExistingUser) {
+      if (checkExistingUser(userProfile)) {
         try {
           const response = await axios.put(userUrl, {
             favorites: [...favorites],
