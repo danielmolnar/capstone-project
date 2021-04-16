@@ -89,40 +89,8 @@ Row.propTypes = {
   addToFavorites: PropTypes.func,
 };
 
-const BackArrow = styled(LeftArrow)`
-  visibility: ${({ isFirstPage }) => (isFirstPage ? 'hidden' : 'visible')};
-  width: 30px;
-  height: 30px;
-  color: var(--secondary-100);
-  cursor: pointer;
-  transition: transform 450ms;
-  &:hover {
-    transform: scale(1.2);
-  }
-`;
-
-const NextArrow = styled(RightArrow)`
-  visibility: ${({ showNext }) => (showNext ? 'visible' : 'hidden')};
-  width: 30px;
-  height: 30px;
-  right: 0;
-  color: var(--secondary-100);
-  cursor: pointer;
-  transition: transform 450ms;
-  &:hover {
-    transform: scale(1.2);
-  }
-`;
-
-const ArrowContainer = styled.div`
-  display: ${({ isLoading }) => (isLoading ? 'none' : 'flex')};
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 5px;
-`;
-const MarginContainer = styled.div`
-  margin-right: 15px;
+const HeadLineStyler = styled.h2`
+  margin-left: 20px;
 `;
 
 const Wrapper = styled.div`
@@ -140,6 +108,38 @@ const MovieWrapper = styled.div`
   }
 `;
 
-const HeadLineStyler = styled.h2`
-  margin-left: 20px;
+const ArrowContainer = styled.div`
+  display: ${({ isLoading }) => (isLoading ? 'none' : 'flex')};
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+`;
+const MarginContainer = styled.div`
+  margin-right: 15px;
+`;
+
+const BackArrow = styled(LeftArrow)`
+  color: var(--secondary-100);
+  cursor: pointer;
+  height: 30px;
+  transition: transform 450ms;
+  visibility: ${({ isFirstPage }) => (isFirstPage ? 'hidden' : 'visible')};
+  width: 30px;
+  &:hover {
+    transform: scale(1.2);
+  }
+`;
+
+const NextArrow = styled(RightArrow)`
+  color: var(--secondary-100);
+  cursor: pointer;
+  height: 30px;
+  right: 0;
+  transition: transform 450ms;
+  visibility: ${({ showNext }) => (showNext ? 'visible' : 'hidden')};
+  width: 30px;
+  &:hover {
+    transform: scale(1.2);
+  }
 `;

@@ -6,7 +6,9 @@ import spinner from '../assets/LoadingSpinner.gif';
 
 function Poster({ movie, isLarge, isLoading }) {
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
-  let existingPath = movie?.poster_path === null;
+  const noPath = movie?.poster_path === null && movie?.backdrop_path === null;
+  const noPosterPath = movie?.poster_path === null;
+  const noBackdropPath = movie?.backdrop_path === null;
 
   return isLoading ? (
     <ImageStyler
@@ -14,19 +16,40 @@ function Poster({ movie, isLarge, isLoading }) {
       src={spinner}
       alt={movie?.name || movie?.title || movie?.original_name}
     />
-  ) : existingPath ? (
+  ) : noPath ? (
     <>
       <Title>{movie?.name || movie?.title || movie?.original_name}</Title>
       <ImageStyler
         netflixStyle={isLarge}
+        key={movie?.id}
         src={isLarge ? flixbuddies_poster : backdrop_poster}
+        alt={movie?.name || movie?.title || movie?.original_name}
+      />
+    </>
+  ) : noPosterPath ? (
+    <>
+      <Title>{movie?.name || movie?.title || movie?.original_name}</Title>
+      <ImageStyler
+        netflixStyle={isLarge}
+        key={movie?.id}
+        src={isLarge ? flixbuddies_poster : `${baseUrl}${movie?.backdrop_path}`}
+        alt={movie?.name || movie?.title || movie?.original_name}
+      />
+    </>
+  ) : noBackdropPath ? (
+    <>
+      <Title>{movie?.name || movie?.title || movie?.original_name}</Title>
+      <ImageStyler
+        netflixStyle={isLarge}
+        key={movie?.id}
+        src={isLarge ? `${baseUrl}${movie?.poster_path}` : backdrop_poster}
         alt={movie?.name || movie?.title || movie?.original_name}
       />
     </>
   ) : (
     <ImageStyler
       netflixStyle={isLarge}
-      key={movie.id}
+      key={movie?.id}
       src={`${baseUrl}${isLarge ? movie?.poster_path : movie?.backdrop_path}`}
       alt={movie?.name || movie?.title || movie?.original_name}
     />
@@ -43,7 +66,9 @@ Poster.propTyes = {
 
 const Title = styled.p`
   padding: 5px;
-  text-align: center;
+  position: absolute;
+  margin: 0 auto;
+  font-size: 0.9rem;
 `;
 
 const ImageStyler = styled.img(

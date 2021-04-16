@@ -360,24 +360,25 @@ const ArrowContainer = styled.div`
 `;
 
 const NextArrow = styled(DownArrow)`
-  visibility: ${({ showNext }) => (showNext ? 'visible' : 'hidden')};
-  width: 30px;
-  height: 30px;
   color: var(--secondary-100);
   cursor: pointer;
+  height: 30px;
   transition: transform 450ms;
+  visibility: ${({ showNext }) => (showNext ? 'visible' : 'hidden')};
+  width: 30px;
+
   &:hover {
     transform: scale(1.2);
   }
 `;
 
 const BackArrow = styled(UpArrow)`
-  visibility: ${({ isFirstPage }) => (isFirstPage ? 'hidden' : 'visible')};
-  width: 30px;
-  height: 30px;
   color: var(--secondary-100);
   cursor: pointer;
+  height: 30px;
   transition: transform 450ms;
+  visibility: ${({ isFirstPage }) => (isFirstPage ? 'hidden' : 'visible')};
+  width: 30px;
   &:hover {
     transform: scale(1.2);
   }

@@ -14,8 +14,10 @@ export default function CardInfos({
 }) {
   if (!open) return null;
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
-  const release = movie.first_air_date || movie.release_date;
-  const noBackDropPath = movie.backdrop_path === null;
+  const release = movie?.first_air_date || movie?.release_date;
+  const noRelease =
+    movie?.first_air_date === undefined && movie?.release_date === undefined;
+  const noBackDropPath = movie?.backdrop_path === null;
 
   return ReactDom.createPortal(
     <>
@@ -28,7 +30,7 @@ export default function CardInfos({
         <BackGroundWrapper
           baseUrl={baseUrl}
           noBackDropPath={noBackDropPath}
-          background={movie.backdrop_path || movie.poster_path}
+          background={movie?.backdrop_path || movie?.poster_path}
         >
           <DetailsWrapper>
             <AddToWatchList
@@ -38,15 +40,15 @@ export default function CardInfos({
           </DetailsWrapper>
         </BackGroundWrapper>
         <TextContainer>
-          <p>{movie.overview}</p>
+          <p>{movie?.overview}</p>
         </TextContainer>
         <TagWrapper>
-          <ReleaseWrapper>
-            <p>{release.slice(0, 4)}</p>
+          <ReleaseWrapper noRelease={noRelease}>
+            <p>{release?.slice(0, 4)}</p>
           </ReleaseWrapper>
           <ScoreWrapper>
             <Score />
-            <p>{movie.vote_average}/10</p>
+            <p>{movie?.vote_average}/10</p>
           </ScoreWrapper>
         </TagWrapper>
       </ModalStyler>
@@ -174,7 +176,7 @@ const Score = styled(BiTachometer)`
 `;
 
 const ReleaseWrapper = styled.div`
-  display: flex;
+  display: ${({ noRelease }) => (noRelease ? 'none' : 'flex')};
   align-items: center;
   border-radius: 5px;
   border: solid var(--secondary-100) 1px;
