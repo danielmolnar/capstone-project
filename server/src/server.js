@@ -35,9 +35,7 @@ server.get('/users/:userId', (req, res) => {
   User.findById(userId)
     .then((user) => res.json(user))
     .catch((error) => {
-      console.log(
-        'User not yet registered. Please consider creating a profile'
-      );
+      console.error(error.message);
     });
 });
 
@@ -60,9 +58,7 @@ server.put('/users/:id', (req, res) => {
 
     .then((user) => res.json(user))
     .catch((error) => {
-      console.log(
-        'User not yet registered. Please consider creating a profile'
-      );
+      console.error(error.message);
     });
 });
 

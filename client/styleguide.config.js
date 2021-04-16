@@ -7,10 +7,10 @@ module.exports = {
     '**/src/components/Row.js',
     '**/src/components/Banner.js',
     '**/src/components/Menu.js',
+    '**/src/components/Overlay.js',
     '**/src/components/FriendRows.js',
     '**/src/components/OverlayMenu.js',
     '**/src/components/ImageContainer.js',
-    '**/src/components/Overlay.js',
     '**/src/components/Ui/Navigation/Menu.js',
   ],
   styleguideComponents: {
