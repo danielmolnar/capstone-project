@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import OverlayMenu from '../components/OverlayMenu';
 import CardInfos from '../components/CardInfos';
-import { isMobile } from 'react-device-detect';
 
 export default function Overlay({
   movie,
@@ -16,7 +15,7 @@ export default function Overlay({
   const checkOnWatchList = isOnWatchList(movie);
 
   return (
-    <OverlayStyler isMobile={isMobile}>
+    <OverlayStyler>
       <ButtonWrapper>
         <OverlayMenu
           clickHandler={() => setIsOpen(true)}

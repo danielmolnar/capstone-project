@@ -43,10 +43,7 @@ const MovieContainer = styled.div(
     max-height: 200px;
     position: relative;
     transition: transform 450ms;
-    p {
-      font-size: 0.7rem;
-      position: absolute;
-    }
+
     :hover {
       transform: scale(1.08);
     }

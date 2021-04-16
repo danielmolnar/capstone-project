@@ -3,19 +3,22 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import ImageContainer from './ImageContainer';
+import { RightArrow } from '@styled-icons/boxicons-regular/RightArrow';
+import { LeftArrow } from '@styled-icons/boxicons-regular/LeftArrow';
 
 function Row({
-  page,
   title,
   isLarge,
   fetchUrl,
   isFavorite,
+  hasNoPages,
   isOnWatchList,
   addToFavorites,
   addToWatchList,
 }) {
-  const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [movies, setMovies] = useState([]);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     async function fetchMovies() {
@@ -41,6 +44,12 @@ function Row({
       <HeadLineStyler data-testid="headline">{title}</HeadLineStyler>
       <Wrapper data-testid="row">
         <MovieWrapper>
+          <ArrowContainer isLoading={isLoading}>
+            <BackArrow
+              isFirstPage={page === 1}
+              onClick={() => setPage((prevPage) => prevPage - 1)}
+            />
+          </ArrowContainer>
           {movies?.map((movie) => (
             <MarginContainer key={movie.id}>
               <ImageContainer
@@ -55,6 +64,12 @@ function Row({
               />
             </MarginContainer>
           ))}
+          <ArrowContainer isLoading={isLoading}>
+            <NextArrow
+              onClick={() => setPage((prevPage) => prevPage + 1)}
+              showNext={movies.length >= 20 && !hasNoPages}
+            />
+          </ArrowContainer>
         </MovieWrapper>
       </Wrapper>
     </>
@@ -64,19 +79,18 @@ function Row({
 export default Row;
 
 Row.propTypes = {
-  page: PropTypes.string,
-  adult: PropTypes.bool,
   title: PropTypes.string,
   isLarge: PropTypes.bool,
   fetchUrl: PropTypes.string,
+  hasNoPages: PropTypes.bool,
   isFavorite: PropTypes.func,
   isOnWatchList: PropTypes.func,
   addToWatchList: PropTypes.func,
   addToFavorites: PropTypes.func,
 };
 
-const MarginContainer = styled.div`
-  margin-right: 15px;
+const HeadLineStyler = styled.h2`
+  margin-left: 20px;
 `;
 
 const Wrapper = styled.div`
@@ -94,6 +108,38 @@ const MovieWrapper = styled.div`
   }
 `;
 
-const HeadLineStyler = styled.h2`
-  margin-left: 20px;
+const ArrowContainer = styled.div`
+  display: ${({ isLoading }) => (isLoading ? 'none' : 'flex')};
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+`;
+const MarginContainer = styled.div`
+  margin-right: 15px;
+`;
+
+const BackArrow = styled(LeftArrow)`
+  color: var(--secondary-100);
+  cursor: pointer;
+  height: 30px;
+  transition: transform 450ms;
+  visibility: ${({ isFirstPage }) => (isFirstPage ? 'hidden' : 'visible')};
+  width: 30px;
+  &:hover {
+    transform: scale(1.2);
+  }
+`;
+
+const NextArrow = styled(RightArrow)`
+  color: var(--secondary-100);
+  cursor: pointer;
+  height: 30px;
+  right: 0;
+  transition: transform 450ms;
+  visibility: ${({ showNext }) => (showNext ? 'visible' : 'hidden')};
+  width: 30px;
+  &:hover {
+    transform: scale(1.2);
+  }
 `;

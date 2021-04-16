@@ -35,9 +35,7 @@ server.get('/users/:userId', (req, res) => {
   User.findById(userId)
     .then((user) => res.json(user))
     .catch((error) => {
-      console.log(
-        'User not yet registered. Please consider creating a profile'
-      );
+      console.error(error.message);
     });
 });
 
@@ -60,9 +58,7 @@ server.put('/users/:id', (req, res) => {
 
     .then((user) => res.json(user))
     .catch((error) => {
-      console.log(
-        'User not yet registered. Please consider creating a profile'
-      );
+      console.error(error.message);
     });
 });
 
@@ -91,7 +87,6 @@ server.get('/netflix', (req, res) => {
       {
         params: {
           query: queryParams.query,
-          include_adult: queryParams.include_adult,
           page: queryParams.page,
         },
       }
@@ -111,7 +106,6 @@ server.get('/toprated', (req, res) => {
       {
         params: {
           query: queryParams.query,
-          include_adult: queryParams.include_adult,
           page: queryParams.page,
         },
       }
@@ -131,7 +125,6 @@ server.get('/action', (req, res) => {
       {
         params: {
           query: queryParams.query,
-          include_adult: queryParams.include_adult,
           page: queryParams.page,
         },
       }
@@ -151,7 +144,6 @@ server.get('/adventure', (req, res) => {
       {
         params: {
           query: queryParams.query,
-          include_adult: queryParams.include_adult,
           page: queryParams.page,
         },
       }
@@ -171,7 +163,6 @@ server.get('/comedy', (req, res) => {
       {
         params: {
           query: queryParams.query,
-          include_adult: queryParams.include_adult,
           page: queryParams.page,
         },
       }
@@ -191,7 +182,6 @@ server.get('/crimemovies', (req, res) => {
       {
         params: {
           query: queryParams.query,
-          include_adult: queryParams.include_adult,
           page: queryParams.page,
         },
       }
@@ -211,7 +201,6 @@ server.get('/documentaries', (req, res) => {
       {
         params: {
           query: queryParams.query,
-          include_adult: queryParams.include_adult,
           page: queryParams.page,
         },
       }
@@ -231,7 +220,6 @@ server.get('/dramas', (req, res) => {
       {
         params: {
           query: queryParams.query,
-          include_adult: queryParams.include_adult,
           page: queryParams.page,
         },
       }
@@ -251,7 +239,6 @@ server.get('/fantasy', (req, res) => {
       {
         params: {
           query: queryParams.query,
-          include_adult: queryParams.include_adult,
           page: queryParams.page,
         },
       }
@@ -271,7 +258,6 @@ server.get('/horror', (req, res) => {
       {
         params: {
           query: queryParams.query,
-          include_adult: queryParams.include_adult,
           page: queryParams.page,
         },
       }
@@ -291,7 +277,6 @@ server.get('/music', (req, res) => {
       {
         params: {
           query: queryParams.query,
-          include_adult: queryParams.include_adult,
           page: queryParams.page,
         },
       }
@@ -311,7 +296,6 @@ server.get('/sciencefiction', (req, res) => {
       {
         params: {
           query: queryParams.query,
-          include_adult: queryParams.include_adult,
           page: queryParams.page,
         },
       }
@@ -331,7 +315,6 @@ server.get('/thriller', (req, res) => {
       {
         params: {
           query: queryParams.query,
-          include_adult: queryParams.include_adult,
           page: queryParams.page,
         },
       }
@@ -352,7 +335,6 @@ server.get('/searchmovies', (req, res) => {
       {
         params: {
           query: queryParams.query,
-          include_adult: queryParams.include_adult,
           page: queryParams.page,
         },
       }
@@ -373,7 +355,6 @@ server.get('/searchshows', (req, res) => {
       {
         params: {
           query: queryParams.query,
-          include_adult: queryParams.include_adult,
           page: queryParams.page,
         },
       }
