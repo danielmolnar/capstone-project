@@ -8,6 +8,8 @@ import isValidForm from '../lib/validateFunctions';
 import requests from '../services/requests';
 import Tags from '../components/Tags';
 
+import { Delete } from '@styled-icons/fluentui-system-regular/Delete';
+
 export default function CreateProfile({
   friends,
   watchlist,
@@ -18,16 +20,17 @@ export default function CreateProfile({
   setUserProfile,
 }) {
   const [infoClicked, setInfoClicked] = useState(false);
-  const userUrl = `${requests.user}${userProfile._id}`;
+  const userUrl = `${requests.user}${userProfile?._id}`;
+  const [isDelete, setIsDelete] = useState(false);
 
   const initialProfile = {
-    age: userProfile?.age ?? '',
-    email: userProfile?.email ?? '',
+    age: '',
+    email: '',
     favorites: [...favorites],
     favoritesNumber: favorites?.length,
     friendsNumber: friends?.length,
-    name: userProfile?.name ?? '',
-    tags: userProfile?.tags ?? [],
+    name: '',
+    tags: [],
     watchlist: [...watchlist],
     watchlistNumber: watchlist.length,
   };
@@ -53,6 +56,15 @@ export default function CreateProfile({
     }
   }
 
+  async function deleteUser() {
+    try {
+      const response = await axios.delete(userUrl);
+      const data = response.data;
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
   async function updateUserInfos(profile) {
     try {
       const response = await axios.put(userUrl, {
@@ -65,6 +77,17 @@ export default function CreateProfile({
       setUserProfile(data);
     } catch (e) {
       console.log(e);
+    }
+  }
+
+  function onDelete(event) {
+    if (window.confirm('Are you sure you want to delete your profile?')) {
+      event.preventDefault();
+      deleteUser();
+      setUserProfile({});
+      setProfile(initialProfile);
+      localStorage.removeItem('UserProfile');
+      setIsLoggedIn(false);
     }
   }
 
@@ -153,22 +176,34 @@ export default function CreateProfile({
               removeProfileTag={removeProfileTag}
             />
           </label>
-          <ButtonContainer isLoggedIn={isLoggedIn} data-testid="button">
-            <FormButton onClick={createHandler} text="Submit" />
-            <FormButton onClick={upDateProfile} text="Edit" />
+          <ButtonContainer data-testid="button">
+            <CreateContainer isLoggedIn={isLoggedIn}>
+              <FormButton onClick={createHandler} text="Submit" />
+            </CreateContainer>
+            <EditContainer isLoggedIn={isLoggedIn} isDelete={isDelete}>
+              <FormButton onClick={upDateProfile} text="Edit" />
+              <FormButton
+                onClick={onDelete}
+                text="Delete"
+                isDelete={isDelete}
+              />
+            </EditContainer>
           </ButtonContainer>
-          <InfoContainer infoClicked={infoClicked}>
-            <span onClick={() => setInfoClicked(!infoClicked)}>
-              <Information />
-            </span>
-
-            <p>
-              Fields populated on this page are for form validation practice
-              only. The email address won't be submitted or stored. Therefore,
-              feel free to use imaginary profile details.
-            </p>
-          </InfoContainer>
+          <FlexContainer>
+            <InfoContainer infoClicked={infoClicked}>
+              <span onClick={() => setInfoClicked(!infoClicked)}>
+                <Information />
+              </span>
+              <p>
+                Fields populated on this page are for form validation practice
+                only. The email address won't be submitted or stored. Therefore,
+                feel free to use imaginary profile details.
+              </p>
+            </InfoContainer>
+            <DeleteIcon onClick={() => setIsDelete(!isDelete)} />
+          </FlexContainer>
         </Form>
+        <button onClick={() => console.log(isDelete)}></button>
       </PageWrapper>
     </>
   );
@@ -225,18 +260,43 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 3rem;
   width: 80%;
-  max-width: 10rem;
+  /* max-width: 10rem; */
   margin-top: 1rem;
+`;
+const CreateContainer = styled.div`
+  display: ${({ isLoggedIn }) => (isLoggedIn ? 'none' : '')};
+`;
 
+const EditContainer = styled.div`
+  display: ${({ isLoggedIn }) => (isLoggedIn ? 'flex' : 'none')};
+  /* border: white solid 1px; */
+  width: 100%;
+  width: 15rem;
+  /* justify-content: flex-start;
+  align-items: space-evenly; */
   button:first-child {
-    display: ${({ isLoggedIn }) => (isLoggedIn ? 'none' : '')};
+    margin-left: 1rem;
+    display: ${({ isDelete }) => (isDelete ? 'none' : '')};
   }
 
   button:last-child {
-    display: ${({ isLoggedIn }) => (isLoggedIn ? '' : 'none')};
+    margin-left: 1rem;
+    display: ${({ isDelete }) => (isDelete ? '' : 'none')};
   }
+`;
+
+const FlexContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+`;
+
+const DeleteIcon = styled(Delete)`
+  width: 25px;
+  height: 25px;
+  color: white;
+  cursor: pointer;
 `;
 
 const InfoContainer = styled.div`
