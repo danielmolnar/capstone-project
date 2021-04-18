@@ -157,11 +157,13 @@ export default function CreateProfile({
           <label htmlFor="email">
             <MailContainer>
               <p>E-Mail</p>{' '}
-              <InfoText infoClicked={infoClicked}>
-                Mail address won't be stored
-              </InfoText>
               <Information onClick={() => setInfoClicked(!infoClicked)} />
             </MailContainer>
+            <InfoText infoClicked={infoClicked}>
+              Your Mail address won't be stored. The validation is for practice
+              only. Feel free to use an imaginary address with a common
+              structure.
+            </InfoText>
             <br />
             <InputStyler
               type="text"
@@ -213,9 +215,9 @@ CreateProfile.propTypes = {
 };
 
 const InfoText = styled.p`
+  padding-top: 0.5rem;
   font-size: 0.7rem;
-  padding: 0;
-  visibility: ${({ infoClicked }) => (infoClicked ? '' : 'hidden')};
+  display: ${({ infoClicked }) => (infoClicked ? '' : 'none')};
 `;
 
 const MailContainer = styled.div`
@@ -302,7 +304,7 @@ const EditContainer = styled.div`
 `;
 
 const DeleteIcon = styled(Delete)`
-  margin-top: 0.5rem;
+  margin: 0.5rem 0;
   width: 25px;
   height: 25px;
   color: white;
@@ -311,8 +313,8 @@ const DeleteIcon = styled(Delete)`
 
 const Information = styled(InfoCircle)`
   color: var(--secondary-100);
-  height: 15px;
-  width: 15px;
+  height: 20px;
+  width: 20px;
   color: white;
   cursor: pointer;
 `;
