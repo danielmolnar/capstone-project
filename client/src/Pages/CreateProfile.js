@@ -9,6 +9,7 @@ import requests from '../services/requests';
 import Tags from '../components/Tags';
 
 import { Delete } from '@styled-icons/fluentui-system-regular/Delete';
+import { InfoCircle } from '@styled-icons/boxicons-regular/InfoCircle';
 
 export default function CreateProfile({
   friends,
@@ -58,8 +59,7 @@ export default function CreateProfile({
 
   async function deleteUser() {
     try {
-      const response = await axios.delete(userUrl);
-      const data = response.data;
+      await axios.delete(userUrl);
     } catch (error) {
       console.error(error.message);
     }
@@ -155,7 +155,13 @@ export default function CreateProfile({
             />
           </label>
           <label htmlFor="email">
-            <p>E-Mail*</p>
+            <MailContainer>
+              <p>E-Mail</p>{' '}
+              <InfoText infoClicked={infoClicked}>
+                Mail address won't be stored
+              </InfoText>
+              <Information onClick={() => setInfoClicked(!infoClicked)} />
+            </MailContainer>
             <br />
             <InputStyler
               type="text"
@@ -187,23 +193,10 @@ export default function CreateProfile({
                 text="Delete"
                 isDelete={isDelete}
               />
+              <DeleteIcon onClick={() => setIsDelete(!isDelete)} />
             </EditContainer>
           </ButtonContainer>
-          <FlexContainer>
-            <InfoContainer infoClicked={infoClicked}>
-              <span onClick={() => setInfoClicked(!infoClicked)}>
-                <Information />
-              </span>
-              <p>
-                Fields populated on this page are for form validation practice
-                only. The email address won't be submitted or stored. Therefore,
-                feel free to use imaginary profile details.
-              </p>
-            </InfoContainer>
-            <DeleteIcon onClick={() => setIsDelete(!isDelete)} />
-          </FlexContainer>
         </Form>
-        <button onClick={() => console.log(isDelete)}></button>
       </PageWrapper>
     </>
   );
@@ -219,11 +212,24 @@ CreateProfile.propTypes = {
   setUserProfile: PropTypes.func,
 };
 
+const InfoText = styled.p`
+  font-size: 0.7rem;
+  padding: 0;
+  visibility: ${({ infoClicked }) => (infoClicked ? '' : 'hidden')};
+`;
+
+const MailContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 const Form = styled.form`
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: space-around;
+  width: 80%;
 
   p {
     margin: 0;
@@ -240,6 +246,8 @@ const Form = styled.form`
 const PageWrapper = styled.div`
   margin: 0 auto;
   width: 80%;
+  display: flex;
+  justify-content: center;
 `;
 
 const HeadlineWrapper = styled.div`
@@ -258,10 +266,11 @@ const InputStyler = styled.input`
 
 const ButtonContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 80%;
-  /* max-width: 10rem; */
+  width: 100%;
+  max-width: 20rem;
   margin-top: 1rem;
 `;
 const CreateContainer = styled.div`
@@ -270,63 +279,40 @@ const CreateContainer = styled.div`
 
 const EditContainer = styled.div`
   display: ${({ isLoggedIn }) => (isLoggedIn ? 'flex' : 'none')};
-  /* border: white solid 1px; */
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   width: 15rem;
-  /* justify-content: flex-start;
-  align-items: space-evenly; */
+
   button:first-child {
-    margin-left: 1rem;
     display: ${({ isDelete }) => (isDelete ? 'none' : '')};
+
+    :hover {
+      background-color: var(--button-hover-light);
+    }
   }
 
-  button:last-child {
-    margin-left: 1rem;
+  button:nth-child(2) {
     display: ${({ isDelete }) => (isDelete ? '' : 'none')};
-  }
-`;
 
-const FlexContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
+    :hover {
+      background-color: var(--button-hover-light);
+    }
+  }
 `;
 
 const DeleteIcon = styled(Delete)`
+  margin-top: 0.5rem;
   width: 25px;
   height: 25px;
   color: white;
   cursor: pointer;
 `;
 
-const InfoContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 20rem;
-  max-width: 20rem;
-  span {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    height: 20px;
-    width: 20px;
-    border: var(--secondary-100) solid 1px;
-    border-radius: 50%;
-    transition: transform 450ms;
-    &:hover {
-      transform: scale(1.25);
-    }
-  }
-  p {
-    visibility: ${({ infoClicked }) => (infoClicked ? '' : 'hidden')};
-    margin-left: 10px;
-    font-size: 0.7rem;
-    padding: 5px;
-  }
-`;
-const Information = styled(StarOfLife)`
+const Information = styled(InfoCircle)`
   color: var(--secondary-100);
-  height: 10px;
-  width: 10px;
+  height: 15px;
+  width: 15px;
+  color: white;
+  cursor: pointer;
 `;
