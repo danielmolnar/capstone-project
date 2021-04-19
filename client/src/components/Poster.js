@@ -7,8 +7,10 @@ import spinner from '../assets/LoadingSpinner.gif';
 function Poster({ movie, isLarge, isLoading }) {
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
   const noPath = movie?.poster_path === null && movie?.backdrop_path === null;
-  const noPosterPath = movie?.poster_path === null;
-  const noBackdropPath = movie?.backdrop_path === null;
+  const noPosterPath =
+    movie?.poster_path === null && movie?.backdrop_path != null;
+  const noBackdropPath =
+    movie?.poster_path != null && movie?.backdrop_path === null;
 
   return isLoading ? (
     <ImageStyler
@@ -16,6 +18,26 @@ function Poster({ movie, isLarge, isLoading }) {
       src={spinner}
       alt={movie?.name || movie?.title || movie?.original_name}
     />
+  ) : isLarge && noPosterPath ? (
+    <>
+      <Title>{movie?.name || movie?.title || movie?.original_name}</Title>
+      <ImageStyler
+        netflixStyle={isLarge}
+        key={movie?.id}
+        src={flixbuddies_poster}
+        alt={movie?.name || movie?.title || movie?.original_name}
+      />
+    </>
+  ) : !isLarge && noBackdropPath ? (
+    <>
+      <Title>{movie?.name || movie?.title || movie?.original_name}</Title>
+      <ImageStyler
+        netflixStyle={isLarge}
+        key={movie?.id}
+        src={backdrop_poster}
+        alt={movie?.name || movie?.title || movie?.original_name}
+      />
+    </>
   ) : noPath ? (
     <>
       <Title>{movie?.name || movie?.title || movie?.original_name}</Title>
@@ -23,25 +45,6 @@ function Poster({ movie, isLarge, isLoading }) {
         netflixStyle={isLarge}
         key={movie?.id}
         src={isLarge ? flixbuddies_poster : backdrop_poster}
-        alt={movie?.name || movie?.title || movie?.original_name}
-      />
-    </>
-  ) : noPosterPath ? (
-    <>
-      <Title>{movie?.name || movie?.title || movie?.original_name}</Title>
-      <ImageStyler
-        netflixStyle={isLarge}
-        key={movie?.id}
-        src={isLarge ? flixbuddies_poster : `${baseUrl}${movie?.backdrop_path}`}
-        alt={movie?.name || movie?.title || movie?.original_name}
-      />
-    </>
-  ) : noBackdropPath ? (
-    <>
-      <ImageStyler
-        netflixStyle={isLarge}
-        key={movie?.id}
-        src={isLarge ? `${baseUrl}${movie?.poster_path}` : backdrop_poster}
         alt={movie?.name || movie?.title || movie?.original_name}
       />
     </>
