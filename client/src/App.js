@@ -11,7 +11,8 @@ import Searchbar from './components/Ui/Searchbar';
 import CreateProfile from './Pages/CreateProfile';
 import ScrollToTop from './hooks/useScrollToTop';
 import FriendsCards from './Pages/FriendsCards';
-import sortFilter from './lib/friendsFunctions';
+import sortFilter from './lib/helperFunctions';
+import { checkExistingUser } from './lib/helperFunctions';
 import Banner from '../src/components/Banner';
 import requests from './services/requests';
 import Watchlist from './Pages/Watchlist';
@@ -27,7 +28,6 @@ function App() {
   const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
   const [favorites, setFavorites] = useLocalStorage('Favorites', []);
   const [isLoadingFriends, setIsLoadingFriends] = useState(false);
-  const isExistingUser = Object.keys(userProfile).length !== 0;
   const [friends, setFriends] = useLocalStorage('Friends', []);
   const userUrl = `${requests.user}${userProfile?._id}`;
   const [isSearching, setIsSearching] = useState(false);
@@ -57,7 +57,7 @@ function App() {
 
   useEffect(() => {
     async function getUser() {
-      if (isExistingUser) {
+      if (checkExistingUser(userProfile)) {
         setIsLoggedIn(true);
         try {
           const response = await axios.get(userUrl);
@@ -73,7 +73,7 @@ function App() {
 
   useEffect(() => {
     async function updateUser() {
-      if (isExistingUser) {
+      if (checkExistingUser(userProfile)) {
         try {
           const response = await axios.put(userUrl, {
             favorites: [...favorites],
@@ -328,12 +328,12 @@ const MovieWrapper = styled.div`
   align-items: center;
   flex-direction: column;
   margin: 0 auto;
-  padding: 10px;
-  width: 100%;
   max-width: 1020px;
   overflow-x: hidden;
   overflow-y: scroll;
+  padding: 10px;
   scrollbar-width: none;
+  width: 100%;
   ::-webkit-scrollbar {
     display: none;
   }
@@ -386,9 +386,9 @@ const BackArrow = styled(UpArrow)`
 
 const GridWrapper = styled.div`
   display: grid;
-  gap: 20px;
   justify-items: center;
   grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
   max-width: 1020px;
   @media (max-width: 800px) {
     grid-template-columns: repeat(3, 1fr);
@@ -404,9 +404,9 @@ const GridWrapper = styled.div`
 const ProfileWrapper = styled.div`
   margin: 0 auto;
   max-width: 1020px;
-  width: 100%;
   overflow-x: hidden;
   scrollbar-width: none;
+  width: 100%;
   ::-webkit-scrollbar {
     display: none;
   }
@@ -415,15 +415,15 @@ const ProfileWrapper = styled.div`
 const FriendsHeadline = styled.h2`
   display: flex;
   margin-left: 20px;
-  width: 100%;
   max-width: 1020px;
+  width: 100%;
 `;
 
 const FriendsFlex = styled.div`
-  margin-left: 25px;
   display: flex;
-  padding: 20px;
+  margin-left: 25px;
   overflow-x: scroll;
+  padding: 20px;
   scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;

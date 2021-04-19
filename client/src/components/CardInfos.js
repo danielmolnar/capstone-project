@@ -89,8 +89,8 @@ const ModalStyler = styled.div`
 
 const Header = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   margin: 0 0.8rem 0 0.8rem;
   padding: 0px 5px;
 
@@ -119,8 +119,8 @@ const CloseButton = styled.button`
 const BackGroundWrapper = styled.div(
   (props) => css`
     display: flex;
-    justify-content: space-between;
     align-items: flex-end;
+    justify-content: space-between;
     background-position: center center;
     background-size: cover;
     box-shadow: var(--boxshadow);
@@ -138,15 +138,15 @@ const BackGroundWrapper = styled.div(
 
 const DetailsWrapper = styled.div`
   display: flex;
-  justify-content: flex-start;
   align-items: center;
+  justify-content: flex-start;
   margin: 0 0 0.3rem 0.9rem;
 `;
 
 const TagWrapper = styled.div`
   display: flex;
-  justify-content: flex-start;
   align-items: center;
+  justify-content: flex-start;
   height: 25px;
   margin: 0 0 0.5rem 0.9rem;
 `;
@@ -160,8 +160,8 @@ const TextContainer = styled.div`
 const ScoreWrapper = styled.div`
   display: flex;
   align-items: center;
-  border-radius: 5px;
   border: solid var(--secondary-100) 1px;
+  border-radius: 5px;
   gap: 0.5rem;
   height: 25px;
   margin-left: 1rem;
@@ -178,11 +178,10 @@ const Score = styled(BiTachometer)`
 const ReleaseWrapper = styled.div`
   display: ${({ noRelease }) => (noRelease ? 'none' : 'flex')};
   align-items: center;
-  border-radius: 5px;
   border: solid var(--secondary-100) 1px;
+  border-radius: 5px;
   height: 25px;
   padding: 0.3rem;
-
   p {
     font-size: 0.8rem;
   }

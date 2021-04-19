@@ -105,9 +105,9 @@ const StyledSpan = styled.span`
   box-shadow: var(--boxshadow-light);
   color: var(--fontcolor-secondary);
   font-size: 0.8rem;
-  padding: 5px;
   margin-right: 7.5px;
   margin-bottom: 7.5px;
+  padding: 5px;
 `;
 
 const TagWrapper = styled.section`
@@ -126,19 +126,19 @@ const MainWrapper = styled.div`
 
 const ProfileWrapper = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
-  margin: 0 auto;
-  width: 80%;
-  max-width: 450px;
+  flex-direction: column;
   border: transparent solid 1px;
   border-radius: 10px;
-  margin-bottom: 3rem;
-  padding: 1rem;
   box-shadow: var(--boxshadow);
+  margin: 0 auto;
+  margin-bottom: 3rem;
+  max-width: 450px;
   overflow-x: hidden;
   overflow-y: scroll;
+  padding: 1rem;
   scrollbar-width: none;
+  width: 80%;
   ::-webkit-scrollbar {
     display: none;
   }

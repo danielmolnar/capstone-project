@@ -38,7 +38,6 @@ function Poster({ movie, isLarge, isLoading }) {
     </>
   ) : noBackdropPath ? (
     <>
-      <Title>{movie?.name || movie?.title || movie?.original_name}</Title>
       <ImageStyler
         netflixStyle={isLarge}
         key={movie?.id}
@@ -65,10 +64,10 @@ Poster.propTyes = {
 };
 
 const Title = styled.p`
+  font-size: 0.9rem;
+  margin: 0 auto;
   padding: 5px;
   position: absolute;
-  margin: 0 auto;
-  font-size: 0.9rem;
 `;
 
 const ImageStyler = styled.img(

@@ -47,12 +47,11 @@ export const StyledBurger = styled.button`
 
   div {
     border-radius: 10px;
+    height: 0.25rem;
     position: relative;
     transform-origin: 1px;
-    width: 2rem;
     transition: all 0.3s linear;
-    height: 0.25rem;
-
+    width: 2rem;
     :first-child {
       background: ${({ open }) =>
         open || window.scrollY < 120

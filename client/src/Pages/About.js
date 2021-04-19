@@ -87,19 +87,18 @@ About.propTypes = {
 
 const PageWrapper = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
-  margin: 0 auto;
-  width: 80%;
-  max-width: 450px;
-  border: transparent solid 1px;
+  flex-direction: column;
   border-radius: 10px;
-  margin-bottom: 3rem;
-  padding: 1rem;
   box-shadow: var(--boxshadow);
+  margin: 0 auto;
+  margin-bottom: 3rem;
+  max-width: 450px;
   overflow-x: hidden;
   overflow-y: scroll;
+  padding: 1rem;
   scrollbar-width: none;
+  width: 80%;
   ::-webkit-scrollbar {
     display: none;
   }
@@ -120,7 +119,7 @@ const Credits = styled.li`
   padding: 5px;
 
   a {
-    color: white;
+    color: var(--secondary-100);
   }
 `;
 
@@ -131,7 +130,7 @@ const SublineWrapper = styled.div`
   width: 100%;
 
   ul {
-    color: white;
+    color: var(--secondary-100);
     margin: 0;
   }
 `;
@@ -151,15 +150,15 @@ const StyledSpan = styled.span`
   box-shadow: var(--boxshadow-light);
   color: var(--fontcolor-secondary);
   font-size: 0.8rem;
-  padding: 5px;
   margin-right: 7.5px;
   margin-bottom: 7.5px;
+  padding: 5px;
 `;
 
 const HeadlineWrapper = styled.div`
-  width: 100%;
   margin: 0 auto;
   max-width: 1020px;
+  width: 100%;
   h2 {
     margin-left: 20px;
   }

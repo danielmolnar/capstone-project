@@ -176,30 +176,30 @@ Home.propTypes = {
 
 const Wrapper = styled.div`
   margin: 0 auto;
-  width: 100%;
   max-width: 1020px;
+  width: 100%;
 `;
 
 const InfoContainer = styled.div`
   display: ${({ isMobile }) => (isMobile ? 'none' : 'flex')};
-  justify-content: flex-end;
   align-items: center;
-  width: 100%;
+  justify-content: flex-end;
   max-width: 1020px;
+  width: 100%;
   span {
     cursor: pointer;
   }
   p {
-    visibility: ${({ desktopInfo }) => (desktopInfo ? '' : 'hidden')};
     font-size: 1rem;
+    visibility: ${({ desktopInfo }) => (desktopInfo ? '' : 'hidden')};
   }
 `;
 
 const InfoIcon = styled(PermDeviceInformation)`
   color: var(--secondary-100);
   height: 30px;
-  width: 30px;
   margin: 0 20px;
+  width: 30px;
   transition: transform 450ms;
   &:hover {
     transform: scale(1.25);

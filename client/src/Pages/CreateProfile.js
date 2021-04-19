@@ -2,11 +2,12 @@ import axios from 'axios';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { StarOfLife } from '@styled-icons/fa-solid/StarOfLife';
 import FormButton from '../components/Ui/Button/FormButton';
 import isValidForm from '../lib/validateFunctions';
 import requests from '../services/requests';
 import Tags from '../components/Tags';
+import { Delete } from '@styled-icons/fluentui-system-regular/Delete';
+import { InfoCircle } from '@styled-icons/boxicons-regular/InfoCircle';
 
 export default function CreateProfile({
   friends,
@@ -18,16 +19,17 @@ export default function CreateProfile({
   setUserProfile,
 }) {
   const [infoClicked, setInfoClicked] = useState(false);
-  const userUrl = `${requests.user}${userProfile._id}`;
+  const userUrl = `${requests.user}${userProfile?._id}`;
+  const [isDelete, setIsDelete] = useState(false);
 
   const initialProfile = {
-    age: userProfile?.age ?? '',
-    email: userProfile?.email ?? '',
+    age: '',
+    email: '',
     favorites: [...favorites],
     favoritesNumber: favorites?.length,
     friendsNumber: friends?.length,
-    name: userProfile?.name ?? '',
-    tags: userProfile?.tags ?? [],
+    name: '',
+    tags: [],
     watchlist: [...watchlist],
     watchlistNumber: watchlist.length,
   };
@@ -53,6 +55,14 @@ export default function CreateProfile({
     }
   }
 
+  async function deleteUser() {
+    try {
+      await axios.delete(userUrl);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
   async function updateUserInfos(profile) {
     try {
       const response = await axios.put(userUrl, {
@@ -65,6 +75,17 @@ export default function CreateProfile({
       setUserProfile(data);
     } catch (e) {
       console.log(e);
+    }
+  }
+
+  function onDelete(event) {
+    if (window.confirm('Are you sure you want to delete your profile?')) {
+      event.preventDefault();
+      deleteUser();
+      setUserProfile({});
+      setProfile(initialProfile);
+      localStorage.removeItem('UserProfile');
+      setIsLoggedIn(false);
     }
   }
 
@@ -132,7 +153,15 @@ export default function CreateProfile({
             />
           </label>
           <label htmlFor="email">
-            <p>E-Mail*</p>
+            <MailContainer>
+              <p>E-Mail</p>{' '}
+              <Information onClick={() => setInfoClicked(!infoClicked)} />
+            </MailContainer>
+            <InfoText infoClicked={infoClicked}>
+              Your mail address won't be stored. The validation is for practice
+              only. Feel free to use an imaginary address with a common
+              structure.
+            </InfoText>
             <br />
             <InputStyler
               type="text"
@@ -153,21 +182,20 @@ export default function CreateProfile({
               removeProfileTag={removeProfileTag}
             />
           </label>
-          <ButtonContainer isLoggedIn={isLoggedIn} data-testid="button">
-            <FormButton onClick={createHandler} text="Submit" />
-            <FormButton onClick={upDateProfile} text="Edit" />
+          <ButtonContainer data-testid="button">
+            <CreateContainer isLoggedIn={isLoggedIn}>
+              <FormButton onClick={createHandler} text="Submit" />
+            </CreateContainer>
+            <EditContainer isLoggedIn={isLoggedIn} isDelete={isDelete}>
+              <FormButton onClick={upDateProfile} text="Edit" />
+              <FormButton
+                onClick={onDelete}
+                text="Delete"
+                isDelete={isDelete}
+              />
+              <DeleteIcon onClick={() => setIsDelete(!isDelete)} />
+            </EditContainer>
           </ButtonContainer>
-          <InfoContainer infoClicked={infoClicked}>
-            <span onClick={() => setInfoClicked(!infoClicked)}>
-              <Information />
-            </span>
-
-            <p>
-              Fields populated on this page are for form validation practice
-              only. The email address won't be submitted or stored. Therefore,
-              feel free to use imaginary profile details.
-            </p>
-          </InfoContainer>
         </Form>
       </PageWrapper>
     </>
@@ -184,11 +212,23 @@ CreateProfile.propTypes = {
   setUserProfile: PropTypes.func,
 };
 
+const HeadlineWrapper = styled.div`
+  margin-left: 20px;
+`;
+
+const PageWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  width: 80%;
+`;
+
 const Form = styled.form`
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: space-around;
+  width: 80%;
 
   p {
     margin: 0;
@@ -202,15 +242,6 @@ const Form = styled.form`
   }
 `;
 
-const PageWrapper = styled.div`
-  margin: 0 auto;
-  width: 80%;
-`;
-
-const HeadlineWrapper = styled.div`
-  margin-left: 20px;
-`;
-
 const InputStyler = styled.input`
   border: none;
   border-radius: 5px;
@@ -221,52 +252,76 @@ const InputStyler = styled.input`
   width: 100%;
 `;
 
+const MailContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const InfoText = styled.p`
+  display: ${({ infoClicked }) => (infoClicked ? '' : 'none')};
+  padding-top: 0.5rem;
+  font-size: 0.7rem;
+`;
+
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 3rem;
-  width: 80%;
-  max-width: 10rem;
+  flex-direction: column;
+  justify-content: center;
   margin-top: 1rem;
+  max-width: 20rem;
+  width: 100%;
+`;
+const CreateContainer = styled.div`
+  display: ${({ isLoggedIn }) => (isLoggedIn ? 'none' : '')};
+  width: 100%;
+  width: 15rem;
+
+  button:hover {
+    background-color: var(--button-hover-light);
+  }
+`;
+
+const EditContainer = styled.div`
+  display: ${({ isLoggedIn }) => (isLoggedIn ? 'flex' : 'none')};
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  width: 15rem;
+
+  button:hover {
+    background-color: var(--button-hover-light);
+  }
 
   button:first-child {
-    display: ${({ isLoggedIn }) => (isLoggedIn ? 'none' : '')};
+    display: ${({ isDelete }) => (isDelete ? 'none' : '')};
   }
 
-  button:last-child {
-    display: ${({ isLoggedIn }) => (isLoggedIn ? '' : 'none')};
+  button:nth-child(2) {
+    display: ${({ isDelete }) => (isDelete ? '' : 'none')};
   }
 `;
 
-const InfoContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 20rem;
-  max-width: 20rem;
-  span {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    height: 20px;
-    width: 20px;
-    border: var(--secondary-100) solid 1px;
-    border-radius: 50%;
-    transition: transform 450ms;
-    &:hover {
-      transform: scale(1.25);
-    }
-  }
-  p {
-    visibility: ${({ infoClicked }) => (infoClicked ? '' : 'hidden')};
-    margin-left: 10px;
-    font-size: 0.7rem;
-    padding: 5px;
-  }
-`;
-const Information = styled(StarOfLife)`
+const DeleteIcon = styled(Delete)`
   color: var(--secondary-100);
-  height: 10px;
-  width: 10px;
+  cursor: pointer;
+  height: 25px;
+  margin: 0.5rem 0;
+  width: 25px;
+  transition: transform 450ms;
+  &:hover {
+    transform: scale(1.25);
+  }
+`;
+
+const Information = styled(InfoCircle)`
+  color: var(--secondary-100);
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+  transition: transform 450ms;
+  &:hover {
+    transform: scale(1.25);
+  }
 `;
