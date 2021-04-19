@@ -110,8 +110,8 @@ const MovieWrapper = styled.div`
 
 const ArrowContainer = styled.div`
   display: ${({ isLoading }) => (isLoading ? 'none' : 'flex')};
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
   justify-content: center;
   padding: 5px;
 `;
@@ -135,7 +135,6 @@ const NextArrow = styled(RightArrow)`
   color: var(--secondary-100);
   cursor: pointer;
   height: 30px;
-  right: 0;
   transition: transform 450ms;
   visibility: ${({ showNext }) => (showNext ? 'visible' : 'hidden')};
   width: 30px;

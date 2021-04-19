@@ -17,28 +17,25 @@ Logo.propTypes = {
   styleguide: PropTypes.bool,
 };
 
-const StyledLogo = styled(FlixbuddiesLogo)(
-  (props) => css`
-    height: 3.5rem;
-    object-fit: contain;
-    padding: 10px;
-    width: 100%;
-  `
-);
+const StyledLogo = styled(FlixbuddiesLogo)`
+  height: 3.5rem;
+  object-fit: contain;
+  padding: 10px;
+  width: 100%;
+`;
 
 const ImageWrapper = styled.div(
   (props) => css`
     display: flex;
     justify-content: center;
+    background: var(--secondary-100);
+    box-shadow: var(--boxshadow);
     position: ${({ styleguide }) => (styleguide ? '' : 'fixed')};
     top: 0;
-    width: 100%;
-    box-shadow: var(--boxshadow);
     transition: all 0.5s;
     transition-timing-function: ease-out;
+    width: 100%;
     z-index: 20;
-    background: var(--secondary-100);
-
     ${props.show &&
       css`
         opacity: 0;

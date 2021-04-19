@@ -38,18 +38,18 @@ Searchbar.propTypes = {
 };
 
 const SwitchIcon = styled(ArrowSwitch)`
+  color: var(--secondary-100);
   height: 20px;
   width: 20px;
-  color: var(--secondary-100);
 `;
 
 const SearchWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-radius: 10px;
   box-shadow: var(--boxshadow);
   margin-bottom: 1rem;
-  border-radius: 10px;
   width: 100%;
 `;
 
@@ -60,26 +60,26 @@ const SearchButton = styled.button`
   background-color: var(--primary-100-opacity);
   border: none;
   border-radius: 0px 5px 5px 0px;
-  width: 10rem;
   color: var(--secondary-100);
+  cursor: pointer;
+  font-size: 0.7rem;
   height: 30px;
   outline: none;
   text-decoration: none;
   transition: transform 250ms;
-  font-size: 0.7rem;
-  cursor: pointer;
+  width: 10rem;
   :hover {
     background-color: var(--primary-100);
   }
 `;
 
 const Inputstyler = styled.input`
+  background: var(--secondary-100);
   border: none;
   border-radius: 5px 0px 0px 5px;
   height: 30px;
   max-width: 800px;
   outline: none;
-  width: 100%;
-  background: var(--secondary-100);
   padding: 5px;
+  width: 100%;
 `;

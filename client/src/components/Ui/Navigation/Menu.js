@@ -90,8 +90,8 @@ const AboutIcon = styled(Book)`
 
 const StyledMenu = styled.nav`
   display: flex;
-  flex-direction: column;
   align-items: flex-start;
+  flex-direction: column;
   justify-content: flex-start;
   background: ${({ styleguide }) =>
     styleguide ? 'var(--primary-100)' : 'var(--secondary-background)'};
@@ -117,10 +117,10 @@ const StyledMenu = styled.nav`
 `;
 
 const MenuWrapper = styled.div`
-  margin-top: 2.75rem;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  margin-top: 2.75rem;
   height: 80%;
   width: 100%;
 `;

@@ -2,12 +2,10 @@ import axios from 'axios';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { StarOfLife } from '@styled-icons/fa-solid/StarOfLife';
 import FormButton from '../components/Ui/Button/FormButton';
 import isValidForm from '../lib/validateFunctions';
 import requests from '../services/requests';
 import Tags from '../components/Tags';
-
 import { Delete } from '@styled-icons/fluentui-system-regular/Delete';
 import { InfoCircle } from '@styled-icons/boxicons-regular/InfoCircle';
 
@@ -160,7 +158,7 @@ export default function CreateProfile({
               <Information onClick={() => setInfoClicked(!infoClicked)} />
             </MailContainer>
             <InfoText infoClicked={infoClicked}>
-              Your Mail address won't be stored. The validation is for practice
+              Your mail address won't be stored. The validation is for practice
               only. Feel free to use an imaginary address with a common
               structure.
             </InfoText>
@@ -214,16 +212,15 @@ CreateProfile.propTypes = {
   setUserProfile: PropTypes.func,
 };
 
-const InfoText = styled.p`
-  padding-top: 0.5rem;
-  font-size: 0.7rem;
-  display: ${({ infoClicked }) => (infoClicked ? '' : 'none')};
+const HeadlineWrapper = styled.div`
+  margin-left: 20px;
 `;
 
-const MailContainer = styled.div`
+const PageWrapper = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  margin: 0 auto;
+  width: 80%;
 `;
 
 const Form = styled.form`
@@ -245,17 +242,6 @@ const Form = styled.form`
   }
 `;
 
-const PageWrapper = styled.div`
-  margin: 0 auto;
-  width: 80%;
-  display: flex;
-  justify-content: center;
-`;
-
-const HeadlineWrapper = styled.div`
-  margin-left: 20px;
-`;
-
 const InputStyler = styled.input`
   border: none;
   border-radius: 5px;
@@ -266,55 +252,76 @@ const InputStyler = styled.input`
   width: 100%;
 `;
 
+const MailContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const InfoText = styled.p`
+  display: ${({ infoClicked }) => (infoClicked ? '' : 'none')};
+  padding-top: 0.5rem;
+  font-size: 0.7rem;
+`;
+
 const ButtonContainer = styled.div`
   display: flex;
+  align-items: center;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  width: 100%;
-  max-width: 20rem;
   margin-top: 1rem;
+  max-width: 20rem;
+  width: 100%;
 `;
 const CreateContainer = styled.div`
   display: ${({ isLoggedIn }) => (isLoggedIn ? 'none' : '')};
+  width: 100%;
+  width: 15rem;
+
+  button:hover {
+    background-color: var(--button-hover-light);
+  }
 `;
 
 const EditContainer = styled.div`
   display: ${({ isLoggedIn }) => (isLoggedIn ? 'flex' : 'none')};
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
   width: 100%;
   width: 15rem;
 
+  button:hover {
+    background-color: var(--button-hover-light);
+  }
+
   button:first-child {
     display: ${({ isDelete }) => (isDelete ? 'none' : '')};
-
-    :hover {
-      background-color: var(--button-hover-light);
-    }
   }
 
   button:nth-child(2) {
     display: ${({ isDelete }) => (isDelete ? '' : 'none')};
-
-    :hover {
-      background-color: var(--button-hover-light);
-    }
   }
 `;
 
 const DeleteIcon = styled(Delete)`
+  color: var(--secondary-100);
+  cursor: pointer;
+  height: 25px;
   margin: 0.5rem 0;
   width: 25px;
-  height: 25px;
-  color: white;
-  cursor: pointer;
+  transition: transform 450ms;
+  &:hover {
+    transform: scale(1.25);
+  }
 `;
 
 const Information = styled(InfoCircle)`
   color: var(--secondary-100);
+  cursor: pointer;
   height: 20px;
   width: 20px;
-  color: white;
-  cursor: pointer;
+  transition: transform 450ms;
+  &:hover {
+    transform: scale(1.25);
+  }
 `;

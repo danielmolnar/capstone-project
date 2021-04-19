@@ -76,8 +76,8 @@ Profile.propTypes = {
 
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
   justify-content: center;
   height: 10rem;
   margin: 0 auto;
@@ -94,9 +94,9 @@ const ButtonContainer = styled.div`
 `;
 
 const HeadlineWrapper = styled.div`
-  width: 100%;
   margin: 0 auto;
   max-width: 1020px;
+  width: 100%;
   h2 {
     margin-left: 20px;
   }
@@ -130,8 +130,8 @@ const IconWrapper = styled.div`
   background-color: var(--secondary-100);
   border-radius: 10px;
   box-shadow: var(--boxshadow-light);
-  padding: 5px;
   margin: 7.5px;
+  padding: 5px;
 
   p {
     color: var(--fontcolor-secondary);
@@ -187,19 +187,19 @@ const MainWrapper = styled.div`
 
 const ProfileWrapper = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
-  margin: 0 auto;
-  width: 80%;
-  max-width: 450px;
+  flex-direction: column;
   border: transparent solid 1px;
   border-radius: 10px;
-  margin-bottom: 3rem;
-  padding: 1rem;
   box-shadow: var(--boxshadow);
+  margin: 0 auto;
+  margin-bottom: 3rem;
+  max-width: 450px;
   overflow-x: hidden;
   overflow-y: scroll;
+  padding: 1rem;
   scrollbar-width: none;
+  width: 80%;
   ::-webkit-scrollbar {
     display: none;
   }

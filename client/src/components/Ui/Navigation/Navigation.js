@@ -44,9 +44,9 @@ Navigation.propTypes = {
 
 const StyledLink = styled(NavLink)`
   svg {
-    width: 25px;
-    height: 25px;
     fill: var(--secondary-100);
+    height: 25px;
+    width: 25px;
   }
 `;
 
@@ -54,19 +54,19 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 100%;
   max-width: 800px;
+  width: 100%;
 `;
 
 const NavWrapper = styled.div`
   display: flex;
   justify-content: center;
-  margin: 0 auto;
   background: var(--primary-background);
+  bottom: ${({ styleguide }) => (styleguide ? '' : '0')};
   box-shadow: var(--boxshadow);
   height: 3rem;
+  margin: 0 auto;
+  position: ${({ styleguide }) => (styleguide ? 'static' : 'fixed')};
   width: 100%;
   z-index: 20;
-  bottom: ${({ styleguide }) => (styleguide ? '' : '0')};
-  position: ${({ styleguide }) => (styleguide ? 'static' : 'fixed')};
 `;

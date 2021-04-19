@@ -39,8 +39,8 @@ OverlayMenu.propTypes = {
 
 const IconWrapper = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   background-color: var(--primary-100-opacity);
   box-shadow: var(--boxshadow-light);
   margin-bottom: 0.5rem;
