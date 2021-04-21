@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import flixbuddies_poster from '../assets/flixbuddies_poster.png';
-import backdrop_poster from '../assets/backdrop_poster.png';
-import spinner from '../assets/LoadingSpinner.gif';
+import flixbuddies_poster from '../assets/flixbuddies_poster.webp';
+import backdrop_poster from '../assets/backdrop_poster.webp';
+import spinner from '../assets/LoadingSpinner.webp';
 
 function Poster({ movie, isLarge, isLoading }) {
   const baseUrl = 'https://image.tmdb.org/t/p/original/';

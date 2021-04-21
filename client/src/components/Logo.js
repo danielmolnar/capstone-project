@@ -1,11 +1,18 @@
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import FlixbuddiesLogo from '../assets/FlixbuddiesLogo';
 
-function Logo({ show, styleguide }) {
+function Logo({ show, styleguide, setOpen }) {
   return (
     <ImageWrapper show={show} styleguide={styleguide}>
-      <StyledLogo />
+      <Link
+        to={{
+          pathname: '/',
+        }}
+      >
+        <StyledLogo onClick={() => setOpen(false)} />
+      </Link>
     </ImageWrapper>
   );
 }

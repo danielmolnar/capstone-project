@@ -159,7 +159,12 @@ function App() {
     <>
       <ScrollToTop>
         <Navigation setOpen={setOpen} />
-        <Banner show={show} handleShow={handleShow} open={open} />
+        <Banner
+          show={show}
+          handleShow={handleShow}
+          open={open}
+          setOpen={setOpen}
+        />
         <Sidebar open={open} setOpen={setOpen} isLoggedIn={isLoggedIn} />
         <Switch>
           <MainWrapper>
