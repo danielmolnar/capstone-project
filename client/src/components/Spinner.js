@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import LoadingSpinner from '../assets/LoadingSpinner.gif';
+import LoadingSpinner from '../assets/LoadingSpinner.webp';
 
 export default function Spinner({ isLarge }) {
   return (

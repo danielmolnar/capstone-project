@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Logo from './Logo';
 
-function Banner({ show, handleShow, open }) {
+function Banner({ show, handleShow, open, setOpen }) {
   useEffect(() => {
     const scrollDown = () =>
       window.scrollY > 120 ? handleShow(true) : handleShow(false);
@@ -12,7 +12,11 @@ function Banner({ show, handleShow, open }) {
     };
   }, [handleShow]);
 
-  return open ? <Logo /> : <Logo show={show} />;
+  return open ? (
+    <Logo setOpen={setOpen} />
+  ) : (
+    <Logo show={show} setOpen={setOpen} />
+  );
 }
 
 export default Banner;
@@ -20,5 +24,6 @@ export default Banner;
 Banner.propTypes = {
   show: PropTypes.bool,
   open: PropTypes.bool,
+  setOpen: PropTypes.func,
   handleShow: PropTypes.func,
 };
