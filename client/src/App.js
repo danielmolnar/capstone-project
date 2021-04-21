@@ -23,6 +23,8 @@ import Search from './Pages/Search';
 import About from './Pages/About';
 import Home from './Pages/Home';
 
+import { isMobile } from 'react-device-detect';
+
 function App() {
   const [userProfile, setUserProfile] = useLocalStorage('UserProfile', {});
   const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
@@ -167,7 +169,7 @@ function App() {
         />
         <Sidebar open={open} setOpen={setOpen} isLoggedIn={isLoggedIn} />
         <Switch>
-          <MainWrapper>
+          <MainWrapper isMobile={isMobile}>
             <Route exact path="/">
               <HomeWrapper>
                 <Home
@@ -320,8 +322,10 @@ function App() {
 export default App;
 
 const MainWrapper = styled.div`
-  margin-top: 100px;
-  margin-bottom: 100px;
+  /* margin-top: 100px;
+  margin-bottom: 100px; */
+  margin: ${({ isMobile }) =>
+    !isMobile ? '100px 15rem 100px 15rem' : '100px 0px'};
 `;
 
 const HomeWrapper = styled.div`

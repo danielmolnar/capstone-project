@@ -7,9 +7,13 @@ import { UserSettings } from '@styled-icons/remix-line/UserSettings';
 import { PeopleFill } from '@styled-icons/bootstrap/PeopleFill';
 import { Profile } from '@styled-icons/icomoon/Profile';
 
+import { isMobile } from 'react-device-detect';
+
 export default function Menu({ open, setOpen, styleguide, isLoggedIn }) {
+  !isMobile && setOpen(true);
+
   return (
-    <StyledMenu open={open} styleguide={styleguide}>
+    <StyledMenu open={open} styleguide={styleguide} isMobile={isMobile}>
       <MenuWrapper>
         <BurgerLink to="/favorites">
           <CloseWrapper onClick={() => setOpen(!open)}>
@@ -104,15 +108,17 @@ const StyledMenu = styled.nav`
   text-align: left;
   transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
   transition: transform 0.3s ease-in-out;
-  width: 40vh;
+  width: 20vh;
   z-index: 8;
+  width: ${({ isMobile }) => (isMobile ? '20vh' : '15rem')};
+  /* width: 20vh; */
 
   @media (max-width: 800px) {
-    width: 35vh;
+    width: ${({ isMobile }) => (isMobile ? '35vh' : '15rem')};
   }
 
   @media (max-width: 500px) {
-    width: 30vh;
+    width: ${({ isMobile }) => (isMobile ? '30vh' : '15rem')};
   }
 `;
 
