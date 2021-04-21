@@ -42,6 +42,8 @@ function App() {
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
 
+  // const isMobile = true;
+
   useEffect(() => {
     async function getFriends() {
       setIsLoadingFriends(true);

@@ -26,6 +26,14 @@ export const GlobalStyles = createGlobalStyle`
   --boxshadow-light: 0px 0px 5px rgba(0, 0, 0, 0.5);
   --primary-background: linear-gradient(to right, hsl(6, 66%, 35%), hsl(353, 85%, 53%));
   --secondary-background: linear-gradient(to left, hsl(6, 66%, 35%), hsl(353, 85%, 53%));
+
+  --base-font-size: 1em;
+  --base-line-height: 1.5;
+  --bp-medium: 64em;
+  --bp-large: 85.375em;
+  --bp-xlarge: 120em;
+  --bp-xxlarge: 160em;
+
 }
 
   @font-face {
@@ -54,17 +62,37 @@ body {
 margin: 0;
 background: var(--primary-background);
 font-family: Roboto, sans-serif;
+font-size: var(--base-font-size);
+line-height: var(--base-line-height);
+
+
+/* @media (min-width: 64em) {
+    font-size: 1.2em;
+  }
+
+  @media (min-width: 85.375em) {
+    font-size: 1.3em;
+  }
+
+  @media (min-width: 120em) {
+    font-size: 1.4em;
+  }
+
+  @media (min-width: 160em) {
+    font-size: 1.6em;
+  } */
 }
 
 h2 {
   font-family: Bebas Neue, sans-serif;
-  font-size: 2rem;
   color: var(--secondary-100);
+  font-size: 1.8em;
 }
 
 p {
   font-family: 'Roboto', sans-serif;
   color: var(--secondary-100);
+  font-size: 1em;
 }
 
 `;

@@ -10,6 +10,7 @@ import { Profile } from '@styled-icons/icomoon/Profile';
 import { isMobile } from 'react-device-detect';
 
 export default function Menu({ open, setOpen, styleguide, isLoggedIn }) {
+  // const isMobile = false;
   !isMobile && setOpen(true);
 
   return (

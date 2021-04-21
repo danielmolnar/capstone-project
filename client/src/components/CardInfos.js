@@ -152,8 +152,8 @@ const TagWrapper = styled.div`
 `;
 
 const TextContainer = styled.div`
-  font-size: 0.8rem;
-  line-height: 1.3;
+  font-size: 0.9rem;
+  /* line-height: 1.3; */
   padding: 0 1rem;
 `;
 

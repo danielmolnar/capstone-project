@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { isMobile } from 'react-device-detect';
 
 export default function Burger({ open, setOpen, styleguide }) {
+  // const isMobile = false;
+
   return (
     <StyledBurger
       isMobile={isMobile}
