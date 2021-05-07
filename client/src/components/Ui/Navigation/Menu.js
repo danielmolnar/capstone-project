@@ -111,7 +111,7 @@ const StyledMenu = styled.nav`
   }
 
   svg {
-    height: ${({ isMobile }) => (isMobile ? '30px' : '40px')};
+    height: ${({ isMobile }) => (isMobile ? '30px' : '35px')};
   }
 
   p {

@@ -58,7 +58,7 @@ const NavWrapper = styled.div`
   background: var(--primary-background);
   bottom: ${({ styleguide }) => (styleguide ? '' : '0')};
   box-shadow: var(--boxshadow);
-  height: ${({ isMobile }) => (isMobile ? '3rem' : '5rem')};
+  height: ${({ isMobile }) => (isMobile ? '3rem' : '4rem')};
   margin: 0 auto;
   position: ${({ styleguide }) => (styleguide ? 'static' : 'fixed')};
   width: 100%;
