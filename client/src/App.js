@@ -42,8 +42,6 @@ function App() {
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
 
-  // const isMobile = true;
-
   useEffect(() => {
     async function getFriends() {
       setIsLoadingFriends(true);
@@ -185,7 +183,7 @@ function App() {
             <Route path="/watchlist">
               <MovieWrapper>
                 <HeadlineWrapper>WATCHLIST</HeadlineWrapper>
-                <GridWrapper>
+                <GridWrapper isMobile={isMobile}>
                   {watchlist?.map((movie) => (
                     <Watchlist
                       isLarge
@@ -239,7 +237,7 @@ function App() {
                     onClick={() => setPage((prevPage) => prevPage - 1)}
                   />
                 </ArrowContainer>
-                <GridWrapper>
+                <GridWrapper isMobile={isMobile}>
                   {search?.map((movie) => (
                     <Search
                       isLarge
@@ -264,7 +262,7 @@ function App() {
             <Route path="/favorites">
               <MovieWrapper>
                 <HeadlineWrapper>FAVORITES</HeadlineWrapper>
-                <GridWrapper>
+                <GridWrapper isMobile={isMobile}>
                   {favorites?.map((movie) => (
                     <Favorites
                       isLarge
@@ -324,8 +322,6 @@ function App() {
 export default App;
 
 const MainWrapper = styled.div`
-  /* margin-top: 100px;
-  margin-bottom: 100px; */
   margin: ${({ isMobile }) =>
     !isMobile ? '100px 15rem 100px 15rem' : '100px 0px'};
 `;
@@ -397,9 +393,10 @@ const BackArrow = styled(UpArrow)`
 
 const GridWrapper = styled.div`
   display: grid;
+  padding: ${({ isMobile }) => (isMobile ? '10px' : '20px')};
   justify-items: center;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  gap: ${({ isMobile }) => (isMobile ? '20px' : '25px')};
   max-width: 1020px;
   @media (max-width: 800px) {
     grid-template-columns: repeat(3, 1fr);

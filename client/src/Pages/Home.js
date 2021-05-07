@@ -34,7 +34,6 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
       />
 
       <Row
-        isLarge
         title="TRENDING"
         data-testid="trending"
         isFavorite={isFavorite}
@@ -46,7 +45,6 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
       />
 
       <Row
-        isLarge
         title="TOP RATED"
         data-testid="top-rated"
         isFavorite={isFavorite}
@@ -57,7 +55,6 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
       />
 
       <Row
-        isLarge
         title="ACTION"
         data-testid="action"
         isFavorite={isFavorite}
@@ -68,7 +65,6 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
       />
 
       <Row
-        isLarge
         title="ADVENTURES"
         data-testid="adventures"
         isFavorite={isFavorite}
@@ -79,7 +75,6 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
       />
 
       <Row
-        isLarge
         title="COMEDY"
         data-testid="comedy"
         isFavorite={isFavorite}
@@ -90,7 +85,6 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
       />
 
       <Row
-        isLarge
         title="Crime"
         data-testid="crime"
         isFavorite={isFavorite}
@@ -101,7 +95,6 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
       />
 
       <Row
-        isLarge
         title="DOCUMENTARIES"
         isFavorite={isFavorite}
         data-testid="documentaries"
@@ -112,7 +105,6 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
       />
 
       <Row
-        isLarge
         title="DRAMA"
         data-testid="drama"
         isFavorite={isFavorite}
@@ -123,7 +115,6 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
       />
 
       <Row
-        isLarge
         title="FANTASY"
         data-testid="fantasy"
         isFavorite={isFavorite}
@@ -134,7 +125,6 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
       />
 
       <Row
-        isLarge
         title="HORROR"
         data-testid="horror"
         isFavorite={isFavorite}
@@ -145,7 +135,6 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
       />
 
       <Row
-        isLarge
         title="MUSIC"
         data-testid="music"
         isFavorite={isFavorite}
@@ -156,7 +145,6 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
       />
 
       <Row
-        isLarge
         title="SCIENCE FICTION"
         isFavorite={isFavorite}
         data-testid="science-fiction"
@@ -167,7 +155,6 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
       />
 
       <Row
-        isLarge
         title="Thriller"
         data-testid="thriller"
         isFavorite={isFavorite}
@@ -203,16 +190,15 @@ const InfoContainer = styled.div`
     cursor: pointer;
   }
   p {
-    font-size: 1rem;
+    font-size: 1.1rem;
     visibility: ${({ desktopInfo }) => (desktopInfo ? '' : 'hidden')};
   }
 `;
 
 const InfoIcon = styled(PermDeviceInformation)`
   color: var(--secondary-100);
-  height: 30px;
   margin: 0 20px;
-  width: 30px;
+  width: 40px;
   transition: transform 450ms;
   &:hover {
     transform: scale(1.25);

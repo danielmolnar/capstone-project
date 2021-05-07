@@ -2,8 +2,9 @@ import ReactDom from 'react-dom';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import backdrop_poster from '../assets/backdrop_poster.webp';
-import { BiTachometer } from 'react-icons/bi';
+import { Tachometer } from '@styled-icons/boxicons-regular/Tachometer';
 import AddToWatchList from './AddToWatchList';
+import { isMobile } from 'react-device-detect';
 
 export default function CardInfos({
   open,
@@ -39,15 +40,15 @@ export default function CardInfos({
             />
           </DetailsWrapper>
         </BackGroundWrapper>
-        <TextContainer>
+        <TextContainer isMobile={isMobile}>
           <p>{movie?.overview}</p>
         </TextContainer>
         <TagWrapper>
-          <ReleaseWrapper noRelease={noRelease}>
+          <ReleaseWrapper noRelease={noRelease} isMobile={isMobile}>
             <p>{release?.slice(0, 4)}</p>
           </ReleaseWrapper>
-          <ScoreWrapper>
-            <Score />
+          <ScoreWrapper isMobile={isMobile}>
+            <Score isMobile={isMobile} />
             <p>{movie?.vote_average}/10</p>
           </ScoreWrapper>
         </TagWrapper>
@@ -147,13 +148,12 @@ const TagWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  height: 25px;
+  /* height: 25px; */
   margin: 0 0 0.5rem 0.9rem;
 `;
 
 const TextContainer = styled.div`
-  font-size: 0.9rem;
-  /* line-height: 1.3; */
+  font-size: ${({ isMobile }) => (isMobile ? '.9rem' : '1rem')};
   padding: 0 1rem;
 `;
 
@@ -162,17 +162,18 @@ const ScoreWrapper = styled.div`
   align-items: center;
   border: solid var(--secondary-100) 1px;
   border-radius: 5px;
-  gap: 0.5rem;
   height: 25px;
   margin-left: 1rem;
-  padding: 0.3rem;
+  padding: ${({ isMobile }) => (isMobile ? '0.6rem' : '1rem 0.6rem')};
   p {
-    font-size: 0.8rem;
+    font-size: ${({ isMobile }) => (isMobile ? '0.9rem' : '1.1rem')};
   }
 `;
 
-const Score = styled(BiTachometer)`
+const Score = styled(Tachometer)`
   color: var(--secondary-100);
+  width: ${({ isMobile }) => (isMobile ? '25px' : '30px')};
+  margin-right: 0.5rem;
 `;
 
 const ReleaseWrapper = styled.div`
@@ -181,8 +182,8 @@ const ReleaseWrapper = styled.div`
   border: solid var(--secondary-100) 1px;
   border-radius: 5px;
   height: 25px;
-  padding: 0.3rem;
+  padding: ${({ isMobile }) => (isMobile ? '0.6rem' : '1rem 0.6rem')};
   p {
-    font-size: 0.8rem;
+    font-size: ${({ isMobile }) => (isMobile ? '0.9rem' : '1.1rem')};
   }
 `;

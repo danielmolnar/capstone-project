@@ -63,10 +63,9 @@ export default function Tags({ tags, addProfileTag, removeProfileTag }) {
 }
 
 Tags.propTypes = {
-  headline: PropTypes.string,
+  tags: PropTypes.array,
   addProfileTag: PropTypes.func,
   removeLastTag: PropTypes.func,
-  tags: PropTypes.array,
 };
 
 const SectionWrapper = styled.section`

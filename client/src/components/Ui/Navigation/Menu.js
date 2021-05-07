@@ -10,41 +10,38 @@ import { Profile } from '@styled-icons/icomoon/Profile';
 import { isMobile } from 'react-device-detect';
 
 export default function Menu({ open, setOpen, styleguide, isLoggedIn }) {
-  // const isMobile = false;
-  !isMobile && setOpen(true);
+  let isOpen;
+  if (!isMobile) {
+    isOpen = true;
+  } else isOpen = open;
 
   return (
-    <StyledMenu open={open} styleguide={styleguide} isMobile={isMobile}>
+    <StyledMenu
+      open={open}
+      styleguide={styleguide}
+      isMobile={isMobile}
+      isOpen={isOpen}
+    >
       <MenuWrapper>
-        <BurgerLink to="/favorites">
-          <CloseWrapper onClick={() => setOpen(!open)}>
-            <Heart />
-            <p>Favorites</p>
-          </CloseWrapper>
+        <BurgerLink to="/favorites" onClick={() => setOpen(!open)}>
+          <Heart />
+          <p>Favorites</p>
         </BurgerLink>
-        <BurgerLink to="/friendsinfo">
-          <CloseWrapper onClick={() => setOpen(!open)}>
-            <Friends />
-            <p>Friends</p>
-          </CloseWrapper>
+        <BurgerLink to="/friendsinfo" onClick={() => setOpen(!open)}>
+          <Friends />
+          <p>Friends</p>
         </BurgerLink>
-        <BurgerLink to="/profile">
-          <CloseWrapper onClick={() => setOpen(!open)}>
-            <MyProfile />
-            <p>Profile</p>
-          </CloseWrapper>
+        <BurgerLink to="/profile" onClick={() => setOpen(!open)}>
+          <MyProfile />
+          <p>Profile</p>
         </BurgerLink>
-        <BurgerLink to="/createprofile">
-          <CloseWrapper onClick={() => setOpen(!open)}>
-            <ProfileSettings />
-            <p>{isLoggedIn ? 'Edit Profile' : 'Create Profile'}</p>
-          </CloseWrapper>
+        <BurgerLink to="/createprofile" onClick={() => setOpen(!open)}>
+          <ProfileSettings />
+          <p>{isLoggedIn ? 'Edit Profile' : 'Create Profile'}</p>
         </BurgerLink>
-        <BurgerLink to="/about">
-          <CloseWrapper onClick={() => setOpen(!open)}>
-            <AboutIcon />
-            <p>About</p>
-          </CloseWrapper>
+        <BurgerLink to="/about" onClick={() => setOpen(!open)}>
+          <AboutIcon />
+          <p>About</p>
         </BurgerLink>
       </MenuWrapper>
     </StyledMenu>
@@ -60,44 +57,35 @@ Menu.propTypes = {
 
 const Heart = styled(HeartCircle)`
   color: var(--secondary-100);
-  height: 30px;
-  margin: 0 20px;
-  width: 30px;
+  height: ${({ isMobile }) => (isMobile ? '30px' : '35px')};
+  margin: 15px 15px 15px 25px;
 `;
 
 const Friends = styled(PeopleFill)`
   color: var(--secondary-100);
-  height: 30px;
-  margin: 0 20px;
-  width: 30px;
+  height: ${({ isMobile }) => (isMobile ? '30px' : '35px')};
+  margin: 15px 15px 15px 25px;
 `;
 
 const MyProfile = styled(Profile)`
   color: var(--secondary-100);
-  height: 30px;
-  margin: 0 20px;
-  width: 30px;
+  height: ${({ isMobile }) => (isMobile ? '30px' : '35px')};
+  margin: 15px 15px 15px 25px;
 `;
 
 const ProfileSettings = styled(UserSettings)`
   color: var(--secondary-100);
-  height: 30px;
-  margin: 0 20px;
-  width: 30px;
+  height: ${({ isMobile }) => (isMobile ? '30px' : '35px')};
+  margin: 15px 15px 15px 25px;
 `;
 
 const AboutIcon = styled(Book)`
   color: var(--secondary-100);
-  height: 30px;
-  width: 30px;
-  margin: 0 20px;
+  height: ${({ isMobile }) => (isMobile ? '30px' : '35px')};
+  margin: 15px 15px 15px 25px;
 `;
 
 const StyledMenu = styled.nav`
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  justify-content: flex-start;
   background: ${({ styleguide }) =>
     styleguide ? 'var(--primary-100)' : 'var(--secondary-background)'};
   box-shadow: var(--boxshadow);
@@ -107,12 +95,12 @@ const StyledMenu = styled.nav`
   bottom: ${({ styleguide }) => (styleguide ? '' : '0')};
   position: ${({ styleguide }) => (styleguide ? '' : 'fixed')};
   text-align: left;
-  transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
+  transform: ${({ isOpen }) =>
+    isOpen ? 'translateX(0)' : 'translateX(-100%)'};
   transition: transform 0.3s ease-in-out;
   width: 20vh;
   z-index: 8;
   width: ${({ isMobile }) => (isMobile ? '20vh' : '15rem')};
-  /* width: 20vh; */
 
   @media (max-width: 800px) {
     width: ${({ isMobile }) => (isMobile ? '35vh' : '15rem')};
@@ -121,25 +109,33 @@ const StyledMenu = styled.nav`
   @media (max-width: 500px) {
     width: ${({ isMobile }) => (isMobile ? '30vh' : '15rem')};
   }
+
+  svg {
+    height: ${({ isMobile }) => (isMobile ? '30px' : '40px')};
+  }
+
+  p {
+    font-size: ${({ isMobile }) => (isMobile ? '1rem' : '1.1rem')};
+  }
 `;
 
 const MenuWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-around;
+  align-items: center;
   margin-top: 2.75rem;
   height: 80%;
   width: 100%;
 `;
 
 const BurgerLink = styled(NavLink)`
-  text-decoration: none;
-`;
-
-const CloseWrapper = styled.div`
   display: flex;
+  justify-content: flex-start;
   align-items: center;
-  height: 3rem;
+  height: 4rem;
+  text-decoration: none;
+  width: 100%;
   &:active,
   &:hover {
     background-color: var(--button-hover);

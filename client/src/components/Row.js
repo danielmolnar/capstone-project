@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import ImageContainer from './ImageContainer';
 import { RightArrow } from '@styled-icons/boxicons-regular/RightArrow';
 import { LeftArrow } from '@styled-icons/boxicons-regular/LeftArrow';
+import { isMobile } from 'react-device-detect';
 
 function Row({
   title,
@@ -51,7 +52,7 @@ function Row({
             />
           </ArrowContainer>
           {movies?.map((movie) => (
-            <MarginContainer key={movie.id}>
+            <MarginContainer key={movie.id} isMobile={isMobile}>
               <ImageContainer
                 movie={movie}
                 key={movie?.id}
@@ -116,7 +117,7 @@ const ArrowContainer = styled.div`
   padding: 5px;
 `;
 const MarginContainer = styled.div`
-  margin-right: 15px;
+  margin-right: ${({ isMobile }) => (isMobile ? '15px' : '22.5px')};
 `;
 
 const BackArrow = styled(LeftArrow)`

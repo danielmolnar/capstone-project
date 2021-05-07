@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import flixbuddies_poster from '../assets/flixbuddies_poster.webp';
 import backdrop_poster from '../assets/backdrop_poster.webp';
 import spinner from '../assets/LoadingSpinner.webp';
+import { isMobile } from 'react-device-detect';
 
 function Poster({ movie, isLarge, isLoading }) {
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
@@ -50,6 +51,7 @@ function Poster({ movie, isLarge, isLoading }) {
     </>
   ) : (
     <ImageStyler
+      isMobile={isMobile}
       netflixStyle={isLarge}
       key={movie?.id}
       src={`${baseUrl}${isLarge ? movie?.poster_path : movie?.backdrop_path}`}
@@ -75,12 +77,12 @@ const Title = styled.p`
 
 const ImageStyler = styled.img(
   (props) => css`
-    max-height: 100px;
+    max-height: ${({ isMobile }) => (isMobile ? '100px' : '150px')};
     object-fit: contain;
     ${props.netflixStyle &&
       css`
-        max-height: 200px;
-        max-width: 134px;
+        max-height: ${({ isMobile }) => (isMobile ? '200px' : '300px')};
+        max-width: ${({ isMobile }) => (isMobile ? '134px' : '201px')};
       `}
   `
 );

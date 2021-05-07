@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import Poster from '../components/Poster.js';
 import Overlay from '../components/Overlay';
+import { isMobile } from 'react-device-detect';
 
 function ImageContainer({
   movie,
@@ -13,7 +14,11 @@ function ImageContainer({
   addToFavorites,
 }) {
   return (
-    <MovieContainer isLarge={isLarge} data-testid="movie-container">
+    <MovieContainer
+      isLarge={isLarge}
+      data-testid="movie-container"
+      isMobile={isMobile}
+    >
       <Poster isLarge={isLarge} movie={movie} isLoading={isLoading} />
       <Overlay
         movie={movie}
@@ -40,7 +45,7 @@ ImageContainer.propTypes = {
 
 const MovieContainer = styled.div(
   (props) => css`
-    max-height: 200px;
+    max-height: ${({ isMobile }) => (isMobile ? '200px' : '300px')};
     position: relative;
     transition: transform 450ms;
 

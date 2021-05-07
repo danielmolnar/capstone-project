@@ -65,34 +65,32 @@ font-family: Roboto, sans-serif;
 font-size: var(--base-font-size);
 line-height: var(--base-line-height);
 
-
-/* @media (min-width: 64em) {
-    font-size: 1.2em;
-  }
-
-  @media (min-width: 85.375em) {
-    font-size: 1.3em;
-  }
-
-  @media (min-width: 120em) {
-    font-size: 1.4em;
-  }
-
-  @media (min-width: 160em) {
-    font-size: 1.6em;
-  } */
 }
 
 h2 {
   font-family: Bebas Neue, sans-serif;
   color: var(--secondary-100);
   font-size: 1.8em;
+
+  @media(min-width: 800px) {
+    font-size: 2.2em;
+  }
 }
 
 p {
   font-family: 'Roboto', sans-serif;
   color: var(--secondary-100);
   font-size: 1em;
+  
+  @media(min-width: 800px) {
+    font-size: 1.15em;
+  }
+}
+
+button {
+  @media(min-width: 800px) {
+    font-size: 1em;
+  }
 }
 
 `;

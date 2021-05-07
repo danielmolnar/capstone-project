@@ -18,7 +18,7 @@ const StyledButton = styled.button`
   font-weight: bold;
   margin-bottom: 5px;
   outline: none;
-  padding: 5px 10px;
+  padding: 10px;
   text-decoration: none;
   transition: transform 250ms;
 

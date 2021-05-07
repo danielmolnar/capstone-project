@@ -1,11 +1,16 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { HeartCircle } from '@styled-icons/boxicons-regular/HeartCircle';
+import { isMobile } from 'react-device-detect';
 
 function HeartInactiveButton({ addToFavorites, color }) {
   return (
     <>
-      <StyledHeartInActive onClick={addToFavorites} color={color} />
+      <StyledHeartInActive
+        onClick={addToFavorites}
+        color={color}
+        isMobile={isMobile}
+      />
     </>
   );
 }
@@ -21,7 +26,6 @@ const StyledHeartInActive = styled(HeartCircle)(
   (props) => css`
     cursor: pointer;
     color: ${(props) => `("${props.color}")`};
-    height: 30px;
-    width: 30px;
+    width: ${({ isMobile }) => (isMobile ? '30px' : '35px')};
   `
 );
