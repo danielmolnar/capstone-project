@@ -1,21 +1,22 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { isMobile } from 'react-device-detect';
 import ImageContainer from '../components/ImageContainer';
 import Spinner from '../components/Spinner';
 
 export default function Friends({
   movie,
   isLarge,
-  isLoadingFriends,
   isFavorite,
   isOnWatchList,
   addToWatchList,
   addToFavorites,
+  isLoadingFriends,
 }) {
   return isLoadingFriends ? (
     <Spinner />
   ) : (
-    <MarginContainer>
+    <MarginContainer isMobile={isMobile}>
       <ImageContainer
         movie={movie}
         isLarge={isLarge}
@@ -39,5 +40,5 @@ Friends.propTypes = {
 };
 
 const MarginContainer = styled.div`
-  margin-right: 15px;
+  margin-right: ${({ isMobile }) => (isMobile ? '15px' : '22.5px')};
 `;
