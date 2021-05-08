@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { isMobile } from 'react-device-detect';
 import styled, { css } from 'styled-components';
 import flixbuddies_poster from '../assets/flixbuddies_poster.webp';
 import backdrop_poster from '../assets/backdrop_poster.webp';
@@ -14,6 +15,7 @@ function Poster({ movie, isLarge, isLoading }) {
 
   return isLoading ? (
     <ImageStyler
+      isMobile={isMobile}
       netflixStyle={isLarge}
       src={spinner}
       alt={movie?.name || movie?.title || movie?.original_name}
@@ -22,6 +24,7 @@ function Poster({ movie, isLarge, isLoading }) {
     <>
       <Title>{movie?.name || movie?.title || movie?.original_name}</Title>
       <ImageStyler
+        isMobile={isMobile}
         netflixStyle={isLarge}
         key={movie?.id}
         src={flixbuddies_poster}
@@ -32,6 +35,7 @@ function Poster({ movie, isLarge, isLoading }) {
     <>
       <Title>{movie?.name || movie?.title || movie?.original_name}</Title>
       <ImageStyler
+        isMobile={isMobile}
         netflixStyle={isLarge}
         key={movie?.id}
         src={backdrop_poster}
@@ -42,6 +46,7 @@ function Poster({ movie, isLarge, isLoading }) {
     <>
       <Title>{movie?.name || movie?.title || movie?.original_name}</Title>
       <ImageStyler
+        isMobile={isMobile}
         netflixStyle={isLarge}
         key={movie?.id}
         src={isLarge ? flixbuddies_poster : backdrop_poster}
@@ -50,6 +55,7 @@ function Poster({ movie, isLarge, isLoading }) {
     </>
   ) : (
     <ImageStyler
+      isMobile={isMobile}
       netflixStyle={isLarge}
       key={movie?.id}
       src={`${baseUrl}${isLarge ? movie?.poster_path : movie?.backdrop_path}`}
@@ -63,6 +69,7 @@ export default Poster;
 Poster.propTyes = {
   movie: PropTypes.object,
   isLarge: PropTypes.bool,
+  isMobile: PropTypes.bool,
   isLoading: PropTypes.bool,
 };
 
@@ -75,12 +82,12 @@ const Title = styled.p`
 
 const ImageStyler = styled.img(
   (props) => css`
-    max-height: 100px;
+    max-height: ${({ isMobile }) => (isMobile ? '100px' : '150px')};
     object-fit: contain;
     ${props.netflixStyle &&
       css`
-        max-height: 200px;
-        max-width: 134px;
+        max-height: ${({ isMobile }) => (isMobile ? '200px' : '300px')};
+        max-width: ${({ isMobile }) => (isMobile ? '134px' : '201px')};
       `}
   `
 );

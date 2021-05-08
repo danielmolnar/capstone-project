@@ -1,27 +1,11 @@
-import { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { isMobile } from 'react-device-detect';
-import { PermDeviceInformation } from '@styled-icons/material/PermDeviceInformation';
 import requests from '../services/requests';
 import Row from '../components/Row';
 
 function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
-  const [desktopInfo, setDesktopInfo] = useState(false);
-
   return (
     <Wrapper>
-      <>
-        <InfoContainer desktopInfo={desktopInfo} isMobile={isMobile}>
-          <p>
-            Use "shift" + "mousewheel" in order to scroll through the movies
-            horizontally
-          </p>
-          <span onClick={() => setDesktopInfo(!desktopInfo)}>
-            <InfoIcon />
-          </span>
-        </InfoContainer>
-      </>
       <Row
         isLarge
         data-testid="netflix"
@@ -34,6 +18,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
       />
 
       <Row
+        hasNoPages
         title="TRENDING"
         data-testid="trending"
         isFavorite={isFavorite}
@@ -41,7 +26,6 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
         addToWatchList={addToWatchList}
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchTrending}
-        hasNoPages
       />
 
       <Row
@@ -178,32 +162,6 @@ const Wrapper = styled.div`
   margin: 0 auto;
   max-width: 1020px;
   width: 100%;
-`;
-
-const InfoContainer = styled.div`
-  display: ${({ isMobile }) => (isMobile ? 'none' : 'flex')};
-  align-items: center;
-  justify-content: flex-end;
-  max-width: 1020px;
-  width: 100%;
-  span {
-    cursor: pointer;
-  }
-  p {
-    font-size: 1rem;
-    visibility: ${({ desktopInfo }) => (desktopInfo ? '' : 'hidden')};
-  }
-`;
-
-const InfoIcon = styled(PermDeviceInformation)`
-  color: var(--secondary-100);
-  height: 30px;
-  margin: 0 20px;
-  width: 30px;
-  transition: transform 450ms;
-  &:hover {
-    transform: scale(1.25);
-  }
 `;
 
 export default Home;

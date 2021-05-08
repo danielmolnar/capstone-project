@@ -14,15 +14,15 @@ const StyledButton = styled.button`
   background-color: var(--primary-100-opacity);
   border: none;
   border-radius: 3px;
+  cursor: pointer;
   color: var(--secondary-100);
   font-weight: bold;
   margin-bottom: 5px;
   outline: none;
-  padding: 5px 10px;
+  padding: 10px;
   text-decoration: none;
   transition: transform 250ms;
 
-  cursor: pointer;
   :hover {
     background-color: var(--primary-100);
   }

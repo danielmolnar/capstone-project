@@ -2,9 +2,12 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
-import ImageContainer from './ImageContainer';
+import { isMobile } from 'react-device-detect';
+import { InformationCircle } from '@styled-icons/ionicons-outline/InformationCircle';
+import { MoveHorizontal } from '@styled-icons/boxicons-regular/MoveHorizontal';
 import { RightArrow } from '@styled-icons/boxicons-regular/RightArrow';
 import { LeftArrow } from '@styled-icons/boxicons-regular/LeftArrow';
+import ImageContainer from './ImageContainer';
 
 function Row({
   title,
@@ -16,9 +19,12 @@ function Row({
   addToFavorites,
   addToWatchList,
 }) {
+  const [desktopInfo, setDesktopInfo] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
+
+  const showInfo = !isMobile && isLarge;
 
   useEffect(() => {
     async function fetchMovies() {
@@ -41,7 +47,23 @@ function Row({
 
   return (
     <>
-      <HeadLineStyler data-testid="headline">{title}</HeadLineStyler>
+      <HeadlineWrapper>
+        <h2 data-testid="headline">{title}</h2>
+        <InfoContainer
+          desktopInfo={desktopInfo}
+          showInfo={showInfo}
+          isLarge={isLarge}
+        >
+          <div onClick={() => setDesktopInfo(!desktopInfo)}>
+            <ScrollIcon />
+            <InfoIcon />
+          </div>
+          <p>
+            Use "Shift" + "Mousewheel" in order to scroll through the movies
+            horizontally
+          </p>
+        </InfoContainer>
+      </HeadlineWrapper>
       <Wrapper data-testid="row">
         <MovieWrapper>
           <ArrowContainer isLoading={isLoading}>
@@ -51,7 +73,7 @@ function Row({
             />
           </ArrowContainer>
           {movies?.map((movie) => (
-            <MarginContainer key={movie.id}>
+            <MarginContainer key={movie.id} isMobile={isMobile}>
               <ImageContainer
                 movie={movie}
                 key={movie?.id}
@@ -81,6 +103,7 @@ export default Row;
 Row.propTypes = {
   title: PropTypes.string,
   isLarge: PropTypes.bool,
+  isMobile: PropTypes.bool,
   fetchUrl: PropTypes.string,
   hasNoPages: PropTypes.bool,
   isFavorite: PropTypes.func,
@@ -89,8 +112,47 @@ Row.propTypes = {
   addToFavorites: PropTypes.func,
 };
 
-const HeadLineStyler = styled.h2`
-  margin-left: 20px;
+const HeadlineWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+  h2 {
+    margin-left: 20px;
+  }
+`;
+
+const InfoContainer = styled.div`
+  display: ${({ showInfo }) => (showInfo ? 'flex' : 'none')};
+  align-items: flex-end;
+  flex-direction: column;
+  justify-content: center;
+
+  div {
+    cursor: pointer;
+    display: flex;
+    padding: 5px;
+    transition: transform 450ms;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+  p {
+    display: ${({ desktopInfo }) => (desktopInfo ? '' : 'none')};
+    font-size: 1.1rem;
+    padding: 0rem 1rem;
+    text-align: right;
+  }
+`;
+
+const ScrollIcon = styled(MoveHorizontal)`
+  color: var(--secondary-100);
+  width: 40px;
+`;
+
+const InfoIcon = styled(InformationCircle)`
+  color: var(--secondary-100);
+  width: 40px;
 `;
 
 const Wrapper = styled.div`
@@ -116,7 +178,7 @@ const ArrowContainer = styled.div`
   padding: 5px;
 `;
 const MarginContainer = styled.div`
-  margin-right: 15px;
+  margin-right: ${({ isMobile }) => (isMobile ? '15px' : '22.5px')};
 `;
 
 const BackArrow = styled(LeftArrow)`

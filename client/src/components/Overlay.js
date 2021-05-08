@@ -18,18 +18,18 @@ export default function Overlay({
     <OverlayStyler>
       <ButtonWrapper>
         <OverlayMenu
-          clickHandler={() => setIsOpen(true)}
           movie={movie}
           isFavorite={isFavorite}
           addToFavorites={addToFavorites}
+          clickHandler={() => setIsOpen(true)}
         />
       </ButtonWrapper>
       <CardInfos
         movie={movie}
         open={isOpen}
-        checkOnWatchList={checkOnWatchList}
         addToWatchList={addToWatchList}
         onClose={() => setIsOpen(false)}
+        checkOnWatchList={checkOnWatchList}
       />
     </OverlayStyler>
   );
@@ -54,7 +54,7 @@ const OverlayStyler = styled.div`
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
-  bottom: 0;
+  bottom: 10px;
   position: absolute;
   width: 100%;
 `;

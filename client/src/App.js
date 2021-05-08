@@ -1,18 +1,19 @@
 import axios from 'axios';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
+import { isMobile } from 'react-device-detect';
 import { Switch, Route } from 'react-router-dom';
 import { DownArrow } from '@styled-icons/boxicons-regular/DownArrow';
 import { UpArrow } from '@styled-icons/boxicons-regular/UpArrow';
 import Navigation from './components/Ui/Navigation/Navigation';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
+import { checkExistingUser } from './lib/helperFunctions';
 import Sidebar from './components/Ui/Navigation/Sidebar';
 import Searchbar from './components/Ui/Searchbar';
 import CreateProfile from './Pages/CreateProfile';
 import ScrollToTop from './hooks/useScrollToTop';
 import FriendsCards from './Pages/FriendsCards';
 import sortFilter from './lib/helperFunctions';
-import { checkExistingUser } from './lib/helperFunctions';
 import Banner from '../src/components/Banner';
 import requests from './services/requests';
 import Watchlist from './Pages/Watchlist';
@@ -53,6 +54,7 @@ function App() {
       }
     }
     getFriends();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -69,6 +71,7 @@ function App() {
       }
     }
     getUser();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -89,6 +92,7 @@ function App() {
       }
     }
     updateUser();
+    // eslint-disable-next-line
   }, [favorites, watchlist]);
 
   useEffect(() => {
@@ -161,13 +165,13 @@ function App() {
         <Navigation setOpen={setOpen} />
         <Banner
           show={show}
-          handleShow={handleShow}
           open={open}
           setOpen={setOpen}
+          handleShow={handleShow}
         />
         <Sidebar open={open} setOpen={setOpen} isLoggedIn={isLoggedIn} />
         <Switch>
-          <MainWrapper>
+          <MainWrapper isMobile={isMobile}>
             <Route exact path="/">
               <HomeWrapper>
                 <Home
@@ -181,7 +185,7 @@ function App() {
             <Route path="/watchlist">
               <MovieWrapper>
                 <HeadlineWrapper>WATCHLIST</HeadlineWrapper>
-                <GridWrapper>
+                <GridWrapper isMobile={isMobile}>
                   {watchlist?.map((movie) => (
                     <Watchlist
                       isLarge
@@ -235,7 +239,7 @@ function App() {
                     onClick={() => setPage((prevPage) => prevPage - 1)}
                   />
                 </ArrowContainer>
-                <GridWrapper>
+                <GridWrapper isMobile={isMobile}>
                   {search?.map((movie) => (
                     <Search
                       isLarge
@@ -260,7 +264,7 @@ function App() {
             <Route path="/favorites">
               <MovieWrapper>
                 <HeadlineWrapper>FAVORITES</HeadlineWrapper>
-                <GridWrapper>
+                <GridWrapper isMobile={isMobile}>
                   {favorites?.map((movie) => (
                     <Favorites
                       isLarge
@@ -320,8 +324,8 @@ function App() {
 export default App;
 
 const MainWrapper = styled.div`
-  margin-top: 100px;
-  margin-bottom: 100px;
+  margin: ${({ isMobile }) =>
+    isMobile ? '100px 0px' : '100px 15rem 100px 15rem'};
 `;
 
 const HomeWrapper = styled.div`
@@ -337,8 +341,8 @@ const MovieWrapper = styled.div`
   overflow-x: hidden;
   overflow-y: scroll;
   padding: 10px;
-  scrollbar-width: none;
   width: 100%;
+  scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;
   }
@@ -347,14 +351,14 @@ const MovieWrapper = styled.div`
 const HeadlineWrapper = styled.h2`
   display: flex;
   margin-left: 30px;
-  width: 100%;
   max-width: 1020px;
+  width: 100%;
 `;
 
 const SearchbarWrapper = styled.div`
   margin: 0 auto;
-  width: 80%;
   max-width: 450px;
+  width: 80%;
 `;
 
 const ArrowContainer = styled.div`
@@ -391,9 +395,10 @@ const BackArrow = styled(UpArrow)`
 
 const GridWrapper = styled.div`
   display: grid;
+  padding: ${({ isMobile }) => (isMobile ? '10px' : '20px')};
   justify-items: center;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  gap: ${({ isMobile }) => (isMobile ? '20px' : '25px')};
   max-width: 1020px;
   @media (max-width: 800px) {
     grid-template-columns: repeat(3, 1fr);

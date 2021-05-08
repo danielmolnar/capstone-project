@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { isMobile } from 'react-device-detect';
 
 export default function Burger({ open, setOpen, styleguide }) {
   return (
     <StyledBurger
       open={open}
-      onClick={() => setOpen(!open)}
+      isMobile={isMobile}
       styleguide={styleguide}
+      onClick={() => setOpen(!open)}
     >
       <div />
       <div />
@@ -18,11 +20,12 @@ export default function Burger({ open, setOpen, styleguide }) {
 Burger.propTypes = {
   open: PropTypes.bool,
   setOpen: PropTypes.func,
+  isMobile: PropTypes.bool,
   styleguide: PropTypes.bool,
 };
 
 export const StyledBurger = styled.button`
-  display: flex;
+  display: ${({ isMobile }) => (!isMobile ? 'none' : 'flex')};
   flex-direction: column;
   justify-content: space-around;
   background: ${({ styleguide }) =>
@@ -36,10 +39,6 @@ export const StyledBurger = styled.button`
   top: ${({ styleguide }) => (styleguide ? '' : '0.725rem')};
   width: 2rem;
   z-index: 21;
-
-  @media (min-width: 1920px) {
-    left: 5%;
-  }
 
   &:focus {
     outline: none;
