@@ -17,5 +17,6 @@ Users of [FLIXBUDDIES](https://flixbuddies.herokuapp.com) cannot only learn whic
 - Mongoose
 - Node.js
 - PropTypes
+- React-Router
 - Styled-Components
 - Styleguidist
