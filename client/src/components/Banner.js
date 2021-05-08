@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Logo from './Logo';
 import { isMobile } from 'react-device-detect';
+import Logo from './Logo';
 
-function Banner({ show, handleShow, open, setOpen }) {
+function Banner({ show, open, setOpen, handleShow }) {
   let isOpen;
-  if (!isMobile) {
-    isOpen = true;
-  } else isOpen = open;
+  if (isMobile) {
+    isOpen = open;
+  } else isOpen = true;
 
   useEffect(() => {
     const scrollDown = () =>

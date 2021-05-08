@@ -18,18 +18,18 @@ export default function Overlay({
     <OverlayStyler>
       <ButtonWrapper>
         <OverlayMenu
-          clickHandler={() => setIsOpen(true)}
           movie={movie}
           isFavorite={isFavorite}
           addToFavorites={addToFavorites}
+          clickHandler={() => setIsOpen(true)}
         />
       </ButtonWrapper>
       <CardInfos
         movie={movie}
         open={isOpen}
-        checkOnWatchList={checkOnWatchList}
         addToWatchList={addToWatchList}
         onClose={() => setIsOpen(false)}
+        checkOnWatchList={checkOnWatchList}
       />
     </OverlayStyler>
   );

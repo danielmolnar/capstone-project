@@ -7,6 +7,9 @@ import { RightArrow } from '@styled-icons/boxicons-regular/RightArrow';
 import { LeftArrow } from '@styled-icons/boxicons-regular/LeftArrow';
 import { isMobile } from 'react-device-detect';
 
+import { InformationCircle } from '@styled-icons/ionicons-outline/InformationCircle';
+import { MoveHorizontal } from '@styled-icons/boxicons-regular/MoveHorizontal';
+
 function Row({
   title,
   isLarge,
@@ -17,9 +20,12 @@ function Row({
   addToFavorites,
   addToWatchList,
 }) {
+  const [desktopInfo, setDesktopInfo] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
+
+  const showInfo = !isMobile && isLarge;
 
   useEffect(() => {
     async function fetchMovies() {
@@ -42,7 +48,23 @@ function Row({
 
   return (
     <>
-      <HeadLineStyler data-testid="headline">{title}</HeadLineStyler>
+      <HeadlineWrapper>
+        <h2 data-testid="headline">{title}</h2>
+        <InfoContainer
+          desktopInfo={desktopInfo}
+          showInfo={showInfo}
+          isLarge={isLarge}
+        >
+          <p>
+            Use "shift" + "mousewheel" in order to scroll through the movies
+            horizontally
+          </p>
+          <span onClick={() => setDesktopInfo(!desktopInfo)}>
+            <ScrollIcon />
+            <InfoIcon />
+          </span>
+        </InfoContainer>
+      </HeadlineWrapper>
       <Wrapper data-testid="row">
         <MovieWrapper>
           <ArrowContainer isLoading={isLoading}>
@@ -90,8 +112,46 @@ Row.propTypes = {
   addToFavorites: PropTypes.func,
 };
 
-const HeadLineStyler = styled.h2`
-  margin-left: 20px;
+const HeadlineWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+
+  h2 {
+    margin-left: 20px;
+  }
+`;
+
+const InfoContainer = styled.div`
+  display: ${({ showInfo }) => (showInfo ? 'flex' : 'none')};
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  span {
+    cursor: pointer;
+    display: flex;
+    /* transition: transform 450ms; */
+    /* margin-left: 1rem; */
+    padding: 5px;
+    &:hover {
+      /* transform: scale(1.1); */
+    }
+  }
+  p {
+    font-size: 1.1rem;
+    display: ${({ desktopInfo }) => (desktopInfo ? '' : 'none')};
+  }
+`;
+
+const ScrollIcon = styled(MoveHorizontal)`
+  color: var(--secondary-100);
+  width: 40px;
+`;
+
+const InfoIcon = styled(InformationCircle)`
+  color: var(--secondary-100);
+  width: 40px;
 `;
 
 const Wrapper = styled.div`

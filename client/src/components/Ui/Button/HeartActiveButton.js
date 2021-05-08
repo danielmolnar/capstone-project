@@ -1,14 +1,15 @@
 import PropTypes from 'prop-types';
+import { isMobile } from 'react-device-detect';
 import styled, { css } from 'styled-components';
 import { HeartCircle } from '@styled-icons/boxicons-solid/HeartCircle';
-import { isMobile } from 'react-device-detect';
+
 function HeartActiveButton({ addToFavorites, color }) {
   return (
     <>
       <StyledHeartActive
-        onClick={addToFavorites}
         color={color}
         isMobile={isMobile}
+        onClick={addToFavorites}
       />
     </>
   );

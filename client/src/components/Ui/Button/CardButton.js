@@ -14,6 +14,7 @@ const StyledButton = styled.button`
   background-color: var(--primary-100-opacity);
   border: none;
   border-radius: 3px;
+  cursor: pointer;
   color: var(--secondary-100);
   font-weight: bold;
   margin-bottom: 5px;
@@ -22,7 +23,6 @@ const StyledButton = styled.button`
   text-decoration: none;
   transition: transform 250ms;
 
-  cursor: pointer;
   :hover {
     background-color: var(--primary-100);
   }

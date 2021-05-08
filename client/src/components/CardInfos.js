@@ -1,10 +1,10 @@
 import ReactDom from 'react-dom';
 import PropTypes from 'prop-types';
+import { isMobile } from 'react-device-detect';
 import styled, { css } from 'styled-components';
 import backdrop_poster from '../assets/backdrop_poster.webp';
 import { Tachometer } from '@styled-icons/boxicons-regular/Tachometer';
 import AddToWatchList from './AddToWatchList';
-import { isMobile } from 'react-device-detect';
 
 export default function CardInfos({
   open,
@@ -15,10 +15,10 @@ export default function CardInfos({
 }) {
   if (!open) return null;
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
+  const noBackDropPath = movie?.backdrop_path === null;
   const release = movie?.first_air_date || movie?.release_date;
   const noRelease =
     movie?.first_air_date === undefined && movie?.release_date === undefined;
-  const noBackDropPath = movie?.backdrop_path === null;
 
   return ReactDom.createPortal(
     <>
@@ -148,7 +148,6 @@ const TagWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  /* height: 25px; */
   margin: 0 0 0.5rem 0.9rem;
 `;
 
@@ -172,8 +171,8 @@ const ScoreWrapper = styled.div`
 
 const Score = styled(Tachometer)`
   color: var(--secondary-100);
-  width: ${({ isMobile }) => (isMobile ? '25px' : '30px')};
   margin-right: 0.5rem;
+  width: ${({ isMobile }) => (isMobile ? '25px' : '30px')};
 `;
 
 const ReleaseWrapper = styled.div`

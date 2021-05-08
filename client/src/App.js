@@ -1,18 +1,19 @@
 import axios from 'axios';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
+import { isMobile } from 'react-device-detect';
 import { Switch, Route } from 'react-router-dom';
 import { DownArrow } from '@styled-icons/boxicons-regular/DownArrow';
 import { UpArrow } from '@styled-icons/boxicons-regular/UpArrow';
 import Navigation from './components/Ui/Navigation/Navigation';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
+import { checkExistingUser } from './lib/helperFunctions';
 import Sidebar from './components/Ui/Navigation/Sidebar';
 import Searchbar from './components/Ui/Searchbar';
 import CreateProfile from './Pages/CreateProfile';
 import ScrollToTop from './hooks/useScrollToTop';
 import FriendsCards from './Pages/FriendsCards';
 import sortFilter from './lib/helperFunctions';
-import { checkExistingUser } from './lib/helperFunctions';
 import Banner from '../src/components/Banner';
 import requests from './services/requests';
 import Watchlist from './Pages/Watchlist';
@@ -22,8 +23,6 @@ import Profile from './Pages/Profile';
 import Search from './Pages/Search';
 import About from './Pages/About';
 import Home from './Pages/Home';
-
-import { isMobile } from 'react-device-detect';
 
 function App() {
   const [userProfile, setUserProfile] = useLocalStorage('UserProfile', {});
@@ -55,6 +54,7 @@ function App() {
       }
     }
     getFriends();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -71,6 +71,7 @@ function App() {
       }
     }
     getUser();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -91,6 +92,7 @@ function App() {
       }
     }
     updateUser();
+    // eslint-disable-next-line
   }, [favorites, watchlist]);
 
   useEffect(() => {
@@ -163,9 +165,9 @@ function App() {
         <Navigation setOpen={setOpen} />
         <Banner
           show={show}
-          handleShow={handleShow}
           open={open}
           setOpen={setOpen}
+          handleShow={handleShow}
         />
         <Sidebar open={open} setOpen={setOpen} isLoggedIn={isLoggedIn} />
         <Switch>
@@ -323,7 +325,7 @@ export default App;
 
 const MainWrapper = styled.div`
   margin: ${({ isMobile }) =>
-    !isMobile ? '100px 15rem 100px 15rem' : '100px 0px'};
+    isMobile ? '100px 0px' : '100px 15rem 100px 15rem'};
 `;
 
 const HomeWrapper = styled.div`
@@ -339,8 +341,8 @@ const MovieWrapper = styled.div`
   overflow-x: hidden;
   overflow-y: scroll;
   padding: 10px;
-  scrollbar-width: none;
   width: 100%;
+  scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;
   }
@@ -349,14 +351,14 @@ const MovieWrapper = styled.div`
 const HeadlineWrapper = styled.h2`
   display: flex;
   margin-left: 30px;
-  width: 100%;
   max-width: 1020px;
+  width: 100%;
 `;
 
 const SearchbarWrapper = styled.div`
   margin: 0 auto;
-  width: 80%;
   max-width: 450px;
+  width: 80%;
 `;
 
 const ArrowContainer = styled.div`

@@ -2,7 +2,8 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { isMobile } from 'react-device-detect';
-import { PermDeviceInformation } from '@styled-icons/material/PermDeviceInformation';
+import { InformationCircle } from '@styled-icons/ionicons-outline/InformationCircle';
+import { MoveHorizontal } from '@styled-icons/boxicons-regular/MoveHorizontal';
 import requests from '../services/requests';
 import Row from '../components/Row';
 
@@ -12,15 +13,16 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
   return (
     <Wrapper>
       <>
-        <InfoContainer desktopInfo={desktopInfo} isMobile={isMobile}>
+        {/* <InfoContainer desktopInfo={desktopInfo} isMobile={isMobile}>
           <p>
             Use "shift" + "mousewheel" in order to scroll through the movies
             horizontally
           </p>
           <span onClick={() => setDesktopInfo(!desktopInfo)}>
             <InfoIcon />
+            <ScrollIcon />
           </span>
-        </InfoContainer>
+        </InfoContainer> */}
       </>
       <Row
         isLarge
@@ -34,6 +36,7 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
       />
 
       <Row
+        hasNoPages
         title="TRENDING"
         data-testid="trending"
         isFavorite={isFavorite}
@@ -41,7 +44,6 @@ function Home({ isFavorite, isOnWatchList, addToWatchList, addToFavorites }) {
         addToWatchList={addToWatchList}
         addToFavorites={addToFavorites}
         fetchUrl={requests.fetchTrending}
-        hasNoPages
       />
 
       <Row
@@ -188,6 +190,12 @@ const InfoContainer = styled.div`
   width: 100%;
   span {
     cursor: pointer;
+    display: flex;
+    transition: transform 450ms;
+    margin-left: 1rem;
+    &:hover {
+      transform: scale(1.1);
+    }
   }
   p {
     font-size: 1.1rem;
@@ -195,14 +203,14 @@ const InfoContainer = styled.div`
   }
 `;
 
-const InfoIcon = styled(PermDeviceInformation)`
+const ScrollIcon = styled(MoveHorizontal)`
   color: var(--secondary-100);
-  margin: 0 20px;
   width: 40px;
-  transition: transform 450ms;
-  &:hover {
-    transform: scale(1.25);
-  }
+`;
+
+const InfoIcon = styled(InformationCircle)`
+  color: var(--secondary-100);
+  width: 40px;
 `;
 
 export default Home;

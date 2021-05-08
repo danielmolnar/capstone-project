@@ -1,26 +1,25 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import { isMobile } from 'react-device-detect';
 import { Book } from '@styled-icons/fa-solid/Book';
 import { HeartCircle } from '@styled-icons/boxicons-solid/HeartCircle';
 import { UserSettings } from '@styled-icons/remix-line/UserSettings';
 import { PeopleFill } from '@styled-icons/bootstrap/PeopleFill';
 import { Profile } from '@styled-icons/icomoon/Profile';
 
-import { isMobile } from 'react-device-detect';
-
 export default function Menu({ open, setOpen, styleguide, isLoggedIn }) {
   let isOpen;
-  if (!isMobile) {
-    isOpen = true;
-  } else isOpen = open;
+  if (isMobile) {
+    isOpen = open;
+  } else isOpen = true;
 
   return (
     <StyledMenu
       open={open}
-      styleguide={styleguide}
-      isMobile={isMobile}
       isOpen={isOpen}
+      isMobile={isMobile}
+      styleguide={styleguide}
     >
       <MenuWrapper>
         <BurgerLink to="/favorites" onClick={() => setOpen(!open)}>
@@ -51,6 +50,7 @@ export default function Menu({ open, setOpen, styleguide, isLoggedIn }) {
 Menu.propTypes = {
   open: PropTypes.bool,
   setOpen: PropTypes.func,
+  isMobile: PropTypes.bool,
   styleguide: PropTypes.bool,
   isLoggedIn: PropTypes.bool,
 };
@@ -88,19 +88,18 @@ const AboutIcon = styled(Book)`
 const StyledMenu = styled.nav`
   background: ${({ styleguide }) =>
     styleguide ? 'var(--primary-100)' : 'var(--secondary-background)'};
-  box-shadow: var(--boxshadow);
-  height: 100vh;
-  left: ${({ styleguide }) => (styleguide ? '' : '0')};
-  top: ${({ styleguide }) => (styleguide ? '' : '0')};
   bottom: ${({ styleguide }) => (styleguide ? '' : '0')};
+  left: ${({ styleguide }) => (styleguide ? '' : '0')};
   position: ${({ styleguide }) => (styleguide ? '' : 'fixed')};
-  text-align: left;
+  top: ${({ styleguide }) => (styleguide ? '' : '0')};
   transform: ${({ isOpen }) =>
     isOpen ? 'translateX(0)' : 'translateX(-100%)'};
-  transition: transform 0.3s ease-in-out;
-  width: 20vh;
-  z-index: 8;
   width: ${({ isMobile }) => (isMobile ? '20vh' : '15rem')};
+  box-shadow: var(--boxshadow);
+  height: 100vh;
+  text-align: left;
+  transition: transform 0.3s ease-in-out;
+  z-index: 8;
 
   @media (max-width: 800px) {
     width: ${({ isMobile }) => (isMobile ? '35vh' : '15rem')};
