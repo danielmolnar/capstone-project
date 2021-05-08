@@ -31,5 +31,6 @@ Banner.propTypes = {
   show: PropTypes.bool,
   open: PropTypes.bool,
   setOpen: PropTypes.func,
+  isMobile: PropTypes.bool,
   handleShow: PropTypes.func,
 };

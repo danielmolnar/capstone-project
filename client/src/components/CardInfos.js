@@ -62,6 +62,7 @@ CardInfos.propTypes = {
   open: PropTypes.bool,
   movie: PropTypes.object,
   onClose: PropTypes.func,
+  isMobile: PropTypes.bool,
   addToWatchList: PropTypes.func,
   checkOnWatchList: PropTypes.bool,
 };

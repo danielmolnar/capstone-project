@@ -121,9 +121,9 @@ const StyledMenu = styled.nav`
 const MenuWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
-  margin-top: 2.75rem;
+  margin-top: 2.5rem;
   height: 80%;
   width: 100%;
 `;

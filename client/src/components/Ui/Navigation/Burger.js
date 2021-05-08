@@ -20,6 +20,7 @@ export default function Burger({ open, setOpen, styleguide }) {
 Burger.propTypes = {
   open: PropTypes.bool,
   setOpen: PropTypes.func,
+  isMobile: PropTypes.bool,
   styleguide: PropTypes.bool,
 };
 

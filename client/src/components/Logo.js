@@ -23,6 +23,7 @@ export default Logo;
 Logo.propTypes = {
   show: PropTypes.bool,
   setOpen: PropTypes.func,
+  isMobile: PropTypes.bool,
   styleguide: PropTypes.bool,
 };
 

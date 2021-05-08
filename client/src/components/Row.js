@@ -2,13 +2,12 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
-import ImageContainer from './ImageContainer';
-import { RightArrow } from '@styled-icons/boxicons-regular/RightArrow';
-import { LeftArrow } from '@styled-icons/boxicons-regular/LeftArrow';
 import { isMobile } from 'react-device-detect';
-
 import { InformationCircle } from '@styled-icons/ionicons-outline/InformationCircle';
 import { MoveHorizontal } from '@styled-icons/boxicons-regular/MoveHorizontal';
+import { RightArrow } from '@styled-icons/boxicons-regular/RightArrow';
+import { LeftArrow } from '@styled-icons/boxicons-regular/LeftArrow';
+import ImageContainer from './ImageContainer';
 
 function Row({
   title,
@@ -55,14 +54,14 @@ function Row({
           showInfo={showInfo}
           isLarge={isLarge}
         >
-          <p>
-            Use "shift" + "mousewheel" in order to scroll through the movies
-            horizontally
-          </p>
-          <span onClick={() => setDesktopInfo(!desktopInfo)}>
+          <div onClick={() => setDesktopInfo(!desktopInfo)}>
             <ScrollIcon />
             <InfoIcon />
-          </span>
+          </div>
+          <p>
+            Use "Shift" + "Mousewheel" in order to scroll through the movies
+            horizontally
+          </p>
         </InfoContainer>
       </HeadlineWrapper>
       <Wrapper data-testid="row">
@@ -104,6 +103,7 @@ export default Row;
 Row.propTypes = {
   title: PropTypes.string,
   isLarge: PropTypes.bool,
+  isMobile: PropTypes.bool,
   fetchUrl: PropTypes.string,
   hasNoPages: PropTypes.bool,
   isFavorite: PropTypes.func,
@@ -117,7 +117,6 @@ const HeadlineWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 5px;
-
   h2 {
     margin-left: 20px;
   }
@@ -125,22 +124,24 @@ const HeadlineWrapper = styled.div`
 
 const InfoContainer = styled.div`
   display: ${({ showInfo }) => (showInfo ? 'flex' : 'none')};
-  align-items: center;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-  span {
+  align-items: flex-end;
+  flex-direction: column;
+  justify-content: center;
+
+  div {
     cursor: pointer;
     display: flex;
-    /* transition: transform 450ms; */
-    /* margin-left: 1rem; */
     padding: 5px;
+    transition: transform 450ms;
     &:hover {
-      /* transform: scale(1.1); */
+      transform: scale(1.1);
     }
   }
   p {
-    font-size: 1.1rem;
     display: ${({ desktopInfo }) => (desktopInfo ? '' : 'none')};
+    font-size: 1.1rem;
+    padding: 0rem 1rem;
+    text-align: right;
   }
 `;
 

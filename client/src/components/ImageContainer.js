@@ -36,6 +36,7 @@ export default ImageContainer;
 ImageContainer.propTypes = {
   movie: PropTypes.object,
   isLarge: PropTypes.bool,
+  isMobile: PropTypes.bool,
   isLoading: PropTypes.bool,
   isFavorite: PropTypes.func,
   isOnWatchList: PropTypes.func,

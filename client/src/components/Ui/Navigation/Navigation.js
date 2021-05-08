@@ -40,6 +40,7 @@ export default function Navigation({ setOpen, styleguide }) {
 
 Navigation.propTypes = {
   setOpen: PropTypes.func,
+  isMobile: PropTypes.bool,
   styleguide: PropTypes.bool,
 };
 

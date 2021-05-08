@@ -19,6 +19,7 @@ export default InfoButton;
 
 InfoButton.propTypes = {
   color: PropTypes.string,
+  isMobile: PropTypes.bool,
   clickHandler: PropTypes.func,
 };
 

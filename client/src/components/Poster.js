@@ -15,6 +15,7 @@ function Poster({ movie, isLarge, isLoading }) {
 
   return isLoading ? (
     <ImageStyler
+      isMobile={isMobile}
       netflixStyle={isLarge}
       src={spinner}
       alt={movie?.name || movie?.title || movie?.original_name}
@@ -23,6 +24,7 @@ function Poster({ movie, isLarge, isLoading }) {
     <>
       <Title>{movie?.name || movie?.title || movie?.original_name}</Title>
       <ImageStyler
+        isMobile={isMobile}
         netflixStyle={isLarge}
         key={movie?.id}
         src={flixbuddies_poster}
@@ -33,6 +35,7 @@ function Poster({ movie, isLarge, isLoading }) {
     <>
       <Title>{movie?.name || movie?.title || movie?.original_name}</Title>
       <ImageStyler
+        isMobile={isMobile}
         netflixStyle={isLarge}
         key={movie?.id}
         src={backdrop_poster}
@@ -43,6 +46,7 @@ function Poster({ movie, isLarge, isLoading }) {
     <>
       <Title>{movie?.name || movie?.title || movie?.original_name}</Title>
       <ImageStyler
+        isMobile={isMobile}
         netflixStyle={isLarge}
         key={movie?.id}
         src={isLarge ? flixbuddies_poster : backdrop_poster}
@@ -65,6 +69,7 @@ export default Poster;
 Poster.propTyes = {
   movie: PropTypes.object,
   isLarge: PropTypes.bool,
+  isMobile: PropTypes.bool,
   isLoading: PropTypes.bool,
 };
 

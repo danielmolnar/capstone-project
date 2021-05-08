@@ -19,6 +19,7 @@ export default HeartActiveButton;
 
 HeartActiveButton.propTypes = {
   color: PropTypes.string,
+  isMobile: PropTypes.bool,
   addToFavorites: PropTypes.func,
 };
 
