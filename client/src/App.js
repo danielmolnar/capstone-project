@@ -54,7 +54,6 @@ function App() {
       }
     }
     getFriends();
-    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -71,7 +70,6 @@ function App() {
       }
     }
     getUser();
-    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -92,7 +90,6 @@ function App() {
       }
     }
     updateUser();
-    // eslint-disable-next-line
   }, [favorites, watchlist]);
 
   useEffect(() => {
