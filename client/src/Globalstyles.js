@@ -1,8 +1,4 @@
 import { createGlobalStyle } from 'styled-components';
-import Bebas from './fonts/BebasWoff1.woff';
-import Bebas2 from './fonts/BebasWoff2.woff2';
-import Roboto from './fonts/RobotoWoff1.woff';
-import Roboto2 from './fonts/RobotoWoff2.woff2';
 
 export const GlobalStyles = createGlobalStyle`
 
@@ -36,23 +32,6 @@ export const GlobalStyles = createGlobalStyle`
 
 }
 
-  @font-face {
-  font-family: 'Bebas Neue';
-  font-style: normal;
-  font-weight: 400;
-  src: local(''),
-  url(${Bebas2}) format('woff2'),
-  url(${Bebas}) format('woff'); 
-}
-
-@font-face {
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 400;
-  src: local(''),
-  url(${Roboto2}) format('woff2'),
-  url(${Roboto}) format('woff');
-}
 
 *{
   box-sizing: border-box;

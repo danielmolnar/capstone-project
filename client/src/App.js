@@ -309,7 +309,10 @@ function App() {
               </ProfileWrapper>
             </Route>
             <Route path="/about">
-              <About />
+              <ProfileWrapper>
+                <HeadlineWrapper>About</HeadlineWrapper>
+                <About />
+              </ProfileWrapper>
             </Route>
           </MainWrapper>
         </Switch>
@@ -383,7 +386,7 @@ const BackArrow = styled(UpArrow)`
   cursor: pointer;
   height: 30px;
   transition: transform 450ms;
-  visibility: ${({ isFirstPage }) => (isFirstPage ? 'hidden' : 'visible')};
+  display: ${({ isFirstPage }) => (isFirstPage ? 'none' : '')};
   width: 30px;
   &:hover {
     transform: scale(1.2);
@@ -397,13 +400,13 @@ const GridWrapper = styled.div`
   grid-template-columns: repeat(4, 1fr);
   gap: ${({ isMobile }) => (isMobile ? '20px' : '25px')};
   max-width: 1020px;
-  @media (max-width: 800px) {
+  @media (max-width: ${({ isMobile }) => (isMobile ? '800px' : '1450px')}) {
     grid-template-columns: repeat(3, 1fr);
   }
-  @media (max-width: 500px) {
+  @media (max-width: ${({ isMobile }) => (isMobile ? '500px' : '1200px')}) {
     grid-template-columns: repeat(2, 1fr);
   }
-  @media (max-width: 320px) {
+  @media (max-width: ${({ isMobile }) => (isMobile ? '320px' : '970px')}) {
     grid-template-columns: 1fr;
   }
 `;
