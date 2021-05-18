@@ -15,10 +15,10 @@ export default function CardInfos({
 }) {
   if (!open) return null;
   const baseUrl = 'https://image.tmdb.org/t/p/original/';
+  const isRated = movie?.vote_count !== 0;
   const noBackDropPath = movie?.backdrop_path === null;
+  const noRelease = movie?.first_air_date === '' || movie?.release_date === '';
   const release = movie?.first_air_date || movie?.release_date;
-  const noRelease =
-    movie?.first_air_date === undefined && movie?.release_date === undefined;
 
   return ReactDom.createPortal(
     <>
@@ -47,9 +47,9 @@ export default function CardInfos({
           <ReleaseWrapper noRelease={noRelease} isMobile={isMobile}>
             <p>{release?.slice(0, 4)}</p>
           </ReleaseWrapper>
-          <ScoreWrapper isMobile={isMobile}>
+          <ScoreWrapper isMobile={isMobile} noRelease={noRelease}>
             <Score isMobile={isMobile} />
-            <p>{movie?.vote_average}/10</p>
+            {isRated ? <p>{movie?.vote_average}/10</p> : <p>No ratings yet</p>}
           </ScoreWrapper>
         </TagWrapper>
       </ModalStyler>
@@ -163,7 +163,7 @@ const ScoreWrapper = styled.div`
   border: solid var(--secondary-100) 1px;
   border-radius: 5px;
   height: 25px;
-  margin-left: 1rem;
+  margin-left: ${({ noRelease }) => (noRelease ? '' : '1rem')};
   padding: ${({ isMobile }) => (isMobile ? '0.6rem' : '1rem 0.6rem')};
   p {
     font-size: ${({ isMobile }) => (isMobile ? '0.9rem' : '1.1rem')};

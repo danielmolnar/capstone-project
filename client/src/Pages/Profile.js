@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { isMobile } from 'react-device-detect';
 import { HeartCircle } from '@styled-icons/boxicons-regular/HeartCircle';
 import { CameraMovie } from '@styled-icons/boxicons-solid/CameraMovie';
 import { PeopleFill } from '@styled-icons/bootstrap/PeopleFill';
@@ -35,7 +36,7 @@ export default function Profile({
       <HeadlineWrapper data-testid="headline">
         <h2>My Profile</h2>
       </HeadlineWrapper>
-      <ProfileWrapper>
+      <ProfileWrapper isMobile={isMobile}>
         <SublineWrapper>
           <Subline>{userProfile?.name}</Subline>
           <StatsWrapper>
@@ -194,12 +195,12 @@ const ProfileWrapper = styled.div`
   box-shadow: var(--boxshadow);
   margin: 0 auto;
   margin-bottom: 3rem;
-  max-width: 450px;
+  max-width: ${({ isMobile }) => (isMobile ? '' : '600px')};
   overflow-x: hidden;
   overflow-y: scroll;
   padding: 1rem;
   scrollbar-width: none;
-  width: 80%;
+  width: 90%;
   ::-webkit-scrollbar {
     display: none;
   }
