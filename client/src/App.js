@@ -230,7 +230,6 @@ function App() {
                     getQuery={(query) => setQuery(query)}
                   />
                 </SearchbarWrapper>
-                <button onClick={() => console.log(search)}>Logger</button>
                 <ArrowContainer isLoading={isLoading}>
                   <BackArrow
                     isFirstPage={page === 1}
