@@ -9,6 +9,7 @@ import Navigation from './components/Ui/Navigation/Navigation';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
 import FriendHeadline from '../src/components/FriendHeadline';
 import Sidebar from './components/Ui/Navigation/Sidebar';
+import { isExisting } from './lib/helperFunctions';
 import Searchbar from './components/Ui/Searchbar';
 import CreateProfile from './Pages/CreateProfile';
 import ScrollToTop from './hooks/useScrollToTop';
@@ -25,7 +26,7 @@ import About from './Pages/About';
 import Home from './Pages/Home';
 
 function App() {
-  const [userProfile, setUserProfile] = useLocalStorage('UserProfile', null);
+  const [userProfile, setUserProfile] = useLocalStorage('UserProfile', {});
   const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
   const [favorites, setFavorites] = useLocalStorage('Favorites', []);
   const [isLoadingFriends, setIsLoadingFriends] = useState(false);
@@ -58,11 +59,12 @@ function App() {
 
   useEffect(() => {
     async function getUser() {
-      if (userProfile) {
+      if (isExisting(userProfile)) {
         setIsLoggedIn(true);
         try {
           const response = await axios.get(userUrl);
           const data = response.data;
+          data === null && setIsLoggedIn(false);
           setUserProfile(data);
         } catch (error) {
           console.error(error.message);
@@ -74,7 +76,7 @@ function App() {
 
   useEffect(() => {
     async function updateUser() {
-      if (userProfile) {
+      if (isExisting(userProfile)) {
         try {
           const response = await axios.put(userUrl, {
             favorites: [...favorites],

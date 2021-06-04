@@ -82,9 +82,8 @@ export default function CreateProfile({
     if (window.confirm('Are you sure you want to delete your profile?')) {
       event.preventDefault();
       deleteUser();
-      setUserProfile(null);
+      setUserProfile({});
       setProfile(initialProfile);
-      localStorage.removeItem('UserProfile');
       setIsLoggedIn(false);
     }
   }

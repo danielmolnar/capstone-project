@@ -8,3 +8,10 @@ export default function sortFilter(data, profile, setState) {
   });
   setState(sortedData);
 }
+
+export function isExisting(obj) {
+  for (var key in obj) {
+    if (obj.hasOwnProperty(key)) return true;
+  }
+  return false;
+}
