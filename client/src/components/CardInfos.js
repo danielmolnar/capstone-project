@@ -22,7 +22,7 @@ export default function CardInfos({
 
   return ReactDom.createPortal(
     <>
-      <BackgroundStyler />
+      <BackgroundStyler onClick={onClose} />
       <ModalStyler>
         <Header>
           <h2>{movie?.name || movie?.title || movie?.original_name}</h2>

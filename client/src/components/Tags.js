@@ -35,30 +35,28 @@ export default function Tags({ tags, addProfileTag, removeProfileTag }) {
   };
 
   return (
-    <>
-      <SectionWrapper>
-        {tags?.map((tag, index) => (
-          <Tag
-            data-selected={selectedTagIndex === index ? 'selected' : ''}
-            selected={selectedTagIndex === index}
-            data-testid="tag"
-            key={index + tag}
-          >
-            {tag}
-            <i onClick={() => removeProfileTag(tag)}>&times;</i>
-          </Tag>
-        ))}
-        <input
-          data-testid="tag-input"
-          type="text"
-          name="tags"
-          onChange={handleChange}
-          value={value}
-          onKeyDown={handleKeyDown}
-          placeholder="Type here"
-        />
-      </SectionWrapper>
-    </>
+    <SectionWrapper>
+      {tags?.map((tag, index) => (
+        <Tag
+          data-selected={selectedTagIndex === index ? 'selected' : ''}
+          selected={selectedTagIndex === index}
+          data-testid="tag"
+          key={index + tag}
+        >
+          {tag}
+          <i onClick={() => removeProfileTag(tag)}>&times;</i>
+        </Tag>
+      ))}
+      <input
+        data-testid="tag-input"
+        type="text"
+        name="tags"
+        onChange={handleChange}
+        value={value}
+        onKeyDown={handleKeyDown}
+        placeholder="Type here"
+      />
+    </SectionWrapper>
   );
 }
 
