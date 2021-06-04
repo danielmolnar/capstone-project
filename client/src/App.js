@@ -25,7 +25,7 @@ import About from './Pages/About';
 import Home from './Pages/Home';
 
 function App() {
-  const [userProfile, setUserProfile] = useLocalStorage('UserProfile', {});
+  const [userProfile, setUserProfile] = useLocalStorage('UserProfile', null);
   const [watchlist, setWatchList] = useLocalStorage('Watchlist', []);
   const [favorites, setFavorites] = useLocalStorage('Favorites', []);
   const [isLoadingFriends, setIsLoadingFriends] = useState(false);
@@ -203,6 +203,7 @@ function App() {
                   <FriendHeadline
                     isFirstFriend={filteredFriendsFavorites[0] === friend}
                     friend={friend}
+                    isMobile={isMobile}
                   />
                   <FriendsFlex>
                     {friend.favorites?.map((movie) => (
@@ -326,7 +327,7 @@ export default App;
 
 const MainWrapper = styled.div`
   margin: ${({ isMobile }) =>
-    isMobile ? '100px 0px' : '100px 15rem 100px 15rem'};
+    isMobile ? '80px 0px' : '100px 15rem 100px 15rem'};
 `;
 
 const HomeWrapper = styled.div`

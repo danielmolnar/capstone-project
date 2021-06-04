@@ -1,10 +1,10 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { isMobile } from 'react-device-detect';
 import { MoveHorizontal } from '@styled-icons/boxicons-regular/MoveHorizontal';
 import { InformationCircle } from '@styled-icons/ionicons-outline/InformationCircle';
 
-export default function FriendHeadline({ friend, isFirstFriend }) {
+export default function FriendHeadline({ friend, isFirstFriend, isMobile }) {
   const [desktopInfo, setDesktopInfo] = useState(false);
   const showInfo = !isMobile && isFirstFriend;
 
@@ -24,6 +24,12 @@ export default function FriendHeadline({ friend, isFirstFriend }) {
     </HeadlineWrapper>
   );
 }
+
+FriendHeadline.propTypes = {
+  friend: PropTypes.object,
+  isFirstFriend: PropTypes.bool,
+  isMobile: PropTypes.bool,
+};
 
 const HeadlineWrapper = styled.div`
   display: flex;
