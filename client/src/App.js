@@ -7,7 +7,7 @@ import { DownArrow } from '@styled-icons/boxicons-regular/DownArrow';
 import { UpArrow } from '@styled-icons/boxicons-regular/UpArrow';
 import Navigation from './components/Ui/Navigation/Navigation';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
-import { checkExistingUser } from './lib/helperFunctions';
+import FriendHeadline from '../src/components/FriendHeadline';
 import Sidebar from './components/Ui/Navigation/Sidebar';
 import Searchbar from './components/Ui/Searchbar';
 import CreateProfile from './Pages/CreateProfile';
@@ -58,7 +58,7 @@ function App() {
 
   useEffect(() => {
     async function getUser() {
-      if (checkExistingUser(userProfile)) {
+      if (userProfile) {
         setIsLoggedIn(true);
         try {
           const response = await axios.get(userUrl);
@@ -74,7 +74,7 @@ function App() {
 
   useEffect(() => {
     async function updateUser() {
-      if (checkExistingUser(userProfile)) {
+      if (userProfile) {
         try {
           const response = await axios.put(userUrl, {
             favorites: [...favorites],
@@ -200,7 +200,10 @@ function App() {
             <ProfileWrapper>
               {filteredFriendsFavorites?.map((friend) => (
                 <div key={friend._id}>
-                  <FriendsHeadline>{friend?.name}</FriendsHeadline>
+                  <FriendHeadline
+                    isFirstFriend={filteredFriendsFavorites[0] === friend}
+                    friend={friend}
+                  />
                   <FriendsFlex>
                     {friend.favorites?.map((movie) => (
                       <Friends
@@ -418,13 +421,6 @@ const ProfileWrapper = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
-`;
-
-const FriendsHeadline = styled.h2`
-  display: flex;
-  margin-left: 20px;
-  max-width: 1020px;
-  width: 100%;
 `;
 
 const FriendsFlex = styled.div`

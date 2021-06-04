@@ -5,11 +5,3 @@ export default function sortFilter(data, profile, setState) {
   });
   setState(sortedData);
 }
-
-export function checkExistingUser(userProfile) {
-  if (userProfile === null) {
-    return false;
-  } else if (Object.keys(userProfile).length === 0) {
-    return false;
-  } else return true;
-}
