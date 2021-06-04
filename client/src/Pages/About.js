@@ -113,26 +113,6 @@ function About() {
               TMDB - The Movie Database API{' '}
             </a>
           </li>
-          <li>
-            Navbar Icon Cinema made by{' '}
-            <a
-              href="https://www.freepik.com"
-              title="Freepik"
-              target={target}
-              rel={rel}
-            >
-              Freepik
-            </a>{' '}
-            from{' '}
-            <a
-              href="https://www.flaticon.com/"
-              title="Flaticon"
-              target={target}
-              rel={rel}
-            >
-              www.flaticon.com
-            </a>
-          </li>
         </ul>
       </StyledSection>
     </PageWrapper>

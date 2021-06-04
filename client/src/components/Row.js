@@ -49,11 +49,7 @@ function Row({
     <>
       <HeadlineWrapper>
         <h2 data-testid="headline">{title}</h2>
-        <InfoContainer
-          desktopInfo={desktopInfo}
-          showInfo={showInfo}
-          isLarge={isLarge}
-        >
+        <InfoContainer desktopInfo={desktopInfo} showInfo={showInfo}>
           <div onClick={() => setDesktopInfo(!desktopInfo)}>
             <ScrollIcon />
             <InfoIcon />

@@ -5,13 +5,11 @@ import { InfoCircle } from '@styled-icons/boxicons-regular/InfoCircle';
 
 function InfoButton({ clickHandler, color }) {
   return (
-    <>
-      <StyledHeartInActive
-        color={color}
-        isMobile={isMobile}
-        onClick={clickHandler}
-      />
-    </>
+    <StyledHeartInActive
+      color={color}
+      isMobile={isMobile}
+      onClick={clickHandler}
+    />
   );
 }
 

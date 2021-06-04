@@ -2,10 +2,10 @@ import axios from 'axios';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import FormButton from '../components/Ui/Button/FormButton';
-import isValidForm from '../lib/validateFunctions';
-import requests from '../services/requests';
 import Tags from '../components/Tags';
+import requests from '../services/requests';
+import isValidForm from '../lib/validateFunctions';
+import FormButton from '../components/Ui/Button/FormButton';
 import { Delete } from '@styled-icons/fluentui-system-regular/Delete';
 import { InfoCircle } from '@styled-icons/boxicons-regular/InfoCircle';
 
@@ -84,7 +84,6 @@ export default function CreateProfile({
       deleteUser();
       setUserProfile({});
       setProfile(initialProfile);
-      localStorage.removeItem('UserProfile');
       setIsLoggedIn(false);
     }
   }

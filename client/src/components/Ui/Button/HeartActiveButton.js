@@ -5,13 +5,11 @@ import { HeartCircle } from '@styled-icons/boxicons-solid/HeartCircle';
 
 function HeartActiveButton({ addToFavorites, color }) {
   return (
-    <>
-      <StyledHeartActive
-        color={color}
-        isMobile={isMobile}
-        onClick={addToFavorites}
-      />
-    </>
+    <StyledHeartActive
+      color={color}
+      isMobile={isMobile}
+      onClick={addToFavorites}
+    />
   );
 }
 

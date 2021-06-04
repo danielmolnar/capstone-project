@@ -7,8 +7,9 @@ import { DownArrow } from '@styled-icons/boxicons-regular/DownArrow';
 import { UpArrow } from '@styled-icons/boxicons-regular/UpArrow';
 import Navigation from './components/Ui/Navigation/Navigation';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
-import { checkExistingUser } from './lib/helperFunctions';
+import FriendHeadline from '../src/components/FriendHeadline';
 import Sidebar from './components/Ui/Navigation/Sidebar';
+import { isExisting } from './lib/helperFunctions';
 import Searchbar from './components/Ui/Searchbar';
 import CreateProfile from './Pages/CreateProfile';
 import ScrollToTop from './hooks/useScrollToTop';
@@ -58,11 +59,12 @@ function App() {
 
   useEffect(() => {
     async function getUser() {
-      if (checkExistingUser(userProfile)) {
+      if (isExisting(userProfile)) {
         setIsLoggedIn(true);
         try {
           const response = await axios.get(userUrl);
           const data = response.data;
+          data === null && setIsLoggedIn(false);
           setUserProfile(data);
         } catch (error) {
           console.error(error.message);
@@ -74,7 +76,7 @@ function App() {
 
   useEffect(() => {
     async function updateUser() {
-      if (checkExistingUser(userProfile)) {
+      if (isExisting(userProfile)) {
         try {
           const response = await axios.put(userUrl, {
             favorites: [...favorites],
@@ -157,167 +159,169 @@ function App() {
   };
 
   return (
-    <>
-      <ScrollToTop>
-        <Navigation setOpen={setOpen} />
-        <Banner
-          show={show}
-          open={open}
-          setOpen={setOpen}
-          handleShow={handleShow}
-        />
-        <Sidebar open={open} setOpen={setOpen} isLoggedIn={isLoggedIn} />
-        <Switch>
-          <MainWrapper isMobile={isMobile}>
-            <Route exact path="/">
-              <HomeWrapper>
-                <Home
-                  isFavorite={isFavorite}
-                  isOnWatchList={isOnWatchList}
-                  addToWatchList={addToWatchList}
-                  addToFavorites={addToFavorites}
-                />
-              </HomeWrapper>
-            </Route>
-            <Route path="/watchlist">
-              <MovieWrapper>
-                <HeadlineWrapper>WATCHLIST</HeadlineWrapper>
-                <GridWrapper isMobile={isMobile}>
-                  {watchlist?.map((movie) => (
-                    <Watchlist
-                      isLarge
-                      movie={movie}
-                      key={movie.id}
-                      isFavorite={() => isFavorite(movie)}
-                      isOnWatchList={() => isOnWatchList(movie)}
-                      addToWatchList={() => addToWatchList(movie)}
-                      addToFavorites={() => addToFavorites(movie)}
-                    />
-                  ))}
-                </GridWrapper>
-              </MovieWrapper>
-            </Route>
-            <Route path="/friends">
-              <ProfileWrapper>
-                {filteredFriendsFavorites?.map((friend) => (
-                  <div key={friend._id}>
-                    <FriendsHeadline>{friend?.name}</FriendsHeadline>
-                    <FriendsFlex>
-                      {friend.favorites?.map((movie) => (
-                        <Friends
-                          isLarge
-                          movie={movie}
-                          key={movie.id}
-                          isLoadingFriends={isLoadingFriends}
-                          isFavorite={() => isFavorite(movie)}
-                          isOnWatchList={() => isOnWatchList(movie)}
-                          addToWatchList={() => addToWatchList(movie)}
-                          addToFavorites={() => addToFavorites(movie)}
-                        />
-                      ))}
-                    </FriendsFlex>
-                  </div>
+    <ScrollToTop>
+      <Navigation setOpen={setOpen} />
+      <Banner
+        show={show}
+        open={open}
+        setOpen={setOpen}
+        handleShow={handleShow}
+      />
+      <Sidebar open={open} setOpen={setOpen} isLoggedIn={isLoggedIn} />
+      <Switch>
+        <MainWrapper isMobile={isMobile}>
+          <Route exact path="/">
+            <HomeWrapper>
+              <Home
+                isFavorite={isFavorite}
+                isOnWatchList={isOnWatchList}
+                addToWatchList={addToWatchList}
+                addToFavorites={addToFavorites}
+              />
+            </HomeWrapper>
+          </Route>
+          <Route path="/watchlist">
+            <MovieWrapper>
+              <HeadlineWrapper>WATCHLIST</HeadlineWrapper>
+              <GridWrapper isMobile={isMobile}>
+                {watchlist?.map((movie) => (
+                  <Watchlist
+                    isLarge
+                    movie={movie}
+                    key={movie.id}
+                    isFavorite={() => isFavorite(movie)}
+                    isOnWatchList={() => isOnWatchList(movie)}
+                    addToWatchList={() => addToWatchList(movie)}
+                    addToFavorites={() => addToFavorites(movie)}
+                  />
                 ))}
-              </ProfileWrapper>
-            </Route>
-            <Route path="/search">
-              <MovieWrapper>
-                <HeadlineWrapper>SEARCH</HeadlineWrapper>
-                <SearchbarWrapper>
-                  <Searchbar
-                    isMovie={isMovie}
-                    setIsMovie={setIsMovie}
-                    getQuery={(query) => setQuery(query)}
+              </GridWrapper>
+            </MovieWrapper>
+          </Route>
+          <Route path="/friends">
+            <ProfileWrapper>
+              {filteredFriendsFavorites?.map((friend) => (
+                <div key={friend._id}>
+                  <FriendHeadline
+                    isFirstFriend={filteredFriendsFavorites[0] === friend}
+                    friend={friend}
+                    isMobile={isMobile}
                   />
-                </SearchbarWrapper>
-                <ArrowContainer isLoading={isLoading}>
-                  <BackArrow
-                    isFirstPage={page === 1}
-                    onClick={() => setPage((prevPage) => prevPage - 1)}
+                  <FriendsFlex>
+                    {friend.favorites?.map((movie) => (
+                      <Friends
+                        isLarge
+                        movie={movie}
+                        key={movie.id}
+                        isLoadingFriends={isLoadingFriends}
+                        isFavorite={() => isFavorite(movie)}
+                        isOnWatchList={() => isOnWatchList(movie)}
+                        addToWatchList={() => addToWatchList(movie)}
+                        addToFavorites={() => addToFavorites(movie)}
+                      />
+                    ))}
+                  </FriendsFlex>
+                </div>
+              ))}
+            </ProfileWrapper>
+          </Route>
+          <Route path="/search">
+            <MovieWrapper>
+              <HeadlineWrapper>SEARCH</HeadlineWrapper>
+              <SearchbarWrapper>
+                <Searchbar
+                  isMovie={isMovie}
+                  setIsMovie={setIsMovie}
+                  getQuery={(query) => setQuery(query)}
+                />
+              </SearchbarWrapper>
+              <ArrowContainer isLoading={isLoading}>
+                <BackArrow
+                  isFirstPage={page === 1}
+                  onClick={() => setPage((prevPage) => prevPage - 1)}
+                />
+              </ArrowContainer>
+              <GridWrapper isMobile={isMobile}>
+                {search?.map((movie) => (
+                  <Search
+                    isLarge
+                    movie={movie}
+                    key={movie.id}
+                    isLoading={isLoading}
+                    isFavorite={() => isFavorite(movie)}
+                    isOnWatchList={() => isOnWatchList(movie)}
+                    addToWatchList={() => addToWatchList(movie)}
+                    addToFavorites={() => addToFavorites(movie)}
                   />
-                </ArrowContainer>
-                <GridWrapper isMobile={isMobile}>
-                  {search?.map((movie) => (
-                    <Search
-                      isLarge
-                      movie={movie}
-                      key={movie.id}
-                      isLoading={isLoading}
-                      isFavorite={() => isFavorite(movie)}
-                      isOnWatchList={() => isOnWatchList(movie)}
-                      addToWatchList={() => addToWatchList(movie)}
-                      addToFavorites={() => addToFavorites(movie)}
-                    />
-                  ))}
-                </GridWrapper>
-                <ArrowContainer isLoading={isLoading}>
-                  <NextArrow
-                    onClick={handleNextPage}
-                    showNext={search.length >= 20 && isSearching}
-                  />
-                </ArrowContainer>
-              </MovieWrapper>
-            </Route>
-            <Route path="/favorites">
-              <MovieWrapper>
-                <HeadlineWrapper>FAVORITES</HeadlineWrapper>
-                <GridWrapper isMobile={isMobile}>
-                  {favorites?.map((movie) => (
-                    <Favorites
-                      isLarge
-                      movie={movie}
-                      key={movie.id}
-                      isFavorite={() => isFavorite(movie)}
-                      isOnWatchList={() => isOnWatchList(movie)}
-                      addToWatchList={() => addToWatchList(movie)}
-                      addToFavorites={() => addToFavorites(movie)}
-                    />
-                  ))}
-                </GridWrapper>
-              </MovieWrapper>
-            </Route>
-            <Route path="/friendsinfo">
-              <ProfileWrapper>
-                <HeadlineWrapper>MY FRIENDS</HeadlineWrapper>
-                {friends?.map((friend) => (
-                  <FriendsCards key={friend._id} friend={friend} />
                 ))}
-              </ProfileWrapper>
-            </Route>
-            <Route path="/profile">
-              <ProfileWrapper>
-                <Profile
-                  friends={friends}
-                  watchlist={watchlist}
-                  favorites={favorites}
-                  isLoggedIn={isLoggedIn}
-                  userProfile={userProfile}
+              </GridWrapper>
+              <ArrowContainer isLoading={isLoading}>
+                <NextArrow
+                  onClick={handleNextPage}
+                  showNext={search.length >= 20 && isSearching}
                 />
-              </ProfileWrapper>
-            </Route>
-            <Route path="/createprofile">
-              <ProfileWrapper>
-                <CreateProfile
-                  friends={friends}
-                  watchlist={watchlist}
-                  favorites={favorites}
-                  isLoggedIn={isLoggedIn}
-                  userProfile={userProfile}
-                  setIsLoggedIn={setIsLoggedIn}
-                  setUserProfile={setUserProfile}
-                />
-              </ProfileWrapper>
-            </Route>
-            <Route path="/about">
-              <ProfileWrapper>
-                <HeadlineWrapper>About</HeadlineWrapper>
-                <About />
-              </ProfileWrapper>
-            </Route>
-          </MainWrapper>
-        </Switch>
-      </ScrollToTop>
-    </>
+              </ArrowContainer>
+            </MovieWrapper>
+          </Route>
+          <Route path="/favorites">
+            <MovieWrapper>
+              <HeadlineWrapper>FAVORITES</HeadlineWrapper>
+              <GridWrapper isMobile={isMobile}>
+                {favorites?.map((movie) => (
+                  <Favorites
+                    isLarge
+                    movie={movie}
+                    key={movie.id}
+                    isFavorite={() => isFavorite(movie)}
+                    isOnWatchList={() => isOnWatchList(movie)}
+                    addToWatchList={() => addToWatchList(movie)}
+                    addToFavorites={() => addToFavorites(movie)}
+                  />
+                ))}
+              </GridWrapper>
+            </MovieWrapper>
+          </Route>
+          <Route path="/friendsinfo">
+            <ProfileWrapper>
+              <HeadlineWrapper>MY FRIENDS</HeadlineWrapper>
+              {friends?.map((friend) => (
+                <FriendsCards key={friend._id} friend={friend} />
+              ))}
+            </ProfileWrapper>
+          </Route>
+          <Route path="/profile">
+            <ProfileWrapper>
+              <Profile
+                friends={friends}
+                watchlist={watchlist}
+                favorites={favorites}
+                isLoggedIn={isLoggedIn}
+                userProfile={userProfile}
+              />
+            </ProfileWrapper>
+          </Route>
+          <Route path="/createprofile">
+            <ProfileWrapper>
+              <CreateProfile
+                friends={friends}
+                watchlist={watchlist}
+                favorites={favorites}
+                isLoggedIn={isLoggedIn}
+                userProfile={userProfile}
+                setIsLoggedIn={setIsLoggedIn}
+                setUserProfile={setUserProfile}
+              />
+            </ProfileWrapper>
+          </Route>
+          <Route path="/about">
+            <ProfileWrapper>
+              <HeadlineWrapper>About</HeadlineWrapper>
+              <About />
+            </ProfileWrapper>
+          </Route>
+        </MainWrapper>
+      </Switch>
+    </ScrollToTop>
   );
 }
 
@@ -325,7 +329,7 @@ export default App;
 
 const MainWrapper = styled.div`
   margin: ${({ isMobile }) =>
-    isMobile ? '100px 0px' : '100px 15rem 100px 15rem'};
+    isMobile ? '80px 0px' : '100px 15rem 100px 15rem'};
 `;
 
 const HomeWrapper = styled.div`
@@ -420,13 +424,6 @@ const ProfileWrapper = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
-`;
-
-const FriendsHeadline = styled.h2`
-  display: flex;
-  margin-left: 20px;
-  max-width: 1020px;
-  width: 100%;
 `;
 
 const FriendsFlex = styled.div`
