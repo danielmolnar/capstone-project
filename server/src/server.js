@@ -16,11 +16,7 @@ const server = express();
 server.use(cors());
 server.use(express.json());
 
-mongoose.connect(connectionString, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndMofidy: false,
-});
+mongoose.connect(connectionString);
 
 server.get('/users', (req, res) => {
   User.find()
