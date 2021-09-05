@@ -23,12 +23,12 @@
     "url": "https://github.com/danielmolnar/capstone-project/issues"
   },
   "devDependencies": {
-    "concurrently": "^6.0.0",
-    "mongodb": "^3.6.5",
-    "nodemon": "^2.0.7"
+    "concurrently": "^6.2.1",
+    "mongodb": "^4.1.1",
+    "nodemon": "^2.0.12"
   },
   "dependencies": {
-    "dotenv": "^8.2.0"
+    "dotenv": "^10.0.0"
   },
   "proxy": "http://localhost:4000"
 }
